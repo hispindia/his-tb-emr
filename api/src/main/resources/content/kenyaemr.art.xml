@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- ===================== Program ===================== -->
+
+	<bean id="kenyaemr.art.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
+		<property name="targetUuid" value="${metadata.program.ART}" />
+		<property name="eligibilityCalculation" value="org.openmrs.module.kenyaemr.calculation.library.art.EligibleForArtProgramCalculation" />
+		<property name="defaultEnrollmentForm" ref="kenyaemr.art.form.enrollment" />
+		<property name="defaultCompletionForm" ref="kenyaemr.art.form.completion" />
+		
+		<property name="fragments">
+			<map>
+				<entry key="enrollment-summary" value="kenyaemr:program/art/artEnrollmentSummary" />
+				<entry key="care-panel" value="kenyaemr:program/art/artCarePanel" />
+				<entry key="completion-summary" value="kenyaemr:program/art/artCompletionSummary" />
+			</map>
+		</property>
+		<property name="order" value="500" />
+	</bean>
+
+	<!-- ===================== Identifiers ===================== -->
+    <!-- Unique Patient Number -->
+	<bean id="kenyaemr.hiv.identifier.upn" class="org.openmrs.module.kenyacore.identifier.IdentifierDescriptor">
+		<property name="targetUuid" value="${metadata.identifiertype.UNIQUE_PATIENT_NUMBER}" />
+		<property name="order" value="90" />
+	</bean>
+    
+    <!-- ART Enrollment -->
+	<bean id="kenyaemr.art.form.enrollment" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+	<property name="targetUuid" value="5f1526f6-64cd-4a90-b4ad-24bb9d2d8709" />
+		<property name="apps">
+			<set>
+				<ref bean="kenyaemr.app.registration" />
+			<!--<ref bean="kenyaemr.app.intake" /> -->
+				<ref bean="kenyaemr.app.clinician" />
+				<ref bean="kenyaemr.app.chart" />
+			</set>
+		</property>
+		<property name="icon" value="kenyaui:forms/generic.png" />
+		<property name="htmlform" value="kenyaemr:art/artEnrollment.html" />
+	</bean>
+	
+	<!-- ART Completion -->
+	<bean id="kenyaemr.art.form.completion" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+	<property name="targetUuid" value="b55b8698-b1df-4c4a-83fb-efdcca4e6159" />
+		<property name="apps">
+			<set>
+				<ref bean="kenyaemr.app.registration" />
+				<!--<ref bean="kenyaemr.app.intake" /> -->
+				<ref bean="kenyaemr.app.clinician" />
+				<ref bean="kenyaemr.app.chart" />
+			</set>
+		</property>
+		<property name="icon" value="kenyaui:forms/completion.png" />
+		<property name="htmlform" value="kenyaemr:art/artDiscontinuation.html" />	
+	</bean>
+	
+
+</beans>

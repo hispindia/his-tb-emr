@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.kenyaemr.model">
+
+	<class name="DrugOrderProcessed" table="drug_order_processed" batch-size="500">
+
+		<id name="id" type="int" column="id"
+			unsaved-value="0">
+				<generator class="native" />
+		</id>
+		<many-to-one name="drugOrder" column="drug_order" class="org.openmrs.DrugOrder" foreign-key="fk_drugorderprocessed_drugorder"/>
+		<many-to-one name="patient" column="patient_id" class="org.openmrs.Patient" foreign-key="fk_patientIdfordrugorderprocessed"/>
+		<property name="createdDate" column="created_date"  />
+		<property name="processedDate" column="processed_date"  />
+		<property name="processedStatus" column="processed_status" />
+		<property name="durationPreProcess" column="duration_preprocess" />
+		<property name="discontinuedDate" column="discontinued_date" />
+		<property name="quantityPostProcess" column="quantity_postprocess" />
+		<property name="drugRegimen" column="drug_regimen" />
+	</class>
+</hibernate-mapping>

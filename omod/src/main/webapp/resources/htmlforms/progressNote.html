@@ -1,0 +1,135 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+-->
+<htmlform>
+
+
+	<style type="text/css">
+		table.tb1 {
+			border: 1px solid black;
+			vertical-align: baseline;
+			text-align: left;
+			background-color: #FFFFFF;
+		}
+		table.tb1 tr th,table.tb1 tr td{
+			border: 0;
+			padding: 5px;
+		}
+		input[type=text]{
+			width:400px;
+		}
+		input[class=hasDatepicker]{
+			width:150px;
+		}
+	</style>
+
+	<script type="text/javascript">
+		
+		jq(document).ready(function(){
+			// show fields with data 
+			fieldIndex1 = 12;
+			count=1;
+			while(document.getElementById("w"+fieldIndex1).value!="" &amp;&amp; count &lt; 11){
+				jQuery('#'+count+'-toggleContainer1').show();   
+				fieldIndex1=fieldIndex1+2;
+				count++;
+			}
+			
+			$j('#1-removeEntry1').remove();
+			$j('#10-addEntry1').remove();
+			$j('#1-toggleContainer1').show();
+			
+			
+			$j('button.addEntry1').on("click", function(){
+				var correctedAddButtonId = parseFloat(this.id) + 1;      
+				var contentAddId = "#" + correctedAddButtonId + "-toggleContainer1";
+				$j(contentAddId).toggle(true);      
+				$j('#' + this.id).toggle(false); 
+				$j('#' + parseFloat(this.id) + '-removeEntry1').toggle(false);
+				return false;});    
+			 
+			$j('button.removeEntry1').on("click", function(){ 
+				var correctedRemoveButtonId = parseFloat(this.id) - 1;
+				var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer1";
+				$j(contentAddId).toggle(false);
+				$j( ':input:not(:button)', contentAddId).val([]);
+				$j('#' + correctedRemoveButtonId + '-addEntry1').toggle(true);
+				$j('#' + correctedRemoveButtonId + '-removeEntry1').toggle(true);
+				return false;
+				});
+		});
+		
+		
+		
+		</script>
+			
+	<div class="ke-form-header">
+		<table width="100%" align="center" style="background-color: #c7d8a7">
+			<tr>
+				<td  align="left">Date: <encounterDate id="encounter-date" showTime="true"/></td>
+				<td align="right">Location: <encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" type="autocomplete" /></td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="ke-form-content" style="width:100%;   padding: 2px;">
+			<table style="background-color: #e8efdc" align="center" class="tb1"  cellspacing="0" width="100%">
+					<tr>
+						<td>1. Date of Admission :</td>
+						<td><obs conceptId="b36da368-4705-4582-b213-74a7a990aff8" /></td>
+					</tr>
+					<tr>
+						<td>2. Date of Discharge :</td>
+						<td><obs conceptId="1641AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+					</tr>
+					<tr>
+						<td valign="top">3. Hospital Diagnosis</td>
+						<td valign="bottom">
+							<table>
+								<repeat>
+									<template>
+										<tr  id="{n}-toggleContainer1" style="display:none;">
+											<td valign="bottom">{n}. <obs conceptId="d8189970-d2a9-431d-864c-c8982d538dc9" style="autocomplete"/></td>
+											<td><button id="{n}-addEntry1" class="addEntry1">Add</button><button id="{n}-removeEntry1" class="removeEntry1">Remove</button>
+											</td>
+										</tr>
+									</template>
+									<render n="1" concept=" "/>
+									<render n="2" concept=" "/>
+									<render n="3" concept=" "/>
+									<render n="4" concept=" "/>
+									<render n="5" concept=" "/>
+									<render n="6" concept=" "/>
+									<render n="7" concept=" "/>
+									<render n="8" concept=" "/>
+									<render n="9" concept=" "/>
+									<render n="10" concept=" "/>
+								</repeat>
+							</table>
+						</td>	
+					</tr>				
+					<tr>
+						<td>
+							4. Clinical Note :	
+						</td>
+						<td>
+							<obs conceptId="f52c4552-15aa-412c-b184-f17dd7c9fe6c" rows="5" cols="100" style="textarea" />
+						</td>
+					</tr>	
+			</table>
+		</div>
+	<div class="ke-form-footer">
+		<submit />
+	</div>
+
+</htmlform>

@@ -1,0 +1,5 @@
+<!-- Patient identifier types used by KenyaEMR, listed A-Z -->
+<refs type="EncounterType">
+	<ref key="TB_SCREENING" uuid="ed6dacc9-0827-4c82-86be-53c0d8c449be" />
+	<ref key="DISPENSE_DRUG" uuid="0daa76ea-9c7d-49c9-8ea0-21d3d079f807" />
+</refs>
