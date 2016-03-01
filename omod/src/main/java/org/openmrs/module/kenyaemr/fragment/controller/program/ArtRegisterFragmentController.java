@@ -25,11 +25,12 @@ public class ArtRegisterFragmentController {
 	public void controller(
 			@RequestParam(value = "patientId", required = false) Person person,
 			@RequestParam(value = "patientId", required = false) Patient patient,
+			@RequestParam("returnUrl") String returnUrl,
 			FragmentModel model) {
 		/*
 		 * Constant value across all visit
 		 */
-
+		model.addAttribute("returnUrl", returnUrl);
 		model.addAttribute("patientName", person.getGivenName());
 		model.addAttribute("patientAge", person.getAge());
 		model.addAttribute("birthDate", new SimpleDateFormat("dd-MMMM-yyyy")

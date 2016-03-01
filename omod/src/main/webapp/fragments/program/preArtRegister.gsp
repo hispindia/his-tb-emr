@@ -27,10 +27,11 @@
 						<br/>
 				</td>
                 <td colspan="2" style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
-						<br/> ${patientWrap.preArtRegistrationNumber  }
+                	
+						<br/><% if(patientWrap.preArtRegistrationNumber) {%> ${patientWrap.preArtRegistrationNumber  }	<% } %>	
 						<br/> ${ patientName }
 						<br/><% if(address.address1) { %> ${ address.address1},  <%} %> <% if(address.cityVillage) { %> ${address.cityVillage}, <%} %>
-							<% if(address.countyDistrict) { %> ${ address.countyDistrict},  <%} %> <% if(address.stateProvince) { %> ${address.stateProvince} <%} %>
+							<% if(address.countyDistrict !='?') { %> ${ address.countyDistrict},  <%} %> <% if(address.stateProvince !='?') { %> ${address.stateProvince} <%} %>
 						<br/> ${ patientAge }
 						<br/> ${ patientGender } 
 						<br/>  ${artEligibleDate}
@@ -67,7 +68,7 @@
                 
                 <td  colspan="2" style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
                 
-                <br/><% if(savedEntryPoint.valueCoded.name) { %> ${ savedEntryPoint.valueCoded.name}  <%} %>
+                <br/><% if(savedEntryPoint) { %> ${ savedEntryPoint.valueCoded.name}  <%} %>
                 <br/><% if (enrollmentStatus) { %>
 						${ enrollmentStatus.valueCoded.name }
 					<% } %>	
@@ -238,8 +239,11 @@
 			</tr>
 		</table>
 	</div>
-	<a id="dlink"  style="display:none;"></a> 
+	<a id="dlink"  style="display:none;"></a>
+	<div> 
 	<input type="button" onClick="tableToExcel('table1','PRE ART Register','${patientWrap.preArtRegistrationNumber}-PRE ART Register.xls');"  value="Export as Excel" />
+	<button onclick="ui.navigate('${returnUrl}')"><b>Back</b></button>
+	</div>
 	
 </div>
 <% } %>

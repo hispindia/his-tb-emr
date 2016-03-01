@@ -45,11 +45,11 @@
 				</td>
                 <td colspan="4" style="text-align: left; vertical-align: top;  padding-left:1%">
 				
-						<br/> ${artInitiationDate}
-						<br/>  ${patientWrap.napArtRegistrationNumber  }
+						<br/> <% if(artInitiationDate) { %>  ${artInitiationDate} <% } %>
+						<br/> <% if(patientWrap.napArtRegistrationNumber) { %>  ${patientWrap.napArtRegistrationNumber  } <% } %>
 						<br/>${ patientName }
 						<br/><% if(address.address1) { %> ${ address.address1},  <%} %> <% if(address.cityVillage) { %> ${address.cityVillage}, <%} %>
-							<% if(address.countyDistrict) { %> ${ address.countyDistrict},  <%} %> <% if(address.stateProvince) { %> ${address.stateProvince} <%} %>
+							<% if(address.countyDistrict !='?') { %> ${ address.countyDistrict},  <%} %> <% if(address.stateProvince !='?') { %> ${address.stateProvince} <%} %>
 						<% if (personWrap.telephoneContact) { %>
 						<br/><small> ${personWrap.telephoneContact}.</small>
 						<% } %>
@@ -192,7 +192,10 @@
 		
 	</div>
 	<a id="dlink"  style="display:none;"></a> 
+	<div>
 	<input type="button" onClick="tableToExcel('table1','ART Register','${patientWrap.napArtRegistrationNumber}-ART Register.xls');"  value="Export as Excel" />
+	<button onclick="ui.navigate('${returnUrl}')"><b>Back</b></button>
+	</div
 </div>
 <% } %>
 

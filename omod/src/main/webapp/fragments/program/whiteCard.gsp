@@ -59,18 +59,29 @@ td, th, table, tr{
 						<tr><td><strong>Age</strong></td><td align="left"> : ${ patientAge } </td></tr>
 						<tr><td><strong>Date of Birth</strong></td><td align="left"> : ${ birthDate } </td></tr>
 						<tr><td><strong>Gender</strong></td><td> : ${ patientGender } </td></tr>
+						<% if ( address.address1) { %>
 						<tr><td><strong>Address</strong> <small></td><td> : ${ address.address1}.</small> </td></tr>
+						<% } %>
 						<% if (personWrap.telephoneContact) { %>
 							<tr><td><strong>Patient's phone number</strong><small> </td><td align="left"> : ${personWrap.telephoneContact}.</small></td> </tr>
 						<% } %>
+						<% if ( address.cityVillage) { %>
 						<tr><td><strong>Village/City</strong><small></td><td> : ${ address.cityVillage}.</small> </td></tr>
+						<% } %>
+						<% if (address.countyDistrict != '?') { %>
 						<tr><td><strong>Township</strong><small> </td><td> : ${ address.countyDistrict}.</small> </td></tr>
+						<% } %>
+						<% if (address.stateProvince != '?') { %>
 						<tr><td><strong>State or Region</strong><small> </td><td> : ${ address.stateProvince}.</small></br> </td></tr>
-						
+						<% } %>
+						<% if (patientWrap.previousHivTestDate) { %>
 						<tr><td><strong>Date HIV+ test</strong><small></td><td> : ${patientWrap.previousHivTestDate}</small> </td></tr>
 						<tr><td><strong>Plcae</strong><small></td><td> : ${patientWrap.previousHivTestPlace}</small> </td></tr>
-						<tr><td><strong>Entry Point</strong><small></td><td> : ${savedEntryPoint.valueCoded.name}</small></br> </td></tr>
+						<% } %>
 						
+						<% if(savedEntryPoint) { %>
+						<tr><td><strong>Entry Point</strong><small></td><td> : ${savedEntryPoint.valueCoded.name}</small></br> </td></tr>
+						<%} %>
 						<% if (savedEntryPointValueDate) { %>
 							<tr><td><strong>Name Previous Clinic</strong><small></td><td> : ${savedEntryPoint.valueText}</small> </td></tr>
 							<tr><td><strong>Date Transferred in</strong><small></td><td align="left"> : ${savedEntryPointValueDate}</small></br> </td></tr>
@@ -216,13 +227,16 @@ td, th, table, tr{
 										<td><strong>Place</strong></td>
 									</tr>
 									<% for ( e in drugMembers ) {  %>
-										<% def values = e.value.split (",") %>	
+										<% def values = e.value.split (",") %>
+										<% if(values[0]) { %>	
 										<tr>
+											
 											<td><% println  values[0] %> </td>
 											<td><% println  values[1] %> </td>
 											<td><% println  values[2] %><br/> </td>
 										</tr>
-									<% } %>						
+										
+									<%} } %>						
 								</table>
 							</td>
 						</tr>
@@ -305,8 +319,9 @@ td, th, table, tr{
 	</div>
 	
 	</br></br>
-	
+	<div>
 	<input type="button" id="toexcel" value="Export as Excel" onclick="tableToExcel('printArea')"/>
-	
+	<button onclick="ui.navigate('${returnUrl}')"><b>Back</b></button>
+	</div>
 </div>
 <% } %>

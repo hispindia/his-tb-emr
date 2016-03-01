@@ -32,11 +32,13 @@ public class WhiteCardFragmentController {
 	public void controller(
 			@RequestParam(value = "patientId", required = false) Person person,
 			@RequestParam(value = "patientId", required = false) Patient patient,
+			@RequestParam("returnUrl") String returnUrl,
 			FragmentModel model) {
 
 		/*
 		 * Constant value across all visit
 		 */
+		model.addAttribute("returnUrl", returnUrl);
 		model.addAttribute("patientName", person.getGivenName());
 		model.addAttribute("patientAge", person.getAge());
 		model.addAttribute("birthDate", new SimpleDateFormat("dd-MMMM-yyyy")
@@ -53,7 +55,8 @@ public class WhiteCardFragmentController {
 		Obs savedEntryPoint = getLatestObs(patient,
 				Dictionary.METHOD_OF_ENROLLMENT);
 		model.addAttribute("savedEntryPoint", savedEntryPoint);
-		if (savedEntryPoint.getValueDate() != null) {
+		
+		if (savedEntryPoint != null && savedEntryPoint.getValueDate() != null) {
 			model.addAttribute("savedEntryPointValueDate",
 					new SimpleDateFormat("dd-MMMM-yyyy").format(savedEntryPoint
 							.getValueDate()));
@@ -291,7 +294,7 @@ public class WhiteCardFragmentController {
 						}
 					}
 				}
-				String val = spNameVal + ", " + spAgeVal + " " + spAgeUnitVal
+				String val = spNameVal + ", " + spAgeVal + ", " + spAgeUnitVal
 						+ ", " + spGenderVal + ", " + spInfectedVal + " ,"
 						+ spArtVal;
 				familyMembers.put(index, val);
@@ -701,7 +704,7 @@ public class WhiteCardFragmentController {
 					}
 					
 					if(regName!=""){
-						regimenList.put(regimenIndex,new SimpleDateFormat("dd-MMMM-yyyy").format(en.getDateCreated()) + ", " + changeStopReason+ ","+ new SimpleDateFormat("dd-MMMM-yyyy").format(en.getDateCreated()) + ","+regName  );
+						regimenList.put(regimenIndex,new SimpleDateFormat("dd-MMMM-yyyy").format(en.getDateCreated()) + ", " + changeStopReason+ ", "+ new SimpleDateFormat("dd-MMMM-yyyy").format(en.getDateCreated()) + ", "+regName  );
 						regimenIndex++;
 					}
 				}
