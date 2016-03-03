@@ -3,7 +3,7 @@
 %>
 <style type="text/css">
 	body {
-		background-color: #e0d8cd;
+		background-color: #c5ffff;
 	}
 </style>
 

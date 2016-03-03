@@ -11,26 +11,27 @@
 	}
 </script>
 
-<div class="ke-patientheader" ng-controller="PatientHeader" ng-init="init(${ currentApp ? ("'" + currentApp.id + "'") : "null" }, ${ patient.id })">
+
+<div class="ke-patientheader" style="color:black" ng-controller="PatientHeader" ng-init="init(${ currentApp ? ("'" + currentApp.id + "'") : "null" }, ${ patient.id })">
 	<div style="float: left; width: 35%;">
 		<div style="float: left; padding-right: 5px">
 			<img width="32" height="32" ng-src="{{ iconUrl }}" />
 		</div>
 		<span class="ke-patient-name">${patientName}</span><br/>
-		<span class="ke-patient-gender">{{ patient.gender | keGender }}</span>,
-		<span class="ke-patient-age">{{ patient.age }} <small>(${ kenyaui.formatPersonBirthdate(patient) })</small></span>
+		<span class="ke-patient-gender" style="color:black"><b>{{ patient.gender | keGender }}</b></span>,
+		<span class="ke-patient-age" style="color:black"><b>{{ patient.age }} <small>(${ kenyaui.formatPersonBirthdate(patient) })</small></b></span>
 	</div>
 	
 	<div style="float: left; width: 30%; text-align: center">
 		<div ng-repeat="identifier in patient.identifiers">
-				<span class="ke-identifier-type">{{ identifier.identifierType }} :</span>
-				<span class="ke-identifier-value">{{ identifier.identifier }}</span>
+				<span style="color:black" class="ke-identifier-type">{{ identifier.identifierType }} :</span>
+				<span style="color:black" class="ke-identifier-value">{{ identifier.identifier }}</span>
 		</div>
 		<div>
 			<% if( ingoName!='') { %>
 			
-			<span class="ke-ingo-type">NAME OF INGO : </span>
-			<span class="ke-ingo-name">${ ingoName}</span>
+			<span style="color:black" class="ke-ingo-type">NAME OF INGO : </span>
+			<span style="color:black" class="ke-ingo-name">${ ingoName}</span>
 			<% } %>
 		</div>
 	</div>

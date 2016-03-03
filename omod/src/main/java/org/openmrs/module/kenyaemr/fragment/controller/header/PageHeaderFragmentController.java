@@ -15,13 +15,19 @@
 package org.openmrs.module.kenyaemr.fragment.controller.header;
 
 import org.openmrs.api.context.Context;
+import org.openmrs.module.appframework.domain.AppDescriptor;
+import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.module.kenyaemr.util.ServerInformation;
 import org.openmrs.module.kenyaui.KenyaUiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
-
+import org.openmrs.ui.framework.page.PageRequest;
+import org.openmrs.util.OpenmrsUtil;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +35,7 @@ import java.util.Map;
  */
 public class PageHeaderFragmentController {
 
-	public void controller(FragmentModel model,
+	public void controller(FragmentModel model,PageRequest pageRequest,
 						   @SpringBean KenyaUiUtils kenyaui) {
 
 		Map<String, Object> kenyaemrInfo = ServerInformation.getKenyaemrInformation();
@@ -46,5 +52,21 @@ public class PageHeaderFragmentController {
 
 		model.addAttribute("systemLocation", Context.getService(KenyaEmrService.class).getDefaultLocation());
 		model.addAttribute("systemLocationCode", Context.getService(KenyaEmrService.class).getDefaultLocationMflCode());
+		
+		// Get apps for the current user
+		List<AppDescriptor> apps = Context.getService(AppFrameworkService.class).getAppsForCurrentUser();
+
+		// Sort by order property
+		Collections.sort(apps, new Comparator<AppDescriptor>() {
+			@Override
+			public int compare(AppDescriptor left, AppDescriptor right) {
+				return OpenmrsUtil.compareWithNullAsGreatest(left.getOrder(), right.getOrder());
+			}
+		});
+
+		model.addAttribute("apps", apps);
+		AppDescriptor currentApp = kenyaui.getCurrentApp(pageRequest);
+		model.addAttribute("currentApp", currentApp);
+		
 	}
 }

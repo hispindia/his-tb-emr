@@ -3,7 +3,7 @@
 %>
 <style type="text/css">
 	body {
-		background-color: #e0d8cd;
+		background-color: #c5ffff;
 	}
 </style>
 <script type="text/javascript">
@@ -25,18 +25,20 @@
 
 	<form method="post" action="${ loginServletUrl }" autocomplete="off">
 		<table style="margin-left: auto; margin-right: auto; border: 0" cellpadding="3" cellspacing="0">
+			
 			<tr>
 				<td style="padding-right: 15px">
 					<!-- <img src="${ ui.resourceLink("kenyaemr", "images/logos/moh.png") }" width="250" height="250"/> -->
 				</td>
 				<td style="padding-left: 15px; padding-top: 75px" valign="top">
 					<table border="0" cellpadding="3" cellspacing="0">
+					<b><center>National TB Program Patient Management System</center></b><br /><br />
 						<tr>
-							<th style="text-align: left">Username</th>
+							<th style="text-align: left;padding-left: 35px;">Username</th>
 							<td style="text-align: left"><input id="uname" type="text" name="uname" style="width: 200px"/></td>
 						</tr>
 						<tr>
-							<th style="text-align: left">Password</th>
+							<th style="text-align: left;padding-left: 35px;">Password</th>
 							<td style="text-align: left"><input type="password" name="pw" style="width: 200px" /></td>
 						</tr>
 						<tr>
@@ -45,7 +47,7 @@
 						</tr>
 						<tr>
 							<td></td>
-							<td style="text-align: left; vertical-align: top"><a style="font-size: 12px" href="forgotPassword.form">Forgot password?</a></td>
+							<td style="text-align: left; vertical-align: top"><a style="font-size: 12px;color:black" href="forgotPassword.form">Forgot password?</a></td>
 						</tr>
 					</table>
 				</td>
