@@ -103,44 +103,19 @@ public class EditPatientFragmentController {
 
 		model.addAttribute("command", newEditPatientForm(existing));
 
-		model.addAttribute("civilStatusConcept",
-				Dictionary.getConcept(Dictionary.CIVIL_STATUS));
 		model.addAttribute("occupationConcept",
 				Dictionary.getConcept(Dictionary.OCCUPATION));
-		model.addAttribute("educationConcept",
-				Dictionary.getConcept(Dictionary.EDUCATION));
-		model.addAttribute("ingoConcept",
-				Dictionary.getConcept(Dictionary.INGO_NAME));
-		model.addAttribute("enrollmentList",
-				Dictionary.getConcept(Dictionary.ENROLLMENT_STATUS));
+
 		model.addAttribute("entryPointList",
 				Dictionary.getConcept(Dictionary.METHOD_OF_ENROLLMENT));
+		
 
-		// Create list of education answer concepts
-		List<Concept> educationOptions = new ArrayList<Concept>();
-		educationOptions.add(Dictionary.getConcept(Dictionary.NONE));
-		educationOptions.add(Dictionary
-				.getConcept(Dictionary.PRIMARY_EDUCATION));
-		educationOptions.add(Dictionary
-				.getConcept(Dictionary.SECONDARY_EDUCATION));
-		educationOptions.add(Dictionary
-				.getConcept(Dictionary.COLLEGE_UNIVERSITY_POLYTECHNIC));
-		model.addAttribute("educationOptions", educationOptions);
-
-		// Create a list of marital status answer concepts
-		List<Concept> maritalStatusOptions = new ArrayList<Concept>();
-		maritalStatusOptions.add(Dictionary
-				.getConcept(Dictionary.MARRIED_POLYGAMOUS));
-		maritalStatusOptions.add(Dictionary
-				.getConcept(Dictionary.MARRIED_MONOGAMOUS));
-		maritalStatusOptions.add(Dictionary.getConcept(Dictionary.DIVORCED));
-		maritalStatusOptions.add(Dictionary.getConcept(Dictionary.WIDOWED));
-		maritalStatusOptions.add(Dictionary
-				.getConcept(Dictionary.LIVING_WITH_PARTNER));
-		maritalStatusOptions.add(Dictionary
-				.getConcept(Dictionary.NEVER_MARRIED));
-		model.addAttribute("maritalStatusOptions", maritalStatusOptions);
-
+		model.addAttribute("townShipList",
+				Dictionary.getConcept(Dictionary.TOWNSHIP));
+		
+		model.addAttribute("tbHistory",
+				Dictionary.getConcept(Dictionary.TB_PATIENT));
+		
 		if (patient != null) {
 			model.addAttribute("recordedAsDeceased",
 					hasBeenRecordedAsDeceased(patient));
@@ -293,49 +268,31 @@ public class EditPatientFragmentController {
 		private PersonAddress personAddress;
 		private Concept maritalStatus;
 		private Concept occupation;
-		private Concept ingoTypeConcept;
-		private Concept enrollmentName;
 		private Concept entryPoint;
-		private Concept education;
-		private Obs savedMaritalStatus;
+		private String entrySourceId;
 		private Obs savedOccupation;
-		private Obs savedIngoTypeConcept;
-		private Obs savedEnrollmentNameConcept;
 		private Obs savedEntryPoint;
-		private Obs savedEducation;
+		private Concept tbHistoryStatus;
+		private Obs savedTBHistoryStatus;
 		private Boolean dead = false;
 		private Date deathDate;
 
-		// private String nationalIdNumber;
-		// private String patientClinicNumber;
-		private String artRegistrationNumber;
-		private String preArtRegistrationNumber;
-		private String napArtRegistrationNumber;
+		private String drTBSuspectNumber;
 		private String systemPatientId;
-		private String uniquePatientNumber;
-
+		private String currentTownshipTBNumber;
+		private String previousTownshipTBNumber;
 		private String telephoneContact;
-		private String nameOfNextOfKin;
-		private String nextOfKinRelationship;
-		private String nextOfKinContact;
-		private String nextOfKinAddress;
-		private String subChiefName;
 
-		private Integer identifierCount;
 		private String fatherName;
-		private String otherEntryPoint;
-		private String otherStatus;
-		private String previousClinicName;
-		private Date transferredInDate;
-		private String hivTestPerformed;
-		private Date hivTestPerformedDate;
-		private String hivTestPerformedPlace;
+		private String otherOccupation;
 		private String checkInType;
 
 		private String nationalId;
 		private String placeOfBirth;
 		private String dateOfRegistration;
-
+		private Concept township;
+		private Obs savedTownship;
+		
 		/**
 		 * Creates an edit form for a new patient
 		 */
@@ -385,66 +342,33 @@ public class EditPatientFragmentController {
 
 			PatientWrapper wrapper = new PatientWrapper(patient);
 
-			artRegistrationNumber = wrapper.getArtRegistrationNumber();
-			preArtRegistrationNumber = wrapper.getPreArtRegistrationNumber();
-			napArtRegistrationNumber = wrapper.getNapArtRegistrationNumber();
+			drTBSuspectNumber = wrapper.getDrTBSuspectNumber();
 			systemPatientId = wrapper.getSystemPatientId();
 
-			uniquePatientNumber = wrapper.getUniquePatientNumber();
-
-			nameOfNextOfKin = wrapper.getNextOfKinName();
-			nextOfKinRelationship = wrapper.getNextOfKinRelationship();
-			nextOfKinContact = wrapper.getNextOfKinContact();
-			nextOfKinAddress = wrapper.getNextOfKinAddress();
-			subChiefName = wrapper.getSubChiefName();
-			previousClinicName = wrapper.getPreviousClinicName();
-			hivTestPerformed = wrapper.getPreviousHivTestStatus();
-			hivTestPerformedPlace = wrapper.getPreviousHivTestPlace();
 			fatherName = wrapper.getFatherName();
 			nationalId = wrapper.getNationalId();
 			placeOfBirth = wrapper.getPlaceOfBirth();
+			entrySourceId = wrapper.getEntrySourceId();
+			currentTownshipTBNumber = wrapper.getCurrentTownshipTBNumber();
+			previousTownshipTBNumber = wrapper.getPreviousClinicName();
 
-			try {
-				String datestr = wrapper.getPreviousHivTestDate();
-				DateFormat formatter;
-				formatter = new SimpleDateFormat("dd-MMMM-yyyy");
-				hivTestPerformedDate = (Date) formatter.parse(datestr);
-			} catch (Exception e) {
-			}
-
-			savedMaritalStatus = getLatestObs(patient, Dictionary.CIVIL_STATUS);
-			if (savedMaritalStatus != null) {
-				maritalStatus = savedMaritalStatus.getValueCoded();
-			}
 
 			savedOccupation = getLatestObs(patient, Dictionary.OCCUPATION);
 			if (savedOccupation != null) {
 				occupation = savedOccupation.getValueCoded();
-			}
-
-			savedIngoTypeConcept = getLatestObs(patient, Dictionary.INGO_NAME);
-			if (savedIngoTypeConcept != null) {
-				ingoTypeConcept = savedIngoTypeConcept.getValueCoded();
-			}
-
-			savedEnrollmentNameConcept = getLatestObs(patient,
-					Dictionary.ENROLLMENT_STATUS);
-			if (savedEnrollmentNameConcept != null) {
-				enrollmentName = savedEnrollmentNameConcept.getValueCoded();
-				otherStatus = savedEnrollmentNameConcept.getValueText();
+				otherOccupation = savedOccupation.getValueText();
 			}
 
 			savedEntryPoint = getLatestObs(patient,
 					Dictionary.METHOD_OF_ENROLLMENT);
 			if (savedEntryPoint != null) {
 				entryPoint = savedEntryPoint.getValueCoded();
-				otherEntryPoint = savedEntryPoint.getValueText();
-				transferredInDate = savedEntryPoint.getValueDate();
 			}
-
-			savedEducation = getLatestObs(patient, Dictionary.EDUCATION);
-			if (savedEducation != null) {
-				education = savedEducation.getValueCoded();
+	
+			savedTownship = getLatestObs(patient,
+					Dictionary.TOWNSHIP);
+			if (savedTownship != null) {
+				township = savedTownship.getValueCoded();
 			}
 		}
 
@@ -480,105 +404,36 @@ public class EditPatientFragmentController {
 				errors.rejectValue("fatherName",
 						"Expected length of Name is exceeding");
 			}
-			;
 
 			if (nationalId.length() > 50) {
 				errors.rejectValue("nationalId",
 						"Expected length of National Id is exceeding");
 			}
-			;
 
 			if (placeOfBirth.length() > 50) {
 				errors.rejectValue("placeOfBirth",
 						"Expected length of Birth Place is exceeding");
 			}
-			;
 
-			if (nameOfNextOfKin.length() > 50) {
-				errors.rejectValue("nameOfNextOfKin",
-						"Expected length of Name is exceeding");
-			}
-			;
-
-			if (nextOfKinAddress.length() > 50) {
-				errors.rejectValue("nextOfKinAddress",
-						"Length of Address is exceeding it's limit");
-			}
-			;
 
 			if (personAddress.getAddress1().length() > 200) {
 				errors.rejectValue("personAddress.address1",
 						"Length of Address is exceeding it's limit");
 			}
-			;
 
 			if (personAddress.getAddress2().length() > 200) {
 				errors.rejectValue("personAddress.address2",
 						"Length of Address is exceeding it's limit");
 			}
-			;
+			
+			if (personAddress.getAddress3().length() > 300) {
+				errors.rejectValue("personAddress.address3",
+						"Length of Address is exceeding it's limit");
+			}
+			
 			require(errors, "gender");
 			require(errors, "birthdate");
-			// require(errors, "entryPoint");
-			// require(errors, "enrollmentName");
-			if (entryPoint != null) {
-				if (entryPoint
-						.getName()
-						.toString()
-						.equals("Patient transferred in pre ART from another clinic")
-						|| entryPoint
-								.getName()
-								.toString()
-								.equals("Patient transferred in on ART from another HIV care or ART clinic")) {
-					require(errors, "previousClinicName");
-					require(errors, "transferredInDate");
-				}
-			}
-			require(errors, "hivTestPerformed");
 
-			if (hivTestPerformed != null && hivTestPerformed.equals("Yes")) {
-				require(errors, "hivTestPerformedPlace");
-				require(errors, "hivTestPerformedDate");
-
-			}
-
-			if (hivTestPerformedDate != null) {
-				if (hivTestPerformedDate.after(new Date())) {
-					errors.rejectValue("hivTestPerformedDate",
-							"Cannot be in the future");
-				}
-			}
-
-			if (transferredInDate != null) {
-				if (transferredInDate.after(new Date())) {
-					errors.rejectValue("transferredInDate",
-							"Cannot be in the future");
-				}
-			}
-
-			// Check for Other entry point
-			if (entryPoint != null) {
-				if (entryPoint.getName().toString().equals("Other")) {
-					require(errors, "otherEntryPoint");
-				}
-			}
-
-			// Check for Other enrollment status
-			if (enrollmentName != null) {
-				if (enrollmentName.getName().toString().equals("Other")) {
-					require(errors, "otherStatus");
-				}
-				
-				if (enrollmentName.getName().toString().equals("Pregnancy") || enrollmentName.getName().toString().equals("Postpartum")) {
-					if(gender.toString().equals("M")){
-						errors.rejectValue("enrollmentName",
-								"Cannot be selected for Male patient");	
-					}
-					
-				}
-			}
-			
-			
 
 			// Require death details if patient is deceased
 			if (dead) {
@@ -603,30 +458,15 @@ public class EditPatientFragmentController {
 				validateField(errors, "telephoneContact",
 						new TelephoneNumberValidator());
 			}
-			if (StringUtils.isNotBlank(nextOfKinContact)) {
-				validateField(errors, "nextOfKinContact",
-						new TelephoneNumberValidator());
-			}
 
 			validateField(errors, "personAddress");
 
-			// validateIdentifierField(errors, "nationalIdNumber",
-			// CommonMetadata._PatientIdentifierType.NATIONAL_ID);
-			// validateIdentifierField(errors, "patientClinicNumber",
-			// CommonMetadata._PatientIdentifierType.PATIENT_CLINIC_NUMBER);
-			identifierCount = 0;
+				
 			validateIdentifierField(
 					errors,
-					"artRegistrationNumber",
-					CommonMetadata._PatientIdentifierType.ART_REGISTRATION_NUMBER);
-			validateIdentifierField(
-					errors,
-					"preArtRegistrationNumber",
-					CommonMetadata._PatientIdentifierType.PRE_ART_REGISTRATION_NUMBER);
-			validateIdentifierField(
-					errors,
-					"napArtRegistrationNumber",
-					CommonMetadata._PatientIdentifierType.NAP_ART_REGISTRATION_NUMBER);
+					"drTBSuspectNumber",
+					CommonMetadata._PatientIdentifierType.DR_TB_SUSPECT_NUMBER);
+			
 
 			// Check, not more than two identifier number get entered (not
 			// required now)
@@ -641,15 +481,8 @@ public class EditPatientFragmentController {
 			// HivMetadata._PatientIdentifierType.UNIQUE_PATIENT_NUMBER);
 
 			// Check INGO name is entered, if INGO number is entered
-			String value = (String) errors
-					.getFieldValue("artRegistrationNumber");
-			if (!value.isEmpty()) {
-				require(errors, "ingoTypeConcept");
-			}
-
-			if (ingoTypeConcept != null) {
-				require(errors, "artRegistrationNumber");
-			}
+	
+		
 
 			// check birth date against future dates and really old dates
 			if (birthdate != null) {
@@ -699,7 +532,6 @@ public class EditPatientFragmentController {
 						.isIdentifierInUseByAnotherPatient(stub)) {
 					errors.rejectValue(field, "In use by another patient");
 				}
-				identifierCount++;
 			}
 		}
 
@@ -756,33 +588,20 @@ public class EditPatientFragmentController {
 			wrapper.getPerson().setTelephoneContact(telephoneContact);
 			// wrapper.setNationalIdNumber(nationalIdNumber, location);
 			// wrapper.setPatientClinicNumber(patientClinicNumber, location);
-			wrapper.setPreArtRegistrationNumber(preArtRegistrationNumber,
+			wrapper.setDrTBSuspectNumber(drTBSuspectNumber,
 					location);
-			wrapper.setArtRegistrationNumber(artRegistrationNumber, location);
-			wrapper.setNapArtRegistrationNumber(napArtRegistrationNumber,
-					location);
+			
 			wrapper.setSystemPatientId(systemPatientId, location);
-			wrapper.setUniquePatientNumber(uniquePatientNumber, location);
-			wrapper.setNextOfKinName(nameOfNextOfKin);
-			wrapper.setNextOfKinRelationship(nextOfKinRelationship);
-			wrapper.setNextOfKinContact(nextOfKinContact);
-			wrapper.setNextOfKinAddress(nextOfKinAddress);
-			wrapper.setSubChiefName(subChiefName);
-			wrapper.setPreviousClinicName(previousClinicName);
-
-			wrapper.setPreviousHivTestStatus(hivTestPerformed);
-
-			if (hivTestPerformed.equals("Yes")) {
-				wrapper.setPreviousHivTestPlace(hivTestPerformedPlace);
-				DateFormat testDate = new SimpleDateFormat("dd-MMMM-yyyy");
-				Date capturedTestDate = hivTestPerformedDate;
-				wrapper.setPreviousHivTestDate(testDate
-						.format(capturedTestDate));
-			}
+	
+			
 
 			wrapper.getPerson().setFatherName(fatherName);
 			wrapper.getPerson().setNationalId(nationalId);
 			wrapper.getPerson().setPlaceOfBirth(placeOfBirth);
+			wrapper.getPerson().setEntrySourceId(entrySourceId);
+			wrapper.getPerson().setPreviousTownshipTBNumber(previousTownshipTBNumber);
+			wrapper.getPerson().setCurrentTownshipTBNumber(currentTownshipTBNumber);
+		
 
 			// Make sure everyone gets an OpenMRS ID
 			PatientIdentifierType openmrsIdType = MetadataUtils.existing(
@@ -816,27 +635,27 @@ public class EditPatientFragmentController {
 			List<Obs> obsToVoid = new ArrayList<Obs>();
 
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
-					Dictionary.getConcept(Dictionary.CIVIL_STATUS),
-					savedMaritalStatus, maritalStatus);
-			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
 					Dictionary.getConcept(Dictionary.OCCUPATION),
 					savedOccupation, occupation);
+			
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
-					Dictionary.getConcept(Dictionary.INGO_NAME),
-					savedIngoTypeConcept, ingoTypeConcept);
+					Dictionary.getConcept(Dictionary.METHOD_OF_ENROLLMENT),
+					savedEntryPoint, entryPoint);
+			
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
-					Dictionary.getConcept(Dictionary.EDUCATION),
-					savedEducation, education);
-
-			if (enrollmentName != null) {
-				if (enrollmentName.getName().toString().equals("Other")) {
+					Dictionary.getConcept(Dictionary.TOWNSHIP),
+					savedTownship, township);
+			
+	
+			if (occupation != null) {
+				if (occupation.getName().toString().equals("Other")) {
 					handleOncePerPatientObs(
 							ret,
 							obsToSave,
 							obsToVoid,
-							Dictionary.getConcept(Dictionary.ENROLLMENT_STATUS),
-							savedEnrollmentNameConcept, enrollmentName,
-							otherStatus, new Date(), 1);
+							Dictionary.getConcept(Dictionary.OCCUPATION),
+							savedOccupation, occupation,
+							otherOccupation, new Date(), 1);
 				}
 
 				else {
@@ -844,59 +663,12 @@ public class EditPatientFragmentController {
 							ret,
 							obsToSave,
 							obsToVoid,
-							Dictionary.getConcept(Dictionary.ENROLLMENT_STATUS),
-							savedEnrollmentNameConcept, enrollmentName, null,
+							Dictionary.getConcept(Dictionary.OCCUPATION),
+							savedOccupation, occupation, null,
 							new Date(), 1);
 				}
 			}
-
-			// With value text and Date
-			if (entryPoint != null) {
-
-				if (transferredInDate != null) {
-					if (entryPoint.getName().toString()
-							.equals("OTHER NON-CODED")) {
-						handleOncePerPatientObs(
-								ret,
-								obsToSave,
-								obsToVoid,
-								Dictionary
-										.getConcept(Dictionary.METHOD_OF_ENROLLMENT),
-								savedEntryPoint, entryPoint, otherEntryPoint,
-								transferredInDate, 0);
-					} else {
-						handleOncePerPatientObs(
-								ret,
-								obsToSave,
-								obsToVoid,
-								Dictionary
-										.getConcept(Dictionary.METHOD_OF_ENROLLMENT),
-								savedEntryPoint, entryPoint, "",
-								transferredInDate, 0);
-					}
-				} else {
-					if (entryPoint.getName().toString()
-							.equals("OTHER NON-CODED")) {
-						handleOncePerPatientObs(
-								ret,
-								obsToSave,
-								obsToVoid,
-								Dictionary
-										.getConcept(Dictionary.METHOD_OF_ENROLLMENT),
-								savedEntryPoint, entryPoint, otherEntryPoint,
-								transferredInDate, 1);
-					} else {
-						handleOncePerPatientObs(
-								ret,
-								obsToSave,
-								obsToVoid,
-								Dictionary
-										.getConcept(Dictionary.METHOD_OF_ENROLLMENT),
-								savedEntryPoint, entryPoint, "",
-								transferredInDate, 1);
-					}
-				}
-			}
+		
 			for (Obs o : obsToVoid) {
 				Context.getObsService().voidObs(o, "KenyaEMR edit patient");
 			}
@@ -1147,22 +919,7 @@ public class EditPatientFragmentController {
 			this.personName = personName;
 		}
 
-		public Concept getIngoTypeConcept() {
-			return ingoTypeConcept;
-		}
-
-		public void setIngoTypeConcept(Concept ingoTypeConcept) {
-			this.ingoTypeConcept = ingoTypeConcept;
-		}
-
-		public Concept getEnrollmentName() {
-			return enrollmentName;
-		}
-
-		public void setEnrollmentName(Concept enrollmentName) {
-			this.enrollmentName = enrollmentName;
-		}
-
+	
 		public Concept getEntryPoint() {
 			return entryPoint;
 		}
@@ -1170,85 +927,30 @@ public class EditPatientFragmentController {
 		public void setEntryPoint(Concept entryPoint) {
 			this.entryPoint = entryPoint;
 		}
-
-		public String getHivTestPerformedPlace() {
-			return hivTestPerformedPlace;
+		
+		public String getOtherOccupation() {
+			return otherOccupation;
 		}
 
-		public void setHivTestPerformedPlace(String hivTestPerformedPlace) {
-			this.hivTestPerformedPlace = hivTestPerformedPlace;
+		public void setOtherOccupation(String otherOccupation) {
+			this.otherOccupation = otherOccupation;
 		}
 
 		public Obs getSavedEntryPoint() {
 			return savedEntryPoint;
 		}
 
-		public String getOtherEntryPoint() {
-			return otherEntryPoint;
-		}
-
-		public void setOtherEntryPoint(String otherEntryPoint) {
-			this.otherEntryPoint = otherEntryPoint;
-		}
-
-		public String getPreviousClinicName() {
-			return previousClinicName;
-		}
-
-		public void setPreviousClinicName(String previousClinicName) {
-			this.previousClinicName = previousClinicName;
-		}
-
-		public Date getTransferredInDate() {
-			return transferredInDate;
-		}
-
-		public void setTransferredInDate(Date transferredInDate) {
-			this.transferredInDate = transferredInDate;
-		}
-
-		public String getHivTestPerformed() {
-			return hivTestPerformed;
-		}
-
-		public void setHivTestPerformed(String hivTestPerformed) {
-			this.hivTestPerformed = hivTestPerformed;
-		}
-
-		public Date getHivTestPerformedDate() {
-			return hivTestPerformedDate;
-		}
-
-		public void setHivTestPerformedDate(Date hivTestPerformedDate) {
-			this.hivTestPerformedDate = hivTestPerformedDate;
-		}
 
 		public void setSavedEntryPoint(Obs savedEntryPoint) {
 			this.savedEntryPoint = savedEntryPoint;
 		}
 
-		public String getArtRegistrationNumber() {
-			return artRegistrationNumber;
+		public String getDrTBSuspectNumber() {
+			return drTBSuspectNumber;
 		}
 
-		public void setArtRegistrationNumber(String artRegistrationNumber) {
-			this.artRegistrationNumber = artRegistrationNumber;
-		}
-
-		public String getPreArtRegistrationNumber() {
-			return preArtRegistrationNumber;
-		}
-
-		public void setPreArtRegistrationNumber(String preArtRegistrationNumber) {
-			this.preArtRegistrationNumber = preArtRegistrationNumber;
-		}
-
-		public String getNapArtRegistrationNumber() {
-			return napArtRegistrationNumber;
-		}
-
-		public void setNapArtRegistrationNumber(String napArtRegistrationNumber) {
-			this.napArtRegistrationNumber = napArtRegistrationNumber;
+		public void setDrTBSuspectNumber(String preArtRegistrationNumber) {
+			this.drTBSuspectNumber = drTBSuspectNumber;
 		}
 
 		public String getSystemPatientId() {
@@ -1267,14 +969,7 @@ public class EditPatientFragmentController {
 			this.checkInType = checkInType;
 		}
 
-		public String getOtherStatus() {
-			return otherStatus;
-		}
-
-		public void setOtherStatus(String otherStatus) {
-			this.otherStatus = otherStatus;
-		}
-
+	
 		/**
 		 * @return the patientClinicNumber
 		 * 
@@ -1289,20 +984,6 @@ public class EditPatientFragmentController {
 		 *            patientClinicNumber) { this.patientClinicNumber =
 		 *            patientClinicNumber; }
 		 */
-		/**
-		 * @return the hivIdNumber
-		 */
-		public String getUniquePatientNumber() {
-			return uniquePatientNumber;
-		}
-
-		/**
-		 * @param uniquePatientNumber
-		 *            the uniquePatientNumber to set
-		 */
-		public void setUniquePatientNumber(String uniquePatientNumber) {
-			this.uniquePatientNumber = uniquePatientNumber;
-		}
 
 		/**
 		 * @return the nationalIdNumber
@@ -1393,20 +1074,6 @@ public class EditPatientFragmentController {
 			this.maritalStatus = maritalStatus;
 		}
 
-		/**
-		 * @return the education
-		 */
-		public Concept getEducation() {
-			return education;
-		}
-
-		/**
-		 * @param education
-		 *            the education to set
-		 */
-		public void setEducation(Concept education) {
-			this.education = education;
-		}
 
 		/**
 		 * @return the occupation
@@ -1454,81 +1121,7 @@ public class EditPatientFragmentController {
 			this.deathDate = deathDate;
 		}
 
-		/**
-		 * @return the nameOfNextOfKin
-		 */
-		public String getNameOfNextOfKin() {
-			return nameOfNextOfKin;
-		}
-
-		/**
-		 * @param nameOfNextOfKin
-		 *            the nameOfNextOfKin to set
-		 */
-		public void setNameOfNextOfKin(String nameOfNextOfKin) {
-			this.nameOfNextOfKin = nameOfNextOfKin;
-		}
-
-		/**
-		 * @return the nextOfKinRelationship
-		 */
-		public String getNextOfKinRelationship() {
-			return nextOfKinRelationship;
-		}
-
-		/**
-		 * @param nextOfKinRelationship
-		 *            the nextOfKinRelationship to set
-		 */
-		public void setNextOfKinRelationship(String nextOfKinRelationship) {
-			this.nextOfKinRelationship = nextOfKinRelationship;
-		}
-
-		/**
-		 * @return the nextOfKinContact
-		 */
-		public String getNextOfKinContact() {
-			return nextOfKinContact;
-		}
-
-		/**
-		 * @param nextOfKinContact
-		 *            the nextOfKinContact to set
-		 */
-		public void setNextOfKinContact(String nextOfKinContact) {
-			this.nextOfKinContact = nextOfKinContact;
-		}
-
-		/**
-		 * @return the nextOfKinAddress
-		 */
-		public String getNextOfKinAddress() {
-			return nextOfKinAddress;
-		}
-
-		/**
-		 * @param nextOfKinAddress
-		 *            the nextOfKinAddress to set
-		 */
-		public void setNextOfKinAddress(String nextOfKinAddress) {
-			this.nextOfKinAddress = nextOfKinAddress;
-		}
-
-		/**
-		 * @return the subChiefName
-		 */
-		public String getSubChiefName() {
-			return subChiefName;
-		}
-
-		/**
-		 * @param subChiefName
-		 *            the subChiefName to set
-		 */
-		public void setSubChiefName(String subChiefName) {
-			this.subChiefName = subChiefName;
-		}
-
+	
 		public String getFatherName() {
 			return fatherName;
 		}
@@ -1561,6 +1154,71 @@ public class EditPatientFragmentController {
 			this.dateOfRegistration = dateOfRegistration;
 		}
 
+		public String getEntrySourceId() {
+			return entrySourceId;
+		}
+
+		public void setEntrySourceId(String entrySourceId) {
+			this.entrySourceId = entrySourceId;
+		}
+
+		public String getCurrentTownshipTBNumber() {
+			return currentTownshipTBNumber;
+		}
+
+		public void setCurrentTownshipTBNumber(String currentTownshipTBNumber) {
+			this.currentTownshipTBNumber = currentTownshipTBNumber;
+		}
+
+		public String getPreviousTownshipTBNumber() {
+			return previousTownshipTBNumber;
+		}
+
+		public void setPreviousTownshipTBNumber(String previousTownshipTBNumber) {
+			this.previousTownshipTBNumber = previousTownshipTBNumber;
+		}
+
+		public Concept getTbHistoryStatus() {
+			return tbHistoryStatus;
+		}
+
+		public void setTbHistoryStatus(Concept tbHistoryStatus) {
+			this.tbHistoryStatus = tbHistoryStatus;
+		}
+
+		public Obs getSavedOccupation() {
+			return savedOccupation;
+		}
+
+		public void setSavedOccupation(Obs savedOccupation) {
+			this.savedOccupation = savedOccupation;
+		}
+
+		public Obs getSavedTBHistoryStatus() {
+			return savedTBHistoryStatus;
+		}
+
+		public void setSavedTBHistoryStatus(Obs savedTBHistoryStatus) {
+			this.savedTBHistoryStatus = savedTBHistoryStatus;
+		}
+
+		public Concept getTownship() {
+			return township;
+		}
+
+		public void setTownship(Concept township) {
+			this.township = township;
+		}
+
+		public Obs getSavedTownship() {
+			return savedTownship;
+		}
+
+		public void setSavedTownship(Obs savedTownship) {
+			this.savedTownship = savedTownship;
+		}
+		
+		
 	}
 
 }

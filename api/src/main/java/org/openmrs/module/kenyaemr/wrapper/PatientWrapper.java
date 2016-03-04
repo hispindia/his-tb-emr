@@ -73,41 +73,16 @@ public class PatientWrapper extends AbstractPatientWrapper {
 		setAsIdentifier(CommonMetadata._PatientIdentifierType.PATIENT_CLINIC_NUMBER, value, location);
 	}
 	
-	public void setPreArtRegistrationNumber(String value, Location location) {
-		setAsIdentifier(CommonMetadata._PatientIdentifierType.PRE_ART_REGISTRATION_NUMBER, value, location);
+	public void setDrTBSuspectNumber(String value, Location location) {
+		setAsIdentifier(CommonMetadata._PatientIdentifierType.DR_TB_SUSPECT_NUMBER, value, location);
 	}
 
 	/**
-	 * Gets the Pre Art Registration Number
+	 * Gets the DR TB suspect Number
 	 * @return the identifier value
 	 */
-	public String getPreArtRegistrationNumber() {
-		return getAsIdentifier(CommonMetadata._PatientIdentifierType.PRE_ART_REGISTRATION_NUMBER);
-	}
-	
-	/**
-	 * Gets the Nap Art Registration Number
-	 * @return the identifier value
-	 */
-	public String getNapArtRegistrationNumber() {
-		return getAsIdentifier(CommonMetadata._PatientIdentifierType.NAP_ART_REGISTRATION_NUMBER);
-	}
-
-	/**
-	 * Sets the Art Registration Number
-	 * @param value the identifier value
-	 * @param location the identifier location
-	 */	
-	public void setArtRegistrationNumber(String value, Location location) {
-		setAsIdentifier(CommonMetadata._PatientIdentifierType.ART_REGISTRATION_NUMBER, value, location);
-	}
-
-	/**
-	 * Gets the Art Registration Number
-	 * @return the identifier value
-	 */
-	public String getArtRegistrationNumber() {
-		return getAsIdentifier(CommonMetadata._PatientIdentifierType.ART_REGISTRATION_NUMBER);
+	public String getDrTBSuspectNumber() {
+		return getAsIdentifier(CommonMetadata._PatientIdentifierType.DR_TB_SUSPECT_NUMBER);
 	}
 	
 	/**
@@ -127,35 +102,7 @@ public class PatientWrapper extends AbstractPatientWrapper {
 		return getAsIdentifier(CommonMetadata._PatientIdentifierType.SYSTEM_PATIENT_ID);
 	}
 	
-		
-
-	/**
-	 * Sets the Nap Art Registration Number
-	 * @param value the identifier value
-	 * @param location the identifier location
-	 */	
-	public void setNapArtRegistrationNumber(String value, Location location) {
-		setAsIdentifier(CommonMetadata._PatientIdentifierType.NAP_ART_REGISTRATION_NUMBER, value, location);
-	}
-
-
-	/**
-	 * Gets the unique patient number
-	 * @return the identifier value
-	 */
-	public String getUniquePatientNumber() {
-		return getAsIdentifier(HivMetadata._PatientIdentifierType.UNIQUE_PATIENT_NUMBER);
-	}
-
-	/**
-	 * Sets the unique patient number
-	 * @param value the identifier value
-	 * @param location the identifier location
-	 */
-	public void setUniquePatientNumber(String value, Location location) {
-		setAsIdentifier(HivMetadata._PatientIdentifierType.UNIQUE_PATIENT_NUMBER, value, location);
-	}
-
+	
 	/**
 	 * Gets the national id number
 	 * @return the identifier value
@@ -339,4 +286,39 @@ public class PatientWrapper extends AbstractPatientWrapper {
 	public void setPlaceOfBirth(String value) {
 		setAsAttribute(CommonMetadata._PersonAttributeType.PLACE_OF_BIRTH, value);
 	}
+	
+	/**
+	 * Sets the Entry source ID
+	 * @param value the string value
+	 */	
+	public void setEntrySourceId(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.ENTRY_SORUCE_ID, value);
+	}
+
+	/**
+	 * Gets the SystemPatientId
+	 * @return the string value
+	 */
+	public String getEntrySourceId() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.ENTRY_SORUCE_ID);
+	}
+	
+	public void setCurrentTownshipTBNumber(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER, value);
+	}
+
+	
+	public String getCurrentTownshipTBNumber() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER);
+	}
+	
+	public void setPreviousTownshipTBNumber(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER, value);
+	}
+
+	
+	public String getPreviousTownshipTBNumber() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER);
+	}
+		
 }

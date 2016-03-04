@@ -229,5 +229,6 @@
     <ref key="CLINICAL_FAILURE" uuid="7f784cf0-d4fb-46d9-95d9-e050bcd7aece" />
     <ref key="OI_TREATMENT_DRUG" uuid="163079AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
     <ref key="TB_SCREENING" uuid="159800AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+    <ref key="TOWNSHIP" uuid="943aeb93-1446-4a11-9bfa-4523ea5998fa" />
 </refs>
 

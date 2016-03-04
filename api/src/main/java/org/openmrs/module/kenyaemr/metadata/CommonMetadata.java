@@ -70,7 +70,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String OLD_ID = Metadata.IdentifierType.OLD;
 		public static final String OPENMRS_ID = Metadata.IdentifierType.MEDICAL_RECORD_NUMBER;
 		public static final String PATIENT_CLINIC_NUMBER = Metadata.IdentifierType.PATIENT_CLINIC_NUMBER;
-		public static final String PRE_ART_REGISTRATION_NUMBER = Metadata.IdentifierType.PRE_ART_REGISTRATION_NUMBER;
+		public static final String DR_TB_SUSPECT_NUMBER = Metadata.IdentifierType.DR_TB_SUSPECT_NUMBER;
 		public static final String NAP_ART_REGISTRATION_NUMBER = Metadata.IdentifierType.NAP_ART_REGISTRATION_NUMBER;
 		public static final String ART_REGISTRATION_NUMBER = Metadata.IdentifierType.ART_REGISTRATION_NUMBER;
 		public static final String SYSTEM_PATIENT_ID = Metadata.IdentifierType.SYSTEM_PATIENT_ID;
@@ -91,7 +91,9 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String  HIV_TEST_PERFORMED = "496fae44-0f1c-40e0-be46-eeb7bb915a17";
 		public static final String  HIV_TEST_PERFORMED_PLACE = "9791c7e0-aedc-442c-a122-da1aae9ea53a";
 		public static final String  HIV_TEST_PERFORMED_DATE = "dc107e00-2f24-4f55-a23c-c7b733b5387f";
-		
+		public static final String ENTRY_SORUCE_ID = "667ed1ab-0d7b-4ac6-a535-20d73f880250";
+		public static final String CURRENT_TOWNSHIP_NUMBER = "51bc574a-fee6-4cc3-ad3a-f78923d011e6";
+		public static final String PREVIOUS_TOWNSHIP_NUMBER = "820b3a4c-d144-455a-848a-1283a32307fc";
 	}
 
 	public static final class _Provider {
@@ -175,8 +177,12 @@ public class CommonMetadata extends AbstractMetadataBundle {
 				String.class, null, false, 4.0, _PersonAttributeType.HIV_TEST_PERFORMED_PLACE));
 		install(personAttributeType("Previous HIV test performed date", "Date of patient's HIV test previously performed",
 				Date.class, null, false, 4.0, _PersonAttributeType.HIV_TEST_PERFORMED_DATE));
-		
-		
+		install(personAttributeType("Entry Source Id", "Entry point source Id",
+				String.class, null, false, 4.0, _PersonAttributeType.ENTRY_SORUCE_ID));
+		install(personAttributeType("Current Township Number", "Current Township Number",
+				String.class, null, false, 4.0, _PersonAttributeType.CURRENT_TOWNSHIP_NUMBER));		
+		install(personAttributeType("Previous Township Number", "Previous Township Number",
+				String.class, null, false, 4.0, _PersonAttributeType.PREVIOUS_TOWNSHIP_NUMBER));		
 		
 		install(personAttributeType("Treatment Supporter's Relationship", "Next of kin relationship to the patient",
 				String.class, null, false, 4.1, _PersonAttributeType.NEXT_OF_KIN_RELATIONSHIP));

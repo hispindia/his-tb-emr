@@ -86,4 +86,29 @@ public class PersonWrapper extends AbstractPersonWrapper {
 	public void setPlaceOfBirth(String value) {
 		setAsAttribute(CommonMetadata._PersonAttributeType.PLACE_OF_BIRTH, value);
 	}
+	
+	public String getEntrySourceId() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.ENTRY_SORUCE_ID);
+	}
+
+	public void setEntrySourceId(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.ENTRY_SORUCE_ID, value);
+	}
+	
+	public void setCurrentTownshipTBNumber(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER, value);
+	}
+	
+	public String getCurrentTownshipTBNumber() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER);
+	}
+	
+	public void setPreviousTownshipTBNumber(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER, value);
+	}
+
+	
+	public String getPreviousTownshipTBNumber() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER);
+	}
 }
