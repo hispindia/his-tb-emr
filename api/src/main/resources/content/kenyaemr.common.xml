@@ -105,9 +105,9 @@
 	</bean>
 	
 	
-	<!--PRE ART REGISTRATION NUMBER --> 
-	<bean id="kenyaemr.common.identifier.preArtRegistrationNumber" class="org.openmrs.module.kenyacore.identifier.IdentifierDescriptor">
-		<property name="targetUuid" value="${metadata.identifiertype.PRE_ART_REGISTRATION_NUMBER}" />
+	<!--DR TB SUSPECT NUMBER --> 
+	<bean id="kenyaemr.common.identifier.drTBSuspectNumber" class="org.openmrs.module.kenyacore.identifier.IdentifierDescriptor">
+		<property name="targetUuid" value="${metadata.identifiertype.DR_TB_SUSPECT_NUMBER}" />
 		<property name="order" value="100" />
 	</bean>
 

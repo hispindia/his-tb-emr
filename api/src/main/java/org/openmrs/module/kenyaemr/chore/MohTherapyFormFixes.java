@@ -50,7 +50,7 @@ public class MohTherapyFormFixes extends AbstractChore {
 	@Override
 	public void perform(PrintWriter out) {
 		Form MOH_257_THERAPY_ENCOUNTER_FORM = formService.getFormByUuid(HivMetadata._Form.MOH_257_ARV_THERAPY);
-		Concept concept = Dictionary.getConcept(Dictionary.ANTIRETROVIRAL_TREATMENT_START_DATE);
+		Concept concept = Dictionary.getConcept(Dictionary.PREVIOUS_TB_REGIMEN_START_DATE);
 		EncounterType encounterType = encounterService.getEncounterTypeByUuid(HivMetadata._EncounterType.HIV_ENROLLMENT);
 
 		//find a list of encounter per MOH_257_THERAPY_ENCOUNTER_FORM and encounterType

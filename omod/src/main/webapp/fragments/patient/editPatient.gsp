@@ -72,7 +72,24 @@
 					[ object: command, property: "tbHistoryStatus", label: "Township", config: [ style: "search", answerTo: townShipList ] ]
 					
 			]
+			
 	]
+			
+	def previousRegimenDetail = [
+			[
+					[ object: command, property: "previousRegimenType", label: "Regimen Type", config: [style:"list",  answerTo: tbRegimenType ] ],
+					[ object: command, property: "previousRegimenStartDate", label: "Start Date"]
+					
+			]	
+		]	
+			
+	def previousTBOutcomeDetail = [
+			[
+					[ object: command, property: "previousTBOutcome", label: "Outcome", config: [style:"list",  answerTo: outcome ] ],
+					[ object: command, property: "previousTBOutcomeDate", label: "Outcome Date"]
+					
+			]	
+		]	 
 	
 %>
 
@@ -229,9 +246,9 @@
 			<table>
 				<tr>
 					<td valign="top">
-						
 						<span class="ke-field-content" >
-							<label class="ke-field-label">Previous History of TB : </lable><input type="radio" name="tbHistoryStatus" value="Yes" id="historyTB-Yes" /> Yes
+							<label class="ke-field-label">Previous History of TB : </lable>
+							<input type="radio" name="tbHistoryStatus" value="Yes" id="historyTB-Yes" /> Yes
 							<input type="radio" name="tbHistoryStatus" value="No" id="historyTB-No" /> No
 						</span>
 					</td>
@@ -243,12 +260,27 @@
 					</td>
 				</tr>
 			</table>
-			<% previousTownship.each { %>
+				<% previousTownship.each { %>
+				   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
+				 <% } %>
+ 			<table>
+				<tr><td style="padding-right:5px">
+						<% previousRegimenDetail.each { %>
+						   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
+						 <% } %>
+					</td><td>
+						<input type="radio" name="previousRegimenStartDateType" value="true" /> Estimated
+						<input type="radio" name="previousRegimenStartDateType" value="false" /> Exact
+					</td>
+				</tr>
+			</table>
+			
+			<% previousTBOutcomeDetail.each { %>
 			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			 <% } %>
-			
-		
 		</fieldset>
+		
+		
 
 		<fieldset>
 			<legend>Gene Xpert Test</legend>

@@ -334,7 +334,7 @@ public class HivCohortLibrary {
 	 * @return the cohort definition
 	 */
 	public CohortDefinition startedArtFromTransferringFacilityOnDate() {
-		Concept starteArtFromTransferringFacility = Dictionary.getConcept(Dictionary.ANTIRETROVIRAL_TREATMENT_START_DATE);
+		Concept starteArtFromTransferringFacility = Dictionary.getConcept(Dictionary.PREVIOUS_TB_REGIMEN_START_DATE);
 		DateObsValueBetweenCohortDefinition cd = new DateObsValueBetweenCohortDefinition();
 		cd.setName("Patients Who Started ART From the Transferring Facility between date");
 		cd.setQuestion(starteArtFromTransferringFacility);

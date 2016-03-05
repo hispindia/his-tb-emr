@@ -34,7 +34,7 @@ public class DateARV1Calculation extends AbstractPatientCalculation {
 	@Override
 	public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> parameterValues,
 										 PatientCalculationContext context) {
-
+		/*
 		CalculationResultMap patientsStartedAtThisFacility = calculate(new OriginalCohortCalculation(), cohort, context);
 		CalculationResultMap transferInPatients = Calculations.lastObs(Dictionary.getConcept(Dictionary.ANTIRETROVIRAL_TREATMENT_START_DATE), cohort, context);
 
@@ -53,7 +53,7 @@ public class DateARV1Calculation extends AbstractPatientCalculation {
 			result.put(ptId, new SimpleResult(dateArv1, this));
 
 		}
-
-		return  result;
+*/
+		return  null;  
 	}
 }

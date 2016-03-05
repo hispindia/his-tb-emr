@@ -36,7 +36,7 @@ public class StartedArtAtTransferingFacilityCalculation extends AbstractPatientC
 	@Override
 	public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> parameterValues,
 										 PatientCalculationContext context) {
-
+/*
 		CalculationResultMap startedArtFromTransferringFacility = Calculations.lastObs(Dictionary.getConcept(Dictionary.ANTIRETROVIRAL_TREATMENT_START_DATE), cohort, context);
 
 		CalculationResultMap result = new CalculationResultMap();
@@ -47,8 +47,8 @@ public class StartedArtAtTransferingFacilityCalculation extends AbstractPatientC
 				startedArt = true;
 			}
 			result.put(ptId, new BooleanResult(startedArt, this));
-		}
-		return  result;
+		}*/
+		return null;
 
 	}
 }

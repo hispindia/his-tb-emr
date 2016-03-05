@@ -116,6 +116,12 @@ public class EditPatientFragmentController {
 		model.addAttribute("tbHistory",
 				Dictionary.getConcept(Dictionary.TB_PATIENT));
 		
+		model.addAttribute("tbRegimenType",
+				Dictionary.getConcept(Dictionary.TB_FORM_REGIMEN));
+		
+		model.addAttribute("outcome",
+				Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME));
+		
 		if (patient != null) {
 			model.addAttribute("recordedAsDeceased",
 					hasBeenRecordedAsDeceased(patient));
@@ -293,6 +299,13 @@ public class EditPatientFragmentController {
 		private Concept township;
 		private Obs savedTownship;
 		
+		private Concept previousRegimenType;
+		private Obs savedPreviousRegimenType;
+		private Date previousRegimenStartDate;
+		private Boolean previousRegimenStartDateType;
+		private Concept previousTBOutcome;
+		private Obs savedPreviousTBOutcome;
+		private Date previousTBOutcomeDate;
 		/**
 		 * Creates an edit form for a new patient
 		 */
@@ -370,6 +383,21 @@ public class EditPatientFragmentController {
 			if (savedTownship != null) {
 				township = savedTownship.getValueCoded();
 			}
+			
+			savedPreviousRegimenType = getLatestObs(patient,
+					Dictionary.TB_FORM_REGIMEN);
+			if (savedPreviousRegimenType != null) {
+				previousRegimenType = savedPreviousRegimenType.getValueCoded();
+				previousRegimenStartDate = savedPreviousRegimenType.getValueDate();
+				previousRegimenStartDateType = savedPreviousRegimenType.getValueBoolean();
+			}
+			
+			savedPreviousTBOutcome = getLatestObs(patient, Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+			if(savedPreviousTBOutcome!=null){
+				previousTBOutcome = savedPreviousTBOutcome.getValueCoded();
+				previousTBOutcomeDate = savedPreviousTBOutcome.getValueDate();
+			}
+			
 		}
 
 		private Obs getLatestObs(Patient patient, String conceptIdentifier) {
@@ -646,6 +674,9 @@ public class EditPatientFragmentController {
 					Dictionary.getConcept(Dictionary.TOWNSHIP),
 					savedTownship, township);
 			
+			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
+					Dictionary.getConcept(Dictionary.TB_FORM_REGIMEN),
+					savedPreviousRegimenType, previousRegimenType);
 	
 			if (occupation != null) {
 				if (occupation.getName().toString().equals("Other")) {
@@ -655,7 +686,7 @@ public class EditPatientFragmentController {
 							obsToVoid,
 							Dictionary.getConcept(Dictionary.OCCUPATION),
 							savedOccupation, occupation,
-							otherOccupation, new Date(), 1);
+							otherOccupation, null, null);
 				}
 
 				else {
@@ -665,8 +696,28 @@ public class EditPatientFragmentController {
 							obsToVoid,
 							Dictionary.getConcept(Dictionary.OCCUPATION),
 							savedOccupation, occupation, null,
-							new Date(), 1);
+							null,  null);
 				}
+			}
+			
+			if(previousTBOutcome != null){
+				handleOncePerPatientObs(
+						ret,
+						obsToSave,
+						obsToVoid,
+						Dictionary.getConcept(Dictionary.OCCUPATION),
+						savedOccupation, occupation, null,
+						previousTBOutcomeDate,  null);
+			}
+			
+			if (previousRegimenType != null){
+				handleOncePerPatientObs(
+						ret,
+						obsToSave,
+						obsToVoid,
+						Dictionary.getConcept(Dictionary.TB_FORM_REGIMEN),
+						savedPreviousRegimenType, previousRegimenType,
+						null , previousRegimenStartDate, previousRegimenStartDateType);
 			}
 		
 			for (Obs o : obsToVoid) {
@@ -844,7 +895,7 @@ public class EditPatientFragmentController {
 		protected void handleOncePerPatientObs(Patient patient,
 				List<Obs> obsToSave, List<Obs> obsToVoid, Concept question,
 				Obs savedObs, Concept newValue, String textValue,
-				Date textDate, int check) {
+				Date textDate, Boolean valBoolean) {
 			if (!OpenmrsUtil.nullSafeEquals(
 					savedObs != null ? savedObs.getValueCoded() : null,
 					newValue)) {
@@ -864,9 +915,14 @@ public class EditPatientFragmentController {
 					o.setLocation(Context.getService(KenyaEmrService.class)
 							.getDefaultLocation());
 					o.setValueCoded(newValue);
-					o.setValueText(textValue);
-					if (check == 0) {
+					if(textValue!=null){
+						o.setValueText(textValue);	
+					}
+					if (textDate != null) {
 						o.setValueDate(textDate);
+					}
+					if(valBoolean!=null){
+						o.setValueBoolean(valBoolean);
 					}
 					obsToSave.add(o);
 				}
@@ -949,7 +1005,7 @@ public class EditPatientFragmentController {
 			return drTBSuspectNumber;
 		}
 
-		public void setDrTBSuspectNumber(String preArtRegistrationNumber) {
+		public void setDrTBSuspectNumber(String drTBSuspectNumber) {
 			this.drTBSuspectNumber = drTBSuspectNumber;
 		}
 
@@ -1216,6 +1272,62 @@ public class EditPatientFragmentController {
 
 		public void setSavedTownship(Obs savedTownship) {
 			this.savedTownship = savedTownship;
+		}
+
+		public Concept getPreviousRegimenType() {
+			return previousRegimenType;
+		}
+
+		public void setPreviousRegimenType(Concept previousRegimenType) {
+			this.previousRegimenType = previousRegimenType;
+		}
+
+		public Obs getSavedPreviousRegimenType() {
+			return savedPreviousRegimenType;
+		}
+
+		public void setSavedPreviousRegimenType(Obs savedPreviousRegimenType) {
+			this.savedPreviousRegimenType = savedPreviousRegimenType;
+		}
+
+		public Date getPreviousRegimenStartDate() {
+			return previousRegimenStartDate;
+		}
+
+		public void setPreviousRegimenStartDate(Date previousRegimenStartDate) {
+			this.previousRegimenStartDate = previousRegimenStartDate;
+		}
+
+		public Boolean getPreviousRegimenStartDateType() {
+			return previousRegimenStartDateType;
+		}
+
+		public void setPreviousRegimenStartDateType(Boolean previousRegimenStartDateType) {
+			this.previousRegimenStartDateType = previousRegimenStartDateType;
+		}
+
+		public Concept getPreviousTBOutcome() {
+			return previousTBOutcome;
+		}
+
+		public void setPreviousTBOutcome(Concept previousTBOutcome) {
+			this.previousTBOutcome = previousTBOutcome;
+		}
+
+		public Obs getSavedPreviousTBOutcome() {
+			return savedPreviousTBOutcome;
+		}
+
+		public void setSavedPreviousTBOutcome(Obs savedPreviousTBOutcome) {
+			this.savedPreviousTBOutcome = savedPreviousTBOutcome;
+		}
+
+		public Date getPreviousTBOutcomeDate() {
+			return previousTBOutcomeDate;
+		}
+
+		public void setPreviousTBOutcomeDate(Date previousTBOutcomeDate) {
+			this.previousTBOutcomeDate = previousTBOutcomeDate;
 		}
 		
 		
