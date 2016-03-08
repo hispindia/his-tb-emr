@@ -69,7 +69,7 @@
 	def previousTownship = [
 			[
 					[ object: command, property: "previousTownshipTBNumber", label: "Previous Township TB Number", config: [  size: 20 ] ],
-					[ object: command, property: "tbHistoryStatus", label: "Township", config: [ style: "search", answerTo: townShipList ] ]
+					[ object: command, property: "township", label: "Township", config: [ style: "search", answerTo: townShipList ] ]
 					
 			]
 			
@@ -90,7 +90,25 @@
 					
 			]	
 		]	 
-	
+		
+	def genSampleIdDetail = [
+			[
+					[ object: command, property: "genSampleId", label: "Sample ID" ]
+			]	
+		]	 
+
+	def genSpecificationDetail = [
+			[
+					[ object: command, property: "genSpecificationPlace", label: "Specimen Collection Place" ],
+					[ object: command, property: "genSpecificationDate", label: "Date"]
+			]	
+		]	 
+	def genResultDetail = [
+			[
+					[ object: command, property: "genResult", label: "Xpert MTB/Rif Result" , config: [style:"list",  answerTo: getResultList ]],
+					[ object: command, property: "genResultDate", label: "Date"]
+			]	
+		]	 
 %>
 
 <form id="edit-patient-form" method="post" action="${ ui.actionLink("kenyaemr", "patient/editPatient", "savePatient") }">
@@ -247,10 +265,16 @@
 				<tr>
 					<td valign="top">
 						<span class="ke-field-content" >
-							<label class="ke-field-label">Previous History of TB : </lable>
-							<input type="radio" name="tbHistoryStatus" value="Yes" id="historyTB-Yes" /> Yes
-							<input type="radio" name="tbHistoryStatus" value="No" id="historyTB-No" /> No
+							<b>Previous History of TB :</b>
+							<% if(command.tbHistoryStatus) {%> 
+								<input type="radio" name="tbHistoryStatus" value="1065" ${ command.tbHistoryStatus.conceptId == 1065 ? 'checked="checked"' : '' }/> Yes
+								<input type="radio" name="tbHistoryStatus" value="1066" ${ command.tbHistoryStatus.conceptId == 1066 ? 'checked="checked"' : '' } /> No	
+							<% } else {%>
+								<input type="radio" name="tbHistoryStatus" value="1065" /> Yes
+								<input type="radio" name="tbHistoryStatus" value="1066"  /> No
+							<% } %>
 						</span>
+						
 					</td>
 					
 					<td valign="top" id="checkInField">
@@ -269,8 +293,13 @@
 						   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 						 <% } %>
 					</td><td>
-						<input type="radio" name="previousRegimenStartDateType" value="true" /> Estimated
-						<input type="radio" name="previousRegimenStartDateType" value="false" /> Exact
+					<% if(command.tbHistoryStatus) {%> 
+						<input type="radio" name="previousRegimenStartDateType" value="163545" ${ command.previousRegimenStartDateType.conceptId == 163545 ? 'checked="checked"' : '' } /> Estimated
+						<input type="radio" name="previousRegimenStartDateType" value="163546" ${ command.previousRegimenStartDateType.conceptId == 163546 ? 'checked="checked"' : '' } /> Exact
+					<% } else {%>
+						<input type="radio" name="previousRegimenStartDateType" value="163545" /> Yes
+						<input type="radio" name="previousRegimenStartDateType" value="163546"  /> No
+					<% } %>
 					</td>
 				</tr>
 			</table>
@@ -279,13 +308,17 @@
 			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			 <% } %>
 		</fieldset>
-		
-		
-
 		<fieldset>
 			<legend>Gene Xpert Test</legend>
-
-
+			<% genSampleIdDetail.each { %>
+			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
+			 <% } %>
+			<% genSpecificationDetail.each { %>
+			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
+			 <% } %>
+			<% genResultDetail.each { %>
+			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
+			 <% } %>
 		</fieldset>
 		
 		

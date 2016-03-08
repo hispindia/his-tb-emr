@@ -111,4 +111,28 @@ public class PersonWrapper extends AbstractPersonWrapper {
 	public String getPreviousTownshipTBNumber() {
 		return getAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER);
 	}
+	
+	public String getGenSampleId() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.GEN_SAMPLE_ID);
+	}
+
+	public void setGenSampleId(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.GEN_SAMPLE_ID, value);
+	}
+	
+	public String getGenSpecificationDate() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.GEN_SPECIMEN_COLLECTION_DATE);
+	}
+
+	public void setGenSpecificationDate(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.GEN_SPECIMEN_COLLECTION_DATE, value);
+	}
+
+	public String getGenSpecificationPlace() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.GEN_SPECIMEN_COLLECTION_PLACE);
+	}
+
+	public void setGenSpecificationPlace(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.GEN_SPECIMEN_COLLECTION_PLACE, value);
+	}
 }

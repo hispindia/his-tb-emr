@@ -51,7 +51,7 @@ public class MchcsCohortLibrary {
 	 */
 	public CohortDefinition pcrWithinMonths() {
 
-		Concept pcrTest = Dictionary.getConcept(Dictionary.HIV_DNA_POLYMERASE_CHAIN_REACTION);
+		Concept pcrTest = Dictionary.getConcept(Dictionary.TB_GENE_RESULT);
 		Concept detected = Dictionary.getConcept(Dictionary.DETECTED);
 		Concept equivocal = Dictionary.getConcept(Dictionary.EQUIVOCAL);
 		Concept inhibitory = Dictionary.getConcept(Dictionary.INHIBITORY);

@@ -60,7 +60,7 @@ public class NeedsPcrTestCalculation extends AbstractPatientCalculation implemen
 
 		// Get whether the child is HIV Exposed
 		CalculationResultMap lastChildHivStatus = Calculations.lastObs(Dictionary.getConcept(Dictionary.CHILDS_CURRENT_HIV_STATUS), inMchcsProgram, context);
-		CalculationResultMap lastPcrTest = Calculations.lastObs(Dictionary.getConcept(Dictionary.HIV_DNA_POLYMERASE_CHAIN_REACTION), inMchcsProgram, context);
+		CalculationResultMap lastPcrTest = Calculations.lastObs(Dictionary.getConcept(Dictionary.TB_GENE_RESULT), inMchcsProgram, context);
 
 		Concept hivExposed = Dictionary.getConcept(Dictionary.EXPOSURE_TO_HIV);
 

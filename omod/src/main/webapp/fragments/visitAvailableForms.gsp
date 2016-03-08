@@ -1,5 +1,5 @@
 <%
-	ui.decorateWith("kenyaui", "panel", [ heading: "Available Visit Forms" ])
+	ui.decorateWith("kenyaui", "panel", [ heading: "<html><span>Available Visit Forms</span></html>" ])
 
 	config.require("visit")
 
@@ -11,4 +11,15 @@
 %>
 
 
-${ ui.includeFragment("kenyaui", "widget/formStack", [ forms: availableForms, onFormClick: onFormClick ]) }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script>
+\$(document).ready(function(){
+    \$("span").click(function(){ 
+        \$("p").toggle();
+       
+    });
+    
+});
+</script>
+
+<html><p>${ ui.includeFragment("kenyaui", "widget/formStack", [ forms: availableForms, onFormClick: onFormClick ]) }</p></html>

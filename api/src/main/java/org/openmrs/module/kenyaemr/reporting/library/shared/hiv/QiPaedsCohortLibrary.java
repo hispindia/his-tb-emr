@@ -379,7 +379,7 @@ public class QiPaedsCohortLibrary {
 	 * @return CohortDefinition
 	 */
 	public CohortDefinition infectedWithHiv() {
-		Concept dnaPcr1 = Dictionary.getConcept(Dictionary.HIV_DNA_POLYMERASE_CHAIN_REACTION);
+		Concept dnaPcr1 = Dictionary.getConcept(Dictionary.TB_GENE_RESULT);
 		Concept dnaPcr2 = Context.getConceptService().getConceptByUuid("1030AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		Concept antiBody1 = Dictionary.getConcept(Dictionary.HIV_RAPID_TEST_1_QUALITATIVE);
 		Concept antiBody2 = Dictionary.getConcept(Dictionary.HIV_RAPID_TEST_2_QUALITATIVE);

@@ -65,7 +65,7 @@ public class NotTakenPcrConfirmatoryTestCalculation extends AbstractPatientCalcu
 		CalculationResultMap lastChildHivStatus = Calculations.lastObs(Dictionary.getConcept(Dictionary.CHILDS_CURRENT_HIV_STATUS), inMchcsProgram, context);
 
 		//check if pcr test was done
-		CalculationResultMap lastPcrTest = Calculations.lastObs(Dictionary.getConcept(Dictionary.HIV_DNA_POLYMERASE_CHAIN_REACTION), inMchcsProgram, context);
+		CalculationResultMap lastPcrTest = Calculations.lastObs(Dictionary.getConcept(Dictionary.TB_GENE_RESULT), inMchcsProgram, context);
 
 		//check if the context status was set to confirmatory
 		CalculationResultMap lastPcrStatus = Calculations.lastObs(Dictionary.getConcept(Dictionary.TEXT_CONTEXT_STATUS), inMchcsProgram, context);

@@ -45,7 +45,7 @@ public class InfantsDNAPCRCalculation extends AbstractPatientCalculation {
 
 
 		// Get whether  the child has dna pcr test obs
-		CalculationResultMap infantsWithDNAPCR = Calculations.allObs(Dictionary.getConcept(Dictionary.HIV_DNA_POLYMERASE_CHAIN_REACTION),cohort, context);
+		CalculationResultMap infantsWithDNAPCR = Calculations.allObs(Dictionary.getConcept(Dictionary.TB_GENE_RESULT),cohort, context);
 		CalculationResultMap ret = new CalculationResultMap();
 
 		//get param val for age

@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.groovy.antlr.treewalker.PreOrderTraversal;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
@@ -121,6 +122,9 @@ public class EditPatientFragmentController {
 		
 		model.addAttribute("outcome",
 				Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME));
+		
+		model.addAttribute("getResultList",
+				Dictionary.getConcept(Dictionary.TB_GENE_RESULT));
 		
 		if (patient != null) {
 			model.addAttribute("recordedAsDeceased",
@@ -302,10 +306,19 @@ public class EditPatientFragmentController {
 		private Concept previousRegimenType;
 		private Obs savedPreviousRegimenType;
 		private Date previousRegimenStartDate;
-		private Boolean previousRegimenStartDateType;
+		private Concept previousRegimenStartDateType;
+		private Obs savedPreviousRegimenStartDateType;
 		private Concept previousTBOutcome;
 		private Obs savedPreviousTBOutcome;
 		private Date previousTBOutcomeDate;
+		
+		private String genSampleId;
+		private Date genSpecificationDate;
+		private String genSpecificationPlace;
+	
+		private Concept genResult;
+		private Obs savedGenResult;
+		private Date genResultDate;
 		/**
 		 * Creates an edit form for a new patient
 		 */
@@ -339,7 +352,7 @@ public class EditPatientFragmentController {
 
 			gender = person.getGender();
 			birthdate = person.getBirthdate();
-			birthdateEstimated = person.getBirthdateEstimated();
+		//	birthdateEstimated = person.getBirthdateEstimated();
 			dead = person.isDead();
 			deathDate = person.getDeathDate();
 
@@ -363,8 +376,19 @@ public class EditPatientFragmentController {
 			placeOfBirth = wrapper.getPlaceOfBirth();
 			entrySourceId = wrapper.getEntrySourceId();
 			currentTownshipTBNumber = wrapper.getCurrentTownshipTBNumber();
-			previousTownshipTBNumber = wrapper.getPreviousClinicName();
-
+			previousTownshipTBNumber = wrapper.getPreviousTownshipTBNumber();
+			genSampleId = wrapper.getGenSampleId() ;
+			
+			try {
+				String datestr = wrapper.getGenSpecificationDate();
+				DateFormat formatter;
+				formatter = new SimpleDateFormat("dd-MMMM-yyyy");
+				genSpecificationDate = (Date) formatter.parse(datestr);
+			} catch (Exception e) {
+			}
+		
+			genSpecificationPlace = wrapper.getGenSpecificationPlace();
+			
 
 			savedOccupation = getLatestObs(patient, Dictionary.OCCUPATION);
 			if (savedOccupation != null) {
@@ -384,12 +408,22 @@ public class EditPatientFragmentController {
 				township = savedTownship.getValueCoded();
 			}
 			
+			savedTBHistoryStatus = getLatestObs(patient, Dictionary.TB_PATIENT);
+			if(savedTBHistoryStatus != null){
+				tbHistoryStatus = savedTBHistoryStatus.getValueCoded();
+			}
+			
 			savedPreviousRegimenType = getLatestObs(patient,
 					Dictionary.TB_FORM_REGIMEN);
 			if (savedPreviousRegimenType != null) {
 				previousRegimenType = savedPreviousRegimenType.getValueCoded();
 				previousRegimenStartDate = savedPreviousRegimenType.getValueDate();
-				previousRegimenStartDateType = savedPreviousRegimenType.getValueBoolean();
+			}
+			
+			savedPreviousRegimenStartDateType = getLatestObs(patient,
+					Dictionary.TB_REGIMEN_START_DATE_TYPE);
+			if (savedPreviousRegimenStartDateType != null) {
+				previousRegimenStartDateType = savedPreviousRegimenStartDateType.getValueCoded();
 			}
 			
 			savedPreviousTBOutcome = getLatestObs(patient, Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
@@ -398,6 +432,12 @@ public class EditPatientFragmentController {
 				previousTBOutcomeDate = savedPreviousTBOutcome.getValueDate();
 			}
 			
+			savedGenResult = getLatestObs(patient, Dictionary.TB_GENE_RESULT);
+			if(savedGenResult!=null){
+				genResult = savedGenResult.getValueCoded();
+				genResultDate = savedGenResult.getValueDate();
+			}
+						
 		}
 
 		private Obs getLatestObs(Patient patient, String conceptIdentifier) {
@@ -584,7 +624,7 @@ public class EditPatientFragmentController {
 
 			toSave.setGender(gender);
 			toSave.setBirthdate(birthdate);
-			toSave.setBirthdateEstimated(birthdateEstimated);
+	//		toSave.setBirthdateEstimated(birthdateEstimated);
 			toSave.setDead(dead);
 			toSave.setDeathDate(deathDate);
 			toSave.setCauseOfDeath(dead ? Dictionary
@@ -620,8 +660,6 @@ public class EditPatientFragmentController {
 					location);
 			
 			wrapper.setSystemPatientId(systemPatientId, location);
-	
-			
 
 			wrapper.getPerson().setFatherName(fatherName);
 			wrapper.getPerson().setNationalId(nationalId);
@@ -629,7 +667,14 @@ public class EditPatientFragmentController {
 			wrapper.getPerson().setEntrySourceId(entrySourceId);
 			wrapper.getPerson().setPreviousTownshipTBNumber(previousTownshipTBNumber);
 			wrapper.getPerson().setCurrentTownshipTBNumber(currentTownshipTBNumber);
-		
+			wrapper.getPerson().setGenSampleId(genSampleId);
+			wrapper.getPerson().setGenSpecificationPlace(genSpecificationPlace);
+
+			DateFormat testDate = new SimpleDateFormat("dd-MMMM-yyyy");
+			Date capturedTestDate = genSpecificationDate;
+			wrapper.setGenSpecificationDate(testDate
+						.format(capturedTestDate));
+			
 
 			// Make sure everyone gets an OpenMRS ID
 			PatientIdentifierType openmrsIdType = MetadataUtils.existing(
@@ -663,10 +708,6 @@ public class EditPatientFragmentController {
 			List<Obs> obsToVoid = new ArrayList<Obs>();
 
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
-					Dictionary.getConcept(Dictionary.OCCUPATION),
-					savedOccupation, occupation);
-			
-			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
 					Dictionary.getConcept(Dictionary.METHOD_OF_ENROLLMENT),
 					savedEntryPoint, entryPoint);
 			
@@ -675,9 +716,13 @@ public class EditPatientFragmentController {
 					savedTownship, township);
 			
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
-					Dictionary.getConcept(Dictionary.TB_FORM_REGIMEN),
-					savedPreviousRegimenType, previousRegimenType);
-	
+					Dictionary.getConcept(Dictionary.TB_REGIMEN_START_DATE_TYPE),
+					savedPreviousRegimenStartDateType, previousRegimenStartDateType);
+			
+			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
+					Dictionary.getConcept(Dictionary.TB_PATIENT),
+					savedTBHistoryStatus, tbHistoryStatus);
+			
 			if (occupation != null) {
 				if (occupation.getName().toString().equals("Other")) {
 					handleOncePerPatientObs(
@@ -686,7 +731,7 @@ public class EditPatientFragmentController {
 							obsToVoid,
 							Dictionary.getConcept(Dictionary.OCCUPATION),
 							savedOccupation, occupation,
-							otherOccupation, null, null);
+							otherOccupation, null);
 				}
 
 				else {
@@ -696,8 +741,18 @@ public class EditPatientFragmentController {
 							obsToVoid,
 							Dictionary.getConcept(Dictionary.OCCUPATION),
 							savedOccupation, occupation, null,
-							null,  null);
+							null);
 				}
+			}
+			
+			if(genResult != null){
+				handleOncePerPatientObs(
+						ret,
+						obsToSave,
+						obsToVoid,
+						Dictionary.getConcept(Dictionary.TB_GENE_RESULT),
+						savedGenResult, genResult, null,
+						genResultDate);
 			}
 			
 			if(previousTBOutcome != null){
@@ -705,9 +760,9 @@ public class EditPatientFragmentController {
 						ret,
 						obsToSave,
 						obsToVoid,
-						Dictionary.getConcept(Dictionary.OCCUPATION),
-						savedOccupation, occupation, null,
-						previousTBOutcomeDate,  null);
+						Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME),
+						savedPreviousTBOutcome, previousTBOutcome, null,
+						previousTBOutcomeDate);
 			}
 			
 			if (previousRegimenType != null){
@@ -717,9 +772,9 @@ public class EditPatientFragmentController {
 						obsToVoid,
 						Dictionary.getConcept(Dictionary.TB_FORM_REGIMEN),
 						savedPreviousRegimenType, previousRegimenType,
-						null , previousRegimenStartDate, previousRegimenStartDateType);
+						null , previousRegimenStartDate);
 			}
-		
+			
 			for (Obs o : obsToVoid) {
 				Context.getObsService().voidObs(o, "KenyaEMR edit patient");
 			}
@@ -891,11 +946,12 @@ public class EditPatientFragmentController {
 				}
 			}
 		}
-
+		
 		protected void handleOncePerPatientObs(Patient patient,
 				List<Obs> obsToSave, List<Obs> obsToVoid, Concept question,
 				Obs savedObs, Concept newValue, String textValue,
-				Date textDate, Boolean valBoolean) {
+				Date textDate) {
+			
 			if (!OpenmrsUtil.nullSafeEquals(
 					savedObs != null ? savedObs.getValueCoded() : null,
 					newValue)) {
@@ -907,6 +963,7 @@ public class EditPatientFragmentController {
 							.getObservationsByPersonAndConcept(patient,
 									question));
 				}
+				
 				if (newValue != null) {
 					Obs o = new Obs();
 					o.setPerson(patient);
@@ -914,15 +971,15 @@ public class EditPatientFragmentController {
 					o.setObsDatetime(new Date());
 					o.setLocation(Context.getService(KenyaEmrService.class)
 							.getDefaultLocation());
-					o.setValueCoded(newValue);
+					if(newValue!=null){
+						o.setValueCoded(newValue);	
+					}
+					
 					if(textValue!=null){
 						o.setValueText(textValue);	
 					}
 					if (textDate != null) {
 						o.setValueDate(textDate);
-					}
-					if(valBoolean!=null){
-						o.setValueBoolean(valBoolean);
 					}
 					obsToSave.add(o);
 				}
@@ -1298,12 +1355,21 @@ public class EditPatientFragmentController {
 			this.previousRegimenStartDate = previousRegimenStartDate;
 		}
 
-		public Boolean getPreviousRegimenStartDateType() {
+		public Concept getPreviousRegimenStartDateType() {
 			return previousRegimenStartDateType;
 		}
 
-		public void setPreviousRegimenStartDateType(Boolean previousRegimenStartDateType) {
+		public void setPreviousRegimenStartDateType(Concept previousRegimenStartDateType) {
 			this.previousRegimenStartDateType = previousRegimenStartDateType;
+		}
+
+		public Obs getSavedPreviousRegimenStartDateType() {
+			return savedPreviousRegimenStartDateType;
+		}
+
+		public void setSavedPreviousRegimenStartDateType(
+				Obs savedPreviousRegimenStartDateType) {
+			this.savedPreviousRegimenStartDateType = savedPreviousRegimenStartDateType;
 		}
 
 		public Concept getPreviousTBOutcome() {
@@ -1329,8 +1395,55 @@ public class EditPatientFragmentController {
 		public void setPreviousTBOutcomeDate(Date previousTBOutcomeDate) {
 			this.previousTBOutcomeDate = previousTBOutcomeDate;
 		}
-		
-		
+
+		public String getGenSampleId() {
+			return genSampleId;
+		}
+
+		public void setGenSampleId(String genSampleId) {
+			this.genSampleId = genSampleId;
+		}
+
+		public Date getGenSpecificationDate() {
+			return genSpecificationDate;
+		}
+
+		public void setGenSpecificationDate(Date genSpecificationDate) {
+			this.genSpecificationDate = genSpecificationDate;
+		}
+
+		public String getGenSpecificationPlace() {
+			return genSpecificationPlace;
+		}
+
+		public void setGenSpecificationPlace(String genSpecificationPlace) {
+			this.genSpecificationPlace = genSpecificationPlace;
+		}
+
+		public Concept getGenResult() {
+			return genResult;
+		}
+
+		public void setGenResult(Concept genResult) {
+			this.genResult = genResult;
+		}
+
+		public Obs getSavedGenResult() {
+			return savedGenResult;
+		}
+
+		public void setSavedGenResult(Obs savedGenResult) {
+			this.savedGenResult = savedGenResult;
+		}
+
+		public Date getGenResultDate() {
+			return genResultDate;
+		}
+
+		public void setGenResultDate(Date genResultDate) {
+			this.genResultDate = genResultDate;
+		}
+
 	}
 
 }

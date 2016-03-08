@@ -26,6 +26,7 @@ import org.openmrs.module.kenyaemr.datatype.LocationDatatype;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata._EncounterType;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata._Form;
 import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
+import org.openmrs.util.AttributableDate;
 import org.springframework.stereotype.Component;
 
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.*;
@@ -94,6 +95,9 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String ENTRY_SORUCE_ID = "667ed1ab-0d7b-4ac6-a535-20d73f880250";
 		public static final String CURRENT_TOWNSHIP_NUMBER = "51bc574a-fee6-4cc3-ad3a-f78923d011e6";
 		public static final String PREVIOUS_TOWNSHIP_NUMBER = "820b3a4c-d144-455a-848a-1283a32307fc";
+		public static final String GEN_SAMPLE_ID = "7277d10e-8030-43d2-bde1-01704fedc9ec";
+		public static final String GEN_SPECIMEN_COLLECTION_DATE = "f607bd28-6a33-40d0-a07b-788299635e46";
+		public static final String GEN_SPECIMEN_COLLECTION_PLACE = "0e51143e-1d98-4c7a-b2de-683dbcd0b2bb";
 	}
 
 	public static final class _Provider {
@@ -176,13 +180,19 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(personAttributeType("Previous HIV test performed place", "Place of patient's HIV test previously performed",
 				String.class, null, false, 4.0, _PersonAttributeType.HIV_TEST_PERFORMED_PLACE));
 		install(personAttributeType("Previous HIV test performed date", "Date of patient's HIV test previously performed",
-				Date.class, null, false, 4.0, _PersonAttributeType.HIV_TEST_PERFORMED_DATE));
+				AttributableDate.class, null, false, 4.0, _PersonAttributeType.HIV_TEST_PERFORMED_DATE));
 		install(personAttributeType("Entry Source Id", "Entry point source Id",
 				String.class, null, false, 4.0, _PersonAttributeType.ENTRY_SORUCE_ID));
 		install(personAttributeType("Current Township Number", "Current Township Number",
 				String.class, null, false, 4.0, _PersonAttributeType.CURRENT_TOWNSHIP_NUMBER));		
 		install(personAttributeType("Previous Township Number", "Previous Township Number",
-				String.class, null, false, 4.0, _PersonAttributeType.PREVIOUS_TOWNSHIP_NUMBER));		
+				String.class, null, false, 4.0, _PersonAttributeType.PREVIOUS_TOWNSHIP_NUMBER));	
+		install(personAttributeType("Genxpert Sample Id", "Genxpert Sample Id",
+				String.class, null, false, 4.0, _PersonAttributeType.GEN_SAMPLE_ID));
+		install(personAttributeType("Genxpert Specimen Date", "Genxpert Specimen collection Date",
+				AttributableDate.class, null, false, 4.0, _PersonAttributeType.GEN_SPECIMEN_COLLECTION_DATE));
+		install(personAttributeType("Genxpert Specimen Place", "Genxpert Specimen collection Place",
+				String.class, null, false, 4.0, _PersonAttributeType.GEN_SPECIMEN_COLLECTION_PLACE));		
 		
 		install(personAttributeType("Treatment Supporter's Relationship", "Next of kin relationship to the patient",
 				String.class, null, false, 4.1, _PersonAttributeType.NEXT_OF_KIN_RELATIONSHIP));
