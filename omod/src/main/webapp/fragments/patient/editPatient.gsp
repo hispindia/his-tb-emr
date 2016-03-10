@@ -11,7 +11,7 @@
 	
 	def fatherNameField = [
 			[
-					[ object: command, property: "fatherName", label: "Father's Name *" ]
+					[ object: command, property: "fatherName", label: "Father's Name " ]
 			]
 	]
 	
@@ -23,7 +23,7 @@
 	
 	def currentTownshipTBNumber = [
 			[
-					[ object: command, property: "currentTownshipTBNumber", label: "Current Township TB Number*" , config: [  size: 20 ]]
+					[ object: command, property: "currentTownshipTBNumber", label: "Current Township TB Number *" , config: [  size: 20 ]]
 			]
 	]
 
@@ -61,14 +61,14 @@
 	def addressFieldRows = [
 			[
 					[ object: command, property: "personAddress.address1", label: "Permanent Home Address ", config: [ type: "textarea", rows: 2, size: 20 ] ],
-					[ object: command, property: "personAddress.address2", label: "Temporary Address for Treatment", config: [ type: "textarea", rows: 2, size: 20 ] ],
+					[ object: command, property: "personAddress.address2", label: "Temporary Address for Treatment *", config: [ type: "textarea", rows: 2, size: 20 ] ],
 					[ object: command, property: "telephoneContact", label: "Contact Number" ]
 			]
 	]
 	
 	def previousTownship = [
 			[
-					[ object: command, property: "previousTownshipTBNumber", label: "Previous Township TB Number", config: [  size: 20 ] ],
+					[ object: command, property: "previousTownshipTBNumber", label: "Previous Township TB Number *", config: [  size: 20 ] ],
 					[ object: command, property: "township", label: "Township", config: [ style: "search", answerTo: townShipList ] ]
 					
 			]
@@ -93,7 +93,7 @@
 		
 	def genSampleIdDetail = [
 			[
-					[ object: command, property: "genSampleId", label: "Sample ID" ]
+					[ object: command, property: "genSampleId", label: "Sample ID *" ]
 			]	
 		]	 
 

@@ -467,7 +467,9 @@ public class EditPatientFragmentController {
 			}
 			;
 
-			require(errors, "fatherName");
+		//	require(errors, "fatherName");
+			require(errors, "currentTownshipTBNumber");
+			
 			if (fatherName.length() > 50) {
 				errors.rejectValue("fatherName",
 						"Expected length of Name is exceeding");
@@ -488,6 +490,11 @@ public class EditPatientFragmentController {
 				errors.rejectValue("personAddress.address1",
 						"Length of Address is exceeding it's limit");
 			}
+			
+			if (personAddress.getAddress1().length() <1 ) {
+				errors.rejectValue("personAddress.address2",
+						"Required");
+			}
 
 			if (personAddress.getAddress2().length() > 200) {
 				errors.rejectValue("personAddress.address2",
@@ -501,7 +508,12 @@ public class EditPatientFragmentController {
 			
 			require(errors, "gender");
 			require(errors, "birthdate");
-
+			require(errors, "drTBSuspectNumber");
+			
+			if(tbHistoryStatus.getConceptId().toString().equals("1065")){
+				require(errors, "previousTownshipTBNumber");
+			}
+			
 
 			// Require death details if patient is deceased
 			if (dead) {
@@ -671,10 +683,11 @@ public class EditPatientFragmentController {
 			wrapper.getPerson().setGenSpecificationPlace(genSpecificationPlace);
 
 			DateFormat testDate = new SimpleDateFormat("dd-MMMM-yyyy");
-			Date capturedTestDate = genSpecificationDate;
-			wrapper.setGenSpecificationDate(testDate
-						.format(capturedTestDate));
-			
+			if(genSpecificationDate!=null){
+				Date capturedTestDate = genSpecificationDate;
+				wrapper.setGenSpecificationDate(testDate
+							.format(capturedTestDate));
+			}
 
 			// Make sure everyone gets an OpenMRS ID
 			PatientIdentifierType openmrsIdType = MetadataUtils.existing(
