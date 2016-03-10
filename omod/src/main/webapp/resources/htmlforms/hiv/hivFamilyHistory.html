@@ -16,27 +16,59 @@
 jq(document).ready(function(){
 	if (getValue('status.value') == "135704" || getValue('status.value') == "1175") {
 		jQuery('#tableFamily :input').prop('disabled', true);
+		jQuery('#1-toggleContainer :input').prop('disabled', true);
+		jQuery('#2-toggleContainer :input').prop('disabled', true);
+		jQuery('#3-toggleContainer :input').prop('disabled', true);
+		jQuery('#4-toggleContainer :input').prop('disabled', true);
+		jQuery('#5-toggleContainer :input').prop('disabled', true);
+		jQuery('#6-toggleContainer :input').prop('disabled', true);
+		jQuery('#7-toggleContainer :input').prop('disabled', true);
+		jQuery('#8-toggleContainer :input').prop('disabled', true);
 	}
 	else
 	{
 		jQuery('#tableFamily :input').prop('disabled', false);
+		jQuery('#1-toggleContainer :input').prop('disabled', false);
+		jQuery('#2-toggleContainer :input').prop('disabled', false);
+		jQuery('#3-toggleContainer :input').prop('disabled', false);
+		jQuery('#4-toggleContainer :input').prop('disabled', false);
+		jQuery('#5-toggleContainer :input').prop('disabled', false);
+		jQuery('#6-toggleContainer :input').prop('disabled', false);
+		jQuery('#7-toggleContainer :input').prop('disabled', false);
+		jQuery('#8-toggleContainer :input').prop('disabled', false);
 	}
 
 	jq("#status :input").change(function(){
 		if (getValue('status.value') == "135704" || getValue('status.value') == "1175") {
 			jQuery('#tableFamily :input').prop('disabled', true);
+			jQuery('#1-toggleContainer :input').prop('disabled', true);
+			jQuery('#2-toggleContainer :input').prop('disabled', true);
+			jQuery('#3-toggleContainer :input').prop('disabled', true);
+			jQuery('#4-toggleContainer :input').prop('disabled', true);
+			jQuery('#5-toggleContainer :input').prop('disabled', true);
+			jQuery('#6-toggleContainer :input').prop('disabled', true);
+			jQuery('#7-toggleContainer :input').prop('disabled', true);
+			jQuery('#8-toggleContainer :input').prop('disabled', true);
 		}
 		else
 		{
 			jQuery('#tableFamily :input').prop('disabled', false);
+			jQuery('#1-toggleContainer :input').prop('disabled', false);
+			jQuery('#2-toggleContainer :input').prop('disabled', false);
+			jQuery('#3-toggleContainer :input').prop('disabled', false);
+			jQuery('#4-toggleContainer :input').prop('disabled', false);
+			jQuery('#5-toggleContainer :input').prop('disabled', false);
+			jQuery('#6-toggleContainer :input').prop('disabled', false);
+			jQuery('#7-toggleContainer :input').prop('disabled', false);
+			jQuery('#8-toggleContainer :input').prop('disabled', false);
 		}
 	});
 	
 	
 	// show fields with data 
-	fieldIndex = 8; 
+	fieldIndex = 10; 
 	j=1;
-	while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 8){
+	while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 10){
 		jQuery('#'+j+'-toggleContainer').show();   
 		fieldIndex=fieldIndex+14;
 		if(document.getElementById("w"+fieldIndex).value != '')
@@ -76,15 +108,45 @@ jq(document).ready(function(){
 </script>
 
 	<style>
-		td, tr, table{
-		  
-			padding:3px;
-		}
+	table{
+	margin-left: 15px;
+	}
+		th, td, tr, table{
+	padding: 5px 10px 5px 5px;
+	}
 		select{
-			padding:4px;
-			border-radius: 2px;
-			width:150px;
+			
+			width: 70%; 
+     box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
 		}
+		input[type=text]{
+	 width: 70%; 
+     box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+	}
+		#tb {     width: 70%;     }
+
+#tb2 {     width: 70%;     }
+
+#tb tr {     width: 70%;     }
+
+#tb2 tr {     width: 70%;     }
+
+.col1 {     width: 25%;    }
+.col2 {     width: 15%;     }
+.col3 {     width: 7%;     }
+.col4 {     width: 6%;     }
+.col5 {     width: 7%;     }
+.col6 {     width: 5%;     }
+.col7 {     width: 10%;     }
+
+
+#tb, #tb2 {     table-layout: fixed;     }
+#tb td, #tb2 td {     word-wrap: break-word;     }
+#tb th, #tb2 th {     word-wrap: break-word;     }
 		
     </style>
 
@@ -106,30 +168,30 @@ jq(document).ready(function(){
 				</table>
 				<br/>
 				<div id="tableFamily">
-				<table  width="100%" style="background-color: #e8efdc"  align="center"  cellspacing="10">
-					<tr style="background-color: #c7d8a7">
-						<th colspan="1" width="350px">Name of the Spouse/Children</th>
-						<th colspan="1" width="170px"><center>Relationship</center></th>
-						<th colspan="1" width="300px"><center>Age</center></th>
-						<th colspan="1" width="150px"><center>Gender</center></th>
-						<th colspan="1" width="200px"><center>HIV Result<br/>(+/-/Unknown)</center></th>
-						<th colspan="1" width="300px"><center>ART(Y/N)</center></th>
-						<th colspan="1" width="100px" ></th>
+				<table  width="75%" style="background-color: #e8efdc"  align="center"  cellspacing="10">
+					<tr >
+						<th class="col1" style="background-color: #696969; color: #ffffff;"><center>Name of the Spouse/Children</center></th>
+						<th class="col2" style="background-color: #696969; color: #ffffff;"><center>Relationship</center></th>
+						<th class="col3" style="background-color: #696969; color: #ffffff;"><center>Age</center></th>
+						<th class="col4" style="background-color: #696969; color: #ffffff;"><center>Gender</center></th>
+						<th class="col5" style="background-color: #696969; color: #ffffff;"><center>HIV Result<br/>(+/-/Unknown)</center></th>
+						<th class="col6" style="background-color: #696969; color: #ffffff;"><center>ART(Y/N)</center></th>
+						<th class="col7" style="background-color: #696969; color: #ffffff;"><center></center></th>
 						
 					</tr>
 					<repeat>
 						<template>
 							<obsgroup groupingConceptId="160593AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
 								<div id="{n}-toggleContainer" style="display:none;">
-									<table  width="100%">
+									<table  width="75%">
 										<tr  style="border:1px solid black;background-color: #e8efdc">
-											<td colspan="1" width="250px"><obs conceptId="2319ebba-7e1e-47e9-9508-d0f6345af70d" labetText=" " size="30"/></td>
-											<td colspan="1" align="left" width="150px"><obs conceptId="baa27ac2-7bf7-4fda-9631-62af8c981f1e"  answerLabel="Relation" style="dropdown"/></td>
-											<td colspan="1" width="150px"><obs conceptId="160617AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Age"/><obs conceptId="1732AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  style="dropdown"  /> </td>
-											<td colspan="1" width="150px"><obs conceptId="1533AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-											<td colspan="1" width="150px"><obs conceptId="1169AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-											<td colspan="1" width="150px"><obs conceptId="72ef6301-fbbb-4c44-8e5f-ec27f33afa22" /></td>
-											<td colspan="1" width="100px"><button id="{n}-addEntry" class="addEntry">Add</button><button id="{n}-removeEntry" class="removeEntry">Remove</button></td> 
+											<td class="col1"><center><obs conceptId="2319ebba-7e1e-47e9-9508-d0f6345af70d" labetText=" " size="30"/></center></td>
+											<td class="col2"><center><obs conceptId="baa27ac2-7bf7-4fda-9631-62af8c981f1e"  answerLabel="Relation" style="dropdown"/></center></td>
+											<td class="col3"><center><obs conceptId="160617AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Age"/><obs conceptId="1732AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  style="dropdown"  /> </center></td>
+											<td class="col4"><center><obs conceptId="1533AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></center></td>
+											<td class="col5"><center><obs conceptId="1169AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></center></td>
+											<td class="col6"><center><obs conceptId="72ef6301-fbbb-4c44-8e5f-ec27f33afa22" /></center></td>
+											<td class="col7"><center><button id="{n}-addEntry" class="addEntry">Add</button><button id="{n}-removeEntry" class="removeEntry">Remove</button></center></td> 
 										</tr>
 									</table>	
 								</div>

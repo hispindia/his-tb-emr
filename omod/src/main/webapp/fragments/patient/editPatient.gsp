@@ -108,7 +108,7 @@
 					[ object: command, property: "genResult", label: "Xpert MTB/Rif Result" , config: [style:"list",  answerTo: getResultList ]],
 					[ object: command, property: "genResultDate", label: "Date"]
 			]	
-		]	 
+		]	
 %>
 
 <form id="edit-patient-form" method="post" action="${ ui.actionLink("kenyaemr", "patient/editPatient", "savePatient") }">
@@ -310,6 +310,7 @@
 		</fieldset>
 		<fieldset>
 			<legend>Gene Xpert Test</legend>
+			
 			<% genSampleIdDetail.each { %>
 			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			 <% } %>
@@ -320,19 +321,8 @@
 			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			 <% } %>
 		</fieldset>
-		
-		
-		
-			<fieldset>
-			<legend>Culture & DST</legend>
-
-			
-			
-
-		</fieldset>
-
 	</div>
-	
+
 	<div class="ke-panel-footer">
 		<% if (command.original) { %>
 			<button onClick="checkIn(0)" type="submit">
@@ -399,7 +389,11 @@ jQuery(document).ready(function(){
 	});
 	
 
+
+
+
 	jQuery(function() {
+		
 		jQuery('#from-age-button').appendTo(jQuery('#from-age-button-placeholder'));
 		
 		jQuery('#edit-patient-form .cancel-button').click(function() {
@@ -430,7 +424,60 @@ jQuery(document).ready(function(){
 		document.getElementById('checkInType').value = check;
 	}
 
-	
+ function addRow(tableID) {
+ 
+            var table = document.getElementById(tableID);
+ 
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+ 
+            var colCount = table.rows[0].cells.length;
+ 
+            for(var i=0; i<colCount; i++) {
+ 
+                var newcell = row.insertCell(i);
+ 
+                newcell.innerHTML = table.rows[0].cells[i].innerHTML;
+                //alert(newcell.childNodes);
+                switch(newcell.childNodes[0].type) {
+                    case "text":
+                            newcell.childNodes[0].value = "";
+                            break;
+                    case "checkbox":
+                            newcell.childNodes[0].checked = false;
+                            break;
+                    case "select-one":
+                            newcell.childNodes[0].selectedIndex = 0;
+                            break;
+                }
+            }
+        }
+ 
+        function deleteRow(tableID) {
+            try {
+            var table = document.getElementById(tableID);
+            var rowCount = table.rows.length;
+ 
+            for(var i=0; i<rowCount; i++) {
+                var row = table.rows[i];
+                var chkbox = row.cells[0].childNodes[0];
+                if(null != chkbox && true == chkbox.checked) {
+                    if(rowCount <= 1) {
+                        alert("Cannot delete all the rows.");
+                        break;
+                    }
+                    table.deleteRow(i);
+                    rowCount--;
+                    i--;
+                }
+ 
+ 
+            }
+            }catch(e) {
+                alert(e);
+            }
+        }
+ 
 
 	function updateBirthdate(data) {
 		var birthdate = new Date(data.birthdate);
