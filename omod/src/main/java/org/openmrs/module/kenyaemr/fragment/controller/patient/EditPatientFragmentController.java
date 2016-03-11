@@ -491,7 +491,7 @@ public class EditPatientFragmentController {
 						"Length of Address is exceeding it's limit");
 			}
 			
-			if (personAddress.getAddress1().length() <1 ) {
+			if (personAddress.getAddress2().length() <1 ) {
 				errors.rejectValue("personAddress.address2",
 						"Required");
 			}
@@ -509,11 +509,11 @@ public class EditPatientFragmentController {
 			require(errors, "gender");
 			require(errors, "birthdate");
 			require(errors, "drTBSuspectNumber");
-			
-			if(tbHistoryStatus.getConceptId().toString().equals("1065")){
-				require(errors, "previousTownshipTBNumber");
+			if(tbHistoryStatus!=null){
+				if(tbHistoryStatus.getConceptId().toString().equals("1065")){
+					require(errors, "previousTownshipTBNumber");
+				}
 			}
-			
 
 			// Require death details if patient is deceased
 			if (dead) {
@@ -799,8 +799,6 @@ public class EditPatientFragmentController {
 			/*
 			 * To check in directly
 			 */
-			List<Encounter> hivEnrollEncTypePrev = Context
-					.getEncounterService().getEncountersByPatient(ret);
 			Date curDate = new Date();
 			if (checkInType.equals("1")) {
 				Visit visit = new Visit();
@@ -825,98 +823,8 @@ public class EditPatientFragmentController {
 					}
 				}
 
-				/*
-				 * Visit visit1 = new Visit(); visit1.setPatient(ret);
-				 * visit1.setStartDatetime(new Date());
-				 * visit1.setVisitType(MetadataUtils.existing(VisitType.class,
-				 * CommonMetadata._VisitType.OUTPATIENT));
-				 * visit1.setLocation(Context
-				 * .getService(KenyaEmrService.class).getDefaultLocation());
-				 * Visit visitSave1 =
-				 * Context.getVisitService().saveVisit(visit1);
-				 */
-
 				Visit visitSave = Context.getVisitService().saveVisit(visit);
 
-				if (hivEnrollEncTypePrev.isEmpty()) {
-
-					EncounterType hivEnrollEncType = MetadataUtils.existing(
-							EncounterType.class,
-							HivMetadata._EncounterType.HIV_ENROLLMENT);
-					Encounter hivEnrollmentEncounter = new Encounter();
-
-					hivEnrollmentEncounter.setEncounterType(hivEnrollEncType);
-					hivEnrollmentEncounter.setPatient(ret);
-					hivEnrollmentEncounter.setLocation(Context.getService(
-							KenyaEmrService.class).getDefaultLocation());
-					hivEnrollmentEncounter.setDateCreated(new Date());
-					hivEnrollmentEncounter.setEncounterDatetime(new Date());
-					hivEnrollmentEncounter.setForm(MetadataUtils.existing(
-							Form.class, HivMetadata._Form.HIV_ENROLLMENT));
-					hivEnrollmentEncounter.setVisit(visitSave);
-					hivEnrollmentEncounter.setVoided(false);
-					Context.getEncounterService().saveEncounter(
-							hivEnrollmentEncounter);
-
-					PatientProgram patientProgram = new PatientProgram();
-					patientProgram.setPatient(ret);
-					patientProgram.setProgram(MetadataUtils.existing(
-							Program.class, HivMetadata._Program.HIV));
-					patientProgram.setDateEnrolled(new Date());
-					patientProgram.setDateCreated(new Date());
-					Context.getProgramWorkflowService().savePatientProgram(
-							patientProgram);
-				}
-			}
-
-			else {
-
-				/**
-				 * 
-				 * Visit visit = new Visit();
-				 * 
-				 * visit.setPatient(ret); SimpleDateFormat
-				 * mysqlDateTimeFormatter = new
-				 * SimpleDateFormat("dd-MMM-yy hh:mm:ss"); try {
-				 * visit.setStartDatetime
-				 * (mysqlDateTimeFormatter.parse(dateOfRegistration
-				 * +" 00:00:00")); } catch (ParseException e) {
-				 * e.printStackTrace(); }
-				 * visit.setVisitType(MetadataUtils.existing(VisitType.class,
-				 * CommonMetadata._VisitType.NEW_PATIENT));
-				 * visit.setLocation(Context
-				 * .getService(KenyaEmrService.class).getDefaultLocation());
-				 * Visit visitSave = Context.getVisitService().saveVisit(visit);
-				 */
-
-				if (hivEnrollEncTypePrev.isEmpty()) {
-					EncounterType hivEnrollEncType = MetadataUtils.existing(
-							EncounterType.class,
-							HivMetadata._EncounterType.HIV_ENROLLMENT);
-					Encounter hivEnrollmentEncounter = new Encounter();
-
-					hivEnrollmentEncounter.setEncounterType(hivEnrollEncType);
-					hivEnrollmentEncounter.setPatient(ret);
-					hivEnrollmentEncounter.setLocation(Context.getService(
-							KenyaEmrService.class).getDefaultLocation());
-					hivEnrollmentEncounter.setDateCreated(new Date());
-					hivEnrollmentEncounter.setEncounterDatetime(new Date());
-					hivEnrollmentEncounter.setForm(MetadataUtils.existing(
-							Form.class, HivMetadata._Form.HIV_ENROLLMENT));
-
-					hivEnrollmentEncounter.setVoided(false);
-					Context.getEncounterService().saveEncounter(
-							hivEnrollmentEncounter);
-
-					PatientProgram patientProgram = new PatientProgram();
-					patientProgram.setPatient(ret);
-					patientProgram.setProgram(MetadataUtils.existing(
-							Program.class, HivMetadata._Program.HIV));
-					patientProgram.setDateEnrolled(new Date());
-					patientProgram.setDateCreated(new Date());
-					Context.getProgramWorkflowService().savePatientProgram(
-							patientProgram);
-				}
 			}
 
 			return ret;

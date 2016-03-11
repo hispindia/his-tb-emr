@@ -8,11 +8,13 @@
 	<bean id="kenyaemr.config.form" class="org.openmrs.module.kenyacore.form.FormConfiguration">
 		<property name="commonPatientForms">
 			<set>
-				<ref bean="kenyaemr.common.form.hivFamilyHistory" />
-				<ref bean="kenyaemr.common.form.obstetricHistory" />
+				
+				<ref bean="kenyaemr.common.form.cultureDSTHistory" />
+				<ref bean="kenyaemr.common.form.mdrHistory" />
+			<!--<ref bean="kenyaemr.common.form.medicalAndSurgicalHistory" />
 				<ref bean="kenyaemr.common.form.drugHistory" />
-				<ref bean="kenyaemr.common.form.personalHistory" />
-				<!--<ref bean="kenyaemr.common.form.medicalAndSurgicalHistory" />-->
+				<ref bean="kenyaemr.common.form.obstetricHistory" />
+				-->
 			</set>
 		</property>
 		<property name="commonVisitForms">
@@ -144,36 +146,38 @@
 
 	<!-- ===================== Forms ===================== -->
 
-	<!-- Family History -->
-	<bean id="kenyaemr.common.form.hivFamilyHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
-		<property name="targetUuid" value="${metadata.form.HIV_FAMILY_HISTORY}" />
+	<!-- Culture and DST History -->
+	<bean id="kenyaemr.common.form.cultureDSTHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+		<property name="targetUuid" value="${metadata.form.CULTURE_DST_HISTORY}" />
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.chart" />
+				<ref bean="kenyaemr.app.registration" />
 			</set>
 		</property>
-		<property name="icon" value="kenyaui:forms/family_history.png" />
+		<property name="icon" value="kenyaui:forms/generic.png" />
 		<property name="htmlform" value="kenyaemr:hiv/hivFamilyHistory.html" />
 		<property name="order" value="100010" />
 	</bean>
 
-	<!-- Obstetric History -->
+	<!-- Obstetric History 
 	<bean id="kenyaemr.common.form.obstetricHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="${metadata.form.OBSTETRIC_HISTORY}" />
 		<property name="gender" value="FEMALE" />
 		<property name="apps">
 			<set>
-				<!--<ref bean="kenyaemr.app.intake" /> -->
 				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.chart" />
+				<ref bean="kenyaemr.app.registration" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/obstetric.png" />
 		<property name="htmlform" value="kenyaemr:obstetricHistory.html" />
 		<property name="order" value="100020" />
 	</bean>
-	
+-->	
+<!-- 	
 	<bean id="kenyaemr.common.form.drugHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="5286ae88-85bb-46e8-a2f7-6361f463ffd4" />
 		<property name="apps">
@@ -185,13 +189,14 @@
 		<property name="icon" value="kenyaui:forms/generic.png" />
 		<property name="htmlform" value="kenyaemr:hiv/hivDrugHistory.html" />
 	</bean>
-	
-	<bean id="kenyaemr.common.form.personalHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+ -->	
+	<bean id="kenyaemr.common.form.mdrHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="d1db31d0-b415-4788-a233-e4000bf4d108" />
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.chart" />
+				<ref bean="kenyaemr.app.registration" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />

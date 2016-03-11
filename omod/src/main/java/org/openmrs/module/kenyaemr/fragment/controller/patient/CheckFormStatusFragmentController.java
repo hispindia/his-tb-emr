@@ -26,11 +26,8 @@ public class CheckFormStatusFragmentController {
 				if (en.getForm().getUuid()
 						.equals("8e4e1abf-7c08-4ba8-b6d8-19a9f1ccb6c9")
 						|| en.getForm().getUuid()
-								.equals("7efa0ee0-6617-4cd7-8310-9f95dfee7a82")
-						|| en.getForm().getUuid()
 								.equals("5286ae88-85bb-46e8-a2f7-6361f463ffd4")
-						|| en.getForm().getUuid()
-								.equals("d1db31d0-b415-4788-a233-e4000bf4d108")) {
+						) {
 					flag= true;
 				}
 			}

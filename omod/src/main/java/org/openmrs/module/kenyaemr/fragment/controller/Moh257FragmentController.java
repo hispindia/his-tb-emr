@@ -49,7 +49,7 @@ public class Moh257FragmentController {
 		String[] page1FormUuids = {
 				HivMetadata._Form.MOH_257_FACE_PAGE,
 				/*HivMetadata._Form.MOH_257_ARV_THERAPY,*/
-				HivMetadata._Form.FAMILY_HISTORY
+				HivMetadata._Form.CULTURE_DST_HISTORY
 		};
 
 		List<SimpleObject> page1AvailableForms = new ArrayList<SimpleObject>();
