@@ -11,9 +11,7 @@
   ~
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
 -->
-<htmlform>
-
-	<script type="text/javascript">
+<htmlform> <script type="text/javascript">
 		jq(document).ready(function () {
 			if (getValue('therapySelection.value') == 1066) {
 				jq('#therapyName :input').prop('disabled', true);
@@ -50,12 +48,12 @@
 		*/	
 			
 			// show fields with data 
-			fieldIndex = 34; 
+			fieldIndex = 26; 
 			j=1;
-			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 6){
+			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 4){
 				//alert(document.getElementById("w"+38).value);
 				jQuery('#'+j+'-toggleContainer').show();   
-				fieldIndex=fieldIndex+2;
+				fieldIndex=fieldIndex+10;
 				if(document.getElementById("w"+fieldIndex).value != '')
 					{
 				$j('#'+j+'-removeEntry').toggle(false);
@@ -71,7 +69,7 @@
 				//}
 	
 			$j('#1-removeEntry').remove();
-			$j('#5-addEntry').remove();
+			$j('#3-addEntry').remove();
 			$j('#1-toggleContainer').show();
 			
 			$j('button.addEntry').on("click", function(){
@@ -94,161 +92,176 @@
 				return false;
 				});
 		});
-	</script>
-	
-	
-	<!-- STYLE ======================
+	</script> <!-- STYLE ======================
 	=================================-->
-	
-	<style>
-	td, tr, table{
+
+<style>
+td, tr, table {
 	padding: 5px 10px 5px 5px;
-	}
-	
-	table{
+}
+
+table {
 	margin-left: 15px;
-	}
-	
-	tbody{
+}
+
+tbody {
 	padding-left: 0px !important;
-	}
-	
-	input[type=text]{
+}
+
+input[type=text] {
 	width: 200px;
-	}
-	
-	select{
+}
+
+select {
 	width: 200px;
 	height: 28px !important;
-	}
-	
-	input[type=checkbox]{
+}
+
+input[type=checkbox] {
 	padding: 0 0 0 0;
 	min-width: 25px;
-	font-weight:bold;
-	background-color:#d9d9d9 !important;
-	}
-	
-	input[type=radio]{
+	font-weight: bold;
+	background-color: #d9d9d9 !important;
+}
+
+input[type=radio] {
 	padding: 0 0 0 0;
 	min-width: 20px;
-	font-weight:bold;
-	background-color:#d9d9d9 !important;
-	}
-	
-	input[type=button], button{
+	font-weight: bold;
+	background-color: #d9d9d9 !important;
+}
+
+input[type=button], button {
 	padding: 5px 10px 5px 5px;
 	margin-right: 15px;
 	min-width: 110px;
-	font-weight:bold;
-	background-color:#d9d9d9 !important;
-	}
-	</style>
-	
-	<!-- STYLE ======================
-	=================================-->
-	
-	
-	<!-- Encounter date, provider and location are not relevant for CE forms -->
-	<div style="display:none">
-		<encounterDate id="encounter-date" showTime="true" />
-		<encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" />
-	</div>
+	font-weight: bold;
+	background-color: #d9d9d9 !important;
+}
+</style>
 
-	<div class="ke-form-content">
+<!-- STYLE ======================
+	=================================--> <!-- Encounter date, provider and location are not relevant for CE forms -->
+<div style="display: none">
+	<encounterDate id="encounter-date" showTime="true" />
+	<encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" />
+</div>
+
+<div class="ke-form-content">
 	<table width="100%" align="left" style="background-color: #c7d8a7">
 		<tr>
 			<td>
-				<table align="left"   class="tb1" cellspacing="10" width="40%" style="background-color: #e8efdc;margin-left: 0px !important;">
+				<table align="left" class="tb1" cellspacing="10" width="60%"
+					style="background-color: #e8efdc; margin-left: 0px !important;">
 					<tr>
-						<td>Risk factor for HIV:</td>
-						<td>
-							<obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160578AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Men who has sex with men (MSM)" style="checkbox" />
-						</td>
-						<td>
-							<obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160579AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Sex worker (SW) " style="checkbox" />
-						</td>
+						<td>Forms for Submission to MDR-TB committee:</td>
+						<td><obs conceptId="bd85f34d-0caf-46ae-ae32-9a9e6cdf1224"
+								answerConceptId="5325AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+								answerLabel="Patient Identity" style="checkbox" /></td>
+						<td><obs conceptId="bd85f34d-0caf-46ae-ae32-9a9e6cdf1224"
+								answerConceptId="3668934b-ac02-4392-b1ac-d99a16f58768"
+								answerLabel="Social Status" style="checkbox" /></td>
 					</tr>
-					<tr>	
+					<tr>
 						<td></td>
-						<td>
-							<obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="855ee133-d234-4440-9599-780dfcded511" answerLabel="Heterosexual" style="checkbox" />
-						</td>
-						<td>
-							<obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="300c6c1e-1ced-4803-b00a-e654f6f18a63" answerLabel="Injection drug use" style="checkbox" />
-						</td>
+						<td><obs conceptId="bd85f34d-0caf-46ae-ae32-9a9e6cdf1224"
+								answerConceptId="d035d3de-d78e-4210-bce0-b586c4fe6bf8"
+								answerLabel="Medical Information (lab investigation results)"
+								style="checkbox" /></td>
+						<td><obs conceptId="bd85f34d-0caf-46ae-ae32-9a9e6cdf1224"
+								answerConceptId="2549e208-11f7-464a-9dd8-2983bd6b136e"
+								answerLabel="Past anti-TB drug history" style="checkbox" /></td>
 					</tr>
-					<tr>	
+					<tr>
 						<td></td>
-						<td>
-							<obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="1063AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Blood transfusion" style="checkbox" />
-						</td>
-						<td>
-							<obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="327bb8a9-822e-419d-b7c8-548f766d30f0" answerLabel="Mother to child" style="checkbox" />
-						</td>
-					</tr>
-					<tr>	
-						<td></td>
-						<td>
-							<obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Unknown" style="checkbox" />
-						</td>
+						<td><obs conceptId="bd85f34d-0caf-46ae-ae32-9a9e6cdf1224"
+								answerConceptId="d0f0892e-00b1-47ff-a969-82d3a63d857d"
+								answerLabel="Pre treatment counselling and informed consent"
+								style="checkbox" /></td>
+						<td><obs conceptId="bd85f34d-0caf-46ae-ae32-9a9e6cdf1224"
+								answerConceptId="63858f2b-636c-4833-8b5e-2eed7eb5b811"
+								answerLabel="Doc action plan" style="checkbox" /></td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 		<br />
-	 <tr>
-	 <td>
-	<table style="background-color: #e8efdc;margin-left: 0px !important;" align="left"  class="tb1" cellspacing="5" width="35%">
 		<tr>
-			<td width="45%">IDUs substitution therapy</td>
-			<td  width="55%"><obs style="radio"   conceptId="9605819f-b191-4bdf-b33a-cefc50436ed0" id="therapySelection"/></td>
-		</tr>
-		<tr>
-			<td>If yes, type</td>
-			<td><obs conceptId="06ba79f6-7344-456a-8265-35f87d43394f" id="therapyName"/></td>
-		</tr>
-		<tr>
-			<td>Literate?  </td>
-			<td><obs  style="radio"  conceptId="b4d2e1fa-6484-4004-97d3-075e19381174" /></td>
-		</tr>
-
-		<tr>
-			<td>Alcoholism? </td>
-			<td><obs  conceptId="fe2b8af1-b305-46bf-a7ce-75d931660a7a" id="alcoholType"/></td>
-		</tr>
-		<tr>
-			<td>What is the estimated monthly<br/> household income (In Kyat/month)? </td>
-			<td><obs conceptId="159776AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-		</tr>
-		<tr>
-			<td>Co-morbidities : </td>
-		</tr>
-		<tr>
-		<repeat>
-			<template>
-					<tr  id="{n}-toggleContainer" style="display:none;">
-						<td valign="top">{n}.<obs conceptId="6f3ac1ca-0500-4286-9c62-7190c4e792d9" style="autocomplete"/>
-						</td><td><button id="{n}-addEntry" class="addEntry">Add</button><button id="{n}-removeEntry" class="removeEntry">Remove</button>
-						</td>
+			<td>
+				<table
+					style="background-color: #e8efdc; margin-left: 0px !important;"
+					align="left" class="tb1" cellspacing="5" width="35%">
+					<tr>
+						<td width="45%">Decision from township level assessment</td>
+						<td width="55%"><obs style="dropdown"
+								conceptId="7e25fea6-19f8-40ad-bb0b-0e871dc8f99b"
+								id="therapySelection" /></td>
 					</tr>
-			</template>
-			<render n="1" concept=" "/>
-			<render n="2" concept=" "/>
-			<render n="3" concept=" "/>
-			<render n="4" concept=" "/>
-			<render n="5" concept=" "/>
-		</repeat>	
+					<tr>
+						<td>If not submitted, Reason</td>
+						<td><obs conceptId="eae22d6c-3fd8-415c-b794-ad0181815a9b"
+								style="dropdown" id="therapyName" /></td>
+					</tr>
 
+
+					<tr>
+						<td></td>
+						<td><obs conceptId="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+								labelText="Other" /></td>
+					</tr>
+				</table>
+			</td>
 		</tr>
-	</table>
-	</td>
-	</tr>
-	</table>
-	</div>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<th colspan="5"><center>Regional / state MDR-TB
+								committee recommendation</center></th>
+					</tr>
+					<tr>
+						<th><center>Date</center></th>
+						<th><center>Decision</center></th>
+						<th><center>Next date</center></th>
+						<th><center>If not initiated, Reason</center></th>
+						<th><center>Other</center></th>
+
+					</tr>
+					<tr>
+						<repeat> <template> <obsgroup
+							groupingConceptId="161913AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+						<tr id="{n}-toggleContainer" style="display: none;">
+							<td valign="top">{n}.<obs
+									conceptId="112917AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+							</td>
+							<td valign="top"><obs
+									conceptId="92f96cb4-1ffe-4d1b-bdae-b848cc135fe3"
+									style="dropdown" /></td>
+							<td valign="top"><obs
+									conceptId="116314AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="true"/></td>
+							<td valign="top"><obs
+									conceptId="361d0d95-1d74-4e02-a678-d3ebf5dff7cb"
+									style="dropdown" /></td>
+							<td valign="top"><obs
+									conceptId="133863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="dropdown" /></td>
+							<td><button id="{n}-addEntry" class="addEntry">Add</button>
+								<button id="{n}-removeEntry" class="removeEntry">Remove</button>
+							</td>
+						</tr>
+						</obsgroup> </template> <render n="1" concept=" " /> <render n="2" concept=" " /> <render
+							n="3" concept=" " /> <render n="4" concept=" " /> <render n="5"
+							concept=" " /> </repeat>
+					</tr>
+				</table>
+			</td>
+		</tr>
 	
-	<div class="ke-form-footer">
-		<submit successUrl=""/>
-	</div>
+	</table>
+</div>
+
+<div class="ke-form-footer">
+	<submit successUrl="" />
+</div>
 
 </htmlform>

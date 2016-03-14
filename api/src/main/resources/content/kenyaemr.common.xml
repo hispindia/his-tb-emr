@@ -148,7 +148,7 @@
 
 	<!-- Culture and DST History -->
 	<bean id="kenyaemr.common.form.cultureDSTHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
-		<property name="targetUuid" value="${metadata.form.CULTURE_DST_HISTORY}" />
+		<property name="targetUuid" value="7efa0ee0-6617-4cd7-8310-9f95dfee7a82" />
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
@@ -157,10 +157,22 @@
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
-		<property name="htmlform" value="kenyaemr:tb/tbCultureDSTHistory.html.html" />
-		<property name="order" value="100010" />
+		<property name="htmlform" value="kenyaemr:tb/tbCultureDSTHistory.html" />
 	</bean>
 
+	<bean id="kenyaemr.common.form.mdrHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+		<property name="targetUuid" value="d1db31d0-b415-4788-a233-e4000bf4d108" />
+		<property name="apps">
+			<set>
+				<ref bean="kenyaemr.app.clinician" />
+				<ref bean="kenyaemr.app.chart" />
+				<ref bean="kenyaemr.app.registration" />
+			</set>
+		</property>
+		<property name="icon" value="kenyaui:forms/generic.png" />
+		<property name="htmlform" value="kenyaemr:tb/tbMDRFormHistory.html" />
+	</bean>
+	
 	<!-- Obstetric History 
 	<bean id="kenyaemr.common.form.obstetricHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="${metadata.form.OBSTETRIC_HISTORY}" />
@@ -190,18 +202,7 @@
 		<property name="htmlform" value="kenyaemr:hiv/hivDrugHistory.html" />
 	</bean>
  -->	
-	<bean id="kenyaemr.common.form.mdrHistory" class="org.openmrs.module.kenyacore.form.FormDescriptor">
-		<property name="targetUuid" value="d1db31d0-b415-4788-a233-e4000bf4d108" />
-		<property name="apps">
-			<set>
-				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
-				<ref bean="kenyaemr.app.registration" />
-			</set>
-		</property>
-		<property name="icon" value="kenyaui:forms/generic.png" />
-		<property name="htmlform" value="kenyaemr:tb/tbMDRFormHistory.html" />
-	</bean>
+
 	
 
 	<!-- Triage -->
