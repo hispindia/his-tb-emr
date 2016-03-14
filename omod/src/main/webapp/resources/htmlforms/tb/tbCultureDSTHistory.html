@@ -1,0 +1,218 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+-->
+<htmlform>
+<script type="text/javascript">
+jq(document).ready(function(){
+	if (getValue('status.value') == "135704" || getValue('status.value') == "1175") {
+		jQuery('#tableFamily :input').prop('disabled', true);
+		jQuery('#1-toggleContainer :input').prop('disabled', true);
+		jQuery('#2-toggleContainer :input').prop('disabled', true);
+		jQuery('#3-toggleContainer :input').prop('disabled', true);
+		jQuery('#4-toggleContainer :input').prop('disabled', true);
+		jQuery('#5-toggleContainer :input').prop('disabled', true);
+		jQuery('#6-toggleContainer :input').prop('disabled', true);
+		jQuery('#7-toggleContainer :input').prop('disabled', true);
+		jQuery('#8-toggleContainer :input').prop('disabled', true);
+	}
+	else
+	{
+		jQuery('#tableFamily :input').prop('disabled', false);
+		jQuery('#1-toggleContainer :input').prop('disabled', false);
+		jQuery('#2-toggleContainer :input').prop('disabled', false);
+		jQuery('#3-toggleContainer :input').prop('disabled', false);
+		jQuery('#4-toggleContainer :input').prop('disabled', false);
+		jQuery('#5-toggleContainer :input').prop('disabled', false);
+		jQuery('#6-toggleContainer :input').prop('disabled', false);
+		jQuery('#7-toggleContainer :input').prop('disabled', false);
+		jQuery('#8-toggleContainer :input').prop('disabled', false);
+	}
+
+	jq("#status :input").change(function(){
+		if (getValue('status.value') == "135704" || getValue('status.value') == "1175") {
+			jQuery('#tableFamily :input').prop('disabled', true);
+			jQuery('#1-toggleContainer :input').prop('disabled', true);
+			jQuery('#2-toggleContainer :input').prop('disabled', true);
+			jQuery('#3-toggleContainer :input').prop('disabled', true);
+			jQuery('#4-toggleContainer :input').prop('disabled', true);
+			jQuery('#5-toggleContainer :input').prop('disabled', true);
+			jQuery('#6-toggleContainer :input').prop('disabled', true);
+			jQuery('#7-toggleContainer :input').prop('disabled', true);
+			jQuery('#8-toggleContainer :input').prop('disabled', true);
+		}
+		else
+		{
+			jQuery('#tableFamily :input').prop('disabled', false);
+			jQuery('#1-toggleContainer :input').prop('disabled', false);
+			jQuery('#2-toggleContainer :input').prop('disabled', false);
+			jQuery('#3-toggleContainer :input').prop('disabled', false);
+			jQuery('#4-toggleContainer :input').prop('disabled', false);
+			jQuery('#5-toggleContainer :input').prop('disabled', false);
+			jQuery('#6-toggleContainer :input').prop('disabled', false);
+			jQuery('#7-toggleContainer :input').prop('disabled', false);
+			jQuery('#8-toggleContainer :input').prop('disabled', false);
+		}
+	});
+	
+	
+	// show fields with data 
+	fieldIndex = 10; 
+	j=1;
+	while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 10){
+		jQuery('#'+j+'-toggleContainer').show();   
+		fieldIndex=fieldIndex+14;
+		if(document.getElementById("w"+fieldIndex).value != '')
+		{
+	$j('#'+j+'-removeEntry').toggle(false);
+	$j('#'+j+'-addEntry').toggle(false);
+		}
+		j++;
+	}
+	//jQuery('#'+i+'-toggleContainer').show();
+	
+	$j('#1-removeEntry').remove();
+	$j('#8-addEntry').remove();
+	$j('#1-toggleContainer').show();
+	
+	
+	$j('button.addEntry').on("click", function(){
+		var correctedAddButtonId = parseFloat(this.id) + 1;      
+		var contentAddId = "#" + correctedAddButtonId + "-toggleContainer";
+		$j(contentAddId).toggle(true);      
+		$j('#' + this.id).toggle(false); 
+		$j('#' + parseFloat(this.id) + '-removeEntry').toggle(false);
+		return false;});    
+	 
+	$j('button.removeEntry').on("click", function(){ 
+		var correctedRemoveButtonId = parseFloat(this.id) - 1;
+		var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer";
+		$j(contentAddId).toggle(false);
+		$j( ':input:not(:button)', contentAddId).val([]);
+		$j('#' + correctedRemoveButtonId + '-addEntry').toggle(true);
+		$j('#' + correctedRemoveButtonId + '-removeEntry').toggle(true);
+		return false;
+		});
+	
+	
+});
+</script>
+
+	<style>
+	table{
+	margin-left: 15px;
+	}
+		th, td, tr, table{
+	padding: 5px 10px 5px 5px;
+	}
+		select{
+			
+			width: 70%; 
+     box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+		}
+		input[type=text]{
+	 width: 70%; 
+     box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+	}
+		#tb {     width: 70%;     }
+
+#tb2 {     width: 70%;     }
+
+#tb tr {     width: 70%;     }
+
+#tb2 tr {     width: 70%;     }
+
+.col1 {     width: 25%;    }
+.col2 {     width: 15%;     }
+.col3 {     width: 7%;     }
+.col4 {     width: 6%;     }
+.col5 {     width: 7%;     }
+.col6 {     width: 5%;     }
+.col7 {     width: 10%;     }
+
+
+#tb, #tb2 {     table-layout: fixed;     }
+#tb td, #tb2 td {     word-wrap: break-word;     }
+#tb th, #tb2 th {     word-wrap: break-word;     }
+		
+    </style>
+
+	<!-- Encounter date, provider and location are not relevant for CE forms -->
+	<div style="display:none">
+		<encounterDate id="encounter-date" showTime="true" />
+		<encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" />
+	</div>
+	
+	
+	<div class="ke-form-content" style="select {   width: 40%;   padding: 2px;}" >
+				
+				<br/>
+				<table style="background-color: #c7d8a7">
+					<tr>
+						<td><strong>Marital Status?</strong></td>
+						<td><obs id="status" conceptId="1054AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/></td>
+					</tr>
+				</table>
+				<br/>
+				<div id="tableFamily">
+				<table  width="75%" style="background-color: #e8efdc"  align="center"  cellspacing="10">
+					<tr >
+						<th class="col1" style="background-color: #696969; color: #ffffff;"><center>Name of the Spouse/Children</center></th>
+						<th class="col2" style="background-color: #696969; color: #ffffff;"><center>Relationship</center></th>
+						<th class="col3" style="background-color: #696969; color: #ffffff;"><center>Age</center></th>
+						<th class="col4" style="background-color: #696969; color: #ffffff;"><center>Gender</center></th>
+						<th class="col5" style="background-color: #696969; color: #ffffff;"><center>HIV Result<br/>(+/-/Unknown)</center></th>
+						<th class="col6" style="background-color: #696969; color: #ffffff;"><center>ART(Y/N)</center></th>
+						<th class="col7" style="background-color: #696969; color: #ffffff;"><center></center></th>
+						
+					</tr>
+					<repeat>
+						<template>
+							<obsgroup groupingConceptId="160593AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+								<div id="{n}-toggleContainer" style="display:none;">
+									<table  width="75%">
+										<tr  style="border:1px solid black;background-color: #e8efdc">
+											<td class="col1"><center><obs conceptId="2319ebba-7e1e-47e9-9508-d0f6345af70d" labetText=" " size="30"/></center></td>
+											<td class="col2"><center><obs conceptId="baa27ac2-7bf7-4fda-9631-62af8c981f1e"  answerLabel="Relation" style="dropdown"/></center></td>
+											<td class="col3"><center><obs conceptId="160617AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Age"/><obs conceptId="1732AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  style="dropdown"  /> </center></td>
+											<td class="col4"><center><obs conceptId="1533AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></center></td>
+											<td class="col5"><center><obs conceptId="1169AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></center></td>
+											<td class="col6"><center><obs conceptId="72ef6301-fbbb-4c44-8e5f-ec27f33afa22" /></center></td>
+											<td class="col7"><center><button id="{n}-addEntry" class="addEntry">Add</button><button id="{n}-removeEntry" class="removeEntry">Remove</button></center></td> 
+										</tr>
+									</table>	
+								</div>
+							</obsgroup>	
+						</template>
+						<render n="1" concept=" "/>
+						<render n="2" concept=" "/>
+						<render n="3" concept=" "/>
+						<render n="4" concept=" "/>
+						<render n="5" concept=" "/>
+						<render n="6" concept=" "/>
+						<render n="7" concept=" "/>
+						<render n="8" concept=" "/>
+					</repeat>	
+
+				</table>
+				</div>
+	</div>
+
+	<div class="ke-form-footer">
+		<submit />
+	</div>
+
+</htmlform>

@@ -157,7 +157,7 @@
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
-		<property name="htmlform" value="kenyaemr:hiv/hivFamilyHistory.html" />
+		<property name="htmlform" value="kenyaemr:tb/tbCultureDSTHistory.html.html" />
 		<property name="order" value="100010" />
 	</bean>
 
@@ -200,7 +200,7 @@
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
-		<property name="htmlform" value="kenyaemr:hiv/hivPersonalHistory.html" />
+		<property name="htmlform" value="kenyaemr:tb/tbMDRFormHistory.html" />
 	</bean>
 	
 
