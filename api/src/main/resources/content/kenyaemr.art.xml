@@ -3,7 +3,7 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- ===================== Program ===================== -->
+	<!-- ===================== Program ===================== 
 
 	<bean id="kenyaemr.art.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
 		<property name="targetUuid" value="${metadata.program.ART}" />
@@ -20,7 +20,7 @@
 		</property>
 		<property name="order" value="500" />
 	</bean>
-
+-->
 	<!-- ===================== Identifiers ===================== -->
     <!-- Unique Patient Number -->
 	<bean id="kenyaemr.hiv.identifier.upn" class="org.openmrs.module.kenyacore.identifier.IdentifierDescriptor">

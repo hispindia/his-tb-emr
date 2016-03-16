@@ -20,7 +20,7 @@
 		<property name="commonVisitForms">
 			<set>
 				<ref bean="kenyaemr.common.form.triage" />
-				<ref bean="kenyaemr.hiv.form.consultationEncounter" />
+				<ref bean="kenyaemr.common.form.consultationEncounter" />
 				<ref bean="kenyaemr.common.form.tbScreening" />
 				<ref bean="kenyaemr.common.form.labOrders" />
 				<ref bean="kenyaemr.common.form.otherMedications" />
@@ -42,7 +42,7 @@
 				<ref bean="kenyaemr.common.report.dhis2" />
 				<ref bean="kenyaemr.common.report.recordedDeceased" /> 
 				<ref bean="kenyaemr.common.report.rdqaReport" />
-				-->
+				
 				
 				<ref bean="kenyaemr.common.report.allPatients" />
 				<ref bean="kenyaemr.hiv.report.onSecondLineArt" />
@@ -73,7 +73,7 @@
 				<ref bean="kenyaemr.common.report.patientsNotInART"/>
 				<ref bean="kenyaemr.common.report.opportunisticInfections"/>
 				<ref bean="kenyaemr.common.report.patientsRestartedART"/>
-				<ref bean="kenyaemr.common.report.patientsTBreceivedART"/>
+				<ref bean="kenyaemr.common.report.patientsTBreceivedART"/> -->
 			</set>
 		</property>
 	</bean>
@@ -280,7 +280,7 @@
 
 
 	<!-- Consultation form -->
-	<bean id="kenyaemr.hiv.form.consultationEncounter" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+	<bean id="kenyaemr.common.form.consultationEncounter" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="bd598114-4ef4-47b1-a746-a616180ccfc0" />
 		<property name="apps">
 			<set>
@@ -353,7 +353,7 @@
 		<property name="order" value="100030" />
 	</bean>-->
 
-	<!-- ===================== Reports ===================== -->
+	<!-- ===================== Reports ===================== 
 	<bean id="kenyaemr.hiv.report.dueForCd4" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
 		<property name="targetUuid" value="9227c34f-18b6-4c93-844e-5732572d5125" />
 		<property name="name" value="Patients due for CD4 test" />
@@ -417,7 +417,7 @@
 		<property name="description" value="National Integrated Form for Reproductive Health, HIV/AIDS, Malaria, TB and Child Nutrition" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
-<!-- 
+ 
 	<bean id="kenyaemr.common.report.moh731" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
 		<property name="targetUuid" value="dcd7d647-ea54-45a9-9d56-f56fc37c2b87" />
 		<property name="name" value="MOH 731" />
@@ -449,7 +449,7 @@
 		<property name="displayIdentifier" ref="kenyaemr.hiv.identifier.upn" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
- -->
+
 	<bean id="kenyaemr.common.report.allPatients" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
 		<property name="targetUuid" value="9e2ed586-130b-11e4-929a-8746415b715a" />
 		<property name="name" value="All Patients List" />
@@ -465,8 +465,8 @@
 		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
-	
-		<!-- NEW REPORTS 2016/02/10 -->
+	-->
+		<!-- NEW REPORTS 2016/02/10 
 
 	
 	<bean id="kenyaemr.hiv.report.patientsDueForViralLoad"
@@ -687,10 +687,10 @@
 			</set>
 		</property>
 	</bean>
+-->
 
 
-
-	<!-- Indicator Reports -->
+	<!-- Indicator Reports 
 	
 	<bean id="kenyaemr.common.report.patientsNotInART" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
 		<property name="targetUuid" value="6dac466d-394b-465a-87e3-8861efafe0b4" />
@@ -719,7 +719,7 @@
 		<property name="description" value="No. of  HIV positive TB patients who have received ART during this month" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
-
+-->
     <!-- =========================== RDQA Reports =============================-->
 <!-- 
     <bean id="kenyaemr.common.report.rdqaReport" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">

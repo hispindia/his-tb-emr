@@ -3,31 +3,31 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- ===================== Program ===================== -->
+	<!-- ===================== Program ===================== 
 
 	<bean id="kenyaemr.hiv.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
 		<property name="targetUuid" value="${metadata.program.HIV}" />
 		<property name="eligibilityCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.EligibleForHivProgramCalculation" />
 		<property name="defaultEnrollmentForm" ref="kenyaemr.hiv.form.enrollment" />
 		<property name="defaultCompletionForm" ref="kenyaemr.hiv.form.completion" />
-	<!-- 	<property name="visitForms">
+	 	<property name="visitForms">
 			<set>
 				<ref bean="kenyaemr.common.form.tbScreening" />
 			</set>
-		</property> -->
+		</property>
 		<property name="reports">
 			<set>
 				
-		<!--	<ref bean="kenyaemr.hiv.report.qi.adult.c.tx" />
+		<ref bean="kenyaemr.hiv.report.qi.adult.c.tx" />
 				<ref bean="kenyaemr.hiv.report.qi.peds.c.tx" />
 				<ref bean="kenyaemr.hiv.report.qi.adult.emtct" />
 				<ref bean="kenyaemr.hiv.report.lostToFollowUp" />
 				<ref bean="kenyaemr.hiv.report.onSecondLineArt" />
-				-->
-				<!--<ref bean="kenyaemr.hiv.report.artCohortAnalysis.6" />
+		
+				<ref bean="kenyaemr.hiv.report.artCohortAnalysis.6" />
 				<ref bean="kenyaemr.hiv.report.artCohortAnalysis.12" />
 				<ref bean="kenyaemr.hiv.report.artCohortAnalysis.24" />
-				<ref bean="kenyaemr.hiv.report.artCohortAnalysis.36" />-->
+				<ref bean="kenyaemr.hiv.report.artCohortAnalysis.36" />
 			</set>
 		</property>
 		<property name="fragments">
@@ -39,10 +39,10 @@
 		</property>
 		<property name="order" value="100" />
 	</bean>
-
+-->
 	<!-- ===================== Identifiers ===================== -->
 
-	<!-- Unique Patient Number
+<!-- Unique Patient Number
 	<bean id="kenyaemr.hiv.identifier.upn" class="org.openmrs.module.kenyacore.identifier.IdentifierDescriptor">
 		<property name="targetUuid" value="${metadata.identifiertype.UNIQUE_PATIENT_NUMBER}" />
 		<property name="order" value="50" />
@@ -50,13 +50,13 @@
  -->
 	<!-- ===================== Forms ===================== -->
 
-	<!-- HIV Enrollment -->
+	<!-- HIV Enrollment 
 	<bean id="kenyaemr.hiv.form.enrollment" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="e4b506c1-7379-42b6-a374-284469cba8da" />
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<!--<ref bean="kenyaemr.app.intake" /> -->
+				<ref bean="kenyaemr.app.intake" /> 
 				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.chart" />
 			</set>
@@ -64,14 +64,14 @@
 		<property name="icon" value="kenyaui:forms/generic.png" />
 		<property name="htmlform" value="kenyaemr:hiv/hivEnrollment.html" />
 	</bean>
-
-	<!-- HIV Completion -->
+-->
+	<!-- HIV Completion 
 	<bean id="kenyaemr.hiv.form.completion" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="e3237ede-fa70-451f-9e6c-0908bc39f8b9" />
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<!--<ref bean="kenyaemr.app.intake" /> -->
+				<ref bean="kenyaemr.app.intake" /> 
 				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.chart" />
 			</set>
@@ -79,14 +79,14 @@
 		<property name="icon" value="kenyaui:forms/completion.png" />
 		<property name="htmlform" value="kenyaemr:hiv/hivDiscontinuation.html" />
 	</bean>
-
-	<!-- MOH257 Face Page -->
+-->
+	<!-- MOH257 Face Page
 	<bean id="kenyaemr.hiv.form.moh257FacePage" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="47814d87-2e53-45b1-8d05-ac2e944db64c" />
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<!--<ref bean="kenyaemr.app.intake" /> -->
+				<ref bean="kenyaemr.app.intake" /> 
 				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.chart" />
 			</set>
@@ -94,8 +94,8 @@
 		<property name="icon" value="kenyaui:forms/moh257.png" />
 		<property name="htmlform" value="kenyaemr:hiv/moh257FacePage.html" />
 	</bean>
-
-	<!-- MOH257 ARV Therapy -->
+ -->
+	<!-- MOH257 ARV Therapy
 	<bean id="kenyaemr.hiv.form.moh257ArvTherapy" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="8f5b3ba5-1677-450f-8445-33b9a38107ae" />
 		<property name="apps">
@@ -106,8 +106,8 @@
 		<property name="icon" value="kenyaui:forms/moh257.png" />
 		<property name="htmlform" value="kenyaemr:hiv/moh257ArvTherapy.html" />
 	</bean>
-
-	<!-- MOH257 Visit Summary -->
+ -->
+	<!-- MOH257 Visit Summary 
 	<bean id="kenyaemr.hiv.form.moh257VisitSummary" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="23b4ebbd-29ad-455e-be0e-04aa6bc30798" />
 		<property name="apps">
@@ -121,7 +121,7 @@
 		<property name="order" value="201030" />
 	</bean>
 	
-
+-->
 	<!-- ===================== Reports ===================== -->
 
 <!-- 

@@ -41,13 +41,13 @@
 	 * For HIV Enrollment submit form directly 
 	 */
 	 jQuery(document).ready(function(){
-		var formId='${ command.form.uuid }';
+/*		var formId='${ command.form.uuid }';
 	 	if(formId=="e4b506c1-7379-42b6-a374-284469cba8da"){
 	 		kenyahfe.submitForm('${ command.returnUrl }');
 		 	}
 		 else if(formId=="5f1526f6-64cd-4a90-b4ad-24bb9d2d8709"){
 	 		kenyahfe.submitForm('${ command.returnUrl }');
-		 	}		
+		 	} */		
 		});
 	
 </script>
