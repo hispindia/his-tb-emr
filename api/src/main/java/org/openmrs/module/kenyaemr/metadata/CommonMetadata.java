@@ -75,6 +75,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String NAP_ART_REGISTRATION_NUMBER = Metadata.IdentifierType.NAP_ART_REGISTRATION_NUMBER;
 		public static final String ART_REGISTRATION_NUMBER = Metadata.IdentifierType.ART_REGISTRATION_NUMBER;
 		public static final String SYSTEM_PATIENT_ID = Metadata.IdentifierType.SYSTEM_PATIENT_ID;
+		public static final String MDR_TB_REGISTRATION_NUMBER = Metadata.IdentifierType.MDR_TB_REGISTRATION_NUMBER;
 	}
 
 	public static final class _PersonAttributeType {
@@ -161,7 +162,16 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(patientIdentifierType("National ID", "Kenyan national identity card number",
 				"\\d{5,10}", "Between 5 and 10 consecutive digits", null,
 				LocationBehavior.NOT_USED, false, _PatientIdentifierType.NATIONAL_ID));
+		install(patientIdentifierType("DR TB Suspect Number", "Identifier for dr tb suspect number",
+				null, null, null,
+				LocationBehavior.NOT_USED, false, _PatientIdentifierType.DR_TB_SUSPECT_NUMBER));
+		install(patientIdentifierType("MDR TB registration Number", "Identifier for dr tb suspect number",
+				null, null, null,
+				LocationBehavior.NOT_USED, false, _PatientIdentifierType.MDR_TB_REGISTRATION_NUMBER));
 
+
+		
+		
 		install(personAttributeType("Telephone contact", "Telephone contact number",
 				String.class, null, false, 1.0, _PersonAttributeType.TELEPHONE_CONTACT));
 		install(personAttributeType("Email address", "Email address of person",

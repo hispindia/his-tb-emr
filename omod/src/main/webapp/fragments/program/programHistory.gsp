@@ -43,13 +43,9 @@
 <% if (currentEnrollment || patientIsEligible) { %>
 <div class="ke-panel-footer">
 	<% if (currentEnrollment) { %>
-		<% if (defaultEnrollmentForm.targetUuid == 'e4b506c1-7379-42b6-a374-284469cba8da') { %>	
+		<% if(defaultEnrollmentForm.targetUuid == '89994550-9939-40f3-afa6-173bce445c79') { %>	
 			<button type="button" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "enterForm", [ patientId: patient.id, formUuid: defaultCompletionForm.targetUuid, appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/discontinue.png") }" /> End of Follow up
-			</button>
-		<% } else if (defaultEnrollmentForm.targetUuid == '5f1526f6-64cd-4a90-b4ad-24bb9d2d8709') { %>	
-			<button type="button" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "enterForm", [ patientId: patient.id, formUuid: defaultCompletionForm.targetUuid, appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/discontinue.png") }" /> Stop ART
+				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/discontinue.png") }" /> Stop Enrollment
 			</button>	
 		<% } else{ %>
 			<button type="button" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "enterForm", [ patientId: patient.id, formUuid: defaultCompletionForm.targetUuid, appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">
@@ -59,17 +55,9 @@
 				
 	<% } else if (patientIsEligible) { %>
 
-		<% if (defaultEnrollmentForm.targetUuid == 'e4b506c1-7379-42b6-a374-284469cba8da') { %>	
+		<% if (defaultEnrollmentForm.targetUuid == '89994550-9939-40f3-afa6-173bce445c79' && artEncounter=="TB Discontinuation") { %>	
 			<button type="button" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "enterForm", [ patientId: patient.id, formUuid: defaultEnrollmentForm.targetUuid, appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/enroll.png") }" /> Re-Enroll
-			</button>
-		<% } else if (defaultEnrollmentForm.targetUuid == '5f1526f6-64cd-4a90-b4ad-24bb9d2d8709' && artEncounter=="Stop ART") { %>	
-			<button type="button" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "enterForm", [ patientId: patient.id, formUuid: defaultEnrollmentForm.targetUuid, appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/enroll.png") }" /> ReStart ART
-			</button>
-		<% } else if (defaultEnrollmentForm.targetUuid == '5f1526f6-64cd-4a90-b4ad-24bb9d2d8709') { %>	
-			<button type="button" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "enterForm", [ patientId: patient.id, formUuid: defaultEnrollmentForm.targetUuid, appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/enroll.png") }" /> Initiate ART
+				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/enroll.png") }" /> ReEnroll
 			</button>
 		<% } else{ %>
 			<button type="button" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "enterForm", [ patientId: patient.id, formUuid: defaultEnrollmentForm.targetUuid, appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">

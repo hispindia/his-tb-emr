@@ -45,7 +45,7 @@ public class TbMetadata extends AbstractMetadataBundle {
 	}
 
 	public static final class _PatientIdentifierType {
-		public static final String DISTRICT_REG_NUMBER = Metadata.IdentifierType.DISTRICT_REGISTRATION_NUMBER;
+		public static final String MDR_TB_REGISTRATION_NUMBER = Metadata.IdentifierType.MDR_TB_REGISTRATION_NUMBER;
 	}
 
 	public static final class _Program {
@@ -63,13 +63,13 @@ public class TbMetadata extends AbstractMetadataBundle {
 		install(encounterType("TB FollowUp", "Consultation in TB Program", _EncounterType.TB_CONSULTATION));
 
 	//	install(form("TB Screening", null, _EncounterType.TB_SCREENING, "1", _Form.TB_SCREENING));
-		install(form("TB Enrollment", null, _EncounterType.TB_ENROLLMENT, "1", _Form.TB_ENROLLMENT));
-		install(form("TB Discontinuation", null, _EncounterType.TB_DISCONTINUATION, "1", _Form.TB_COMPLETION));
+		install(form("MDR-TB Registration", null, _EncounterType.TB_ENROLLMENT, "1", _Form.TB_ENROLLMENT));
+		install(form("Stop Enrollment", null, _EncounterType.TB_DISCONTINUATION, "1", _Form.TB_COMPLETION));
 		install(form("TB FollowUp" ,null, _EncounterType.TB_CONSULTATION, "1", _Form.TB_FOLLOW_UP));
 
-		install(patientIdentifierType("TB Registration Number", "Assigned to every TB patient",
+		install(patientIdentifierType("MDR TB Registration Number", "Assigned to every TB patient",
 				null, null, null,
-				LocationBehavior.NOT_USED, false, _PatientIdentifierType.DISTRICT_REG_NUMBER));
+				LocationBehavior.NOT_USED, false, _PatientIdentifierType.MDR_TB_REGISTRATION_NUMBER));
 
 		install(program("TB", "Treatment for TB patients", Dictionary.TUBERCULOSIS_TREATMENT_PROGRAM, _Program.TB));
 	}
