@@ -36,7 +36,7 @@ table.tb1 tr th, table.tb1 tr td {
 		jq(document).ready(function(){
 			
 			// show fields with data 
-			fieldIndex = 8; 
+			fieldIndex = 10; 
 			j=1;
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 6){
 				jQuery('#'+j+'-toggleContainer').show();   
@@ -70,7 +70,7 @@ table.tb1 tr th, table.tb1 tr td {
 			
 			
 			// show fields with data 
-			fieldIndex = 29; 
+			fieldIndex = 31; 
 			j=1;
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 3){
 				//alert(document.getElementById("w"+38).value);
@@ -110,7 +110,7 @@ table.tb1 tr th, table.tb1 tr td {
 				});
 
 			// show fields with data 
-			fieldIndex = 77; 
+			fieldIndex = 79; 
 			j=1;
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 6){
 				//alert(document.getElementById("w"+38).value);
@@ -156,12 +156,12 @@ table.tb1 tr th, table.tb1 tr td {
 			if(d!="Invalid Date"){
 			
 				d.setDate(d.getDate() + 280);
-				document.getElementById("w75-display").value =  d.getDate() + "-" + months[d.getMonth()-1] + "-" + d.getFullYear();
-				document.getElementById("w75").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+				document.getElementById("w77-display").value =  d.getDate() + "-" + months[d.getMonth()-1] + "-" + d.getFullYear();
+				document.getElementById("w77").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
 			}
 			else{
-				document.getElementById("w75-display").value =  "";
-				document.getElementById("w75").value = "";
+				document.getElementById("w77-display").value =  "";
+				document.getElementById("w77").value = "";
 			}
 			
 			var da = new Date(getValue('curDate.value'));
@@ -185,18 +185,18 @@ table.tb1 tr th, table.tb1 tr td {
 				if(d!=""){
 					jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
 					d.setDate(d.getDate() + 280);
-					document.getElementById("w75-display").value =  d.getDate() + "-" + months[d.getMonth()-1] + "-" + d.getFullYear();
-					document.getElementById("w75").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+					document.getElementById("w77-display").value =  d.getDate() + "-" + months[d.getMonth()-1] + "-" + d.getFullYear();
+					document.getElementById("w77").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
 					
 				}
 				else{
-					document.getElementById("w75-display").value =  "";
-					document.getElementById("w75").value = "";
+					document.getElementById("w77-display").value =  "";
+					document.getElementById("w77").value = "";
 				}
 			});
-/*			
+			
 			var pbirthdate = new Date("<lookup expression="patient.birthdate" />").getTime();
-
+/*
 			//check if the date of tb treatment already exists
 			var treatmentDate = "<lookup expression="fn.latestObs(1113).valueDate" />"
 
@@ -266,58 +266,25 @@ table.tb1 tr th, table.tb1 tr td {
  				jq('#referredByOptions1 input:radio' ).prop( "checked", false );
  			});
     			
-
+ 			*/	
 			//create some variable that will control the dates on the form not to be earlier than DOB
 			var pbirthdate = new Date("<lookup expression="patient.birthdate" />").getTime();
 			var encounterdate;
-			var dstartoftreatment;
-			var dreferredby;
-			var transferindate;
-			var dfirstenrolled;
-            var treatmentSupporterNumber;
-            var regex = /^\+?\d{7,13}$/
-	*/	
+            
+            
 			beforeSubmit.push (function() {
-	/*			encounterdate = new Date(getValue('encounter-date.value')).getTime();
-       			datestartoftreatment = new Date(getValue('dstartoftreatment.value')).getTime();
-       			dreferredby = new Date(getValue('datereferredby.value')).getTime();
-       			transferindate  = new Date(getValue('transferindate.value')).getTime();
-       			dfirstenrolled = new Date(getValue('datefirstenrolled.value')).getTime();
-                treatmentSupporterNumber = getValue('treatmentSupportedNumber.value');
-
-                if (treatmentSupporterNumber != '' &amp;&amp; !regex.test(treatmentSupporterNumber)){
-                    jq('#treatmentsupportError').html('Please provide valid phone Number');
-                    return false;
-                }
-
-       			if (encounterdate &lt; pbirthdate) {
+				encounterdate = new Date(getValue('encounter-date.value')).getTime();
+				if(!getValue('dclassification.value')){
+					getField('dclassification.error').html('Required').show();
+                   	return false
+				}
+/*
+				if (encounterdate &lt; pbirthdate) {
                		getField('encounter-date.error').html('Encounter datetime should be after the birth date').show();
                    	return false
          		}
-         		
-          		if (datestartoftreatment &lt; pbirthdate) {
-          			jq('#startOfTreatmentDateError').show();
-               		jq('#startOfTreatmentDateError').html('Date start of treatment should be after the birth date');
-                   	return false
-         		}
-         	         
-        		if (dreferredby &lt; pbirthdate) {
-        			jq('#referalDateError').show();
-               		jq('#referalDateError').html('Date referred by should be after the birth date');
-                   	return false
-         		}
-         		
-         		if (transferindate &lt; pbirthdate) {
-         			jq('#transferInDatesError').show();
-               		jq('#transferInDatesError').html('Transfer in date should be after the birth date');
-                   	return false
-         		}
-          		if (dfirstenrolled &lt; pbirthdate){
-          			jq('#transferInDatesError').show();
-               		jq('#transferInDatesError').html('Date first enrolled should be after the birth date');
-                   	return false
-         		}
 */
+       			
     			return true;
 			});
 			//try add load treatment supporter's information if available from other places for this patient
@@ -360,13 +327,11 @@ table.tb1 tr th, table.tb1 tr td {
 			}
 		});
 	</script>
-<div class="ke-form-header">
-	<table width="100%">
-		<tr>
-			<td>Date <encounterDate id="encounter-date" showTime="true" /></td>
-		</tr>
-	</table>
-</div>
+	
+	<div style="display:none">
+		<encounterDate id="encounter-date" showTime="true" />
+		<encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" />
+	</div>
 
 <div class="ke-form-content">
 	<table align="center" border="0" class="tb" cellspacing="10">
@@ -384,9 +349,9 @@ table.tb1 tr th, table.tb1 tr td {
 				</h5>
 				<table class="tb1" border="0" width="100%">
 					<tr>
-						<td>Disease Classification</td>
+						<td>Disease Classification </td>
 						<td><obs conceptId="160040AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-								style="radio" id="dclassification" /></td>
+								style="radio" id="dclassification"  /></td>
 					</tr>
 					<tr>
 						<td>If Extra -pulmonary, specific site</td>
@@ -414,7 +379,7 @@ table.tb1 tr th, table.tb1 tr td {
 								conceptId="160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
 					</tr>
 					<tr>
-						<td>MDR-TB registration number</td>
+						<td>MDR-TB registration number </td>
 						<td><patient field="identifier"
 								identifierTypeId="d8ee3b8c-a8fc-4d6b-af6a-9423be5f8906"
 								required="false" /></td>
