@@ -12,6 +12,8 @@
 				<span class="ke-identifier-type">{{ identifier.identifierType }}</span>
 				<span class="ke-identifier-value">{{ identifier.identifier }}</span>
 			</div>
+			
+				<strong>{{ patient.township }}</strong>
 		</td>
 		<td style="text-align: right; vertical-align: top; width: 33%">
 			<div class="ke-visittag" ng-if="patient.activeVisit">

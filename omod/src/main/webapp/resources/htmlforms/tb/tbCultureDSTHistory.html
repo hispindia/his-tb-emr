@@ -12,6 +12,70 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
 -->
 <htmlform>
+<style>
+th, td, tr, table{
+	padding: 5px 10px 5px 5px;
+	}
+	
+	table{
+	margin-left: 15px;
+	}
+	
+	tbody{
+	padding-left: 0px !important;
+	}
+select{
+	width: 80%; 
+     box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+	}
+	input[type=text]{
+	 width: 80%; 
+     box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
+	}
+	input[type=button], button{
+	padding: 5px 10px 5px 5px;
+	margin-right: 15px;
+	min-width: 110px;
+	font-weight:bold;
+	background-color:#d9d9d9 !important;
+	}
+	
+	input[type=radio]{
+	padding: 0 0 0 0;
+	min-width: 20px;
+	font-weight:bold;
+	background-color:#d9d9d9 !important;
+	}
+	#tb {     width: 80%;     }
+
+#tb2 {     width: 80%;     }
+
+#tb tr {     width: 80%;     }
+
+#tb2 tr {     width: 80%;     }
+
+.col1 {     width: 10%;    }
+.col2 {     width: 6%;     }
+.col3 {     width: 6%;     }
+.col4 {     width: 6%;     }
+.col5 {     width: 6%;     }
+.col6 {     width: 6%;     }
+.col7 {     width: 6%;     }
+.col8 {     width: 6%;     }
+.col9 {     width: 6%;     }
+.col10 {     width: 6%;     }
+.col11 {     width: 6%;     }
+.col12 {     width: 10%;     }
+
+#tb, #tb2 {     table-layout: fixed;     }
+#tb td, #tb2 td {     word-wrap: break-word;     }
+#tb th, #tb2 th {     word-wrap: break-word;     }
+	
+</style>
 <script type="text/javascript">
 jq(document).ready(function(){
 	
@@ -67,42 +131,42 @@ jq(document).ready(function(){
 	</div>
 	
 	
-	<div class="ke-form-content" style="select {   width: 40%;   padding: 2px;}" >
+	<div class="ke-form-content"  >
 				<div id="tableFamily">
-				<table  width="75%" style="background-color: #e8efdc"  align="center"  cellspacing="10">
+				<table  width="80%" style="background-color: #e8efdc"  align="center"  cellspacing="10" >
 					<tr>
 						
-						<th class="col1" style="background-color: #696969; color: #ffffff;"><center>Date</center></th>
-						<th class="col2" style="background-color: #696969; color: #ffffff;"><center>S</center></th>
-						<th class="col3" style="background-color: #696969; color: #ffffff;"><center>H</center></th>
-						<th class="col4" style="background-color: #696969; color: #ffffff;"><center>R</center></th>
-						<th class="col5" style="background-color: #696969; color: #ffffff;"><center>Z</center></th>
-						<th class="col6" style="background-color: #696969; color: #ffffff;"><center>E</center></th>
-						<th class="col7" style="background-color: #696969; color: #ffffff;"><center>Pto/Eto</center></th>
-						<th class="col7" style="background-color: #696969; color: #ffffff;"><center>Cm</center></th>
-						<th class="col7" style="background-color: #696969; color: #ffffff;"><center>Oflox</center></th>
-						<th class="col7" style="background-color: #696969; color: #ffffff;"><center>Km/Amk</center></th>
-						<th class="col7" style="background-color: #696969; color: #ffffff;"><center>Other</center></th>
-						<th></th>
+						<th align="center" class="col1" style="background-color: #696969; color: #ffffff;"><center>Date</center></th>
+						<th align="center" class="col2" style="background-color: #696969; color: #ffffff;"><center>S</center></th>
+						<th align="center" class="col3" style="background-color: #696969; color: #ffffff;"><center>H</center></th>
+						<th align="center" class="col4" style="background-color: #696969; color: #ffffff;"><center>R</center></th>
+						<th align="center" class="col5" style="background-color: #696969; color: #ffffff;"><center>Z</center></th>
+						<th align="center" class="col6" style="background-color: #696969; color: #ffffff;"><center>E</center></th>
+						<th align="center" class="col7" style="background-color: #696969; color: #ffffff;"><center>Pto/Eto</center></th>
+						<th align="center" class="col8" style="background-color: #696969; color: #ffffff;"><center>Cm</center></th>
+						<th align="center" class="col9" style="background-color: #696969; color: #ffffff;"><center>Oflox</center></th>
+						<th align="center" class="col10" style="background-color: #696969; color: #ffffff;"><center>Km/Amk</center></th>
+						<th align="center" class="col11" style="background-color: #696969; color: #ffffff;"><center>Other</center></th>
+						<th align="center" class="col12" style="background-color: #696969; color: #ffffff;"></th>
 					</tr>
 					<repeat>
 						<template>
 							<obsgroup groupingConceptId="152057AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
 								<div id="{n}-toggleContainer" style="display:none;">
-									<table  width="75%">
+									<table  width="80%">
 										<tr  style="border:1px solid black;background-color: #e8efdc">
-											<td class="col1"><center>{n}.<obs conceptId="1428AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></center></td>
-											<td class="col2"><center><obs conceptId="84360AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown"/></center></td>
-											<td class="col3"><center><obs conceptId="78280AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown"  /> </center></td>
-											<td class="col4"><center><obs conceptId="767AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
-											<td class="col5"><center><obs conceptId="82900AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
-											<td class="col6"><center><obs conceptId="75948AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
-											<td class="col6"><center><obs conceptId="1393AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
-											<td class="col6"><center><obs conceptId="162185AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
-											<td class="col6"><center><obs conceptId="81022AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
-											<td class="col6"><center><obs conceptId="138201AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
-											<td class="col6"><center><obs conceptId="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></center></td>
-											<td class="col7"><center><button id="{n}-addEntry" class="addEntry">Add</button><button id="{n}-removeEntry" class="removeEntry">Remove</button></center></td> 
+											<td align="center" class="col1"><center>{n}.<obs conceptId="1428AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></center></td>
+											<td align="center" class="col2"><center><obs conceptId="84360AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown"/></center></td>
+											<td align="center" class="col3"><center><obs conceptId="78280AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown"  /> </center></td>
+											<td align="center" class="col4"><center><obs conceptId="767AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
+											<td align="center" class="col5"><center><obs conceptId="82900AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
+											<td align="center" class="col6"><center><obs conceptId="75948AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
+											<td align="center" class="col7"><center><obs conceptId="1393AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
+											<td align="center" class="col8"><center><obs conceptId="162185AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
+											<td align="center" class="col9"><center><obs conceptId="81022AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
+											<td align="center" class="col10"><center><obs conceptId="138201AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="dropdown" /></center></td>
+											<td align="center" class="col11"><center><obs conceptId="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></center></td>
+											<td align="center" class="col12"><center><button id="{n}-addEntry" class="addEntry">Add</button><button id="{n}-removeEntry" class="removeEntry">Remove</button></center></td> 
 										</tr>
 									</table>	
 								</div>

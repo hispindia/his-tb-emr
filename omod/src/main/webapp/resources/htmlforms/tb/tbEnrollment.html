@@ -15,7 +15,7 @@
 
 <style type="text/css">
 table.tb {
-	background-color: #FFFFCC;
+	background-color: #c7d8a7;
 	border: 1px solid black;
 }
 
@@ -23,7 +23,7 @@ table.tb1 {
 	border: 1px solid black;
 	vertical-align: baseline;
 	text-align: left;
-	background-color: #FFFFFF;
+	background-color: #e8efdc;
 }
 
 table.tb1 tr th, table.tb1 tr td {
@@ -68,9 +68,14 @@ table.tb1 tr th, table.tb1 tr td {
 				return false;
 				});
 			
-			
+		
 			// show fields with data 
-			fieldIndex = 31; 
+			if( getValue('regGroup.value')!=null){
+				fieldIndex = 81;
+			}
+			else{
+				fieldIndex = 31;
+			}
 			j=1;
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 3){
 				//alert(document.getElementById("w"+38).value);
@@ -78,6 +83,7 @@ table.tb1 tr th, table.tb1 tr td {
 				fieldIndex=fieldIndex+6;
 				if(document.getElementById("w"+fieldIndex).value != '')
 					{
+					alert(fieldIndex);
 				$j('#'+j+'-removeEntry1').toggle(false);
 				$j('#'+j+'-addEntry1').toggle(false);
 					}
@@ -110,7 +116,7 @@ table.tb1 tr th, table.tb1 tr td {
 				});
 
 			// show fields with data 
-			fieldIndex = 79; 
+			fieldIndex = 77; 
 			j=1;
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 6){
 				//alert(document.getElementById("w"+38).value);
@@ -194,9 +200,9 @@ table.tb1 tr th, table.tb1 tr td {
 					document.getElementById("w77").value = "";
 				}
 			});
-			
+/*			
 			var pbirthdate = new Date("<lookup expression="patient.birthdate" />").getTime();
-/*
+
 			//check if the date of tb treatment already exists
 			var treatmentDate = "<lookup expression="fn.latestObs(1113).valueDate" />"
 
@@ -266,25 +272,58 @@ table.tb1 tr th, table.tb1 tr td {
  				jq('#referredByOptions1 input:radio' ).prop( "checked", false );
  			});
     			
- 			*/	
+
 			//create some variable that will control the dates on the form not to be earlier than DOB
 			var pbirthdate = new Date("<lookup expression="patient.birthdate" />").getTime();
 			var encounterdate;
-            
-            
+			var dstartoftreatment;
+			var dreferredby;
+			var transferindate;
+			var dfirstenrolled;
+            var treatmentSupporterNumber;
+            var regex = /^\+?\d{7,13}$/
+	*/	
 			beforeSubmit.push (function() {
-				encounterdate = new Date(getValue('encounter-date.value')).getTime();
-				if(!getValue('dclassification.value')){
-					getField('dclassification.error').html('Required').show();
-                   	return false
-				}
-/*
-				if (encounterdate &lt; pbirthdate) {
+	/*			encounterdate = new Date(getValue('encounter-date.value')).getTime();
+       			datestartoftreatment = new Date(getValue('dstartoftreatment.value')).getTime();
+       			dreferredby = new Date(getValue('datereferredby.value')).getTime();
+       			transferindate  = new Date(getValue('transferindate.value')).getTime();
+       			dfirstenrolled = new Date(getValue('datefirstenrolled.value')).getTime();
+                treatmentSupporterNumber = getValue('treatmentSupportedNumber.value');
+
+                if (treatmentSupporterNumber != '' &amp;&amp; !regex.test(treatmentSupporterNumber)){
+                    jq('#treatmentsupportError').html('Please provide valid phone Number');
+                    return false;
+                }
+
+       			if (encounterdate &lt; pbirthdate) {
                		getField('encounter-date.error').html('Encounter datetime should be after the birth date').show();
                    	return false
          		}
+         		
+          		if (datestartoftreatment &lt; pbirthdate) {
+          			jq('#startOfTreatmentDateError').show();
+               		jq('#startOfTreatmentDateError').html('Date start of treatment should be after the birth date');
+                   	return false
+         		}
+         	         
+        		if (dreferredby &lt; pbirthdate) {
+        			jq('#referalDateError').show();
+               		jq('#referalDateError').html('Date referred by should be after the birth date');
+                   	return false
+         		}
+         		
+         		if (transferindate &lt; pbirthdate) {
+         			jq('#transferInDatesError').show();
+               		jq('#transferInDatesError').html('Transfer in date should be after the birth date');
+                   	return false
+         		}
+          		if (dfirstenrolled &lt; pbirthdate){
+          			jq('#transferInDatesError').show();
+               		jq('#transferInDatesError').html('Date first enrolled should be after the birth date');
+                   	return false
+         		}
 */
-       			
     			return true;
 			});
 			//try add load treatment supporter's information if available from other places for this patient
@@ -326,15 +365,15 @@ table.tb1 tr th, table.tb1 tr td {
 				mbdCalculation();	
 			}
 		});
+		
 	</script>
-	
 	<div style="display:none">
 		<encounterDate id="encounter-date" showTime="true" />
 		<encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" />
 	</div>
 
 <div class="ke-form-content">
-	<table align="center" border="0" class="tb" cellspacing="10">
+	<table width="80%" align="center" border="0" class="tb" cellspacing="10">
 		<tr>
 			<td colspan="2">
 				<div class="ke-form-instructions">
@@ -343,20 +382,24 @@ table.tb1 tr th, table.tb1 tr td {
 			</td>
 		</tr>
 		<tr>
-			<td valign="top">
+			<td align="center" colspan="2"> 
 				<h5>
 					<b>MDR-TB Information</b>
 				</h5>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%" valign="top">
 				<table class="tb1" border="0" width="100%">
 					<tr>
-						<td>Disease Classification </td>
+						<td>Disease Classification</td>
 						<td><obs conceptId="160040AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-								style="radio" id="dclassification"  /></td>
+								style="radio" id="dclassification" /></td>
 					</tr>
 					<tr>
 						<td>If Extra -pulmonary, specific site</td>
 						<td>
-							<table>
+							<table width="80%">
 								<obsgroup
 									groupingConceptId="161357AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
 								<repeat> <template>
@@ -379,10 +422,10 @@ table.tb1 tr th, table.tb1 tr td {
 								conceptId="160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
 					</tr>
 					<tr>
-						<td>MDR-TB registration number </td>
-						<td><patient field="identifier"
+						<td>MDR-TB registration number</td>
+						<td ><patient field="identifier"
 								identifierTypeId="d8ee3b8c-a8fc-4d6b-af6a-9423be5f8906"
-								required="false" /></td>
+								required="true" /></td>
 					</tr>
 					<tr>
 						<td>Date of the MDR-TB registration number</td>
@@ -396,7 +439,12 @@ table.tb1 tr th, table.tb1 tr td {
 						<td>Date of getting the hospital number</td>
 						<td><obs conceptId="1818AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
 					</tr>
-					<tr>
+				</table>
+			</td>
+			<td width="50%" valign="top">
+				<fieldset>
+					<table  class="tb1" border="0" width="100%"> 
+						<tr>
 						<td colspan="2">
 							<table>
 								<tr>
@@ -437,7 +485,7 @@ table.tb1 tr th, table.tb1 tr td {
 					</tr>
 					<tr>
 						<td>Registration group</td>
-						<td><obs conceptId="159976AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+						<td><obs conceptId="159976AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" required="true" id="regGroup"/></td>
 					</tr>
 					<tr>
 						<td>Contact of MDR-TB cases</td>
@@ -448,9 +496,14 @@ table.tb1 tr th, table.tb1 tr td {
 						<td>Treatment centre</td>
 						<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba" /></td>
 					</tr>
-				</table>
+					</table>
+				</fieldset>
 			</td>
-			<td valign="top">
+		</tr>
+		<tr id="topMost">
+			<td width="50%" valign="top">
+				
+			
 				<fieldset>
 					<h5>
 						<b>HIV Information</b>
@@ -459,7 +512,7 @@ table.tb1 tr th, table.tb1 tr td {
 						<tr>
 							<td>HIV testing done</td>
 							<td><obs conceptId="159938AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" /></td>
+									style="radio" required="true"/></td>
 						</tr>
 						<tr>
 							<td>Date of test</td>
@@ -507,11 +560,9 @@ table.tb1 tr th, table.tb1 tr td {
 						</tr>
 					</table>
 				</fieldset>
-			</td>
-		</tr>
-		<tr id="topMost">
+				</td>
 			<td valign="top">
-				<fieldset>
+			<fieldset>
 					<h5>
 						<b>Other medical information</b>
 					</h5>
@@ -556,14 +607,12 @@ table.tb1 tr th, table.tb1 tr td {
 						<tr>
 							<td>Drug Allergy</td>
 							<td><obs conceptId="141760AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" /></td>
+									style="radio" required="true"/></td>
 						</tr>
 						<tr>
 							<td>If yes, name of drug</td>
 							<td><obs conceptId="06ba79f6-7344-456a-8265-35f87d43394f" /></td>
 						</tr>
-
-
 					</table>
 				</fieldset>
 			</td>

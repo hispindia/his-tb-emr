@@ -7,7 +7,7 @@
 
 	def id = config.id ?: ui.generateId();
 %>
-<form id="${ id }" ng-controller="PatientSearchForm2" ng-init="init('${ defaultWhich }')">
+<form id="${ id }" ng-controller="PatientSearchForm2" ng-init="init('${ defaultWhich }')"  >
 	<label  class="ke-field-label">Which patients</label>
 	<span class="ke-field-content">
 		<input type="radio" ng-model="which" ng-change="updateSearch()" value="all" /> All
@@ -25,8 +25,13 @@
 	
 	<label class="ke-field-label">Scheduled Date</label>
 	<span class="ke-field-content">
-	${ ui.includeFragment("kenyaui", "field/java.util.Date" ,[id:'scheduledDate',  formFieldName:'date', showTime: false])}
-	
+		${ ui.includeFragment("kenyaui", "field/java.util.Date" ,[id:'scheduledDate',  formFieldName:'date', showTime: false])}
 	</span>
+
+	<label class="ke-field-label">Township</label>
+	<span class="ke-field-content">
+		<input type="text" name="township" ng-model="township" ng-change="updateSearch()" style="width: 260px" />
+	</span>
+
 	<input type="button" value="Search" ng-click="updateSearch();"/>
 </form>

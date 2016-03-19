@@ -115,7 +115,6 @@ public class SearchFragmentController {
 			@RequestParam(value = "q", required = false) String query,
 			@RequestParam(value = "which", required = false, defaultValue = "all") String which,
 			UiUtils ui) {
-
 		log.error("search normal");
 		// Return empty list if we don't have enough input to search on
 		if (StringUtils.isBlank(query) && "all".equals(which)) {
@@ -207,6 +206,7 @@ public class SearchFragmentController {
 			@RequestParam(value = "date", required = false) String date,
 			@RequestParam(value = "q", required = false) String query,
 			@RequestParam(value = "which", required = false, defaultValue = "all") String which,
+			@RequestParam(value = "township", required = false) String township,
 			UiUtils ui) {
 		// log.error("info search patient query: " +query);
 		Date scheduledDate = null;
