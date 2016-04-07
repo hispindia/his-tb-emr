@@ -12,164 +12,137 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
 -->
 <htmlform>
-    <style type="text/css">
-		
-		table.tb1 {
-			border: 1px solid black;
-			vertical-align: baseline;
-			text-align: left;
-			background-color: #FFFFFF;
-		}
-		table.tb1 tr th,table.tb1 tr td{
-			border: 0;
-			padding: 5px;
-		}
-		
 
-	</style>
-    <script type="text/javascript">
-		var value1;
+<style type="text/css">
+table.tb1 {
+	border: 1px solid black;
+	vertical-align: baseline;
+	text-align: left;
+	background-color: #FFFFFF;
+}
+
+table.tb1 tr th, table.tb1 tr td {
+	border: 0;
+	padding: 5px;
+}
+</style>
+<script type="text/javascript">
+	
 		jq(document).ready(function(){
+			// show fields with data 
+			// show fields with data 
+			fieldIndex = 8; 
+			j=1;
+			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 10){
+				jQuery('#'+j+'-toggleContainer').show();   
+				fieldIndex=fieldIndex+10;
+				if(document.getElementById("w"+fieldIndex).value != '')
+				{
+			$j('#'+j+'-removeEntry').toggle(false);
+			$j('#'+j+'-addEntry').toggle(false);
+				}
+				j++;
+			}
+			//jQuery('#'+i+'-toggleContainer').show();
 			
-		beforeSubmit.push(function() {
-			return true;	
-		});
+			$j('#1-removeEntry').remove();
+			$j('#8-addEntry').remove();
+			$j('#1-toggleContainer').show();
+			
+			
+			$j('button.addEntry').on("click", function(){
+				var correctedAddButtonId = parseFloat(this.id) + 1;      
+				var contentAddId = "#" + correctedAddButtonId + "-toggleContainer";
+				$j(contentAddId).toggle(true);      
+				$j('#' + this.id).toggle(false); 
+				$j('#' + parseFloat(this.id) + '-removeEntry').toggle(false);
+				return false;});    
+			 
+			$j('button.removeEntry').on("click", function(){ 
+				var correctedRemoveButtonId = parseFloat(this.id) - 1;
+				var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer";
+				$j(contentAddId).toggle(false);
+				$j( ':input:not(:button)', contentAddId).val([]);
+				$j('#' + correctedRemoveButtonId + '-addEntry').toggle(true);
+				$j('#' + correctedRemoveButtonId + '-removeEntry').toggle(true);
+				return false;
+				});
+			
+			
 		});
 	</script>
-		
-	<div class="ke-form-header">
-		<table width="100%" align="center" style="background-color: #c7d8a7">
-			<tr>
-				<td align="left">Date: <encounterDate id="encounter-date" showTime="true"/></td>
-				<td align="right">Location: <encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" type="autocomplete" /></td>
-			</tr>
-		</table>
-	</div>
-   
-		<div class="ke-form-content" style="width: 100%;   padding: 2px;">
-		<table style="background-color: #e8efdc" align="center"  class="tb1" cellspacing="10" width="20%">   
+
+<div class="ke-form-header">
+	<table width="100%" align="center" style="background-color: #c7d8a7">
 		<tr>
-		 <td><b>OI Treatment</b></td>
-		 </tr>
-		
-		<tr><th><input type="text" id="drugNameah" name="drugNameah" size="20" value="Drug Name" disabled="disabled"/></th>
-		<th><input type="text" id="strengthah" name="strengthah" size="20" value="Strength" disabled="disabled"/></th>
-        <th><input type="text" id="formulationah" name="formulationah" size="12" value="Unit" disabled="disabled"/></th>
-        <th><input type="text" id="frequencyah" name="frequencyah" size="20" value="Frequency" disabled="disabled"/></th>
-        <th><input type="text" id="durationah" name="durationah" size="20" value="Duration (in days)" disabled="disabled"/></th></tr>
-			<repeat>
-				<template>
-					<obsgroup groupingConceptId="163021AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-					<div>
-						    <tr><td><obs conceptId="163079AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="autocomplete" size="20" /></td>
-							<td><obs conceptId="1443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="20" /></td>
-							<td><obs conceptId="162384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labetText=""  /></td>
-							<td>
-								<obs 
-									conceptId="160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									answerConceptIds="160862AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160864AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160865AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160858AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160866AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160870AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									answerLabels="Once daily,Once daily at bedtime,Once daily in the evening,Once daily in the morning,Twice daily,Thrice daily,Four times daily" 
-								size="0"/>
-							</td>
-							<td><obs conceptId="159368AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="20" /></td></tr>
-						
-						</div>
-					</obsgroup>
-					
-				</template>
-				<render />
-				<render />
-				<render />
-				<render />
-				<render />
-			</repeat>
-			</table>
-			</div>
-			<tr>
-		    <td colspan="5"><hr /></td>
-		    </tr>
-		 
-			
-		   <div class="ke-form-content" style="width: 100%;   padding: 2px;">
-		<table style="background-color: #e8efdc" align="center"  class="tb1" cellspacing="10" width="20%">   
+			<td align="left">Date: <encounterDate id="encounter-date"
+					showTime="true" /></td>
+			<td align="right">Location: <encounterLocation
+					default="GlobalProperty:kenyaemr.defaultLocation"
+					type="autocomplete" /></td>
+		</tr>
+	</table>
+</div>
+
+<div class="ke-form-content" style="width: 100%; padding: 2px;">
+	<table style="background-color: #e8efdc" align="center" class="tb1"
+		cellspacing="10" width="60%">
+
 		<tr>
-		    <td><b>Prophylaxis</b></td>
-		    </tr>
-		   <tr><th><input type="text" id="drugNameah" name="drugNameah" size="20" value="Drug Name" disabled="disabled"/></th>
-		   <th><input type="text" id="strengthah" name="strengthah" size="12" value="Strength" disabled="disabled"/></th>
-		   <th><input type="text" id="formulationah" name="formulationah" size="20" value="Unit" disabled="disabled"/></th>
-           <th><input type="text" id="frequencyah" name="frequencyah" size="26" value="Frequency" disabled="disabled"/></th>
-          <th><input type="text" id="durationah" name="durationah" size="20" value="Duration (in days)" disabled="disabled"/></th></tr>
-		    <repeat>
-				<template>
-					<obsgroup groupingConceptId="163022AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-						<div>
-							<tr><td><obs conceptId="163096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="autocomplete" size="20"/></td>
-							<td><obs conceptId="1443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="20" /></td>
-							<td><obs conceptId="162384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labetText="" /></td>
-							<td>
-								<obs
-									conceptId="160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+			<td>
+				<table
+					style="background-color: #e8efdc; margin-left: 0px !important;">
+					<tr>
+						<th colspan="6"><center>Other Medical Order</center></th>
+					</tr>
+					<tr>
+						<th><center>Drug Name</center></th>
+						<th><center>Strength</center></th>
+						<th><center>Unit</center></th>
+						<th><center>Frequency</center></th>
+						<th><center>Duration</center></th>
+						<th></th>
+					</tr>
+					<tr>
+						<repeat> <template> <obsgroup
+							groupingConceptId="163021AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+						<tr id="{n}-toggleContainer" style="display: none;">
+							<td><obs conceptId="163020AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="autocomplete" size="20" /></td>
+							<td><obs conceptId="1443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									size="20" /></td>
+							<td><obs conceptId="162384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									labetText="" /></td>
+							<td><obs conceptId="160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 									answerConceptIds="160862AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160864AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160865AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160858AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160866AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160870AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 									answerLabels="Once daily,Once daily at bedtime,Once daily in the evening,Once daily in the morning,Twice daily,Thrice daily,Four times daily"
-								size="0"/></td>
-							
-							<td><obs conceptId="159368AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="20" /></td></tr>
-						</div>
+									size="0" /></td>
+							<td><obs conceptId="159368AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									size="20" /></td>
+							<td><button id="{n}-addEntry" class="addEntry">Add</button>
+								<button id="{n}-removeEntry" class="removeEntry">Remove</button></td>
+					</tr>
 					</obsgroup>
-				</template>
-				<render />
-				<render />
-				<render />
-				<render />
-				<render />
-			</repeat>
-			</table>
-			<tr>
-		    <td colspan="5"><hr /></td>
-		    </tr>
-			
-		    </div>
-			
-		    <div class="ke-form-content" style="width:100%;   padding: 2px;">
-		<table style="background-color: #e8efdc" align="center"  class="tb1" cellspacing="10" width="20%">   
-		<tr>
-		    <td><b>Other Treatment</b></td>
-		    </tr>
-		    <tr><th><input type="text" id="drugNameah" name="drugNameah" size="20" value="Drug Name" disabled="disabled"/></th>
-		   <th><input type="text" id="strengthah" name="strengthah" size="20" value="Strength" disabled="disabled"/></th>
-         <th><input type="text" id="formulationah" name="formulationah" size="12" value="Unit" disabled="disabled"/></th>
-           <th><input type="text" id="frequencyah" name="frequencyah" size="26" value="Frequency" disabled="disabled"/></th>
-          <th><input type="text" id="durationah" name="durationah" size="20" value="Duration (in days)" disabled="disabled"/></th></tr>
-		    <repeat>
-				<template>
-					<obsgroup groupingConceptId="163023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-						    <div>
-							<tr><td><obs conceptId="163096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="autocomplete" size="20"/></td>
-							<td><obs conceptId="1443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="20" /></td>
-							<td><obs conceptId="162384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labetText="" /></td>
-							<td>
-								<obs
-									conceptId="160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									answerConceptIds="160862AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160864AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160865AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160858AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160866AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160870AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									answerLabels="Once daily,Once daily at bedtime,Once daily in the evening,Once daily in the morning,Twice daily,Thrice daily,Four times daily"
-								size="0"/></td>
-							
-							<td><obs conceptId="159368AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="20" /></td></tr>
-						</div>
-					</obsgroup>
-				</template>
-				<render />
-				<render />
-				<render />
-				<render />
-				<render />
-			</repeat>
-		</table>
-	</div>
-	
-	<div class="ke-form-footer">
-		<submit />
-	</div>
+					</template>
+					<render n="1" concept=" " />
+					<render n="2" concept=" " />
+					<render n="3" concept=" " />
+					<render n="4" concept=" " />
+					<render n="5" concept=" " />
+					<render n="6" concept=" " />
+					<render n="7" concept=" " />
+					<render n="8" concept=" " />
+					</repeat>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<div class="ke-form-footer">
+	<submit />
+</div>
 
 </htmlform>

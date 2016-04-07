@@ -1,0 +1,143 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+-->
+<htmlform>
+
+<style type="text/css">
+table.tb1 {
+	border: 1px solid black;
+	vertical-align: baseline;
+	text-align: left;
+	background-color: #FFFFFF;
+}
+
+table.tb1 tr th, table.tb1 tr td {
+	border: 0;
+	padding: 5px;
+}
+</style>
+<script type="text/javascript">
+	
+		jq(document).ready(function(){
+			// show fields with data 
+			// show fields with data 
+			fieldIndex = 8; 
+			j=1;
+			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 10){
+				jQuery('#'+j+'-toggleContainer').show();   
+				fieldIndex=fieldIndex+10;
+				if(document.getElementById("w"+fieldIndex).value != '')
+				{
+			$j('#'+j+'-removeEntry').toggle(false);
+			$j('#'+j+'-addEntry').toggle(false);
+				}
+				j++;
+			}
+			//jQuery('#'+i+'-toggleContainer').show();
+			
+			$j('#1-removeEntry').remove();
+			$j('#8-addEntry').remove();
+			$j('#1-toggleContainer').show();
+			
+			
+			$j('button.addEntry').on("click", function(){
+				var correctedAddButtonId = parseFloat(this.id) + 1;      
+				var contentAddId = "#" + correctedAddButtonId + "-toggleContainer";
+				$j(contentAddId).toggle(true);      
+				$j('#' + this.id).toggle(false); 
+				$j('#' + parseFloat(this.id) + '-removeEntry').toggle(false);
+				return false;});    
+			 
+			$j('button.removeEntry').on("click", function(){ 
+				var correctedRemoveButtonId = parseFloat(this.id) - 1;
+				var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer";
+				$j(contentAddId).toggle(false);
+				$j( ':input:not(:button)', contentAddId).val([]);
+				$j('#' + correctedRemoveButtonId + '-addEntry').toggle(true);
+				$j('#' + correctedRemoveButtonId + '-removeEntry').toggle(true);
+				return false;
+				});
+			
+			
+		});
+	</script>
+
+<div class="ke-form-header">
+	<table width="100%" align="center" style="background-color: #c7d8a7">
+		<tr>
+			<td align="left">Date: <encounterDate id="encounter-date"
+					showTime="true" /></td>
+			<td align="right">Location: <encounterLocation
+					default="GlobalProperty:kenyaemr.defaultLocation"
+					type="autocomplete" /></td>
+		</tr>
+	</table>
+</div>
+
+<div class="ke-form-content" style="width: 100%; padding: 2px;">
+	<table style="background-color: #e8efdc" align="center" class="tb1"
+		cellspacing="10" width="60%">
+
+		<tr>
+			<td>
+				<table
+					style="background-color: #e8efdc; margin-left: 0px !important;">
+					<tr>
+						<th colspan="6"><center>Other Medical Order</center></th>
+					</tr>
+					<tr>
+						<th><center>Name of househole</center></th>
+						<th><center>Test for TB</center></th>
+						<th><center>Test Result</center></th>
+						<th><center>Treatment started</center></th>
+						<th></th>
+					</tr>
+					<tr>
+						<repeat> <template> <obsgroup
+							groupingConceptId="163021AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+						<tr id="{n}-toggleContainer" style="display: none;">
+							<td><obs conceptId="163020AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="autocomplete" size="20" /></td>
+							<td><obs conceptId="162384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									labetText="" /></td>
+							<td><obs conceptId="162384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									labetText="" /></td>
+							<td><obs conceptId="162384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									labetText="" /></td>
+							<td><button id="{n}-addEntry" class="addEntry">Add</button>
+								<button id="{n}-removeEntry" class="removeEntry">Remove</button></td>
+					</tr>
+					</obsgroup>
+					</template>
+					<render n="1" concept=" " />
+					<render n="2" concept=" " />
+					<render n="3" concept=" " />
+					<render n="4" concept=" " />
+					<render n="5" concept=" " />
+					<render n="6" concept=" " />
+					<render n="7" concept=" " />
+					<render n="8" concept=" " />
+					</repeat>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<div class="ke-form-footer">
+	<submit />
+</div>
+
+</htmlform>

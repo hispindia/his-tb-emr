@@ -12,20 +12,17 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
 -->
 <htmlform>
-	<style type="text/css">
-		
-		td{
-			 
-			padding: 5px;
-		}
-			input[type=text]{
-			width: 300px;
-	}
-	
-		
+<style type="text/css">
+td {
+	padding: 5px;
+}
 
-	</style>
-	<script type="text/javascript">
+input[type=text] {
+	width: 300px;
+}
+</style>
+
+<script type="text/javascript">
 		jq(document).ready(function(){
 			
 			if (getValue('artSideEffectPresent.value') == 1065) {
@@ -77,56 +74,119 @@
 					jq('#admittedId :input').prop('disabled', true);
 				}
 			});
-
+			jq("#appointmentafterDate").change(function() {
+				var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+		    	var date = new Date();
+		    	if (getValue('appointmentafterDate.value')=="1750")  {
+			    	date.setDate(date.getDate() + 7);
+			    }
+		    	if (getValue('appointmentafterDate.value')=="1525")  {
+			    	date.setDate(date.getDate() + 14);
+			    }
+		    	if (getValue('appointmentafterDate.value')=="1791")  {
+			    	date.setDate(date.getDate() + 21);
+			    }
+		    	if (getValue('appointmentafterDate.value')=="1524")  {
+			    	date.setDate(date.getDate() + 30);
+			    }
+		    	
+				var someFormattedDate = date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear();
+		    	if(someFormattedDate!="Invalid Date"){
+			    	document.getElementById("w90-display").value =  date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear();
+					document.getElementById("w90").value = date.getFullYear()  + "-" +  date.getMonth() 	+ "-" + date.getDate();
+		    	}
+		    	else{
+		    		document.getElementById("w90-display").value =  "";
+					document.getElementById("w90").value = "";
+		    	}
+		    	
+			});
 			
 			jq("#w58,#w60,#w62,#w64,#w66,#w68,#w70,#w72,#w74,#w76").change(function() {
-					if(document.getElementById(this.id).value==121629 || document.getElementById(this.id).value==137781 || document.getElementById(this.id).value==133069 || 
-							document.getElementById(this.id).value==119030){
-						alert("Please check AZT is included in the regimen.");
+					if(document.getElementById(this.id).value==111177 ){
+						alert("Please check ANTIBIOTICS is included in the regimen.");
 					}
 					
-					if(document.getElementById(this.id).value==113054 || document.getElementById(this.id).value==162937 || document.getElementById(this.id).value==163027){
-						alert("Please check EFV is included in the regimen.");
+					if(document.getElementById(this.id).value==135842 || document.getElementById(this.id).value==113654 || document.getElementById(this.id).value==163547|| document.getElementById(this.id).value==136162){
+						alert("Please check LINEZOLID is included in the regimen.");
 					}
 					
-					if(document.getElementById(this.id).value==162940 || document.getElementById(this.id).value==162941 || document.getElementById(this.id).value==140520
-					|| document.getElementById(this.id).value==162939){
-						alert("Please check TDF is included in the regimen.");
+					if(document.getElementById(this.id).value==163517 ){
+						alert("Please check Pto/Eto,Gfx is included in the regimen.");
+					}
+					if(document.getElementById(this.id).value==163518){
+						alert("Please check Pto/Eto is included in the regimen.");
+					}
+					if(document.getElementById(this.id).value==117321 || document.getElementById(this.id).value==142412){
+						alert("Please check Pto/Eto, PAS is included in the regimen.");
 					}
 
-					if(document.getElementById(this.id).value==141623 || document.getElementById(this.id).value==163026 || document.getElementById(this.id).value==162938 
-					|| document.getElementById(this.id).value==163076 || document.getElementById(this.id).value==126626){
-						alert("Please check LPV/r is included in the regimen.");
+					if(document.getElementById(this.id).value==121681){
+						alert("Please check H, Eto/Pto is included in the regimen.");
 					}
-
 					
-					if(document.getElementById(this.id).value==159098){
-						alert("Please check EFV, LPV/r, NVP is included in the regimen.");
+					
+					if(document.getElementById(this.id).value==116986|| document.getElementById(this.id).value==163519 || document.getElementById(this.id).value==136443){
+						alert("Please check Z, H, R, Pto/Eto, and PAS is included in the regimen.");
 					}
 
 
-					if(document.getElementById(this.id).value==135761){
-						alert("Please check AZT, d4T, LPV/r is included in the regimen.");
+					if(document.getElementById(this.id).value==133473){
+						alert("Please check Eto/Pto, PAS, H, E, Z, AMX/CLV, Cfz is included in the regimen.");
 					}
 
 		
-					if(document.getElementById(this.id).value==149607){
-						alert("Please check d4T, LPV/r is included in the regimen.");
+					if(document.getElementById(this.id).value==110834 ||document.getElementById(this.id).value==151){
+						alert("Please check PAS, Eto, Pto, Cfz, FQs, H, E, and Z is included in the regimen.");
 					}
 
+					if(document.getElementById(this.id).value==134255){
+						alert("Please check Eto/Pto, Clr, FQs is included in the regimen.");
+					}
+
+					if(document.getElementById(this.id).value==80){
+						alert("Please check Z, Fluoroquinolones is included in the regimen.");
+					}
+					if(document.getElementById(this.id).value==163520){
+						alert("Please check Fluoroquinolones  is included in the regimen.");
+					}
+					if(document.getElementById(this.id).value==117762){
+						alert("Please check Z  is included in the regimen.");
+					}
+					if(document.getElementById(this.id).value==163521||document.getElementById(this.id).value==113338||document.getElementById(this.id).value==163522){
+						alert("Please check S, Km, Am, Cm  is included in the regimen.");
+					}
+					if(document.getElementById(this.id).value==117698){
+						alert("Please check S, Km, Am, Cm, Clr  is included in the regimen.");
+					}
+					if(document.getElementById(this.id).value==163548){
+						alert("Please check S, Km, Am, Cm, Cs, FQs, H Eto, Lzd  is included in the regimen.");
+					}
 					if(document.getElementById(this.id).value==118983){
-						alert("Please check d4T is included in the regimen.");
+						alert("Please check Cs, Lzd, H, S, Km, Cm, H, Fluoroquinolones, Pto/Eto, E  is included in the regimen.");
 					}
-
-					if(document.getElementById(this.id).value==162955){
-						alert("Please check AZT, d4T, TDF is included in the regimen.");
+					
+					if(document.getElementById(this.id).value==162313 || document.getElementById(this.id).value==155190){
+						alert("Please check Cs, H, FQs  is included in the regimen.");
 					}
-					if(document.getElementById(this.id).value==125886){
-						alert("Please check EFV, NVP is included in the regimen.");
+					if(document.getElementById(this.id).value==119537 ){
+						alert("Please check Cs, fluoroquinolones, H, Eto/Pto  is included in the regimen.");
 					}
-
+					if(document.getElementById(this.id).value==125562)
+					{
+						alert("Please check Cs, H, Eto/Pto  is included in the regimen.");
+					}
+					if(document.getElementById(this.id).value==114736 ||document.getElementById(this.id).value==111164)
+						{
+						alert("Please check E, Eto/Pto, Lzd, Cfz, rifabutin, H, S  is included in the regimen.");
+						}
+					if(document.getElementById(this.id).value==128384)
+						{
+						alert("Please check FQs is included in the regimen.");
+						}
+					
 			});
-
+			
 
 
 			beforeSubmit.push(function() {
@@ -286,172 +346,156 @@
 				});
 			
 		});
-		
-		
-		
-		function onWeightOrHeightChange() {
-			var display = '';
-			var doseCount = parseInt(getValue('missedDoseCount.value'));
-			var totalDoseCount = parseInt(getValue('totalDoseCount.value'));
-			
-				var count =  100-((doseCount * 100)/ (totalDoseCount));
-				if(isNaN(count)){
-					display = '<input id="w100" type="text" value="0" name="w100" size="5" autocomplete="off" />';									
-				}
-				else{
-					if(count > 94){
-						display = '<input id="w100" type="text" value=" &gt;95%" name="w100" size="5" autocomplete="off" />';
-					}
-					else if(count > 79){
-						display = '<input id="w100" type="text" value=" 80-95 %" name="w100" size="5" autocomplete="off" />';
-					}
-					else{
-						display = '<input id="w100" type="text" value=" &lt;80%" name="w100" size="5" autocomplete="off" />';
-					}
-				}
-				jQuery('#calculated-adherence').html(display);
-				
-				if(count > 94 ){
-					jq('#reasonForNonAdherence :input').prop('disabled', true);	
-				}
-				else
-					jq('#reasonForNonAdherence :input').prop('disabled', false);
-		}
-		
-		jQuery(function() {
-			getField('missedDoseCount.value').change(onWeightOrHeightChange);
-			getField('totalDoseCount.value').change(onWeightOrHeightChange);
-			onWeightOrHeightChange();
-		});
 	
 	</script>
 
-	<div class="ke-form-header" style="select {   padding: 2px;}">
-		<table width="100%" style="background-color: #c7d8a7">
-			<tr>
-				<td>Date: <encounterDate id="encounter-date" showTime="true" /></td>
-				<td>Location: <encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" type="autocomplete" /></td>
-			</tr>
-		</table>
-	</div>
+<div class="ke-form-header" style="">
+	<table width="100%" style="background-color: #c7d8a7">
+		<tr>
+			<td>Date: <encounterDate id="encounter-date" showTime="true" /></td>
+			<td>Location: <encounterLocation
+					default="GlobalProperty:kenyaemr.defaultLocation"
+					type="autocomplete" /></td>
+		</tr>
+	</table>
+</div>
 
-	<div class="ke-form-content">
-		<fieldset>
-			<table style="background-color: #e8efdc;" width="80%" align="center">
-				<tr>
-					<td style="padding-left:10px;" valign="top">1. Chief complaint: </td>
-					<td>	
-						<table>
-							<repeat>
-								<template>
-										<tr  id="{n}-toggleContainer" style="display:none;">
-											<td><obs conceptId="5219AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="autocomplete" labelText=" "  /></td>
-											<td><button id="{n}-addEntry" class="addEntry">Add</button><button id="{n}-removeEntry" class="removeEntry">Remove</button>
-											</td>
-										</tr>
-								</template>
-								<render n="1" concept=" "/>
-								<render n="2" concept=" "/>
-								<render n="3" concept=" "/>
-								<render n="4" concept=" "/>
-								<render n="5" concept=" "/>
-								<render n="6" concept=" "/>
-								<render n="7" concept=" "/>
-								<render n="8" concept=" "/>
-								<render n="9" concept=" "/>
-								<render n="10" concept=" "/>
-							</repeat>
-						</table>
-					</td>		
-				</tr>
-				<tr>
-					<td style="padding-left:10px;" valign="top">2. History of present illness: </td>
-					<td>
-						<obs conceptId="1390AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" rows="2" cols="100" />
-					</td>
-				</tr>
-				
-				<tr>
-					<td style="padding-left:10px;" valign="top">3. General examination: </td>
-					<td>
-						<obs conceptId="1119AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" rows="2" cols="100" />
-					</td>
-				</tr>
-				
-				<tr>
-					<td style="padding-left:10px;" valign="top">4. Systemic Examination: </td>
-					<td>
-						<obs conceptId="f6139afd-53ab-4e4b-9e44-8f1f564ce772" rows="2" cols="100" />
-					</td>
-				</tr>
-				
-				<tr>
+<div class="ke-form-content">
+	<fieldset>
+		<table style="background-color: #ffffff;" width="80%" align="center">
+			<tr>
+				<td style="padding-left: 10px;" valign="top">1. Chief
+					complaint:</td>
+				<td>
+					<table>
+						<repeat> <template>
+						<tr id="{n}-toggleContainer" style="display: none;">
+							<td><obs conceptId="5219AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="autocomplete" labelText=" " /></td>
+							<td><button id="{n}-addEntry" class="addEntry">Add</button>
+								<button id="{n}-removeEntry" class="removeEntry">Remove</button>
+							</td>
+						</tr>
+						</template> <render n="1" concept=" " /> <render n="2" concept=" " /> <render
+							n="3" concept=" " /> <render n="4" concept=" " /> <render n="5"
+							concept=" " /> <render n="6" concept=" " /> <render n="7"
+							concept=" " /> <render n="8" concept=" " /> <render n="9"
+							concept=" " /> <render n="10" concept=" " /> </repeat>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;" valign="top">2. History of
+					present illness:</td>
+				<td><obs conceptId="1390AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						rows="2" cols="100" /></td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 10px;" valign="top">3. General
+					examination:</td>
+				<td><obs conceptId="1119AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						rows="2" cols="100" /></td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 10px;" valign="top" bgcolor="#FAFAD2">4.
+					Systematic Examination:</td>
+
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;" valign="top">Heart:</td>
+				<td><obs conceptId="151940AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						rows="2" cols="100" /></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;" valign="top">Lungs:</td>
+				<td><obs conceptId="162669AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						rows="2" cols="100" /></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;" valign="top">Abdomen:</td>
+				<td><obs conceptId="162669AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						rows="2" cols="100" /></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;" valign="top">Lymph Node:</td>
+				<td><obs conceptId="c2534416-d179-4b5c-a4fc-0c353fa1f2f9"
+						rows="2" cols="100" /></td>
+			</tr>
+			<!--  	<tr>
 					<td style="padding-left:10px;" valign="top">5. Note: </td>
 					<td>
 						<obs conceptId="162169AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" rows="2" cols="100" />
 					</td>
-				</tr>
-				<tr>
-					<td style="padding-left:10px;" valign="top">6. Diagnosis: </td>
-					<td>	
+				</tr>-->
+			<tr>
+				<td style="padding-left: 10px;" valign="top">5. Neurological
+					Examination:</td>
+				<td><obs conceptId="157992AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						rows="2" cols="100" /></td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 10px;" valign="top">6. Other Findings:
+				</td>
+				<td><obs conceptId=" 	160160AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						rows="2" cols="100" /></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;" valign="top">7. Diagnosis:</td>
+				<td>
+					<table>
+						<obsgroup groupingConceptId="50ea66b0-77a0-42a8-84f5-c7164c9e3373">
+						<repeat> <template>
+						<tr id="{n}-toggleContainer1" style="display: none;">
+							<td><obs conceptId="d8189970-d2a9-431d-864c-c8982d538dc9"
+									style="autocomplete" type="autocomplete" labelText=" "
+									id="daig_value" /></td>
+							<td><button id="{n}-addEntry1" class="addEntry1">Add</button>
+								<button id="{n}-removeEntry1" class="removeEntry1">Remove</button>
+							</td>
+						</tr>
+						</template> <render n="1" concept=" " /> <render n="2" concept=" " /> <render
+							n="3" concept=" " /> <render n="4" concept=" " /> <render n="5"
+							concept=" " /> <render n="6" concept=" " /> <render n="7"
+							concept=" " /> <render n="8" concept=" " /> <render n="9"
+							concept=" " /> <render n="10" concept=" " /> </repeat> </obsgroup>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;">8. Suffered from any drug side
+					effect ?</td>
+				<td><obs id="artSideEffectPresent"
+						conceptId="159935AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="radio" /></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;" valign="top">a. Side Effect's:
+				</td>
+				<td valign="top">
+					<div id="artSideEffectList">
 						<table>
-							<obsgroup groupingConceptId="50ea66b0-77a0-42a8-84f5-c7164c9e3373">
-								<repeat>
-									<template>
-										<tr  id="{n}-toggleContainer1" style="display:none;">
-											<td><obs conceptId="d8189970-d2a9-431d-864c-c8982d538dc9" style="autocomplete" type="autocomplete" labelText=" "  id="daig_value"/></td>
-											<td><button id="{n}-addEntry1" class="addEntry1">Add</button><button id="{n}-removeEntry1" class="removeEntry1">Remove</button>
-											</td>
-										</tr>
-									</template>
-									<render n="1" concept=" "/>
-									<render n="2" concept=" "/>
-									<render n="3" concept=" "/>
-									<render n="4" concept=" "/>
-									<render n="5" concept=" "/>
-									<render n="6" concept=" "/>
-									<render n="7" concept=" "/>
-									<render n="8" concept=" "/>
-									<render n="9" concept=" "/>
-									<render n="10" concept=" "/>
-								</repeat>
-							</obsgroup>
+							<repeat> <template>
+							<tr id="{n}-toggleContainer2" style="display: none;">
+								<td valign="top"><obs
+										conceptId="59af83ba-4a34-416d-86f9-e91096818e0a"
+										id="artSideEffectValue" /></td>
+								<td valign="top"><button id="{n}-addEntry2"
+										class="addEntry2">Add</button>
+									<button id="{n}-removeEntry2" class="removeEntry2">Remove</button>
+								</td>
+							</tr>
+							</template> <render n="1" concept=" " /> <render n="2" concept=" " /> <render
+								n="3" concept=" " /> <render n="4" concept=" " /> <render n="5"
+								concept=" " /> <render n="6" concept=" " /> <render n="7"
+								concept=" " /> <render n="8" concept=" " /> <render n="9"
+								concept=" " /> <render n="10" concept=" " /> </repeat>
 						</table>
-					</td>		
-				</tr>
-				<tr>
-					<td style="padding-left:10px;">7. Side effects of ART ?</td>
-					<td><obs id="artSideEffectPresent" conceptId="159935AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="radio" /></td>
-				</tr>
-				<tr>
-					<td style="padding-left:10px;" valign="top"> a. Side Effect's: </td>
-					<td valign="top">	
-						<div id="artSideEffectList">
-						<table>
-								<repeat>
-									<template>
-										<tr  id="{n}-toggleContainer2" style="display:none;">
-											<td valign="top"><obs conceptId="4b4e4b62-4e44-43f6-9c35-ca23861a153e" id="artSideEffectValue" /></td>
-											<td valign="top"><button id="{n}-addEntry2" class="addEntry2">Add</button><button id="{n}-removeEntry2" class="removeEntry2">Remove</button>
-											</td>
-										</tr>
-									</template>
-									<render n="1" concept=" "/>
-									<render n="2" concept=" "/>
-									<render n="3" concept=" "/>
-									<render n="4" concept=" "/>
-									<render n="5" concept=" "/>
-									<render n="6" concept=" "/>
-									<render n="7" concept=" "/>
-									<render n="8" concept=" "/>
-									<render n="9" concept=" "/>
-									<render n="10" concept=" "/>
-								</repeat>
-						</table>
-						</div>
-					</td>		
-				</tr>				
-				<tr>
+					</div>
+				</td>
+			</tr>
+			<!--  <tr>
 					<td style="padding-left:10px;">
 					  8. ART Adherence
 					</td>
@@ -471,8 +515,8 @@
 					<td><obs id="calculated-adherence" class="value" conceptId="360716f8-c50b-4bb7-bce8-edbe4aa9445c"/>
 					<br/> Reason for non-adherence : <obs id="reasonForNonAdherence" conceptId="160582AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
 					</td>
-				</tr>
-<!-- 			<tr>	
+				</tr>-->
+			<!-- 			<tr>	
 					<td style="padding-left:28px;">Taking doses at correct time in last 30 days?</td>
 					<td><obs conceptId="8a70de3b-5975-4c16-b1e7-e9a7a63329e2" style="radio"/></td>
 				</tr>
@@ -480,17 +524,19 @@
 					<td style="padding-left:28px;">Taking correct doses in last 30 days?</td>
 					<td><obs conceptId="9f401f60-2ac3-4d6c-bf8a-33885b99492a" style="radio"/></td>
 				</tr>
- -->					
-				
-				<tr>	
-					<td style="padding-left:10px;">9. Temporary Referral</td>
-					<td><obs id="temporaryReffered" conceptId="5e05d243-e039-4f04-9988-18d5a499329e" style="radio"/></td>
-				</tr>
-				<tr>	
-					<td style="padding-left:28px;">Temporary Referral Reason</td>
-					<td><obs id="temporaryRefferedReason" conceptId="c648f69b-7065-4255-9af2-6076348c87dc"/></td>
-				</tr>
-				<tr>	
+ -->
+
+			<tr>
+				<td style="padding-left: 10px;">9. Temporary Referral</td>
+				<td><obs id="temporaryReffered"
+						conceptId="5e05d243-e039-4f04-9988-18d5a499329e" style="radio" /></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 28px;">Temporary Referral Reason</td>
+				<td><obs id="temporaryRefferedReason"
+						conceptId="c648f69b-7065-4255-9af2-6076348c87dc" /></td>
+			</tr>
+			<!--  <tr>	
 					<td style="padding-left:10px;">10. Admitted</td>
 					<td><obs conceptId="c17ed847-31e8-4c6a-a3b6-e2d6493870ff" style="radio" id="admittedOption" /></td>
 				</tr>
@@ -507,19 +553,29 @@
 						</table>
 						</div>
 					</td>	
-				</tr>
-				<tr>	
-					<td style="padding-left:10px;">11. Next Step</td>
-					<td  style="padding: 5px"><div>Next appointment date : <obs id="appointmentDate" conceptId="5096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="true" /></div></td>
-				</tr>
-			</table>
+				</tr>-->
+			<tr>
+				<td style="padding-left: 10px;">10. Next Step</td>
+				<td style="padding: 5px"><div>
+						Next appointment date :
+						<obs id="appointmentDate"
+							conceptId="5096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							allowFutureDates="true" />
+					</div>
+					<div>
+						After :
+						<obs id="appointmentafterDate"
+							conceptId="161261AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+					</div></td>
+			</tr>
+		</table>
 
-		</fieldset>
+	</fieldset>
 
-	</div>
+</div>
 
-	<div class="ke-form-footer">
-		<submit />
-	</div>
+<div class="ke-form-footer">
+	<submit />
+</div>
 
 </htmlform>

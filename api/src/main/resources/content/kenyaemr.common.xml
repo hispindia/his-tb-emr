@@ -21,13 +21,14 @@
 			<set>
 				<ref bean="kenyaemr.common.form.triage" />
 				<ref bean="kenyaemr.common.form.consultationEncounter" />
-				<ref bean="kenyaemr.common.form.tbScreening" />
 				<ref bean="kenyaemr.common.form.labOrders" />
 				<ref bean="kenyaemr.common.form.otherMedications" />
 				<ref bean="kenyaemr.common.form.progressNote" />
-<!--  			<ref bean="kenyaemr.common.form.clinicalEncounter" /> -->
+<!--  			<ref bean="kenyaemr.common.form.clinicalEncounter" /> 
+				<ref bean="kenyaemr.common.form.tbScreening" />			-->
 				<ref bean="kenyaemr.common.form.labResults" /> 
 				<ref bean="kenyaemr.common.form.drugOrders" />
+				<ref bean="kenyaemr.common.form.contactTracing" />
 			</set>
 		</property>
 	</bean>
@@ -221,19 +222,20 @@
 		<property name="order" value="200010" />
 	</bean>
 
-	<!-- Clinical Encounter
-	<bean id="kenyaemr.common.form.clinicalEncounter" class="org.openmrs.module.kenyacore.form.FormDescriptor">
-		<property name="targetUuid" value="${metadata.form.CLINICAL_ENCOUNTER}" />
+	<!-- Contact tracing  --> 
+	<bean id="kenyaemr.common.form.contactTracing" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+		<property name="targetUuid" value="${metadata.form.CONTACT_TRACING}" />
 		<property name="apps">
 			<set>
+				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
-		<property name="htmlform" value="kenyaemr:clinicalEncounter.html" />
+		<property name="htmlform" value="kenyaemr:contactTracing.html" />
 		<property name="order" value="200020" />
 	</bean>
- --> 
+
 	<!-- Lab Order -->
 	<bean id="kenyaemr.common.form.labOrders" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="740308bd-1fe1-43b4-8b7d-51e1d513e205" />

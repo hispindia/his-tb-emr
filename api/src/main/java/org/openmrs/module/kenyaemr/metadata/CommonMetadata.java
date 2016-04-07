@@ -50,7 +50,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 
 	public static final class _Form {
 		public static final String CONSULTATION_ENCOUNTER = "bd598114-4ef4-47b1-a746-a616180ccfc0";
-		public static final String CLINICAL_ENCOUNTER = Metadata.Form.CLINICAL_ENCOUNTER;
+		public static final String CONTACT_TRACING = Metadata.Form.CONTACT_TRACING;
 		public static final String LAB_RESULTS = Metadata.Form.LAB_RESULTS;
 		public static final String OBSTETRIC_HISTORY = Metadata.Form.OBSTETRIC_HISTORY;
 		public static final String OTHER_MEDICATIONS = Metadata.Form.OTHER_MEDICATIONS;
@@ -136,7 +136,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		
 		
 		install(form("Consultation", null, _EncounterType.CONSULTATION, "1", _Form.CONSULTATION_ENCOUNTER));
-		install(form("Clinical Encounter", null, _EncounterType.CONSULTATION, "1", _Form.CLINICAL_ENCOUNTER));
+		install(form("Contact Tracing", null, _EncounterType.CONSULTATION, "1", _Form.CONTACT_TRACING));
 		install(form("TB, OI and Staging Form", null, _EncounterType.CONSULTATION, "1", _Form.TB_SCREENING));
 		install(form("Lab Results", null, _EncounterType.LAB_RESULTS, "1", _Form.LAB_RESULTS));
 		install(form("Obstetric History", null, _EncounterType.REGISTRATION, "1", _Form.OBSTETRIC_HISTORY));
