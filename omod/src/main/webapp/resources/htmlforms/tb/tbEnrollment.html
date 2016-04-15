@@ -199,6 +199,27 @@ table.tb1 tr th, table.tb1 tr td {
 					document.getElementById("w77").value = "";
 				}
 			});
+			
+			
+			//getting the values of the disease classification option buttons
+				var optValues = getValue('dclassification.value');
+				if (optValues == 156204 || optValues == 163055){
+					jq('#expul :input').prop('disabled', false);
+				}
+				else {
+    				jq('#expul :input').prop('disabled', true);
+				}
+				
+    			$('#dclassification input:radio').click(function() {
+    				var optValues = getValue('dclassification.value');
+    				if (optValues == 156204 || optValues == 163055){
+    					jq('#expul :input').prop('disabled', false);
+    				}
+    				else {
+        				jq('#expul :input').prop('disabled', true);
+    				}
+    			});
+
 /*			
 			var pbirthdate = new Date("<lookup expression="patient.birthdate" />").getTime();
 
@@ -323,6 +344,19 @@ table.tb1 tr th, table.tb1 tr td {
                    	return false
          		}
 */
+
+					var count=0;
+					$('#expul').find('select :selected').each(function(){
+					        count+=Number($(this).val());
+					});
+					var optValues = getValue('dclassification.value');
+					if (optValues == 156204 || optValues == 163055){
+						if(count &lt; 1){
+							alert("Please select atleast one site");
+							return false;	
+						}	
+					}
+					
     			return true;
 			});
 			//try add load treatment supporter's information if available from other places for this patient
@@ -372,7 +406,7 @@ table.tb1 tr th, table.tb1 tr td {
 	</div>
 
 <div class="ke-form-content">
-	<table width="80%" align="center" border="0" class="tb" cellspacing="10">
+	<table width="100%" align="center" border="0" class="tb" cellspacing="10">
 		<tr>
 			<td colspan="2">
 				<div class="ke-form-instructions">
@@ -393,11 +427,12 @@ table.tb1 tr th, table.tb1 tr td {
 					<tr>
 						<td>Disease Classification</td>
 						<td><obs conceptId="160040AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-								style="radio" id="dclassification" /></td>
+								style="radio" id="dclassification" required="true"/></td>
 					</tr>
 					<tr>
 						<td>If Extra -pulmonary, specific site</td>
 						<td>
+							<div id="expul">
 							<table width="80%">
 								<obsgroup
 									groupingConceptId="161357AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
@@ -413,6 +448,7 @@ table.tb1 tr th, table.tb1 tr td {
 									n="3" concept=" " /> <render n="4" concept=" " /> <render
 									n="5" concept=" " /> </repeat> </obsgroup>
 							</table>
+							</div>
 						</td>
 					</tr>
 					<tr>

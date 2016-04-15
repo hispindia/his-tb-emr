@@ -43,8 +43,6 @@
 	
 	def occupation = [
 			[
-					[ object: command, property: "occupation", label: "Occupation ", config: [ style: "list", answerTo: occupationConcept ] ],
-					[ object: command, property: "otherOccupation", label: "If other, Please specify" ],
 					[ object: command, property: "personAddress.address3", label: "Workplace/university/school address", config: [ type: "textarea",  rows: 2,size: 20 ] ],
 			]		
 	]
@@ -93,7 +91,7 @@
 		
 	def genSampleIdDetail = [
 			[
-					[ object: command, property: "genSampleId", label: "Sample ID *" ]
+					[ object: command, property: "genSampleId", label: "Sample ID" ]
 			]	
 		]	 
 
@@ -205,12 +203,31 @@
 			${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			<% } %>
 			<br />
+			
 			<legend>Address</legend>
+			<table>
+				<tr>
+					<td> 
+						<center><label class="ke-field-label">Occupation</label></center>
+						<span class="ke-field-content" >
+							${ ui.includeFragment("kenyaui", "widget/field",[ id:"occupation", object: command, property: "occupation", config: [ style: "list", answerTo: occupationConcept ] ]) }
+						</span>
+					</td>
+					 <td  id="otherStatus">
+						<center><label class="ke-field-label">If other, Please specify</label></center>
+						<span class="ke-field-content">
+							${ ui.includeFragment("kenyaui", "widget/field",[ id:"otherOccupation",object: command, property: "otherOccupation" ]) }
+						</span>	
+					</td>
+				</tr>
+			</table>
+			
 			<% occupation.each { %>
 			${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			<% } %>
-			
 		</fieldset>
+
+
 
 		<fieldset>
 
@@ -259,8 +276,6 @@
 
 		<fieldset>
 			<legend>Previous TB treatment Episodes</legend>
-			
-			
 			<table>
 				<tr>
 					<td valign="top">
@@ -284,29 +299,33 @@
 					</td>
 				</tr>
 			</table>
+
+			<div id="previousTBHistory">
 				<% previousTownship.each { %>
 				   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 				 <% } %>
- 			<table>
-				<tr><td style="padding-right:5px">
-						<% previousRegimenDetail.each { %>
-						   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
-						 <% } %>
-					</td><td>
-					<% if(command.tbHistoryStatus) {%> 
-						<input type="radio" name="previousRegimenStartDateType" value="163545" ${ command.previousRegimenStartDateType.conceptId == 163545 ? 'checked="checked"' : '' } /> Estimated
-						<input type="radio" name="previousRegimenStartDateType" value="163546" ${ command.previousRegimenStartDateType.conceptId == 163546 ? 'checked="checked"' : '' } /> Exact
-					<% } else {%>
-						<input type="radio" name="previousRegimenStartDateType" value="163545" /> Yes
-						<input type="radio" name="previousRegimenStartDateType" value="163546"  /> No
-					<% } %>
-					</td>
-				</tr>
-			</table>
-			
-			<% previousTBOutcomeDetail.each { %>
-			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
-			 <% } %>
+	 			<table>
+					<tr><td style="padding-right:5px">
+							<% previousRegimenDetail.each { %>
+							   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
+							 <% } %>
+						</td><td>
+						<% if(command.previousRegimenStartDateType) {%> 
+							<input type="radio" name="previousRegimenStartDateType" value="163545" ${ command.previousRegimenStartDateType.conceptId == 163545 ? 'checked="checked"' : '' } /> Estimated
+							<input type="radio" name="previousRegimenStartDateType" value="163546" ${ command.previousRegimenStartDateType.conceptId == 163546 ? 'checked="checked"' : '' } /> Exact
+						<% } else {%>
+							<input type="radio" name="previousRegimenStartDateType" value="163545" /> Estimated
+							<input type="radio" name="previousRegimenStartDateType" value="163546"  /> Exact
+						<% } %>
+						</td>
+					</tr>
+				</table>
+				
+				<% previousTBOutcomeDetail.each { %>
+				   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
+				 <% } %>
+			</div>			 
+			 
 		</fieldset>
 		<fieldset>
 			<legend>Gene Xpert Test</legend>
@@ -371,8 +390,26 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 ]) }
 
 <script type="text/javascript">
-var patientId=${patientId};
-jQuery(document).ready(function(){
+	var patientId=${patientId};
+	jQuery(document).ready(function(){
+		if(patientId==null)
+	    { 
+	      	jq("#otherStatus").hide();
+	      	document.getElementById("previousTBHistory").style.display = 'none';
+	    }
+	    else
+	    {
+	    	var stats=${statusother};
+	        if(stats==5622)
+	        { 
+	        	jq("#otherStatus").show();
+	        }
+	         else
+	        {
+		        jq("#otherStatus").hide();
+	        }
+	     }   
+
 		 document.getElementById('checkInField').style.display='none';
 		 	var m_names = new Array("Jan", "Feb", "Mar", 
 			"Apr", "May", "Jun", "Jul", "Aug", "Sep", 
@@ -386,9 +423,36 @@ jQuery(document).ready(function(){
 			if(document.getElementById('dateOfRegistration')!=null){
 				document.getElementById('dateOfRegistration').value=newDate;
 			}
+
+		jq('#occupation').on('change', function() 
+            {  
+			getSelectOption(jq(this).val());
+			
+		});
+
+		
+		 jq('input[type=radio][name=tbHistoryStatus]').change(function() {
+	        if (this.value == 1065) {
+	                 document.getElementById("previousTBHistory").style.display = "";
+	        }
+	        else  {
+	                  document.getElementById("previousTBHistory").style.display = 'none';
+	        }
+ 		   });
 	});
 	
-
+    function getSelectOption(elem)
+    {   
+        
+        if(elem== 5622){ 
+            document.getElementById("otherStatus").style.display = "";
+        }
+        
+        else
+        {
+          document.getElementById("otherStatus").style.display = 'none';
+        }
+    };
 
 
 

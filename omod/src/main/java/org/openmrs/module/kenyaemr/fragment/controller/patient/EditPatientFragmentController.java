@@ -126,6 +126,16 @@ public class EditPatientFragmentController {
 		model.addAttribute("getResultList",
 				Dictionary.getConcept(Dictionary.TB_GENE_RESULT));
 		
+		Obs otherOccupation ;
+		otherOccupation = getLatestObs(patient,
+				Dictionary.OCCUPATION);
+		if (otherOccupation != null) {
+			model.addAttribute("statusother",
+					otherOccupation.getValueCoded());
+		} else {
+			model.addAttribute("statusother", 0);
+		}
+		
 		if (patient != null) {
 			model.addAttribute("recordedAsDeceased",
 					hasBeenRecordedAsDeceased(patient));
@@ -168,6 +178,18 @@ public class EditPatientFragmentController {
 
 	}
 
+	private Obs getLatestObs(Patient patient, String conceptIdentifier) {
+		Concept concept = Dictionary.getConcept(conceptIdentifier);
+		List<Obs> obs = Context.getObsService()
+				.getObservationsByPersonAndConcept(patient, concept);
+		if (obs.size() > 0) {
+			// these are in reverse chronological order
+			return obs.get(0);
+		}
+		return null;
+	}
+
+	
 	/**
 	 * Checks if a patient has been recorded as deceased by a program
 	 * 

@@ -313,12 +313,12 @@ public class PatientWrapper extends AbstractPatientWrapper {
 	}
 	
 	public void setPreviousTownshipTBNumber(String value) {
-		setAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER, value);
+		setAsAttribute(CommonMetadata._PersonAttributeType.PREVIOUS_TOWNSHIP_NUMBER, value);
 	}
 
 	
 	public String getPreviousTownshipTBNumber() {
-		return getAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER);
+		return getAsAttribute(CommonMetadata._PersonAttributeType.PREVIOUS_TOWNSHIP_NUMBER);
 	}
 	
 	public String getGenSampleId() {

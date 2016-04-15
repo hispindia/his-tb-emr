@@ -13,19 +13,42 @@
 -->
 <htmlform> <script type="text/javascript">
 		jq(document).ready(function () {
-			if (getValue('therapySelection.value') == 1066) {
-				jq('#therapyName :input').prop('disabled', true);
-			}
-			else {
+			if (getValue('therapySelection.value') == 163505) {
 				jq('#therapyName :input').prop('disabled', false);
-			}
-		
-			jq("#therapySelection input:radio").change(function() {
-				if (getValue('therapySelection.value') == 1066) {
-					jq('#therapyName :input').prop('disabled', true);
+				if (getValue('therapyName.value') == 5622){
+					jq('#otherReason :input').prop('disabled', false);					
 				}
 				else {
+					jq('#otherReason :input').prop('disabled', true);					
+				}
+			}
+			else {
+				jq('#therapyName :input').prop('disabled', true);
+				jq('#otherReason :input').prop('disabled', true);
+			}
+		
+			jq("#therapySelection").change(function() {
+				if (getValue('therapySelection.value') == 163505) {
 					jq('#therapyName :input').prop('disabled', false);
+					if (getValue('therapyName.value') == 5622){
+						jq('#otherReason :input').prop('disabled', false);					
+					}
+					else {
+						jq('#otherReason :input').prop('disabled', true);					
+					}
+				}
+				else {
+					jq('#therapyName :input').prop('disabled', true);
+					jq('#otherReason :input').prop('disabled', true);
+				}
+			});
+			
+			jq("#therapyName").change(function() {
+				if (getValue('therapyName.value') == 5622){
+					jq('#otherReason :input').prop('disabled', false);					
+				}
+				else {
+					jq('#otherReason :input').prop('disabled', true);					
 				}
 			});
 	/*		
@@ -145,7 +168,7 @@ input[type=button], button {
 	<table width="100%" align="left" style="background-color: #c7d8a7">
 		<tr>
 			<td>
-				<table align="left" class="tb1" cellspacing="10" width="40%"
+				<table align="left" class="tb1" cellspacing="10" width="70%"
 					style="background-color: #e8efdc; margin-left: 0px !important;">
 					<tr>
 						<td>Forms for Submission to MDR-TB committee:</td>
@@ -196,19 +219,17 @@ input[type=button], button {
 						<td><obs conceptId="eae22d6c-3fd8-415c-b794-ad0181815a9b"
 								style="dropdown" id="therapyName" /></td>
 					</tr>
-
-
 					<tr>
 						<td>Other</td>
-						<td><obs conceptId="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-								 /></td>
+						<td><obs conceptId="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="otherReason"/></td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<table style="background-color: #e8efdc; margin-left: 0px !important;">
+				<table
+					style="background-color: #e8efdc; margin-left: 0px !important;">
 					<tr>
 						<th colspan="6"><center>Regional / state MDR-TB
 								committee recommendation</center></th>
@@ -233,7 +254,8 @@ input[type=button], button {
 									conceptId="92f96cb4-1ffe-4d1b-bdae-b848cc135fe3"
 									style="dropdown" /></td>
 							<td valign="top"><obs
-									conceptId="116314AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="true"/></td>
+									conceptId="116314AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									allowFutureDates="true" /></td>
 							<td valign="top"><obs
 									conceptId="361d0d95-1d74-4e02-a678-d3ebf5dff7cb"
 									style="dropdown" /></td>
@@ -251,7 +273,7 @@ input[type=button], button {
 				</table>
 			</td>
 		</tr>
-	
+
 	</table>
 </div>
 
