@@ -70,11 +70,11 @@ table.tb1 tr th, table.tb1 tr td {
 			
 		
 			// show fields with data 
-			if( getValue('regGroup.value')!=null){
+			if( getValue('regGroup.value')!=""){
 				fieldIndex = 81;
 			}
 			else{
-				fieldIndex = 31;
+				fieldIndex = 29;
 			}
 			j=1;
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 3){
@@ -115,7 +115,12 @@ table.tb1 tr th, table.tb1 tr td {
 				});
 
 			// show fields with data 
-			fieldIndex = 77; 
+			if( getValue('regGroup.value')!=""){
+				fieldIndex = 65;
+			}
+			else{
+				fieldIndex = 71;
+			}
 			j=1;
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 6){
 				//alert(document.getElementById("w"+38).value);
@@ -154,73 +159,255 @@ table.tb1 tr th, table.tb1 tr td {
 				return false;
 				});
 			
-			
-			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-			var d = new Date(getValue('curDate.value'));
-			var today = new Date();
-			if(d!="Invalid Date"){
-			
-				d.setDate(d.getDate() + 280);
-				document.getElementById("w77-display").value =  d.getDate() + "-" + months[d.getMonth()-1] + "-" + d.getFullYear();
-				document.getElementById("w77").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
-			}
-			else{
-				document.getElementById("w77-display").value =  "";
-				document.getElementById("w77").value = "";
-			}
-			
-			var da = new Date(getValue('curDate.value'));
-			da.setDate(da.getDate() + 250);
-			var edd = new Date(da);
-			var today = new Date();
-			if(edd-today &lt; 0){
-			//	$('.ke-form-content').find('input:text').val('');
-				$(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
-				$(':checkbox, :radio').prop('checked', false);
-				jq('#fPlanningOption :input').prop('disabled', true);
-				jq('#ifYesPregnancy :input').prop('disabled', true);
-				jq('#infantTable :input').prop('disabled', true);
-				
-			}
-		
-			jq("#curDate :input").change(function() {
+			if(document.getElementById("curDate")){
 				var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 				var d = new Date(getValue('curDate.value'));
 				var today = new Date();
-				if(d!=""){
-					jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+				if(d!="Invalid Date"){
 					d.setDate(d.getDate() + 280);
-					document.getElementById("w77-display").value =  d.getDate() + "-" + months[d.getMonth()-1] + "-" + d.getFullYear();
-					document.getElementById("w77").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
-					
+					document.getElementById("w89-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+					document.getElementById("w89").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
 				}
 				else{
-					document.getElementById("w77-display").value =  "";
-					document.getElementById("w77").value = "";
+					document.getElementById("w89-display").value =  "";
+					document.getElementById("w89").value = "";
 				}
-			});
+				
+				var da = new Date(getValue('curDate.value'));
+				da.setDate(da.getDate() + 250);
+				var edd = new Date(da);
+				var today = new Date();
+				if(edd-today &lt; 0){
+				//	$('.ke-form-content').find('input:text').val('');
+					$(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
+					$(':checkbox, :radio').prop('checked', false);
+					jq('#fPlanningOption :input').prop('disabled', true);
+					jq('#ifYesPregnancy :input').prop('disabled', true);
+					jq('#infantTable :input').prop('disabled', true);
+					
+				}
+			
+				jq("#curDate :input").change(function() {
+					var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+					var d = new Date(getValue('curDate.value'));
+					var today = new Date();
+					if(d!=""){
+						jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+						d.setDate(d.getDate() + 280);
+						document.getElementById("w89-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+						document.getElementById("w89").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+						
+					}
+					else{
+						document.getElementById("w89-display").value =  "";
+						document.getElementById("w89").value = "";
+					}
+				});
+
+			}
 			
 			
 			//getting the values of the disease classification option buttons
 				var optValues = getValue('dclassification.value');
 				if (optValues == 156204 || optValues == 163055){
 					jq('#expul :input').prop('disabled', false);
+	//				jq('#expulOtherSite :input').prop('disabled', false);
 				}
 				else {
     				jq('#expul :input').prop('disabled', true);
+	//				jq('#expulOtherSite :input').prop('disabled', true);
 				}
 				
     			$('#dclassification input:radio').click(function() {
     				var optValues = getValue('dclassification.value');
     				if (optValues == 156204 || optValues == 163055){
     					jq('#expul :input').prop('disabled', false);
+    //					jq('#expulOtherSite :input').prop('disabled', false);
     				}
     				else {
         				jq('#expul :input').prop('disabled', true);
+   // 					jq('#expulOtherSite :input').prop('disabled', true);
     				}
     			});
+    			
+    			if (getValue('hivSection.value') == 1065){
+					jq('#hivSectionField :input').prop('disabled', false);
+					if (getValue('napCenter.value') == 1065){
+    					jq('#preArtRegNumber :input').prop('disabled', false);
+    					jq('#treatmentCenter :input').prop('disabled', true);
+    				}
+    				else if(getValue('napCenter.value') == 1066){
+        				jq('#preArtRegNumber :input').prop('disabled', true);
+        				jq('#treatmentCenter :input').prop('disabled', false);
+    				}
+    				else{
+    					jq('#preArtRegNumber :input').prop('disabled', true);
+        				jq('#treatmentCenter :input').prop('disabled', true);
+    				}
+	       			if (getValue('artOption.value') == 1065){
+						jq('#artDate :input').prop('disabled', false);
+						jq('#artRegimen :input').prop('disabled', false);
+					}
+					else{
+						jq('#artDate :input').prop('disabled', true);
+						jq('#artRegimen :input').prop('disabled', true);
+					}
+	       			
+	      			if (getValue('cptOption.value') == 1065){
+						jq('#cptDate :input').prop('disabled', false);
+					}
+					else{
+						jq('#cptDate :input').prop('disabled', true);
+					}
+					
+				}
+				else {
+    				jq('#hivSectionField :input').prop('disabled', true);
+				}
+				
+    			$('#hivSection input:radio').click(function() {
+        			if (getValue('hivSection.value') == 1065){
+    					jq('#hivSectionField :input').prop('disabled', false);
+    					if (getValue('napCenter.value') == 1065){
+        					jq('#preArtRegNumber :input').prop('disabled', false);
+        					jq('#treatmentCenter :input').prop('disabled', true);
+        				}
+        				else if(getValue('napCenter.value') == 1066){
+            				jq('#preArtRegNumber :input').prop('disabled', true);
+            				jq('#treatmentCenter :input').prop('disabled', false);
+        				}
+        				else{
+        					jq('#preArtRegNumber :input').prop('disabled', true);
+            				jq('#treatmentCenter :input').prop('disabled', true);
+        				}
+    					
+    	       			if (getValue('artOption.value') == 1065){
+    						jq('#artDate :input').prop('disabled', false);
+    						jq('#artRegimen :input').prop('disabled', false);
+    					}
+    					else{
+    						jq('#artDate :input').prop('disabled', true);
+    						jq('#artRegimen :input').prop('disabled', true);
+    					}
+    	       			
+    	      			if (getValue('cptOption.value') == 1065){
+    						jq('#cptDate :input').prop('disabled', false);
+    					}
+    					else{
+    						jq('#cptDate :input').prop('disabled', true);
+    					}
 
-/*			
+    				}
+    				else {
+        				jq('#hivSectionField :input').prop('disabled', true);
+    				}
+    			});
+    			
+    			/* For treatment taking at NAP center options */
+    			if (getValue('napCenter.value') == 1065){
+					jq('#preArtRegNumber :input').prop('disabled', false);
+					jq('#treatmentCenter :input').prop('disabled', true);
+				}
+				else if(getValue('napCenter.value') == 1066){
+    				jq('#preArtRegNumber :input').prop('disabled', true);
+    				jq('#treatmentCenter :input').prop('disabled', false);
+				}
+				else{
+					jq('#preArtRegNumber :input').prop('disabled', true);
+    				jq('#treatmentCenter :input').prop('disabled', true);
+				}
+				
+    			$('#napCenter input:radio').click(function() {
+        			if (getValue('napCenter.value') == 1065){
+    					jq('#preArtRegNumber :input').prop('disabled', false);
+    					jq('#treatmentCenter :input').prop('disabled', true);
+    				}
+    				else if(getValue('napCenter.value') == 1066){
+        				jq('#preArtRegNumber :input').prop('disabled', true);
+        				jq('#treatmentCenter :input').prop('disabled', false);
+    				}
+    				else{
+    					jq('#preArtRegNumber :input').prop('disabled', true);
+        				jq('#treatmentCenter :input').prop('disabled', true);
+    				}
+    			});
+    	
+    			/* ART option selction fields*/
+       			if (getValue('artOption.value') == 1065){
+					jq('#artDate :input').prop('disabled', false);
+					jq('#artRegimen :input').prop('disabled', false);
+				}
+				else{
+					jq('#artDate :input').prop('disabled', true);
+					jq('#artRegimen :input').prop('disabled', true);
+				}
+				
+    			$('#artOption input:radio').click(function() {
+           			if (getValue('artOption.value') == 1065){
+    					jq('#artDate :input').prop('disabled', false);
+    					jq('#artRegimen :input').prop('disabled', false);
+    				}
+    				else{
+    					jq('#artDate :input').prop('disabled', true);
+    					jq('#artRegimen :input').prop('disabled', true);
+    				}
+    			});
+    			
+    			/* CPT option selction fields*/
+       			if (getValue('cptOption.value') == 1065){
+					jq('#cptDate :input').prop('disabled', false);
+				}
+				else{
+					jq('#cptDate :input').prop('disabled', true);
+				}
+				
+    			$('#cptOption input:radio').click(function() {
+           			if (getValue('cptOption.value') == 1065){
+    					jq('#cptDate :input').prop('disabled', false);
+    				}
+    				else{
+    					jq('#cptDate :input').prop('disabled', true);
+    				}
+    			});
+    			
+    			/* Pregnancy Details*/
+       			if (getValue('pregnancyStatus.value') == 1065){
+					jq('#curDate :input').prop('disabled', false);
+					jq('#nextDate :input').prop('disabled', false);
+				}
+				else{
+					jq('#curDate :input').prop('disabled', true);
+					jq('#nextDate :input').prop('disabled', true);
+				}
+				
+    			$('#pregnancyStatus input:radio').click(function() {
+           			if (getValue('pregnancyStatus.value') == 1065){
+    					jq('#curDate :input').prop('disabled', false);
+    					jq('#nextDate :input').prop('disabled', false);
+    				}
+    				else{
+    					jq('#curDate :input').prop('disabled', true);
+    					jq('#nextDate :input').prop('disabled', true);
+    				}
+    			});
+    			
+       			if (getValue('drugOption.value') == 1065){
+					jq('#drugName :input').prop('disabled', false);
+				}
+				else{
+					jq('#drugName :input').prop('disabled', true);
+				}
+				
+    			$('#drugOption input:radio').click(function() {
+           			if (getValue('drugOption.value') == 1065){
+    					jq('#drugName :input').prop('disabled', false);
+    				}
+    				else{
+    					jq('#drugName :input').prop('disabled', true);
+    				}
+    			});
+    			
+    	/*			
 			var pbirthdate = new Date("<lookup expression="patient.birthdate" />").getTime();
 
 			//check if the date of tb treatment already exists
@@ -371,8 +558,7 @@ table.tb1 tr th, table.tb1 tr td {
 			setValue('treatmentSupportedNumber.value', treatmentSuppoterPhoneNumber);
 */
 		});
-	</script>
-	<script type="text/javascript">
+	</script> <script type="text/javascript">
 		function mbdCalculation() {
 			var display = '';
 			
@@ -384,9 +570,8 @@ table.tb1 tr th, table.tb1 tr td {
 			jQuery('#mbddate').html(display );
 		}
 		jQuery(function() {
+			if(document.getElementById("curDate")){
 			getField('curDate.value').change(mbdCalculation);
-			
-			
 			var da = new Date(getValue('curDate.value'));
 			da.setDate(da.getDate() + 250);
 			var edd = new Date(da);
@@ -397,16 +582,18 @@ table.tb1 tr th, table.tb1 tr td {
 			else{
 				mbdCalculation();	
 			}
+			}
 		});
 		
 	</script>
-	<div style="display:none">
-		<encounterDate id="encounter-date" showTime="true" />
-		<encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" />
-	</div>
+<div style="display: none">
+	<encounterDate id="encounter-date" showTime="true" />
+	<encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" />
+</div>
 
 <div class="ke-form-content">
-	<table width="100%" align="center" border="0" class="tb" cellspacing="10">
+	<table width="100%" align="center" border="0" class="tb"
+		cellspacing="10">
 		<tr>
 			<td colspan="2">
 				<div class="ke-form-instructions">
@@ -415,7 +602,7 @@ table.tb1 tr th, table.tb1 tr td {
 			</td>
 		</tr>
 		<tr>
-			<td align="center" colspan="2"> 
+			<td align="center" colspan="2">
 				<h5>
 					<b>MDR-TB Information</b>
 				</h5>
@@ -427,38 +614,38 @@ table.tb1 tr th, table.tb1 tr td {
 					<tr>
 						<td>Disease Classification</td>
 						<td><obs conceptId="160040AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-								style="radio" id="dclassification" required="true"/></td>
+								style="radio" id="dclassification" required="true" /></td>
 					</tr>
 					<tr>
 						<td>If Extra -pulmonary, specific site</td>
 						<td>
 							<div id="expul">
-							<table width="80%">
-								<obsgroup
-									groupingConceptId="161357AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-								<repeat> <template>
-								<tr id="{n}-toggleContainer" style="display: none;">
-									<td><obs conceptId="5d710188-5b99-4d39-8c93-a562c02c452a"
-											style="dropdown" labelText=" " /></td>
-									<td><button id="{n}-addEntry" class="addEntry">Add</button>
-										<button id="{n}-removeEntry" class="removeEntry">Remove</button>
-									</td>
-								</tr>
-								</template> <render n="1" concept=" " /> <render n="2" concept=" " /> <render
-									n="3" concept=" " /> <render n="4" concept=" " /> <render
-									n="5" concept=" " /> </repeat> </obsgroup>
-							</table>
+								<table width="80%">
+									<obsgroup
+										groupingConceptId="161357AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+									<repeat> <template>
+									<tr id="{n}-toggleContainer" style="display: none;">
+										<td><obs conceptId="5d710188-5b99-4d39-8c93-a562c02c452a"
+												style="dropdown" labelText=" " id="expulSite" /></td>
+										<td><button id="{n}-addEntry" class="addEntry">Add</button>
+											<button id="{n}-removeEntry" class="removeEntry">Remove</button>
+										</td>
+									</tr>
+									</template> <render n="1" concept=" " /> <render n="2" concept=" " /> <render
+										n="3" concept=" " /> <render n="4" concept=" " /> <render
+										n="5" concept=" " /> </repeat> </obsgroup>
+								</table>
 							</div>
 						</td>
 					</tr>
-					<tr>
+					<!-- 			<tr>
 						<td></td>
 						<td>Other <obs
-								conceptId="160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-					</tr>
+								conceptId="160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="expulOtherSite"/></td>
+					</tr> -->
 					<tr>
 						<td>MDR-TB registration number</td>
-						<td ><patient field="identifier"
+						<td><patient field="identifier"
 								identifierTypeId="d8ee3b8c-a8fc-4d6b-af6a-9423be5f8906"
 								required="true" /></td>
 					</tr>
@@ -478,147 +665,135 @@ table.tb1 tr th, table.tb1 tr td {
 			</td>
 			<td width="50%" valign="top">
 				<fieldset>
-					<table  class="tb1" border="0" width="100%"> 
+					<table class="tb1" border="0" width="100%">
 						<tr>
-						<td colspan="2">
-							<table>
-								<tr>
-									<th colspan="3"><center>DOT provider/supervisor
-											details</center></th>
-								</tr>
-								<tr>
-									<th><center>DOT provider name</center></th>
-									<th><center>DOT provider Contact No.</center></th>
-									<th><center>DOT Supervisor</center></th>
-								</tr>
-								<tr>
-									<repeat> <template> <obsgroup
-										groupingConceptId="1418AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-									<tr id="{n}-toggleContainer1" style="display: none;">
-										<td valign="top">{n}.<obs
-												conceptId="160750AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
-										</td>
-										<td valign="top"><obs
-												conceptId="1561AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-												style="dropdown" /></td>
-										<td valign="top"><obs
-												conceptId="1473AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-												allowFutureDates="true" /></td>
-										<td><button id="{n}-addEntry1" class="addEntry1">Add</button>
-											<button id="{n}-removeEntry1" class="removeEntry1">Remove</button>
-										</td>
+							<td colspan="2">
+								<table>
+									<tr>
+										<th colspan="3"><center>DOT provider/supervisor
+												details</center></th>
 									</tr>
-									</obsgroup> </template> <render n="1" concept=" " /> <render n="2" concept=" " /> </repeat>
-								</tr>
-							</table>
+									<tr>
+										<th><center>DOT provider name</center></th>
+										<th><center>DOT provider Contact No.</center></th>
+										<th><center>DOT Supervisor</center></th>
+									</tr>
+									<tr>
+										<repeat> <template> <obsgroup
+											groupingConceptId="1418AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+										<tr id="{n}-toggleContainer1" style="display: none;">
+											<td valign="top">{n}.<obs
+													conceptId="160750AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="25" />
+											</td>
+											<td valign="top"><obs
+													conceptId="1561AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="25" /></td>
+											<td valign="top"><obs
+													conceptId="1473AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+													allowFutureDates="true" size="25" /></td>
+											<td><button id="{n}-addEntry1" class="addEntry1">Add</button>
+												<button id="{n}-removeEntry1" class="removeEntry1">Remove</button>
+											</td>
+										</tr>
+										</obsgroup> </template> <render n="1" concept=" " /> <render n="2" concept=" " />
+										</repeat>
+									</tr>
+								</table>
 
-						</td>
-					</tr>
-					<tr>
-						<td>Patient type</td>
-						<td><obs conceptId="159871AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-					</tr>
-					<tr>
-						<td>Registration group</td>
-						<td><obs conceptId="159976AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" required="true" id="regGroup"/></td>
-					</tr>
-					<tr>
-						<td>Contact of MDR-TB cases</td>
-						<td><obs conceptId="1526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-								style="radio" /></td>
-					</tr>
-					<tr>
-						<td>Treatment centre</td>
-						<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba" /></td>
-					</tr>
+							</td>
+						</tr>
+						<tr>
+							<td>Patient type</td>
+							<td><obs conceptId="159871AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+						</tr>
+						<tr>
+							<td>Registration group</td>
+							<td><obs conceptId="159976AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									required="true" id="regGroup" /></td>
+						</tr>
+						<tr>
+							<td>Contact of MDR-TB cases</td>
+							<td><obs conceptId="1526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="radio" /></td>
+						</tr>
+						<tr>
+							<td>Treatment centre</td>
+							<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba" /></td>
+						</tr>
 					</table>
 				</fieldset>
 			</td>
 		</tr>
 		<tr id="topMost">
 			<td width="50%" valign="top">
-				
-			
-				<fieldset>
 					<h5>
 						<b>HIV Information</b>
 					</h5>
 					<table class="tb1" border="0" width="100%">
+						<col width="50%" />
+  						<col width="50%" />
 						<tr>
 							<td>HIV testing done</td>
 							<td><obs conceptId="159938AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" required="true"/></td>
-						</tr>
-						<tr>
-							<td>Date of test</td>
-							<td><obs conceptId="160751AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-						</tr>
-						<tr>
-							<td>Result</td>
-							<td><obs conceptId="305AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-						</tr>
-						<tr>
-							<td>If reactive, treatment taking at NAP center</td>
-							<td><obs conceptId="dc3f16ef-1beb-4c57-8182-df37c70f40ed"
-									style="radio" /></td>
-						</tr>
-						<tr>
-							<td>If yes, Pre ART/ART registration number</td>
-							<td><obs conceptId="1762AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-						</tr>
-						<tr>
-							<td>If No, Name of HIV treatment center</td>
-							<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba" /></td>
-						</tr>
-						<tr>
-							<td>Started on ART</td>
-							<td><obs conceptId="162127AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" /></td>
-						</tr>
-						<tr>
-							<td>Date</td>
-							<td><obs conceptId="162550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-						</tr>
-						<tr>
-							<td>Current HIV regimen</td>
-							<td><obs conceptId="1400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="autocomplete" answerClasses="drug" /></td>
-						</tr>
-						<tr>
-							<td>Started on CPT</td>
-							<td><obs conceptId="112234AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" /></td>
-						</tr>
-						<tr>
-							<td>Date</td>
-							<td><obs conceptId="431adda7-582e-4822-83a6-25344f21fc7c" /></td>
+									style="radio" required="true" id="hivSection"/></td>
 						</tr>
 					</table>
-				</fieldset>
-				</td>
+					<div id="hivSectionField">
+						<table class="tb1" border="0" width="100%">
+							<col width="50%" />
+							<col width="50%" />
+							<tr>
+								<td>Date of test</td>
+								<td><obs conceptId="160751AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+							</tr>
+							<tr>
+								<td>Result</td>
+								<td><obs conceptId="305AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+							</tr>
+							<tr>
+								<td>If reactive, treatment taking at NAP center</td>
+								<td><obs conceptId="dc3f16ef-1beb-4c57-8182-df37c70f40ed"
+										style="radio" id="napCenter"/></td>
+							</tr>
+							<tr>
+								<td>If yes, Pre ART/ART registration number</td>
+								<td><obs conceptId="1762AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="preArtRegNumber"/></td>
+							</tr>
+							<tr>
+								<td>If No, Name of HIV treatment center</td>
+								<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba" id="treatmentCenter"/></td>
+							</tr>
+							<tr>
+								<td>Started on ART</td>
+								<td><obs conceptId="162127AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+										style="radio" id="artOption"/></td>
+							</tr>
+							<tr>
+								<td>Date</td>
+								<td><obs conceptId="162550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="artDate"/></td>
+							</tr>
+							<tr>
+								<td>Current HIV regimen</td>
+								<td><obs conceptId="1400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+										style="autocomplete" answerClasses="drug" id="artRegimen"/></td>
+							</tr>
+							<tr>
+								<td>Started on CPT</td>
+								<td><obs conceptId="112234AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+										style="radio" id="cptOption"/></td>
+							</tr>
+							<tr>
+								<td>Date</td>
+								<td><obs conceptId="431adda7-582e-4822-83a6-25344f21fc7c" id="cptDate"/></td>
+							</tr>
+						</table>
+					</div>
+			</td>
 			<td valign="top">
-			<fieldset>
+				<fieldset>
 					<h5>
 						<b>Other medical information</b>
 					</h5>
 					<table border="0" class="tb1" width="100%">
-						<tr>
-							<td>Pregnancy</td>
-							<td><obs conceptId="5272AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" /></td>
-						</tr>
-						<tr>
-							<td>If yes, LMP</td>
-							<td><obs conceptId="1427AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="curDate"/></td>
-						</tr>
-						<tr>
-							<td>EDD</td>
-							<td><obs conceptId="5596AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="true" id="nextDate"/></td>
-						</tr>
-						<tr>
-							<td>MBD</td>
-							<td> <span id="mbddate" class="value"></span></td>
-						</tr>
 						<tr>
 							<td>Co-morbidities</td>
 							<td>
@@ -642,12 +817,35 @@ table.tb1 tr th, table.tb1 tr td {
 						<tr>
 							<td>Drug Allergy</td>
 							<td><obs conceptId="141760AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" required="true"/></td>
+									style="radio" required="true" id="drugOption"/></td>
 						</tr>
 						<tr>
 							<td>If yes, name of drug</td>
-							<td><obs conceptId="06ba79f6-7344-456a-8265-35f87d43394f" /></td>
+							<td><obs conceptId="06ba79f6-7344-456a-8265-35f87d43394f" id="drugName"/></td>
 						</tr>
+					
+						
+						<includeIf logicTest="GENDER = F">
+						<tr>
+							<td>Pregnancy</td>
+							<td><obs conceptId="5272AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="radio" id="pregnancyStatus" /></td>
+						</tr>
+						<tr>
+							<td>If yes, LMP</td>
+							<td><obs conceptId="1427AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									id="curDate" allowFutureDates="false" /></td>
+						</tr>
+						<tr>
+							<td>EDD</td>
+							<td><obs conceptId="5596AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									allowFutureDates="true" id="nextDate" /></td>
+						</tr>
+						<tr>
+							<td>MBD</td>
+							<td><span id="mbddate" class="value"></span></td>
+						</tr>
+						</includeIf>
 					</table>
 				</fieldset>
 			</td>
