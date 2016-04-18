@@ -19,31 +19,32 @@
 		${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: ui.format(it.attributeType), value: it ]) }
 		<% } %>
 -->		
-		Father name : <strong>${personWrap.fatherName}</strong>
+		<% for ( d in dotMembers ) { %>
+		<% def values = d.value.split(",")	%>
+			Contact Number : <strong><% println  values[1] %></strong> </br> 
+			Dot Provider Name : <strong> <% println  values[0] %> </strong>
+		<% } %>
+		</br> 
+		<% if (personWrap.fatherName) { %>
+		Father's name : <strong>${personWrap.fatherName}</strong>
+		<% } %>
 		<% if (personWrap.telephoneContact) { %>
 			<br/>Patient contact number : <strong> ${personWrap.telephoneContact}</strong>
 		<% } %>
-		<% if (patientAdd.countyDistrict!="?") { %>
-			<br/>Patient Address : <strong>${patientAdd.countyDistrict}</strong>
-		<% } %>
-		<% if (patientWrap.nextOfKinName) { %>
-			<br/>Treatment Supporter's Name: <strong>${patientWrap.nextOfKinName}</strong>
-		<% } %>
-		<% if (patientWrap.nextOfKinContact) { %>
-			<br/>Treatment Supporter's contact number: <strong>${patientWrap.nextOfKinContact}</strong>
-		<% } %>
-		<% if (patientWrap.previousHivTestDate) { %>
-			<br/>HIV confirmation test date : <strong>${patientWrap.previousHivTestDate}</strong>
-		<% } %>
-		<% if (savedEntryPoint) { %>
-		<br/> Entry Point : <strong>${savedEntryPoint.valueCoded.name}</strong>
+		<% if (comorbitidyList) { %>
+			<br/>Co-morbidities : <strong>${comorbitidyList}</strong>
 		<% } %>
 		<% if (pregStatusVal) { %>
 			<br/>Pregnancy : <strong>${pregStatusVal}</strong>
 		<% } %>
 		<% if (drugAllergiesVal) { %>
-			<br/>Drug Allergy & name : <strong>${drugAllergiesVal}</strong>
-		<% } %>
+			<% if (drugAllergiesVal=="Yes") { %>
+			<br/>Drug Allergy & name : <strong>${drugAllergiesVal} 
+			(${drugAllergiesName})
+			<% } else {%>
+				<br/>Drug Allergy  : <strong>${drugAllergiesVal} 
+			</strong>
+		<%  } } %>
 		
 		
 		

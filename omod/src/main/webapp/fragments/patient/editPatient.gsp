@@ -348,12 +348,12 @@
 				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${"Save Changes" }
 			</button>		
 		<% } else {%>
-			<button onClick="checkIn(1)" type="submit">
+		<!--<button onClick="checkIn(1)" type="submit">
 				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${ "Create Patient and Check In" }
 			</button>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		-->
 			<button onClick="return validateDateOfRegistration();checkIn(0)" type="submit">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${ "Create Patient" }
+				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${ "Create Patient and Check In" }
 			</button>
 			<input type="text" id="dateOfRegistration" name="dateOfRegistration" placeholder="Date of registration">
 			<script type="text/javascript">

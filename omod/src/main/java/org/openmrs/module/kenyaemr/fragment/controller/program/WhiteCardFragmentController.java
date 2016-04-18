@@ -110,7 +110,7 @@ public class WhiteCardFragmentController {
 		model.addAttribute("iduStatusValue", iduStatusValue);
 
 		Obs iduStatusNameObs = getAllLatestObs(patient,
-				Dictionary.IDU_NAME_PERSONAL_HISTORY);
+				Dictionary.ALERGIC_DRUG_NAME);
 		if (iduStatusNameObs != null) {
 			EncounterWrapper wrapped = new EncounterWrapper(
 					iduStatusNameObs.getEncounter());

@@ -41,94 +41,191 @@ import org.openmrs.ui.framework.page.PageRequest;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Patient summary fragment
  */
 public class PatientSummaryFragmentController {
-	
+
 	public void controller(@FragmentParam("patient") Patient patient,
-						   @FragmentParam("patient") Person person,
-						   @SpringBean FormManager formManager,
-						   @SpringBean KenyaUiUtils kenyaUi,
-						   PageRequest pageRequest,
-						   UiUtils ui,
-						   FragmentModel model) {
+			@FragmentParam("patient") Person person,
+			@SpringBean FormManager formManager,
+			@SpringBean KenyaUiUtils kenyaUi, PageRequest pageRequest,
+			UiUtils ui, FragmentModel model) {
 
 		AppDescriptor currentApp = kenyaUi.getCurrentApp(pageRequest);
 
 		// Get all common per-patient forms as simple objects
 		List<SimpleObject> forms = new ArrayList<SimpleObject>();
-		for (FormDescriptor formDescriptor : formManager.getCommonFormsForPatient(currentApp, patient)) {
+		for (FormDescriptor formDescriptor : formManager
+				.getCommonFormsForPatient(currentApp, patient)) {
 			forms.add(ui.simplifyObject(formDescriptor.getTarget()));
 		}
 
 		model.addAttribute("patient", patient);
-		model.addAttribute("recordedAsDeceased", hasBeenRecordedAsDeceased(patient));
+		model.addAttribute("recordedAsDeceased",
+				hasBeenRecordedAsDeceased(patient));
 		model.addAttribute("forms", forms);
-		
-		//Patient address
-		model.addAttribute("patientAdd",  person.getPersonAddress());
-		
+
+		// Patient address
+		model.addAttribute("patientAdd", person.getPersonAddress());
+
 		/*
 		 * Get Entry point
-		 * */
-		if(getLatestObs(patient,Dictionary.METHOD_OF_ENROLLMENT)!=null){
+		 */
+		if (getLatestObs(patient, Dictionary.METHOD_OF_ENROLLMENT) != null) {
 			Obs savedEntryPoint = getLatestObs(patient,
 					Dictionary.METHOD_OF_ENROLLMENT);
 			model.addAttribute("savedEntryPoint", savedEntryPoint);
-		}
-		else{
+		} else {
 			model.addAttribute("savedEntryPoint", "");
 		}
-		
+
 		PatientWrapper wrapperPatient = new PatientWrapper(patient);
 		PersonWrapper wrapperPerson = new PersonWrapper(person);
-		
+
 		model.addAttribute("patientWrap", wrapperPatient);
 		model.addAttribute("personWrap", wrapperPerson);
 
-		
 		/*
 		 * Obstetric History
-		 * */
+		 */
 		String pregStatusVal = "";
-		
+
 		Obs pregStatus = getLatestObs(patient, Dictionary.PREGNANCY_STATUS);
 		if (pregStatus != null) {
-				pregStatusVal = pregStatus.getValueCoded().getName().toString();
+			pregStatusVal = pregStatus.getValueCoded().getName().toString();
 		}
 		model.addAttribute("pregStatusVal", pregStatusVal);
-		
+
 		/*
 		 * Drug History
 		 */
 		String drugAllergiesVal = "";
+		String drugAllergiesName = "";
 
 		Obs drugAllergies = getLatestObs(patient,
-				Dictionary.ALLERGY_DRUG);
+				Dictionary.DRUG_ALLERGY_TB_ENROLL_FORM);
 		if (drugAllergies != null) {
 			EncounterWrapper wrapped = new EncounterWrapper(
 					drugAllergies.getEncounter());
 			List<Obs> obsList = wrapped.allObs(drugAllergies.getConcept());
 			for (Obs obs : obsList) {
-				drugAllergiesVal = drugAllergiesVal.concat(obs.getValueCoded().getName().toString());
+				drugAllergiesVal = drugAllergiesVal.concat(obs.getValueCoded()
+						.getName().toString());
 			}
 		}
+
+		Obs drugName = getLatestObs(patient, Dictionary.ALERGIC_DRUG_NAME);
+		if (drugName != null) {
+			EncounterWrapper wrapped = new EncounterWrapper(
+					drugName.getEncounter());
+			List<Obs> obsList = wrapped.allObs(drugName.getConcept());
+			for (Obs obs : obsList) {
+				drugAllergiesName = drugAllergiesName.concat(obs
+						.getValueCoded().getName().toString());
+			}
+		}
+
 		model.addAttribute("drugAllergiesVal", drugAllergiesVal);
+		model.addAttribute("drugAllergiesName", drugAllergiesName);
+
+		String listAllRiskFactor = "";
+		String comorbitidyList = "";
+
+		Obs comorbidity = getAllLatestObs(patient,
+				Dictionary.COMORBIDITY_TB_ENROLL_FORM);
+		if (comorbidity != null) {
+			EncounterWrapper wrapped = new EncounterWrapper(
+					comorbidity.getEncounter());
+			List<Obs> obsList = wrapped.allObs(comorbidity.getConcept());
+
+			for (Obs obs : obsList) {
+				if (comorbitidyList.isEmpty()) {
+					comorbitidyList = comorbitidyList.concat(obs
+							.getValueCoded().getName().toString());
+				} else {
+					comorbitidyList = comorbitidyList.concat(", "
+							+ obs.getValueCoded().getName().toString());
+				}
+			}
+		}
+
+		model.addAttribute("comorbitidyList", comorbitidyList);
+
+		Obs dotProviderName = getAllLatestObs(patient,
+				Dictionary.DOT_PROVIDER_NAME_TB_ENROLL_FORM);
+		Obs dotProviderContact = getAllLatestObs(patient,
+				Dictionary.DOT_PROVIDER_CONTACT_TB_ENROLL_FORM);
+		Obs providerGroup = getAllLatestObs(patient,
+				Dictionary.DOT_PROVIDER_DETAILS_SECTION);
+
+		Map<Integer, String> dotMembers = new HashMap<Integer, String>();
+		Integer index = 0;
+		if (providerGroup != null) {
+			EncounterWrapper wrappedObsGroup = new EncounterWrapper(
+					providerGroup.getEncounter());
+			List<Obs> obsGroupList = wrappedObsGroup.allObs(providerGroup
+					.getConcept());
+			for (Obs obsG : obsGroupList) {
+				String dotName = "";
+				int dotContact = 0;
+
+				if (dotProviderName != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							dotProviderName.getEncounter());
+					List<Obs> obsList = wrapped.allObs(dotProviderName
+							.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							dotName = obs.getValueText().toString();
+						}
+					}
+				}
+
+				if (dotProviderContact != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							dotProviderContact.getEncounter());
+					List<Obs> obsList = wrapped.allObs(dotProviderContact
+							.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							dotContact = obs.getValueNumeric().intValue();
+						}
+					}
+				}
+
+				String val = dotName + ", " + dotContact;
+				dotMembers.put(index, val);
+				if(index==0){
+					break;
+				}
+				index++;
+			}
+		}
+
+		model.addAttribute("dotMembers", dotMembers);
+
 	}
 
 	/**
 	 * Checks if a patient has been recorded as deceased by a program
-	 * @param patient the patient
+	 * 
+	 * @param patient
+	 *            the patient
 	 * @return true if patient was recorded as deceased
 	 */
 	protected boolean hasBeenRecordedAsDeceased(Patient patient) {
-		PatientCalculation calc = CalculationUtils.instantiateCalculation(RecordedDeceasedCalculation.class, null);
-		return ResultUtil.isTrue(Context.getService(PatientCalculationService.class).evaluate(patient.getId(), calc));
+		PatientCalculation calc = CalculationUtils.instantiateCalculation(
+				RecordedDeceasedCalculation.class, null);
+		return ResultUtil.isTrue(Context.getService(
+				PatientCalculationService.class)
+				.evaluate(patient.getId(), calc));
 	}
-	
+
 	private Obs getLatestObs(Patient patient, String conceptIdentifier) {
 		Concept concept = Dictionary.getConcept(conceptIdentifier);
 		List<Obs> obs = Context.getObsService()
@@ -139,7 +236,7 @@ public class PatientSummaryFragmentController {
 		}
 		return null;
 	}
-	
+
 	private Obs getAllLatestObs(Patient patient, String conceptIdentifier) {
 		Concept concept = Dictionary.getConcept(conceptIdentifier);
 		List<Obs> obs = Context.getObsService()

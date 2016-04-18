@@ -818,36 +818,43 @@ public class EditPatientFragmentController {
 				Context.getObsService().saveObs(o, "KenyaEMR edit patient");
 			}
 
-			/*
-			 * To check in directly
-			 */
 			Date curDate = new Date();
-			if (checkInType.equals("1")) {
-				Visit visit = new Visit();
-				visit.setPatient(ret);
-				visit.setStartDatetime(curDate);
-				visit.setVisitType(MetadataUtils.existing(VisitType.class,
-						CommonMetadata._VisitType.OUTPATIENT));
-				visit.setLocation(Context.getService(KenyaEmrService.class)
-						.getDefaultLocation());
-
-				if (isNewPatient) {
-					VisitAttributeType attrType = Context.getService(
-							VisitService.class).getVisitAttributeTypeByUuid(
-							CommonMetadata._VisitAttributeType.NEW_PATIENT);
-					if (attrType != null) {
-						VisitAttribute attr = new VisitAttribute();
-						attr.setAttributeType(attrType);
-						attr.setVisit(visit);
-						attr.setDateCreated(curDate);
-						attr.setValue(true);
-						visit.addAttribute(attr);
-					}
-				}
-
-				Visit visitSave = Context.getVisitService().saveVisit(visit);
-
+			SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat(
+					"dd-MMM-yy HH:mm:ss");
+			Date date = null;
+			try {
+				date = mysqlDateTimeFormatter.parse(dateOfRegistration
+						+ " " + curDate.getHours() + ":" + curDate.getMinutes()
+						+ ":" + curDate.getSeconds());
+			} catch (ParseException e) {
+				date = curDate;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
+			Visit visit = new Visit();
+			visit.setPatient(ret);
+			visit.setStartDatetime(date);
+			visit.setVisitType(MetadataUtils.existing(VisitType.class,
+					CommonMetadata._VisitType.OUTPATIENT));
+			visit.setLocation(Context.getService(KenyaEmrService.class)
+					.getDefaultLocation());
+
+			if (isNewPatient) {
+				VisitAttributeType attrType = Context.getService(
+						VisitService.class).getVisitAttributeTypeByUuid(
+						CommonMetadata._VisitAttributeType.NEW_PATIENT);
+				if (attrType != null) {
+					VisitAttribute attr = new VisitAttribute();
+					attr.setAttributeType(attrType);
+					attr.setVisit(visit);
+					attr.setDateCreated(date);
+					attr.setValue(true);
+					visit.addAttribute(attr);
+				}
+			}
+
+			Visit visitSave = Context.getVisitService().saveVisit(visit);
 
 			return ret;
 		}

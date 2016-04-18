@@ -57,7 +57,7 @@ public class ImmunizationSubmissionElement implements HtmlGeneratorElement, Form
 	// Question concepts
 	private Concept immunizationGroupConcept = HtmlFormEntryUtil.getConcept(Dictionary.IMMUNIZATION_HISTORY);
 	private Concept vaccineQuestionConcept = HtmlFormEntryUtil.getConcept(Dictionary.IMMUNIZATIONS);
-	private Concept sequenceNumberConcept = HtmlFormEntryUtil.getConcept(Dictionary.IMMUNIZATION_SEQUENCE_NUMBER);
+//	private Concept sequenceNumberConcept = HtmlFormEntryUtil.getConcept(Dictionary.IMMUNIZATION_SEQUENCE_NUMBER);
 
 	/**
 	 * Constructs a new immunization submission element
@@ -152,7 +152,7 @@ public class ImmunizationSubmissionElement implements HtmlGeneratorElement, Form
 
 				session.getSubmissionActions().beginObsGroup(group);
 				session.getSubmissionActions().createObs(vaccineQuestionConcept, vaccineConcept, null, null, null);
-				session.getSubmissionActions().createObs(sequenceNumberConcept, sequenceNumber, null, null, null);
+	//			session.getSubmissionActions().createObs(sequenceNumberConcept, sequenceNumber, null, null, null);
 				session.getSubmissionActions().endObsGroup();
 			}
 			catch (InvalidActionException e) {
@@ -186,9 +186,9 @@ public class ImmunizationSubmissionElement implements HtmlGeneratorElement, Form
 				if (memberObs.getConcept().equals(vaccineQuestionConcept)) {
 					vaccineAnswer = memberObs.getValueCoded();
 				}
-				else if (memberObs.getConcept().equals(sequenceNumberConcept)) {
+	/*			else if (memberObs.getConcept().equals(sequenceNumberConcept)) {
 					sequenceNumberAnswer = memberObs.getValueNumeric().intValue();
-				}
+				}*/
 			}
 
 			// Remove and return and group if both vaccine and sequence number match

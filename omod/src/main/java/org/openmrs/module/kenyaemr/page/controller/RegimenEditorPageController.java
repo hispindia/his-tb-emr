@@ -16,6 +16,8 @@ package org.openmrs.module.kenyaemr.page.controller;
 
 import org.openmrs.Concept;
 import org.openmrs.Patient;
+import org.openmrs.Visit;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.regimen.RegimenManager;
 import org.openmrs.module.kenyaemr.EmrConstants;
 import org.openmrs.module.kenyaemr.regimen.RegimenChange;
@@ -28,6 +30,7 @@ import org.openmrs.util.OpenmrsUtil;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Controller for regimen editor page
@@ -41,7 +44,17 @@ public class RegimenEditorPageController {
 						   @SpringBean RegimenManager regimenManager) {
 
 		Patient patient = (Patient) model.getAttribute(EmrWebConstants.MODEL_ATTR_CURRENT_PATIENT);
-
+		List<Visit> visitList = Context.getVisitService().getActiveVisitsByPatient(patient);
+		Date visitDate = null;
+		if(visitList!=null){
+			for(Visit v : visitList ){
+				visitDate = v.getStartDatetime();
+			}
+		}
+		else{
+			visitDate = new Date();
+		}
+		
 		model.addAttribute("category", category);
 		model.addAttribute("returnUrl", returnUrl);
 
@@ -54,6 +67,6 @@ public class RegimenEditorPageController {
 		Date now = new Date();
 		boolean futureChanges = OpenmrsUtil.compareWithNullAsEarliest(lastChangeDate, now) >= 0;
 
-		model.addAttribute("initialDate", futureChanges ? lastChangeDate : now);
+		model.addAttribute("initialDate", futureChanges ? lastChangeDate : visitDate);
 	}
 }
