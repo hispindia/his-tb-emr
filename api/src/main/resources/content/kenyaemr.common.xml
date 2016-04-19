@@ -36,6 +36,10 @@
 	<bean id="kenyaemr.config.report" class="org.openmrs.module.kenyacore.report.ReportConfiguration">
 		<property name="commonReports">
 			<set>
+				<ref bean="kenyaemr.common.report.allPatients" />
+				<ref bean="kenyaemr.tb.report.needsSputumTest" />
+				<ref bean="kenyaemr.tb.report.missingSputumResults" />
+			
 	 	<!--
 				<ref bean="kenyaemr.common.report.moh711" />
 				<ref bean="kenyaemr.common.report.artDrug" />
@@ -45,7 +49,6 @@
 				<ref bean="kenyaemr.common.report.rdqaReport" />
 				
 				
-				<ref bean="kenyaemr.common.report.allPatients" />
 				<ref bean="kenyaemr.hiv.report.onSecondLineArt" />
                 <ref bean="kenyaemr.common.report.missedAppointment" />
                 <ref bean="kenyaemr.hiv.report.dueForCd4" />
@@ -355,7 +358,33 @@
 		<property name="order" value="100030" />
 	</bean>-->
 
-	<!-- ===================== Reports ===================== 
+	<!--	 ===================== Reports ===================== --> 
+	
+	<bean id="kenyaemr.common.report.allPatients" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="9e2ed586-130b-11e4-929a-8746415b715a" />
+		<property name="name" value="All Patients List" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.AllPatientsCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+
+	<bean id="kenyaemr.tb.report.needsSputumTest" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="316c9d65-fbce-402e-8e89-b5f7e78276cb" />
+		<property name="name" value="Patients due for TB sputum test" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.NeedsTbSputumTestCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+
+	<bean id="kenyaemr.tb.report.missingSputumResults" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="c38e0866-b24b-43e0-aa21-e21638742e63" />
+		<property name="name" value="Patients with missing TB sputum results" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.MissingTbSputumResultsCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<!--
+	
 	<bean id="kenyaemr.hiv.report.dueForCd4" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
 		<property name="targetUuid" value="9227c34f-18b6-4c93-844e-5732572d5125" />
 		<property name="name" value="Patients due for CD4 test" />
@@ -452,13 +481,6 @@
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 
-	<bean id="kenyaemr.common.report.allPatients" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
-		<property name="targetUuid" value="9e2ed586-130b-11e4-929a-8746415b715a" />
-		<property name="name" value="All Patients List" />
-		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.AllPatientsCalculation" />
-		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
-		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
-	</bean>
 	
 	<bean id="kenyaemr.hiv.report.onSecondLineArt" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
 		<property name="targetUuid" value="6e91a8da-fcab-47dc-86e7-dd92b925dd86" />

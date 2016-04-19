@@ -61,7 +61,8 @@ public class PersonSimplifier extends AbstractSimplifier<Person> {
 		ret.put("telephoneContact", wrapper.getTelephoneContact());
 		ret.put("emailAddress", wrapper.getEmailAddress());
 		
-		ret.put("township",person.getPersonAddress().getCountyDistrict().toString().equals("?") ? "":  person.getPersonAddress().getCountyDistrict());
+//		ret.put("township",person.getPersonAddress().getCountyDistrict().toString().equals("?") ? "":  person.getPersonAddress().getCountyDistrict());
+		ret.put("township","");
 
 		return ret;
 	}

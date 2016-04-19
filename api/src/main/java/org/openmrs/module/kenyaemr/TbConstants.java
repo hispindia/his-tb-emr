@@ -18,7 +18,10 @@ package org.openmrs.module.kenyaemr;
  * Constants related to TB care
  */
 public class TbConstants {
-
+	/**
+	 * Number of days to show remind for sputum smear test
+	 */
+	public static final int MONTHLY_SPUTUM_TEST = 30;
 	/**
 	 * Number of days in which a patient has to visit to be considered active
 	 */
