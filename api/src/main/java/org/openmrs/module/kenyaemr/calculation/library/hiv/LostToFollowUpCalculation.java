@@ -15,7 +15,6 @@
 package org.openmrs.module.kenyaemr.calculation.library.hiv;
 
 import org.openmrs.Concept;
-
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Program;
@@ -28,8 +27,10 @@ import org.openmrs.module.kenyacore.calculation.Filters;
 import org.openmrs.module.kenyacore.calculation.PatientFlagCalculation;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.HivConstants;
+import org.openmrs.module.kenyaemr.TbConstants;
 import org.openmrs.module.kenyaemr.calculation.EmrCalculationUtils;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata;
+import org.openmrs.module.kenyaemr.metadata.TbMetadata;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 
 import java.util.Collection;
@@ -60,34 +61,25 @@ public class LostToFollowUpCalculation extends AbstractPatientCalculation implem
 	@Override
 	public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> arg1, PatientCalculationContext context) {
 
-		Program hivProgram = MetadataUtils.existing(Program.class, HivMetadata._Program.HIV);
-		Concept reasonForDiscontinuation = Dictionary.getConcept(Dictionary.REASON_FOR_PROGRAM_DISCONTINUATION);
-		Concept transferout = Dictionary.getConcept(Dictionary.TRANSFERRED_OUT);
+		Program tbProgram = MetadataUtils.existing(Program.class, TbMetadata._Program.TB);
 
 		Set<Integer> alive = Filters.alive(cohort, context);
-		Set<Integer> inHivProgram = Filters.inProgram(hivProgram, alive, context);
+		Set<Integer> inTbProgram = Filters.inProgram(tbProgram, alive, context);
 
-		CalculationResultMap lastEncounters = Calculations.lastEncounter(null, inHivProgram, context);
-		CalculationResultMap lastReturnDateObss = Calculations.lastObs(Dictionary.getConcept(Dictionary.RETURN_VISIT_DATE), inHivProgram, context);
-		CalculationResultMap lastProgramDiscontinuation = Calculations.lastObs(reasonForDiscontinuation, cohort, context);
+		CalculationResultMap lastEncounters = Calculations.lastEncounter(null, inTbProgram, context);
 
 		CalculationResultMap ret = new CalculationResultMap();
 		for (Integer ptId : cohort) {
 			boolean lost = false;
 
 			// Is patient alive and in the HIV program
-			if (inHivProgram.contains(ptId)) {
+			if (inTbProgram.contains(ptId)) {
 
 				// Patient is lost if no encounters in last X days
 				Encounter lastEncounter = EmrCalculationUtils.encounterResultForPatient(lastEncounters, ptId);
-				Date lastScheduledReturnDate = EmrCalculationUtils.datetimeObsResultForPatient(lastReturnDateObss, ptId);
-				Obs discontuation = EmrCalculationUtils.obsResultForPatient(lastProgramDiscontinuation, ptId);
-				if (lastScheduledReturnDate != null) {
-					if(daysSince(lastScheduledReturnDate, context) > HivConstants.LOST_TO_FOLLOW_UP_THRESHOLD_DAYS){
+				if (lastEncounter != null) {
+					if(daysSince(lastEncounter.getEncounterDatetime(), context) > TbConstants.MONTH_THREE_SPUTUM_TEST){
 						lost = true;
-					}
-					if(discontuation != null && discontuation.getValueCoded().equals(transferout)) {
-						lost = false;
 					}
 				}
 

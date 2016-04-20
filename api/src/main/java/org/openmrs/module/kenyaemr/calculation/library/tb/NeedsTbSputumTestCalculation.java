@@ -92,7 +92,7 @@ public class NeedsTbSputumTestCalculation extends AbstractPatientCalculation imp
 				
 				Date today = new Date();
 				if (requiredObs.size() > 0) {
-					long diff = requiredObs.get(0).getEncounter().getVisit().getStartDatetime().getTime() - today.getTime();
+					long diff =  today.getTime() - requiredObs.get(0).getObsDatetime().getTime() ;
 					int dayDiff = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 					if(dayDiff <= TbConstants.MONTHLY_SPUTUM_TEST){
 						needsSputum = false;

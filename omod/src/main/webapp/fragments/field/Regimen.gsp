@@ -82,7 +82,7 @@
 			<optgroup label="${ group.name }">${ groupOptions(group) }</optgroup>
 		<% } %>
 	</select>
-	<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="guide" name="guide" value="Guide" onClick="guidee();" />
+<!--	<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="guide" name="guide" value="Guide" onClick="guidee();" />-->
 	<br />
 	<br />
 	

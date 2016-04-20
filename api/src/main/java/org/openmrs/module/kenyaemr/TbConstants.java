@@ -33,6 +33,8 @@ public class TbConstants {
 	 */
 	public static final int MONTH_TWO_SPUTUM_TEST = 60;
 
+	
+	public static final int MONTH_FOUR_SPUTUM_TEST = 120;
 	/**
 	 * Number of days between sputum results duration taken before carrying out
 	 * another sputum at month 5 for all patient classification
