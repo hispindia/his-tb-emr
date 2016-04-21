@@ -213,9 +213,9 @@ public class RegimenUtilFragmentController {
 					}
 					DrugOrder o = component.toDrugOrder(patient,changeDate,encounter);
 					Order order=Context.getOrderService().saveOrder(o);
-				
 					DrugOrderProcessed drugOrderProcessed=new DrugOrderProcessed();
 					drugOrderProcessed.setDrugOrder(Context.getOrderService().getDrugOrder(order.getOrderId()));
+					
 					drugOrderProcessed.setPatient(patient);
 					drugOrderProcessed.setCreatedDate(new Date());
 					drugOrderProcessed.setProcessedStatus(false);
@@ -225,7 +225,10 @@ public class RegimenUtilFragmentController {
 					}
 					String drugRegimen=request.getParameter("selectedOption1");
 					drugOrderProcessed.setDrugRegimen(drugRegimen);
-					kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
+					/**
+					 * Will be added for next release
+					 * */
+					//	kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
 					count++;
 				}
 			}
