@@ -211,6 +211,9 @@ public class RegimenUtilFragmentController {
 					if(drugConceptId!=null){
 				    drugConcept=Context.getConceptService().getConceptByUuid(drugConceptId.substring(2));
 					}
+					
+					System.out.println(encounter.getEncounterDatetime());
+					
 					DrugOrder o = component.toDrugOrder(patient,changeDate,encounter);
 					Order order=Context.getOrderService().saveOrder(o);
 					DrugOrderProcessed drugOrderProcessed=new DrugOrderProcessed();
@@ -586,13 +589,16 @@ public class RegimenUtilFragmentController {
 		encounter.setPatient(patient);
 		encounter.setCreator(user);
 		encounter.setProvider(user);
-		encounter.setEncounterDatetime(new Date());
 		encounter.setEncounterType(Context.getEncounterService().getEncounterTypeByUuid(_EncounterType.REGIMEN_ORDER));
 		encounter.setLocation(location);
 		if(visitSize==1){
 			for(Visit visit:visits){
 		encounter.setVisit(visit);
+		encounter.setEncounterDatetime(visit.getStartDatetime());
 			}
+		}
+		else{
+			encounter.setEncounterDatetime(new Date());
 		}
 		
 		encounter=Context.getEncounterService().saveEncounter(encounter);

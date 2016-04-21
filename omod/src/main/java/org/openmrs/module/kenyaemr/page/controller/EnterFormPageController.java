@@ -14,6 +14,14 @@
 
 package org.openmrs.module.kenyaemr.page.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.openmrs.Patient;
+import org.openmrs.Visit;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaui.annotation.SharedPage;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,10 +33,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class EnterFormPageController {
 
 	public void controller(@RequestParam(value = "formUuid", required = false) String formUuid,
+			 			   @RequestParam(value = "patientId", required = false) Patient patient,
 	                       @RequestParam("returnUrl") String returnUrl,
 	                       PageModel model) {
 
 		model.addAttribute("formUuid", formUuid);
 		model.addAttribute("returnUrl", returnUrl);
+		
+		List<Visit> vList = Context.getVisitService().getActiveVisitsByPatient(patient);
+		Visit activeVisit = null;
+		for(Visit v : vList ){
+			activeVisit = Context.getVisitService().getVisit(v.getVisitId());
+		}
+		
+		Date curDate = new Date();
+		SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat(
+				"dd-MMM-yy HH:mm:ss");
+		Date date = new Date();
+		if(activeVisit!=null){
+			String modifiedDate= new SimpleDateFormat("dd-MMM-yyyy").format(activeVisit.getStartDatetime());
+			try {
+				date = mysqlDateTimeFormatter.parse(modifiedDate
+						+ " " + curDate.getHours() + ":" + curDate.getMinutes()
+						+ ":" + curDate.getSeconds());
+			} catch (ParseException e) {
+				date = curDate;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+		model.addAttribute("activeVisit", activeVisit);
+		model.addAttribute("activeVisitDate", date);
 	}
 }

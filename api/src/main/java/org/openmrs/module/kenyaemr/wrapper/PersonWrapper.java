@@ -104,7 +104,7 @@ public class PersonWrapper extends AbstractPersonWrapper {
 	}
 	
 	public void setPreviousTownshipTBNumber(String value) {
-		setAsAttribute(CommonMetadata._PersonAttributeType.CURRENT_TOWNSHIP_NUMBER, value);
+		setAsAttribute(CommonMetadata._PersonAttributeType.PREVIOUS_TOWNSHIP_NUMBER, value);
 	}
 
 	

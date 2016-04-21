@@ -344,7 +344,7 @@
 
 	<div class="ke-panel-footer">
 		<% if (command.original) { %>
-			<button onClick="checkIn(0)" type="submit">
+			<button onClick="checkIn(1)" type="submit">
 				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${"Save Changes" }
 			</button>		
 		<% } else {%>
@@ -408,6 +408,18 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 	        {
 		        jq("#otherStatus").hide();
 	        }
+	        
+	        var history = ${tbHistory};
+	        if(history==1065)
+	        { 
+	        	  document.getElementById("previousTBHistory").style.display = "";
+	        }
+	         else
+	        {
+		          document.getElementById("previousTBHistory").style.display = 'none';
+	        }
+	        
+	        
 	     }   
 
 		 document.getElementById('checkInField').style.display='none';
@@ -455,9 +467,7 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
     };
 
 
-
 	jQuery(function() {
-		
 		jQuery('#from-age-button').appendTo(jQuery('#from-age-button-placeholder'));
 		
 		jQuery('#edit-patient-form .cancel-button').click(function() {
@@ -472,7 +482,7 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 					<% } else { %>
 					
 					 if (document.getElementById('checkInType').value==1) { 
-						ui.navigate('kenyaemr', 'registration/registrationViewPatient', { patientId: data.id })
+						ui.navigate('kenyaemr', 'registration/registrationViewPatient', { patientId: data.id });
 						} else { 
 						ui.navigate('kenyaemr', 'registration/registrationViewPatient', { patientId: data.id });
 					 } 
@@ -483,6 +493,7 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 			}
 		});
 	});
+	
 	
 	function checkIn(check){
 		document.getElementById('checkInType').value = check;

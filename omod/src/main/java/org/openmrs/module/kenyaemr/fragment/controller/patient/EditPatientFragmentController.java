@@ -114,9 +114,17 @@ public class EditPatientFragmentController {
 		model.addAttribute("townShipList",
 				Dictionary.getConcept(Dictionary.TOWNSHIP));
 		
-		model.addAttribute("tbHistory",
-				Dictionary.getConcept(Dictionary.TB_PATIENT));
 		
+		Obs tbHistory ;
+		tbHistory = getLatestObs(patient,
+				Dictionary.TB_PATIENT);
+		if (tbHistory != null) {
+			model.addAttribute("tbHistory",
+					tbHistory.getValueCoded());
+		} else {
+			model.addAttribute("tbHistory", 0);
+		}
+	
 		model.addAttribute("tbRegimenType",
 				Dictionary.getConcept(Dictionary.TB_FORM_REGIMEN));
 		
@@ -818,43 +826,49 @@ public class EditPatientFragmentController {
 				Context.getObsService().saveObs(o, "KenyaEMR edit patient");
 			}
 
-			Date curDate = new Date();
-			SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat(
-					"dd-MMM-yy HH:mm:ss");
-			Date date = null;
-			try {
-				date = mysqlDateTimeFormatter.parse(dateOfRegistration
-						+ " " + curDate.getHours() + ":" + curDate.getMinutes()
-						+ ":" + curDate.getSeconds());
-			} catch (ParseException e) {
-				date = curDate;
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (checkInType.equals("1")) {
 			}
-			
-			Visit visit = new Visit();
-			visit.setPatient(ret);
-			visit.setStartDatetime(date);
-			visit.setVisitType(MetadataUtils.existing(VisitType.class,
-					CommonMetadata._VisitType.OUTPATIENT));
-			visit.setLocation(Context.getService(KenyaEmrService.class)
-					.getDefaultLocation());
-
-			if (isNewPatient) {
-				VisitAttributeType attrType = Context.getService(
-						VisitService.class).getVisitAttributeTypeByUuid(
-						CommonMetadata._VisitAttributeType.NEW_PATIENT);
-				if (attrType != null) {
-					VisitAttribute attr = new VisitAttribute();
-					attr.setAttributeType(attrType);
-					attr.setVisit(visit);
-					attr.setDateCreated(date);
-					attr.setValue(true);
-					visit.addAttribute(attr);
+			else{	
+				
+				Date curDate = new Date();
+				SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat(
+						"dd-MMM-yy HH:mm:ss");
+				Date date = null;
+				try {
+					date = mysqlDateTimeFormatter.parse(dateOfRegistration
+							+ " " + curDate.getHours() + ":" + curDate.getMinutes()
+							+ ":" + curDate.getSeconds());
+				} catch (ParseException e) {
+					date = curDate;
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			}
+				
+				
+				Visit visit = new Visit();
+				visit.setPatient(ret);
+				visit.setStartDatetime(date);
+				visit.setVisitType(MetadataUtils.existing(VisitType.class,
+						CommonMetadata._VisitType.OUTPATIENT));
+				visit.setLocation(Context.getService(KenyaEmrService.class)
+						.getDefaultLocation());
 
-			Visit visitSave = Context.getVisitService().saveVisit(visit);
+				if (isNewPatient) {
+					VisitAttributeType attrType = Context.getService(
+							VisitService.class).getVisitAttributeTypeByUuid(
+							CommonMetadata._VisitAttributeType.NEW_PATIENT);
+					if (attrType != null) {
+						VisitAttribute attr = new VisitAttribute();
+						attr.setAttributeType(attrType);
+						attr.setVisit(visit);
+						attr.setDateCreated(date);
+						attr.setValue(true);
+						visit.addAttribute(attr);
+					}
+				}
+				Visit visitSave = Context.getVisitService().saveVisit(visit);
+				
+			}
 
 			return ret;
 		}

@@ -1,7 +1,8 @@
-<%
-	ui.decorateWith("kenyaemr", "standardPage", [ patient: currentPatient, visit: currentVisit ])
 
-	def defaultEncounterDate = currentVisit ? currentVisit.startDatetime : new Date()
+<%
+	ui.decorateWith("kenyaemr", "standardPage", [ patient: currentPatient, visit: activeVisit ])
+
+	def defaultEncounterDate = activeVisit ? activeVisitDate : new Date()
 %>
 <div class="ke-page-content">
 	${ ui.includeFragment("kenyaemr", "form/enterHtmlForm", [
