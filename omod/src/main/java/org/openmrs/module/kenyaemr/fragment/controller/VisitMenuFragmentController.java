@@ -14,6 +14,8 @@
 
 package org.openmrs.module.kenyaemr.fragment.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.openmrs.Patient;
@@ -51,5 +53,24 @@ public class VisitMenuFragmentController {
 		
 		model.addAttribute("newCurrentVisit", newVisit);
 		model.addAttribute("typeOfUser", typeOfUser);	
+		
+		Date curDate = new Date();
+		SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat(
+				"dd-MMM-yy HH:mm:ss");
+		Date date = new Date();
+		if(visit!=null){
+			String modifiedDate= new SimpleDateFormat("dd-MMM-yyyy").format(visit.getStartDatetime());
+			try {
+				date = mysqlDateTimeFormatter.parse(modifiedDate
+						+ " " + curDate.getHours() + ":" + curDate.getMinutes()
+						+ ":" + curDate.getSeconds());
+			} catch (ParseException e) {
+				date = curDate;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		model.addAttribute("activeVisitDate", date);
 	}
 }

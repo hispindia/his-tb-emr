@@ -7,7 +7,7 @@
 			fields: [
 						[ hiddenInputName: "visitId", value: visit.visitId ],
 						[ hiddenInputName: "appId", value: currentApp.id ],
-						[ label: "End Date and Time", formFieldName: "stopDatetime", class: java.util.Date, initialValue: new Date(), showTime: true ]
+						[ label: "End Date and Time", formFieldName: "stopDatetime", class: java.util.Date, initialValue: activeVisitDate, showTime: true ]
 			],
 			fragmentProvider: "kenyaemr",
 			fragment: "registrationUtil",
