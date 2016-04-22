@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.groovy.antlr.treewalker.PreOrderTraversal;
@@ -545,6 +546,23 @@ public class EditPatientFragmentController {
 				}
 			}
 
+			if(genSpecificationDate!=null && genResultDate!=null){
+				if(genResultDate.before(genSpecificationDate)){
+					errors.rejectValue("genResultDate",
+							"Can not be before Specimen collection date");
+				}
+				long diff = genResultDate.getTime() - genSpecificationDate.getTime();
+				int dayDiff = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+				if(dayDiff > 30){
+					errors.rejectValue("genSpecificationDate",
+							"Result date can not be after 30 days");
+				}
+			}
+			
+			
+			
+			
+			
 			// Require death details if patient is deceased
 			if (dead) {
 				require(errors, "deathDate");
