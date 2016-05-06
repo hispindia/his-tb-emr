@@ -344,5 +344,22 @@ public class PatientWrapper extends AbstractPatientWrapper {
 	public void setGenSpecificationPlace(String value) {
 		setAsAttribute(CommonMetadata._PersonAttributeType.GEN_SPECIMEN_COLLECTION_PLACE, value);
 	}
+	
+	public String getPreviousRegimenType() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.PREVIOUS_REGIMEN);
+	}
+
+	public void setPreviousRegimenType(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.PREVIOUS_REGIMEN, value);
+	}
+	
+	public String getPreviousRegimenStartDate() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.PREVIOUS_REGIMEN_DATE);
+	}
+
+	public void setPreviousRegimenStartDate(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.PREVIOUS_REGIMEN_DATE, value);
+	}
+
 		
 }

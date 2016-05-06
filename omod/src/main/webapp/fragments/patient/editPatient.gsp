@@ -23,7 +23,7 @@
 	
 	def currentTownshipTBNumber = [
 			[
-					[ object: command, property: "currentTownshipTBNumber", label: "Current Township TB Number *" , config: [  size: 20 ]]
+					[ object: command, property: "currentTownshipTBNumber", label: "Current Township TB Number" , config: [  size: 20 ]]
 			]
 	]
 
@@ -43,7 +43,6 @@
 	
 	def occupation = [
 			[
-					[ object: command, property: "personAddress.address3", label: "Workplace/university/school address", config: [ type: "textarea",  rows: 2,size: 20 ] ],
 			]		
 	]
 	
@@ -58,8 +57,9 @@
 	
 	def addressFieldRows = [
 			[
+					[ object: command, property: "personAddress.address3", label: "Workplace/university/school address", config: [ type: "textarea",  rows: 2,size: 20 ] ],
 					[ object: command, property: "personAddress.address1", label: "Permanent Home Address ", config: [ type: "textarea", rows: 2, size: 20 ] ],
-					[ object: command, property: "personAddress.address2", label: "Temporary Address for Treatment *", config: [ type: "textarea", rows: 2, size: 20 ] ],
+					[ object: command, property: "personAddress.address2", label: "Temporary Address for Treatment", config: [ type: "textarea", rows: 2, size: 20 ] ],
 					[ object: command, property: "telephoneContact", label: "Contact Number" ]
 			]
 	]
@@ -75,7 +75,7 @@
 			
 	def previousRegimenDetail = [
 			[
-					[ object: command, property: "previousRegimenType", label: "Regimen Type", config: [style:"list",  answerTo: tbRegimenType ] ],
+					[ object: command, property: "previousRegimenType", label: "Regimen" ],
 					[ object: command, property: "previousRegimenStartDate", label: "Start Date"]
 					
 			]	
@@ -202,9 +202,6 @@
 			<% placeOfBirth.each { %>
 			${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			<% } %>
-			<br />
-			
-			<legend>Address</legend>
 			<table>
 				<tr>
 					<td> 
@@ -221,7 +218,9 @@
 					</td>
 				</tr>
 			</table>
-			
+			<br />						
+			<legend>Address</legend>
+
 			<% occupation.each { %>
 			${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			<% } %>

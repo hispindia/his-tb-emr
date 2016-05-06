@@ -99,7 +99,9 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String GEN_SAMPLE_ID = "7277d10e-8030-43d2-bde1-01704fedc9ec";
 		public static final String GEN_SPECIMEN_COLLECTION_DATE = "f607bd28-6a33-40d0-a07b-788299635e46";
 		public static final String GEN_SPECIMEN_COLLECTION_PLACE = "0e51143e-1d98-4c7a-b2de-683dbcd0b2bb";
-	}
+		public static final String PREVIOUS_REGIMEN_DATE = "c32c0ba5-22d8-4e4b-9c63-dd170eaf4af5";
+		public static final String PREVIOUS_REGIMEN = "9f11018f-cdf7-484a-a2bb-0e6f8d2b6b43";
+		}
 
 	public static final class _Provider {
 		public static final String UNKNOWN = "ae01b8ff-a4cc-4012-bcf7-72359e852e14";
@@ -202,7 +204,12 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(personAttributeType("Genxpert Specimen Date", "Genxpert Specimen collection Date",
 				AttributableDate.class, null, false, 4.0, _PersonAttributeType.GEN_SPECIMEN_COLLECTION_DATE));
 		install(personAttributeType("Genxpert Specimen Place", "Genxpert Specimen collection Place",
-				String.class, null, false, 4.0, _PersonAttributeType.GEN_SPECIMEN_COLLECTION_PLACE));		
+				String.class, null, false, 4.0, _PersonAttributeType.GEN_SPECIMEN_COLLECTION_PLACE));
+		install(personAttributeType("Previous Regimen", "Previous Regimen for Patient",
+				String.class, null, false, 4.0, _PersonAttributeType.PREVIOUS_REGIMEN));
+		install(personAttributeType("Previous Regimen Start Date", "Previous Regimen start date for Patient",
+				AttributableDate.class, null, false, 4.0, _PersonAttributeType.PREVIOUS_REGIMEN_DATE));
+		
 		
 		install(personAttributeType("Treatment Supporter's Relationship", "Next of kin relationship to the patient",
 				String.class, null, false, 4.1, _PersonAttributeType.NEXT_OF_KIN_RELATIONSHIP));

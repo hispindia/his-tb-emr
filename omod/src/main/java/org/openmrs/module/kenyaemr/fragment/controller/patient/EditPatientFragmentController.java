@@ -125,10 +125,10 @@ public class EditPatientFragmentController {
 		} else {
 			model.addAttribute("tbHistory", 0);
 		}
-	
+	/*
 		model.addAttribute("tbRegimenType",
 				Dictionary.getConcept(Dictionary.TB_FORM_REGIMEN));
-		
+	*/	
 		model.addAttribute("outcome",
 				Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME));
 		
@@ -334,8 +334,7 @@ public class EditPatientFragmentController {
 		private Concept township;
 		private Obs savedTownship;
 		
-		private Concept previousRegimenType;
-		private Obs savedPreviousRegimenType;
+		private String previousRegimenType;
 		private Date previousRegimenStartDate;
 		private Concept previousRegimenStartDateType;
 		private Obs savedPreviousRegimenStartDateType;
@@ -420,7 +419,17 @@ public class EditPatientFragmentController {
 		
 			genSpecificationPlace = wrapper.getGenSpecificationPlace();
 			
-
+			previousRegimenType = wrapper.getPreviousRegimenType();
+			
+			try {
+				String datestr = wrapper.getPreviousRegimenStartDate();
+				DateFormat formatter;
+				formatter = new SimpleDateFormat("dd-MMMM-yyyy");
+				previousRegimenStartDate = (Date) formatter.parse(datestr);
+			} catch (Exception e) {
+			}
+		
+			
 			savedOccupation = getLatestObs(patient, Dictionary.OCCUPATION);
 			if (savedOccupation != null) {
 				occupation = savedOccupation.getValueCoded();
@@ -442,13 +451,6 @@ public class EditPatientFragmentController {
 			savedTBHistoryStatus = getLatestObs(patient, Dictionary.TB_PATIENT);
 			if(savedTBHistoryStatus != null){
 				tbHistoryStatus = savedTBHistoryStatus.getValueCoded();
-			}
-			
-			savedPreviousRegimenType = getLatestObs(patient,
-					Dictionary.TB_FORM_REGIMEN);
-			if (savedPreviousRegimenType != null) {
-				previousRegimenType = savedPreviousRegimenType.getValueCoded();
-				previousRegimenStartDate = savedPreviousRegimenType.getValueDate();
 			}
 			
 			savedPreviousRegimenStartDateType = getLatestObs(patient,
@@ -499,7 +501,7 @@ public class EditPatientFragmentController {
 			;
 
 		//	require(errors, "fatherName");
-			require(errors, "currentTownshipTBNumber");
+		//	require(errors, "currentTownshipTBNumber");
 			
 			if (fatherName.length() > 50) {
 				errors.rejectValue("fatherName",
@@ -521,11 +523,11 @@ public class EditPatientFragmentController {
 				errors.rejectValue("personAddress.address1",
 						"Length of Address is exceeding it's limit");
 			}
-			
+			/*
 			if (personAddress.getAddress2().length() <1 ) {
 				errors.rejectValue("personAddress.address2",
 						"Required");
-			}
+			}*/
 
 			if (personAddress.getAddress2().length() > 200) {
 				errors.rejectValue("personAddress.address2",
@@ -729,12 +731,20 @@ public class EditPatientFragmentController {
 			wrapper.getPerson().setCurrentTownshipTBNumber(currentTownshipTBNumber);
 			wrapper.getPerson().setGenSampleId(genSampleId);
 			wrapper.getPerson().setGenSpecificationPlace(genSpecificationPlace);
+			wrapper.getPerson().setPreviousRegimenType(previousRegimenType);
+			
 
 			DateFormat testDate = new SimpleDateFormat("dd-MMMM-yyyy");
 			if(genSpecificationDate!=null){
 				Date capturedTestDate = genSpecificationDate;
 				wrapper.setGenSpecificationDate(testDate
 							.format(capturedTestDate));
+			}
+			
+			if(previousRegimenStartDate!=null){
+				Date startDate = previousRegimenStartDate;
+				wrapper.setPreviousRegimenStartDate(testDate
+							.format(startDate));
 			}
 
 			// Make sure everyone gets an OpenMRS ID
@@ -824,16 +834,6 @@ public class EditPatientFragmentController {
 						Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME),
 						savedPreviousTBOutcome, previousTBOutcome, null,
 						previousTBOutcomeDate);
-			}
-			
-			if (previousRegimenType != null){
-				handleOncePerPatientObs(
-						ret,
-						obsToSave,
-						obsToVoid,
-						Dictionary.getConcept(Dictionary.TB_FORM_REGIMEN),
-						savedPreviousRegimenType, previousRegimenType,
-						null , previousRegimenStartDate);
 			}
 			
 			for (Obs o : obsToVoid) {
@@ -1313,20 +1313,12 @@ public class EditPatientFragmentController {
 			this.savedTownship = savedTownship;
 		}
 
-		public Concept getPreviousRegimenType() {
+		public String getPreviousRegimenType() {
 			return previousRegimenType;
 		}
 
-		public void setPreviousRegimenType(Concept previousRegimenType) {
+		public void setPreviousRegimenType(String previousRegimenType) {
 			this.previousRegimenType = previousRegimenType;
-		}
-
-		public Obs getSavedPreviousRegimenType() {
-			return savedPreviousRegimenType;
-		}
-
-		public void setSavedPreviousRegimenType(Obs savedPreviousRegimenType) {
-			this.savedPreviousRegimenType = savedPreviousRegimenType;
 		}
 
 		public Date getPreviousRegimenStartDate() {

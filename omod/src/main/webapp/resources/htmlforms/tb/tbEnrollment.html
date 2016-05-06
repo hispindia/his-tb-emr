@@ -34,9 +34,13 @@ table.tb1 tr th, table.tb1 tr td {
 
 <script type="text/javascript">
 		jq(document).ready(function(){
-			
 			// show fields with data 
-			fieldIndex = 10; 
+			if( getValue('regGroup.value')!="" &amp;&amp; document.getElementById("w10").value==null ){
+				fieldIndex = 69;
+			}
+			else{
+				fieldIndex = 10;
+			}
 			j=1;
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 6){
 				jQuery('#'+j+'-toggleContainer').show();   
@@ -132,7 +136,6 @@ table.tb1 tr th, table.tb1 tr td {
 				$j('#'+j+'-addEntry2').toggle(false);
 					}
 				j++;
-				
 			}
 
 			$j('#1-removeEntry2').remove();
@@ -158,20 +161,67 @@ table.tb1 tr th, table.tb1 tr td {
 				$j('#' + correctedRemoveButtonId + '-removeEntry2').toggle(true);
 				return false;
 				});
-			
+				
 			if(document.getElementById("curDate")){
 				var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 				var d = new Date(getValue('curDate.value'));
 				var today = new Date();
-				if(d!="Invalid Date"){
-					d.setDate(d.getDate() + 280);
-					document.getElementById("w89-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
-					document.getElementById("w89").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
-				}
+				if(document.getElementById("w69")){
+					if( getValue('regGroup.value')!=""){
+						if(d!="Invalid Date"){
+							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+							d.setDate(d.getDate() + 280);
+							document.getElementById("w67-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+							document.getElementById("w67").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+						}
+						else{
+							document.getElementById("w67-display").value =  "";
+							document.getElementById("w67").value = "";
+						}
+
+					}
+					else{
+						if(d!="Invalid Date"){
+							d.setDate(d.getDate() + 280);
+							document.getElementById("w89-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+							document.getElementById("w89").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+						}
+						else{
+							document.getElementById("w89-display").value =  "";
+							document.getElementById("w89").value = "";
+						}
+						
+					}
+				}	
 				else{
-					document.getElementById("w89-display").value =  "";
-					document.getElementById("w89").value = "";
+					if( getValue('regGroup.value')!=""){
+						if(d!="Invalid Date"){
+							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+							d.setDate(d.getDate() + 280);
+							document.getElementById("w77-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+							document.getElementById("w77").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+						}
+						else{
+							document.getElementById("w77-display").value =  "";
+							document.getElementById("w77").value = "";
+						}
+
+					}
+					else{
+						if(d!="Invalid Date"){
+							d.setDate(d.getDate() + 280);
+							document.getElementById("w89-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+							document.getElementById("w89").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+						}
+						else{
+							document.getElementById("w89-display").value =  "";
+							document.getElementById("w89").value = "";
+						}
+						
+					}
 				}
+
+				
 				
 				var da = new Date(getValue('curDate.value'));
 				da.setDate(da.getDate() + 250);
@@ -191,17 +241,62 @@ table.tb1 tr th, table.tb1 tr td {
 					var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 					var d = new Date(getValue('curDate.value'));
 					var today = new Date();
-					if(d!=""){
-						jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
-						d.setDate(d.getDate() + 280);
-						document.getElementById("w89-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
-						document.getElementById("w89").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
-						
-					}
+					
+					if(document.getElementById("w69")){
+						if( getValue('regGroup.value')!=""){
+							if(d!="Invalid Date"){
+								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+								d.setDate(d.getDate() + 280);
+								document.getElementById("w67-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+								document.getElementById("w67").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+							}
+							else{
+								document.getElementById("w67-display").value =  "";
+								document.getElementById("w67").value = "";
+							}
+
+						}
+						else{
+							if(d!="Invalid Date"){
+								d.setDate(d.getDate() + 280);
+								document.getElementById("w89-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+								document.getElementById("w89").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+							}
+							else{
+								document.getElementById("w89-display").value =  "";
+								document.getElementById("w89").value = "";
+							}
+							
+						}
+					}	
 					else{
-						document.getElementById("w89-display").value =  "";
-						document.getElementById("w89").value = "";
+						if( getValue('regGroup.value')!=""){
+							if(d!="Invalid Date"){
+								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+								d.setDate(d.getDate() + 280);
+								document.getElementById("w77-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+								document.getElementById("w77").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+							}
+							else{
+								document.getElementById("w77-display").value =  "";
+								document.getElementById("w77").value = "";
+							}
+
+						}
+						else{
+							if(d!="Invalid Date"){
+								d.setDate(d.getDate() + 280);
+								document.getElementById("w89-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()] + "-" + d.getFullYear();
+								document.getElementById("w89").value = d.getFullYear()  + "-" +  d.getMonth() 	+ "-" + d.getDate();
+							}
+							else{
+								document.getElementById("w89-display").value =  "";
+								document.getElementById("w89").value = "";
+							}
+							
+						}
 					}
+					
 				});
 
 			}
@@ -232,34 +327,49 @@ table.tb1 tr th, table.tb1 tr td {
     			
     			if (getValue('hivSection.value') == 1065){
 					jq('#hivSectionField :input').prop('disabled', false);
-					if (getValue('napCenter.value') == 1065){
-    					jq('#preArtRegNumber :input').prop('disabled', false);
-    					jq('#treatmentCenter :input').prop('disabled', true);
-    				}
-    				else if(getValue('napCenter.value') == 1066){
-        				jq('#preArtRegNumber :input').prop('disabled', true);
-        				jq('#treatmentCenter :input').prop('disabled', false);
-    				}
-    				else{
-    					jq('#preArtRegNumber :input').prop('disabled', true);
-        				jq('#treatmentCenter :input').prop('disabled', true);
-    				}
-	       			if (getValue('artOption.value') == 1065){
-						jq('#artDate :input').prop('disabled', false);
-						jq('#artRegimen :input').prop('disabled', false);
-					}
-					else{
-						jq('#artDate :input').prop('disabled', true);
-						jq('#artRegimen :input').prop('disabled', true);
-					}
-	       			
-	      			if (getValue('cptOption.value') == 1065){
-						jq('#cptDate :input').prop('disabled', false);
-					}
-					else{
-						jq('#cptDate :input').prop('disabled', true);
-					}
 					
+					if (getValue('testResult.value') == ""){
+						jq('#artOption :radio').prop('disabled', true);
+						jq('#napCenter :radio').prop('disabled', true);
+						jq('#cptOption :radio').prop('disabled', true);
+					}
+					if (getValue('testResult.value') == 1228){
+						jq('#artOption :radio').prop('disabled', false);
+						jq('#napCenter :radio').prop('disabled', false);
+						jq('#cptOption :radio').prop('disabled', true);
+						if (getValue('napCenter.value') == 1065){
+	    					jq('#preArtRegNumber :input').prop('disabled', false);
+	    					jq('#treatmentCenter :input').prop('disabled', true);
+	    				}
+	    				else if(getValue('napCenter.value') == 1066){
+	        				jq('#preArtRegNumber :input').prop('disabled', true);
+	        				jq('#treatmentCenter :input').prop('disabled', false);
+	    				}
+	    				else{
+	    					jq('#preArtRegNumber :input').prop('disabled', true);
+	        				jq('#treatmentCenter :input').prop('disabled', true);
+	    				}
+		       			if (getValue('artOption.value') == 1065){
+							jq('#artDate :input').prop('disabled', false);
+							jq('#artRegimen :input').prop('disabled', false);
+						}
+						else{
+							jq('#artDate :input').prop('disabled', true);
+							jq('#artRegimen :input').prop('disabled', true);
+						}
+					}
+					else{
+						jq('#artOption :radio').prop('disabled', true);
+						jq('#napCenter :radio').prop('disabled', true);
+						jq('#cptOption :radio').prop('disabled', false);
+		      			if (getValue('cptOption.value') == 1065){
+							jq('#cptDate :input').prop('disabled', false);
+						}
+						else{
+							jq('#cptDate :input').prop('disabled', true);
+						}
+
+					}
 				}
 				else {
     				jq('#hivSectionField :input').prop('disabled', true);
@@ -268,6 +378,9 @@ table.tb1 tr th, table.tb1 tr td {
     			$('#hivSection input:radio').click(function() {
         			if (getValue('hivSection.value') == 1065){
     					jq('#hivSectionField :input').prop('disabled', false);
+    					jq('#artOption :radio').prop('disabled', true);
+    					jq('#napCenter :radio').prop('disabled', true);
+    					jq('#cptOption :radio').prop('disabled', true);
     					if (getValue('napCenter.value') == 1065){
         					jq('#preArtRegNumber :input').prop('disabled', false);
         					jq('#treatmentCenter :input').prop('disabled', true);
@@ -301,6 +414,55 @@ table.tb1 tr th, table.tb1 tr td {
     				else {
         				jq('#hivSectionField :input').prop('disabled', true);
     				}
+    			});
+    			
+    			$('#testResult').click(function() {
+        			if (getValue('testResult.value') == ""){
+        				jq('#cptOption :radio').prop('disabled', true);
+        				jq('#preArtRegNumber :input').prop('disabled', true);
+        				jq('#treatmentCenter :input').prop('disabled', true);
+    					jq('#artDate :input').prop('disabled', true);
+						jq('#artRegimen :input').prop('disabled', true);
+						jq('#artOption :radio').prop('disabled', true);
+						jq('#napCenter :radio').prop('disabled', true);
+         			}
+        			else if(getValue('testResult.value') == 1228 ){
+        				jq('#artOption :radio').prop('disabled', false);
+						jq('#napCenter :radio').prop('disabled', false);
+        				if (getValue('napCenter.value') == 1065){
+        					jq('#preArtRegNumber :input').prop('disabled', false);
+        					jq('#treatmentCenter :input').prop('disabled', true);
+        				}
+        				else if(getValue('napCenter.value') == 1066){
+            				jq('#preArtRegNumber :input').prop('disabled', true);
+            				jq('#treatmentCenter :input').prop('disabled', false);
+        				}
+        				else{
+        					jq('#preArtRegNumber :input').prop('disabled', true);
+            				jq('#treatmentCenter :input').prop('disabled', true);
+        				}
+    					
+    	       			if (getValue('artOption.value') == 1065){
+    						jq('#artDate :input').prop('disabled', false);
+    						jq('#artRegimen :input').prop('disabled', false);
+    					}
+    					else{
+    						jq('#artDate :input').prop('disabled', true);
+    						jq('#artRegimen :input').prop('disabled', true);
+    					}
+    	       			
+    	       			jq('#cptOption :radio').prop('disabled', true);
+    	       			jq('#cptDate :input').prop('disabled', true);
+        			}
+        			else {
+        				jq('#cptOption :radio').prop('disabled', false);
+        				jq('#preArtRegNumber :input').prop('disabled', true);
+        				jq('#treatmentCenter :input').prop('disabled', true);
+    					jq('#artDate :input').prop('disabled', true);
+						jq('#artRegimen :input').prop('disabled', true);
+						jq('#artOption :radio').prop('disabled', true);
+						jq('#napCenter :radio').prop('disabled', true);
+        			}
     			});
     			
     			/* For treatment taking at NAP center options */
@@ -406,131 +568,8 @@ table.tb1 tr th, table.tb1 tr td {
     					jq('#drugName :input').prop('disabled', true);
     				}
     			});
-    			
-    	/*			
-			var pbirthdate = new Date("<lookup expression="patient.birthdate" />").getTime();
-
-			//check if the date of tb treatment already exists
-			var treatmentDate = "<lookup expression="fn.latestObs(1113).valueDate" />"
-
-			//set the value of the treatment date if available
-			setValue('dstartoftreatment.value', treatmentDate);
-			
-			var pulmodiv = document.getElementById('iddivPulmonary');
-			var expulmodiv = document.getElementById('expul');
-			//getting the values of the disease classification option buttons
-			var optValues = getValue('dclassification.value');
-				if (optValues == 42){
-					jq('#expul :input').prop('disabled', true);
-    				jq('#iddivPulmonary :input').prop('disabled', false);
-				}
-				else if (optValues == 5042 ){
-					jq('#iddivPulmonary :input').prop('disabled', true);
-    				jq('#expul :input').prop('disabled', false);
-				}
-				else {
-					jq('#iddivPulmonary :input').prop('disabled', true);
-    				jq('#expul :input').prop('disabled', true);
-				}
-				
-    			$('#dclassification input:radio').click(function() {
-    				if (jq(this).val() == 42) {
-    					jq('#expul :input').prop('disabled', true);
-    					jq('#iddivPulmonary :input').prop('disabled', false);
-    				}
-    				if (jq(this).val() == 5042) {
-    					jq('#iddivPulmonary :input').prop('disabled', true);
-    					jq('#expul :input').prop('disabled', false);
-    				}
-    			});
-   			//activating the transfer in details only when the patient classification is transfer in
-   			//patientClassification
-   			var optpatientclassification = getValue('patientClassification.value');
-
-   				if (optpatientclassification == 159872 ) {
-   					jq('#transferInDetails :input').prop('disabled', false);
-   				}
-
-   				else {
-   					jq('#transferInDetails :input').prop('disabled', true)
-   				}
-   				
-   				jq('#patientClassification input:radio').click(function() {
-
-   					if (jq(this).val() == 159872){
-   						jq('#transferInDetails :input').prop('disabled', false);
-   					}
-
-   					else {
-   						jq('#transferInDetails :input').prop('disabled', true);
-   					}
-   				});
- 			//hide the div tags that hold errors on the start of the form
- 			jq('#startOfTreatmentDateError').hide();
- 			jq('#referalDateError').hide();
- 			jq('#transferInDatesError').hide();
- 			
- 			//control the transfer in option 
- 			jq('#referredByOptions1 input:radio').click(function() {
- 				jq( '#referredByOptions2 input:radio' ).prop( "checked", false );
- 			});
-
- 			jq('#referredByOptions2 input:radio').click(function() {
- 				jq('#referredByOptions1 input:radio' ).prop( "checked", false );
- 			});
-    			
-
-			//create some variable that will control the dates on the form not to be earlier than DOB
-			var pbirthdate = new Date("<lookup expression="patient.birthdate" />").getTime();
-			var encounterdate;
-			var dstartoftreatment;
-			var dreferredby;
-			var transferindate;
-			var dfirstenrolled;
-            var treatmentSupporterNumber;
-            var regex = /^\+?\d{7,13}$/
-	*/	
+  
 			beforeSubmit.push (function() {
-	/*			encounterdate = new Date(getValue('encounter-date.value')).getTime();
-       			datestartoftreatment = new Date(getValue('dstartoftreatment.value')).getTime();
-       			dreferredby = new Date(getValue('datereferredby.value')).getTime();
-       			transferindate  = new Date(getValue('transferindate.value')).getTime();
-       			dfirstenrolled = new Date(getValue('datefirstenrolled.value')).getTime();
-                treatmentSupporterNumber = getValue('treatmentSupportedNumber.value');
-
-                if (treatmentSupporterNumber != '' &amp;&amp; !regex.test(treatmentSupporterNumber)){
-                    jq('#treatmentsupportError').html('Please provide valid phone Number');
-                    return false;
-                }
-
-       			if (encounterdate &lt; pbirthdate) {
-               		getField('encounter-date.error').html('Encounter datetime should be after the birth date').show();
-                   	return false
-         		}
-         		
-          		if (datestartoftreatment &lt; pbirthdate) {
-          			jq('#startOfTreatmentDateError').show();
-               		jq('#startOfTreatmentDateError').html('Date start of treatment should be after the birth date');
-                   	return false
-         		}
-         	         
-        		if (dreferredby &lt; pbirthdate) {
-        			jq('#referalDateError').show();
-               		jq('#referalDateError').html('Date referred by should be after the birth date');
-                   	return false
-         		}
-         		
-         		if (transferindate &lt; pbirthdate) {
-         			jq('#transferInDatesError').show();
-               		jq('#transferInDatesError').html('Transfer in date should be after the birth date');
-                   	return false
-         		}
-          		if (dfirstenrolled &lt; pbirthdate){
-          			jq('#transferInDatesError').show();
-               		jq('#transferInDatesError').html('Date first enrolled should be after the birth date');
-                   	return false
-         		}
-*/
 
 					var count=0;
 					$('#expul').find('select :selected').each(function(){
@@ -546,17 +585,7 @@ table.tb1 tr th, table.tb1 tr td {
 					
     			return true;
 			});
-			//try add load treatment supporter's information if available from other places for this patient
-	/*		var treatmentSuppoterNames = "<lookup expression="fn.latestObs(160638).valueText" />";
-			var treatmentSuppoterRelation = "<lookup expression="fn.latestObs(160640).valueCoded" />";;
-			var treatmentSuppoterAddress = "<lookup expression="fn.latestObs(160641).valueText" />";;
-			var treatmentSuppoterPhoneNumber = "<lookup expression="fn.latestObs(160642).valueText" />";
-			//populate the fields
-			setValue('tSupporterNames.value', treatmentSuppoterNames);
-			setValue('tSupporterRelation.value', treatmentSuppoterRelation);
-			setValue('tSupporterAddress.value', treatmentSuppoterAddress);
-			setValue('treatmentSupportedNumber.value', treatmentSuppoterPhoneNumber);
-*/
+	
 		});
 	</script> <script type="text/javascript">
 		function mbdCalculation() {
@@ -707,7 +736,7 @@ table.tb1 tr th, table.tb1 tr td {
 						</tr>
 						<tr>
 							<td>Registration group</td>
-							<td><obs conceptId="159976AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							<td><obs conceptId="159990AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 									required="true" id="regGroup" /></td>
 						</tr>
 						<tr>
@@ -747,7 +776,7 @@ table.tb1 tr th, table.tb1 tr td {
 							</tr>
 							<tr>
 								<td>Result</td>
-								<td><obs conceptId="305AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+								<td><obs conceptId="305AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="testResult"/></td>
 							</tr>
 							<tr>
 								<td>If reactive, treatment taking at NAP center</td>
@@ -773,8 +802,8 @@ table.tb1 tr th, table.tb1 tr td {
 							</tr>
 							<tr>
 								<td>Current HIV regimen</td>
-								<td><obs conceptId="1400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-										style="autocomplete" answerClasses="drug" id="artRegimen"/></td>
+								<td><obs conceptId="1088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+										style="autocomplete"  id="artRegimen"/></td>
 							</tr>
 							<tr>
 								<td>Started on CPT</td>
