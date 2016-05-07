@@ -34,8 +34,9 @@ table.tb1 tr th, table.tb1 tr td {
 
 <script type="text/javascript">
 		jq(document).ready(function(){
+			var checkData = getValue('regGroup.value');
 			// show fields with data 
-			if( getValue('regGroup.value')!="" &amp;&amp; document.getElementById("w10").value==null ){
+			if( checkData!="" &amp;&amp; document.getElementById("w10").value==null ){
 				fieldIndex = 69;
 			}
 			else{
@@ -74,7 +75,7 @@ table.tb1 tr th, table.tb1 tr td {
 			
 		
 			// show fields with data 
-			if( getValue('regGroup.value')!=""){
+			if( checkData!=""){
 				fieldIndex = 81;
 			}
 			else{
@@ -119,7 +120,7 @@ table.tb1 tr th, table.tb1 tr td {
 				});
 
 			// show fields with data 
-			if( getValue('regGroup.value')!=""){
+			if( checkData!=""){
 				fieldIndex = 65;
 			}
 			else{
@@ -167,7 +168,7 @@ table.tb1 tr th, table.tb1 tr td {
 				var d = new Date(getValue('curDate.value'));
 				var today = new Date();
 				if(document.getElementById("w69")){
-					if( getValue('regGroup.value')!=""){
+					if( checkData!=""){
 						if(d!="Invalid Date"){
 							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
 							d.setDate(d.getDate() + 280);
@@ -194,7 +195,7 @@ table.tb1 tr th, table.tb1 tr td {
 					}
 				}	
 				else{
-					if( getValue('regGroup.value')!=""){
+					if( checkData!=""){
 						if(d!="Invalid Date"){
 							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
 							d.setDate(d.getDate() + 280);
@@ -243,7 +244,7 @@ table.tb1 tr th, table.tb1 tr td {
 					var today = new Date();
 					
 					if(document.getElementById("w69")){
-						if( getValue('regGroup.value')!=""){
+						if( checkData!=""){
 							if(d!="Invalid Date"){
 								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
 								d.setDate(d.getDate() + 280);
@@ -270,7 +271,7 @@ table.tb1 tr th, table.tb1 tr td {
 						}
 					}	
 					else{
-						if( getValue('regGroup.value')!=""){
+						if( checkData!=""){
 							if(d!="Invalid Date"){
 								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
 								d.setDate(d.getDate() + 280);
