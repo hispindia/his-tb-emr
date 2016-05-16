@@ -62,7 +62,7 @@ public class MchcsCarePanelFragmentController {
 
 			heiOutcomes = heiCompletionWrapper.firstObs(Dictionary.getConcept(Dictionary.REASON_FOR_PROGRAM_DISCONTINUATION));
 			hivExposed =  mchcsEnrollmentWrapper.firstObs(Dictionary.getConcept(Dictionary.CHILDS_CURRENT_HIV_STATUS));
-			hivStatus =  heiCompletionWrapper.firstObs(Dictionary.getConcept(Dictionary.HIV_STATUS));
+			hivStatus =  heiCompletionWrapper.firstObs(Dictionary.getConcept(Dictionary.RESULT_OF_HIV_TEST));
 		}
 
 		if ((hivExposed != null) && (hivExposed.getValueCoded() != Dictionary.getConcept(Dictionary.EXPOSURE_TO_HIV))) {

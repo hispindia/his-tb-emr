@@ -73,6 +73,19 @@ public class PatientWrapper extends AbstractPatientWrapper {
 		setAsIdentifier(CommonMetadata._PatientIdentifierType.PATIENT_CLINIC_NUMBER, value, location);
 	}
 	
+	public void setMDRTBRegistrationNumber(String value, Location location) {
+		setAsIdentifier(CommonMetadata._PatientIdentifierType.MDR_TB_REGISTRATION_NUMBER, value, location);
+	}
+
+	/**
+	 * Gets the MDR TB REGISTRATION_NUMBER
+	 * @return the identifier value
+	 */
+	public String getMDRTBRegistration() {
+		return getAsIdentifier(CommonMetadata._PatientIdentifierType.MDR_TB_REGISTRATION_NUMBER);
+	}
+	
+	
 	public void setDrTBSuspectNumber(String value, Location location) {
 		setAsIdentifier(CommonMetadata._PatientIdentifierType.DR_TB_SUSPECT_NUMBER, value, location);
 	}

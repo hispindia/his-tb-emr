@@ -55,7 +55,7 @@ public class MchmsCarePanelFragmentController {
 			calculations.put("gestation", weeks.getWeeks());
 		}
 
-		Obs hivStatusObs = lastMchEnrollmentWrapped.firstObs(Dictionary.getConcept(Dictionary.HIV_STATUS));
+		Obs hivStatusObs = lastMchEnrollmentWrapped.firstObs(Dictionary.getConcept(Dictionary.RESULT_OF_HIV_TEST));
 		if (hivStatusObs != null) {
 			calculations.put("hivStatus", hivStatusObs.getValueCoded());
 		} else {
