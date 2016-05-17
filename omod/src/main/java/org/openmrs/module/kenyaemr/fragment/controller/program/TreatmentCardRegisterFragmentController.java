@@ -213,327 +213,87 @@ public class TreatmentCardRegisterFragmentController {
 		}
 		model.addAttribute("cptStartDateVal", cptStartDateVal);
 		
+
 		/*
-		 * Obstetric History
-		 * */
-		String pregStatusVal = "";
-		String eddVal = "";
-		String ancNumberVal = "";
-		
-		Obs pregStatus = getLatestObs(patient, Dictionary.PREGNANCY_STATUS);
-		if (pregStatus != null) {
-				pregStatusVal = pregStatus.getValueCoded().getName().toString();
-		}
-		model.addAttribute("pregStatusVal", pregStatusVal);
-		
-		Obs edd = getLatestObs(patient, Dictionary.EXPECTED_DATE_OF_DELIVERY);
-		if (edd != null) {
-			eddVal = new SimpleDateFormat("dd-MMMM-yyyy").format(edd.getValueDate());
-		}
-		model.addAttribute("eddVal", eddVal);
-		
-		Obs ancNumber = getLatestObs(patient, Dictionary.ANTENATAL_CASE_NUMBER);
-		if (ancNumber != null) {
-			ancNumberVal = ancNumber.getValueNumeric().toString();
-		}
-		model.addAttribute("ancNumberVal", ancNumberVal);
-		
-		
-		/*
-		 * Personal History
+		 * District/Township MDR-TB Committee recommendation
 		 */
-
-		String listAllRiskFactor = "";
-		String literate = "";
-		String employed = "";
-
-		Obs riskFactor = getAllLatestObs(patient, Dictionary.HIV_RISK_FACTOR);
-		if (riskFactor != null) {
-			EncounterWrapper wrapped = new EncounterWrapper(
-					riskFactor.getEncounter());
-			List<Obs> obsList = wrapped.allObs(riskFactor.getConcept());
-
-			for (Obs obs : obsList) {
-				if (listAllRiskFactor.isEmpty()) {
-					listAllRiskFactor = listAllRiskFactor.concat(obs
-							.getValueCoded().getName().toString());
-				} else {
-					listAllRiskFactor = listAllRiskFactor.concat(", "
-							+ obs.getValueCoded().getName().toString());
-				}
-			}
-		}
-
-		model.addAttribute("listAllRiskFactor", listAllRiskFactor);
-		
-		Obs literateObs = getAllLatestObs(patient, Dictionary.LITERATE);
-		if (literateObs != null) {
-			EncounterWrapper wrapped = new EncounterWrapper(
-					literateObs.getEncounter());
-			List<Obs> obsList = wrapped.allObs(literateObs.getConcept());
-			for (Obs obs : obsList) {
-				literate = literate.concat(obs.getValueCoded().getName()
-						.toString());
-			}
-		}
-		model.addAttribute("literate", literate);
-
-		Obs employedObs = getAllLatestObs(patient, Dictionary.EMPLOYED);
-		if (employedObs != null) {
-			EncounterWrapper wrapped = new EncounterWrapper(
-					employedObs.getEncounter());
-			List<Obs> obsList = wrapped.allObs(employedObs.getConcept());
-			for (Obs obs : obsList) {
-				employed = employed.concat(obs.getValueCoded().getName()
-						.toString());
-			}
-		}
-		model.addAttribute("employed", employed);
+		Obs committeeRecommendationDetail = getAllLatestObs(patient,
+				Dictionary.COMMITTEE_RECOMMENDATION_DETAILS);
+		Obs committeeRecommendationDate = getAllLatestObs(patient, Dictionary.COMMITTEE_RECOMMENDATION_DATE);
+		Obs committeeRecommendationNextDate = getAllLatestObs(patient, Dictionary.COMMITTEE_RECOMMENDATION_NEXT_DATE);
+		Obs committeeRecommendationDecision = getAllLatestObs(patient, Dictionary.COMMITTEE_RECOMMENDATION_DECISION);
 
 		
-		/*
-		 * Drug History
-		 */
-		String artReceivedVal = "";
-
-		Obs artReceived = getAllLatestObs(patient,
-				Dictionary.DRUG_HISTORY_ART_RECEIVED);
-		if (artReceived != null) {
-			EncounterWrapper wrapped = new EncounterWrapper(
-					artReceived.getEncounter());
-			List<Obs> obsList = wrapped.allObs(artReceived.getConcept());
-			for (Obs obs : obsList) {
-				artReceivedVal = artReceivedVal.concat(obs.getValueCoded()
-						.getName().toString());
-			}
-		}
-		model.addAttribute("artReceivedVal", artReceivedVal);
-
-		String artReceivedTypeValue = "";
-
-		Obs artReceivedType = getAllLatestObs(patient,
-				Dictionary.DRUG_HISTORY_ART_RECEIVED_TYPE);
-		if (artReceivedType != null) {
-			EncounterWrapper wrapped = new EncounterWrapper(
-					artReceivedType.getEncounter());
-			List<Obs> obsList = wrapped.allObs(artReceivedType.getConcept());
-			for (Obs obs : obsList) {
-				artReceivedTypeValue = artReceivedTypeValue.concat(obs
-						.getValueCoded().getName().toString());
-			}
-		}
-		model.addAttribute("artReceivedTypeValue", artReceivedTypeValue);
-
-		String artReceivedPlaceValue = "";
-
-		Obs artReceivedPlace = getAllLatestObs(patient,
-				Dictionary.DRUG_HISTORY_ART_RECEIVED_PLACE);
-		if (artReceivedPlace != null) {
-			EncounterWrapper wrapped = new EncounterWrapper(
-					artReceivedPlace.getEncounter());
-			List<Obs> obsList = wrapped.allObs(artReceivedPlace.getConcept());
-			for (Obs obs : obsList) {
-				artReceivedPlaceValue = artReceivedPlaceValue.concat(obs
-						.getValueCoded().getName().toString());
-			}
-		}
-		model.addAttribute("artReceivedPlaceValue", artReceivedPlaceValue);
-
-		String drugStartDateVal = "";
-		Obs drugStartDate = getAllLatestObs(patient, Dictionary.ART_START_DATE_DRUG_HISTORY);
-		if (drugStartDate != null) {
-			EncounterWrapper wrapped = new EncounterWrapper(
-					drugStartDate.getEncounter());
-			List<Obs> obsList = wrapped.allObs(drugStartDate
-					.getConcept());
-			for (Obs obs : obsList) {
-				drugStartDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getValueDate());
-			}
-		}
-		
-		model.addAttribute("drugStartDateVal", drugStartDateVal);
-		
-		String drugDurationVal = "";
-		Obs drugDuration = getAllLatestObs(patient, Dictionary.DRUG_DURATION);
-		if (drugDuration != null) {
-			EncounterWrapper wrapped = new EncounterWrapper(
-					drugDuration.getEncounter());
-			List<Obs> obsList = wrapped.allObs(drugDuration
-					.getConcept());
-			for (Obs obs : obsList) {
-					drugDurationVal = drugDurationVal.concat(obs
-							.getValueNumeric().toString());
-			}
-		}
-		
-		model.addAttribute("drugDurationVal", drugDurationVal);
-
-		String drugNameVal = "";
-		Obs drugName = getAllLatestObs(patient, Dictionary.DRUG_NAME);
-		if (drugName != null) {
-			EncounterWrapper wrapped = new EncounterWrapper(
-					drugName.getEncounter());
-			List<Obs> obsList = wrapped.allObs(drugName.getConcept());
-
-			for (Obs obs : obsList) {
-				if (drugNameVal.isEmpty()) {
-					drugNameVal = drugNameVal.concat(obs
-							.getValueCoded().getName().toString());
-				} else {
-					drugNameVal = drugNameVal.concat(", "
-							+ obs.getValueCoded().getName().toString());
-				}
-			}
-		}
-		model.addAttribute("drugNameVal", drugNameVal);
-		
-		
-		/*
-		 * Personal History
-		 */
-		Obs obstetricHistoryDetail = getAllLatestObs(patient,
-				Dictionary.OBSTETRIC_HIS_DETAIL);
-		Obs infantName = getAllLatestObs(patient, Dictionary.INFANT_NAME);
-		Obs infantCptDate = getAllLatestObs(patient, Dictionary.INFANT_CPT_DATE);
-
-		Map<Integer, String> infantList = new HashMap<Integer, String>();
-		Integer infantIndex = 0;
-		if (obstetricHistoryDetail != null) {
+		Map<Integer, String> recommendationIndexList = new HashMap<Integer, String>();
+		Integer recommendationIndex = 0;
+		if (committeeRecommendationDetail != null) {
 			EncounterWrapper wrappedObsGroup = new EncounterWrapper(
-					obstetricHistoryDetail.getEncounter());
+					committeeRecommendationDetail.getEncounter());
 			List<Obs> obsGroupList = wrappedObsGroup
-					.allObs(obstetricHistoryDetail.getConcept());
+					.allObs(committeeRecommendationDetail.getConcept());
 			for (Obs obsG : obsGroupList) {
-				String infantNameVal = "";
-				String infantCptDateVal = "";
+				String committeeRecommendationDateVal = "";
+				String committeeRecommendationDecisionVal = "";
+				String committeeRecommendationNextDateVal = "";
 
-				if (infantName != null) {
+				if (committeeRecommendationDate != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
-							infantName.getEncounter());
-					List<Obs> obsList = wrapped.allObs(infantName.getConcept());
+							committeeRecommendationDate.getEncounter());
+					List<Obs> obsList = wrapped.allObs(committeeRecommendationDate.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
-							infantNameVal = infantNameVal.concat(obs
-									.getValueText().toString());
+							committeeRecommendationDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getValueDate());
 						}
 					}
 				}
 
 
-				if (infantCptDate != null) {
+				if (committeeRecommendationNextDate != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
-							infantCptDate.getEncounter());
-					List<Obs> obsList = wrapped.allObs(infantCptDate
+							committeeRecommendationNextDate.getEncounter());
+					List<Obs> obsList = wrapped.allObs(committeeRecommendationNextDate
 							.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
-							infantCptDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getValueDate());
+							committeeRecommendationNextDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getValueDate());
+						}
+					}
+				}
+
+				if (committeeRecommendationDecision != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							committeeRecommendationDecision.getEncounter());
+					List<Obs> obsList = wrapped.allObs(committeeRecommendationDecision.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							committeeRecommendationDecisionVal = committeeRecommendationDecisionVal.concat(obs
+									.getValueCoded().getName().toString());
 						}
 					}
 				}
 
 
-				String val = infantNameVal + ", " + infantCptDateVal;
-				infantList.put(infantIndex, val);
-				infantIndex++;
-
+				String val = committeeRecommendationDateVal + ", " + committeeRecommendationDecisionVal+ ", " + committeeRecommendationNextDateVal;
+				recommendationIndexList.put(recommendationIndex, val);
+				recommendationIndex++;
 			}
 		}
-		model.addAttribute("infantList", infantList);
+		model.addAttribute("recommendationIndexList", recommendationIndexList);
 		
-		
-		/*
-		 * End of follow up for Antiretroviral therapy
-		 * */
-		
-		String programDiscontinuationReasonVal = "";
-		String reasonConcept = "" ; 
-		String dataPlaceVal ="";
-		
-		Obs programDiscontinuationReason = getLatestObs(patient,
-				Dictionary.REASON_FOR_PROGRAM_DISCONTINUATION);
-		if (programDiscontinuationReason != null) {
-				programDiscontinuationReasonVal = programDiscontinuationReason.getValueCoded().getName().toString();
-				reasonConcept = programDiscontinuationReason.getValueCoded().toString();
-			
+		String tbOutcomeDateVal = "";
+		Obs tbOutcomeDate = getLatestObs(patient, Dictionary.TB_OUTCOME_DATE);
+		if (tbOutcomeDate != null) {
+			tbOutcomeDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(tbOutcomeDate.getValueDate());
 		}
-		model.addAttribute("programDiscontinuationReasonVal", programDiscontinuationReasonVal);
+		model.addAttribute("tbOutcomeDateVal", tbOutcomeDateVal);
 		
-		if(reasonConcept.equals("5240")){
-			Obs dataPlace = getAllLatestObs(patient,
-					Dictionary.DATE_LAST_VISIT);
-			if (dataPlace != null) {
-				EncounterWrapper wrapped = new EncounterWrapper(
-						dataPlace.getEncounter());
-				List<Obs> obsList = wrapped.allObs(dataPlace.getConcept());
-				for (Obs obs : obsList) {
-					dataPlaceVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getValueDate());
-				}
-			}
+		String tbOutcomeVal = "";
+		Obs tbOutcome = getLatestObs(patient, Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+		if (tbOutcome != null) {
+			tbOutcomeVal = tbOutcome.getValueCoded().getName().toString();
 		}
-		else if(reasonConcept.equals("160034")){
-			Obs dataPlace = getAllLatestObs(patient,
-					Dictionary.DEATH_DATE);
-			if (dataPlace != null) {
-				EncounterWrapper wrapped = new EncounterWrapper(
-						dataPlace.getEncounter());
-				List<Obs> obsList = wrapped.allObs(dataPlace.getConcept());
-				for (Obs obs : obsList) {
-					dataPlaceVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getValueDate());
-				}
-			}
-		}
-		else if(reasonConcept.equals("159492")){
-			Obs datePlace = getAllLatestObs(patient,
-					Dictionary.DATE_TRANSFERRED_OUT);
-			if (datePlace != null) {
-				EncounterWrapper wrapped = new EncounterWrapper(
-						datePlace.getEncounter());
-				List<Obs> obsList = wrapped.allObs(datePlace.getConcept());
-				for (Obs obs : obsList) {
-					dataPlaceVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getValueDate());
-				}
-			}
-
-			Obs place = getAllLatestObs(patient,
-					Dictionary.TRANSFERRED_OUT_TO);
-			if (place != null) {
-				EncounterWrapper wrapped = new EncounterWrapper(
-						place.getEncounter());
-				List<Obs> obsList = wrapped.allObs(place.getConcept());
-				for (Obs obs : obsList) {
-					dataPlaceVal = dataPlaceVal + " / Place : "+ obs.getValueText().toString();
-				}
-			}
-		}
+		model.addAttribute("tbOutcomeVal", tbOutcomeVal);		
 		
-		model.addAttribute("dataPlaceVal", dataPlaceVal);
-
-		
-		/*
-		 * Encounter details
-		 * */
-		Date dateArt = new Date();
-		List<Encounter> artEncounters = Context.getEncounterService().getEncounters(patient);
-		for (Encounter en : artEncounters) {
-			if(en.getEncounterType().getUuid().equals("0cb4417d-b98d-4265-92aa-c6ee3d3bb317")){
-				if(dateArt.after(en.getEncounterDatetime())){
-					dateArt =  en.getEncounterDatetime();
-				}
-			}
-		}
-		model.addAttribute("artInitiationDate",new SimpleDateFormat("dd-MMMM-yyyy").format(dateArt));
-		
-		Date dateArtEligible = new Date();
-		List<Encounter> artEligibleEncounters = Context.getEncounterService().getEncounters(patient);
-		for (Encounter en : artEligibleEncounters) {
-			if(en.getEncounterType().getUuid().equals("de78a6be-bfc5-4634-adc3-5f1a280455cc")){
-				if(dateArtEligible.after(en.getEncounterDatetime())){
-					dateArtEligible =  en.getEncounterDatetime();
-				}
-			}
-		}
-		model.addAttribute("artEligibleDate",new SimpleDateFormat("dd-MMMM-yyyy").format(dateArtEligible));
 		
 		model.addAttribute("graphingConcepts", Dictionary.getConcepts(Dictionary.TUBERCULOSIS_TREATMENT_NUMBER, Dictionary.TUBERCULOSIS_DRUG_TREATMENT_START_DATE,Dictionary.TB_FORM_REGIMEN, Dictionary.CURRENT_WHO_STAGE));
 	}

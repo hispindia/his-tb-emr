@@ -831,7 +831,7 @@ public class EditPatientFragmentController {
 						ret,
 						obsToSave,
 						obsToVoid,
-						Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME),
+						Dictionary.getConcept(Dictionary.PREVIOUS_TREATMENT_OUTCOME),
 						savedPreviousTBOutcome, previousTBOutcome, null,
 						previousTBOutcomeDate);
 			}

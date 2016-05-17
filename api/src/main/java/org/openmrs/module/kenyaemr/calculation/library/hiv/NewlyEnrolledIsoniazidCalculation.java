@@ -74,7 +74,7 @@ public class NewlyEnrolledIsoniazidCalculation extends AbstractPatientCalculatio
                     Date obsDate = null;
 
                     for (Obs patient : obsListForPatient) {
-                        if (patient.getValueCoded() == Dictionary.getConcept(Dictionary.ISONIAZID)) {
+                        if (patient.getValueCoded() == Dictionary.getConcept(Dictionary.CULTURE_DRUG_H)) {
                             obsDate = patient.getObsDatetime();
                             break;
                         }
