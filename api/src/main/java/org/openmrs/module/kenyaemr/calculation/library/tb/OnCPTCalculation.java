@@ -50,7 +50,7 @@ public class OnCPTCalculation extends AbstractPatientCalculation {
 		//a list of lost to follow up patients
 		Set<Integer> ltfu = CalculationUtils.patientsThatPass(calculate(new LostToFollowUpCalculation(), cohort, context));
 		//declare the concepts required to check whether a patient is hiv positive
-		Concept hivStatus = Dictionary.getConcept(Dictionary.HIV_STATUS);
+		Concept hivStatus = Dictionary.getConcept(Dictionary.HIV_TEST);
 		Concept hivInfected = Dictionary.getConcept(Dictionary.HIV_INFECTED);
 		Concept hivPositive = Dictionary.getConcept(Dictionary.POSITIVE);
 		//get the several map representation of the results

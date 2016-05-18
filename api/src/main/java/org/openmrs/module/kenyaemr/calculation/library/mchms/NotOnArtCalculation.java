@@ -62,7 +62,7 @@ public class NotOnArtCalculation extends AbstractPatientCalculation implements P
 		Set<Integer> alive = Filters.alive(cohort, context);
 		Set<Integer> inMchmsProgram = Filters.inProgram(mchmsProgram, alive, context);
 
-		CalculationResultMap lastHivStatusObss = Calculations.lastObs(Dictionary.getConcept(Dictionary.HIV_STATUS), inMchmsProgram, context);
+		CalculationResultMap lastHivStatusObss = Calculations.lastObs(Dictionary.getConcept(Dictionary.HIV_TEST), inMchmsProgram, context);
 		CalculationResultMap artStatusObss = Calculations.lastObs(Dictionary.getConcept(Dictionary.ANTIRETROVIRAL_USE_IN_PREGNANCY), inMchmsProgram, context);
 		CalculationResultMap lmpObss = Calculations.firstObs(Dictionary.getConcept(Dictionary.LAST_MONTHLY_PERIOD), inMchmsProgram, context);
 

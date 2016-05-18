@@ -296,7 +296,7 @@ public class HivCohortLibrary {
 	 * @return the cohort definition
 	 */
 	public  CohortDefinition testedForHiv() {
-		Concept hivStatus = Dictionary.getConcept(Dictionary.HIV_STATUS);
+		Concept hivStatus = Dictionary.getConcept(Dictionary.HIV_TEST);
 		Concept indeterminate = Dictionary.getConcept(Dictionary.INDETERMINATE);
 		Concept hivInfected = Dictionary.getConcept(Dictionary.HIV_INFECTED);
 		Concept unknown = Dictionary.getConcept(Dictionary.UNKNOWN);
@@ -317,7 +317,7 @@ public class HivCohortLibrary {
 	 * @return the cohort definition
 	 */
 	public  CohortDefinition testedHivStatus(Concept status) {
-		Concept hivStatus = Dictionary.getConcept(Dictionary.HIV_STATUS);
+		Concept hivStatus = Dictionary.getConcept(Dictionary.HIV_TEST);
 		Concept hivInfected = Dictionary.getConcept(Dictionary.HIV_INFECTED);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("tested for positive for HIV");

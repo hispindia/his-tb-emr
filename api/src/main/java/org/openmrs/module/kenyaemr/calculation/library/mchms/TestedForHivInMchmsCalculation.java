@@ -62,7 +62,7 @@ public class TestedForHivInMchmsCalculation extends AbstractPatientCalculation {
 
 		Set<Integer> aliveMchmsPatients = CalculationUtils.patientsThatPass(activePatientPrograms);
 
-		Concept hivStatusConcept = partner ? Dictionary.getConcept(Dictionary.PARTNER_HIV_STATUS) : Dictionary.getConcept(Dictionary.HIV_STATUS);
+		Concept hivStatusConcept = partner ? Dictionary.getConcept(Dictionary.PARTNER_HIV_STATUS) : Dictionary.getConcept(Dictionary.HIV_TEST);
 		Concept hivTestDateConcept = partner ? Dictionary.getConcept(Dictionary.DATE_OF_PARTNER_HIV_DIAGNOSIS) : Dictionary.getConcept(Dictionary.DATE_OF_HIV_DIAGNOSIS);
 
 		CalculationResultMap lastHivStatusObss = Calculations.lastObs(hivStatusConcept, aliveMchmsPatients, context);

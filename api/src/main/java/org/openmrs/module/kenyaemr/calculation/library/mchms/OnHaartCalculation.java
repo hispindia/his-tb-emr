@@ -50,7 +50,7 @@ public class OnHaartCalculation extends AbstractPatientCalculation {
 		Set<Integer> alive = Filters.alive(cohort, context);
 		Set<Integer> inMchmsProgram = Filters.inProgram(mchmsProgram, alive, context);
 
-		CalculationResultMap lastHivStatusObss = Calculations.lastObs(Dictionary.getConcept(Dictionary.HIV_STATUS), inMchmsProgram, context);
+		CalculationResultMap lastHivStatusObss = Calculations.lastObs(Dictionary.getConcept(Dictionary.HIV_TEST), inMchmsProgram, context);
 		CalculationResultMap artStatusObss = Calculations.lastObs(Dictionary.getConcept(Dictionary.ANTIRETROVIRAL_USE_IN_PREGNANCY), inMchmsProgram, context);
 
 		Concept hivPositiveConcept = Dictionary.getConcept(Dictionary.POSITIVE);

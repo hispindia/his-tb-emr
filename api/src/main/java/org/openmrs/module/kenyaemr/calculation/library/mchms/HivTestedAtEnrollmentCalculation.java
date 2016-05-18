@@ -53,7 +53,7 @@ public class HivTestedAtEnrollmentCalculation extends AbstractPatientCalculation
 		Set<Integer> alive = Filters.alive(cohort, context);
 		Set<Integer> inMchmsProgram = Filters.inProgram(mchmsProgram, alive, context);
 
-		CalculationResultMap hivStatusObs = Calculations.lastObs(Dictionary.getConcept(Dictionary.HIV_STATUS), inMchmsProgram, context);
+		CalculationResultMap hivStatusObs = Calculations.lastObs(Dictionary.getConcept(Dictionary.HIV_TEST), inMchmsProgram, context);
 		CalculationResultMap hivTestDateObs = Calculations.lastObs(Dictionary.getConcept(Dictionary.DATE_OF_HIV_DIAGNOSIS), inMchmsProgram, context);
 
 		Concept notHivTestedConcept = Dictionary.getConcept(Dictionary.NOT_HIV_TESTED);

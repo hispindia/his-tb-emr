@@ -46,7 +46,7 @@ public class DiscordantCoupleCalculation extends AbstractPatientCalculation {
 		Set<Integer> alive = Filters.alive(cohort, context);
 		Set<Integer> inMchmsProgram = Filters.inProgram(mchmsProgram, alive, context);
 
-		Concept patientHivStatusConcept = Dictionary.getConcept(Dictionary.HIV_STATUS);
+		Concept patientHivStatusConcept = Dictionary.getConcept(Dictionary.HIV_TEST);
 		Concept partnerHivStatusConcept = Dictionary.getConcept(Dictionary.PARTNER_HIV_STATUS);
 
 		CalculationResultMap lastPatientHivStatusObss = Calculations.lastObs(patientHivStatusConcept, inMchmsProgram, context);
