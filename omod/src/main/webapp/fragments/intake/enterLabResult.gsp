@@ -24,8 +24,9 @@ No record found.
 </thead>
 <% listTests.eachWithIndex { test , count -> %>
 	<input type="hidden" id="${test.conceptId}_isRadiology" name="${test.conceptId}_isRadiology" value="${test.isRadioloy}"/>
+	<input type="hidden" id="${test.conceptId}_hasAnswers" name="${test.conceptId}_hasAnswers" value="${test.hasAnswers}"/>
 	
-	<tr class="ke-stack-item ke-navigable">
+	<tr class="ke-stack-item ke-navigable" border="1"> 
 	<td>${count+1}</td>
 	<td>
 		<input type="text" id="${test.obs.obsId}"  size="40" value="${test.name}" alt="${test.name}" disabled>
@@ -38,7 +39,179 @@ No record found.
 		<tr><td>Impression <input type="text" id="${test.conceptId}_valueImpression" name="${test.conceptId}_valueImpression" size="15" value="${test.resultImpression}"  onblur="calculateComment(${test.conceptId})"></td></tr>
 		</table>
 		</td>
-	<% } else { %> 
+	<% } else if (test.hasAnswers){ %> 
+		<td  style="text-align:right">
+			<select id="${test.conceptId}_valueDropdown" size="1" name="${test.conceptId}_valueDropdown" value="${test.valueDropdown}">
+				<option value=""></option>
+				<option ${ (test.valueDropdown=='703') ? 'selected="true"' : '' } value="703">Positive</option>
+				<option ${ (test.valueDropdown=='664') ? 'selected="true"' : '' } value="664">Negative</option>
+			</select>
+		</td>
+		
+	<% } else if (test.conceptId==12){ %> 	
+		<td  style="text-align:right">
+			<table border="1">
+				<tr>
+					<td></td><td>Findings</td><td>Impressions</td>
+				</tr>
+				<tr>
+					<td>Lungs & Pleura</td>
+					<td>
+						<table border="1">
+							<tr>
+								<td></td><td>Right</td><td>Left</td>									
+							</tr>
+							<tr>
+								<td>Upper zone</td>
+								<td>
+									<select id="163586_valueDropdown" value="" name="163586_valueDropdown" size="1">
+										<option value=""></option>
+										<option ${ (vd163586=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
+										<option ${ (vd163586=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
+										<option ${ (vd163586=='6049') ? 'selected="true"' : '' } value="6049">Infiltrate</option>
+										<option ${ (vd163586=='163527') ? 'selected="true"' : '' } value="163527">Consolidation</option>
+										<option ${ (vd163586=='148187') ? 'selected="true"' : '' } value="148187">Fibrosis</option>
+										<option ${ (vd163586=='163528') ? 'selected="true"' : '' } value="163528">Hyper-inflated lung</option>
+										<option ${ (vd163586=='163529') ? 'selected="true"' : '' } value="163529">Collapse lung/atelactasis</option>
+										<option ${ (vd163586=='126464') ? 'selected="true"' : '' } value="126464">Alveolitis Calcification</option>
+										<option ${ (vd163586=='116197') ? 'selected="true"' : '' } value="116197">Mass/nodule</option>
+									</select>
+								</td>
+								<td>
+									<select id="163589_valueDropdown" value="" name="163589_valueDropdown" size="1">
+										<option value=""></option>
+										<option ${ (vd163589=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
+										<option ${ (vd163589=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
+										<option ${ (vd163589=='6049') ? 'selected="true"' : '' } value="6049">Infiltrate</option>
+										<option ${ (vd163589=='163527') ? 'selected="true"' : '' } value="163527">Consolidation</option>
+										<option ${ (vd163589=='148187') ? 'selected="true"' : '' } value="148187">Fibrosis</option>
+										<option ${ (vd163589=='163528') ? 'selected="true"' : '' } value="163528">Hyper-inflated lung</option>
+										<option ${ (vd163589=='163529') ? 'selected="true"' : '' } value="163529">Collapse lung/atelactasis</option>
+										<option ${ (vd163589=='126464') ? 'selected="true"' : '' } value="126464">Alveolitis Calcification</option>
+										<option ${ (vd163589=='116197') ? 'selected="true"' : '' } value="116197">Mass/nodule</option>
+									</select>
+								</td>							
+							</tr>
+							<tr>
+								<td>Middle zone</td>
+								<td>
+									<select id="163587_valueDropdown" value="" name="163587_valueDropdown" size="1">
+										<option value=""></option>
+										<option ${ (vd163587=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
+										<option ${ (vd163587=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
+										<option ${ (vd163587=='6049') ? 'selected="true"' : '' } value="6049">Infiltrate</option>
+										<option ${ (vd163587=='163527') ? 'selected="true"' : '' } value="163527">Consolidation</option>
+										<option ${ (vd163587=='148187') ? 'selected="true"' : '' } value="148187">Fibrosis</option>
+										<option ${ (vd163587=='163528') ? 'selected="true"' : '' } value="163528">Hyper-inflated lung</option>
+										<option ${ (vd163587=='163529') ? 'selected="true"' : '' } value="163529">Collapse lung/atelactasis</option>
+										<option ${ (vd163587=='126464') ? 'selected="true"' : '' } value="126464">Alveolitis Calcification</option>
+										<option ${ (vd163587=='116197') ? 'selected="true"' : '' } value="116197">Mass/nodule</option>
+									</select>
+								</td>
+								<td>
+									<select id="163590_valueDropdown" value="" name="163590_valueDropdown" size="1">
+										<option value=""></option>
+										<option ${ (vd163590=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
+										<option ${ (vd163590=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
+										<option ${ (vd163590=='6049') ? 'selected="true"' : '' } value="6049">Infiltrate</option>
+										<option ${ (vd163590=='163527') ? 'selected="true"' : '' } value="163527">Consolidation</option>
+										<option ${ (vd163590=='148187') ? 'selected="true"' : '' } value="148187">Fibrosis</option>
+										<option ${ (vd163590=='163528') ? 'selected="true"' : '' } value="163528">Hyper-inflated lung</option>
+										<option ${ (vd163590=='163529') ? 'selected="true"' : '' } value="163529">Collapse lung/atelactasis</option>
+										<option ${ (vd163590=='126464') ? 'selected="true"' : '' } value="126464">Alveolitis Calcification</option>
+										<option ${ (vd163590=='116197') ? 'selected="true"' : '' } value="116197">Mass/nodule</option>
+									</select>
+								</td>											
+							</tr>
+							<tr>
+								<td>Lower zone</td>
+								<td>
+									<select id="163588_valueDropdown" value="" name="163588_valueDropdown" size="1">
+										<option value=""></option>
+										<option ${ (vd163588=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
+										<option ${ (vd163588=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
+										<option ${ (vd163588=='6049') ? 'selected="true"' : '' } value="6049">Infiltrate</option>
+										<option ${ (vd163588=='163527') ? 'selected="true"' : '' } value="163527">Consolidation</option>
+										<option ${ (vd163588=='148187') ? 'selected="true"' : '' } value="148187">Fibrosis</option>
+										<option ${ (vd163588=='163528') ? 'selected="true"' : '' } value="163528">Hyper-inflated lung</option>
+										<option ${ (vd163588=='163529') ? 'selected="true"' : '' } value="163529">Collapse lung/atelactasis</option>
+										<option ${ (vd163588=='126464') ? 'selected="true"' : '' } value="126464">Alveolitis Calcification</option>
+										<option ${ (vd163588=='116197') ? 'selected="true"' : '' } value="116197">Mass/nodule</option>
+									</select>
+								</td>
+								<td>
+									<select id="163591_valueDropdown" value="" name="163591_valueDropdown" size="1">
+										<option value=""></option>
+										<option ${ (vd163591=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
+										<option ${ (vd163591=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
+										<option ${ (vd163591=='6049') ? 'selected="true"' : '' } value="6049">Infiltrate</option>
+										<option ${ (vd163591=='163527') ? 'selected="true"' : '' } value="163527">Consolidation</option>
+										<option ${ (vd163591=='148187') ? 'selected="true"' : '' } value="148187">Fibrosis</option>
+										<option ${ (vd163591=='163528') ? 'selected="true"' : '' } value="163528">Hyper-inflated lung</option>
+										<option ${ (vd163591=='163529') ? 'selected="true"' : '' } value="163529">Collapse lung/atelactasis</option>
+										<option ${ (vd163591=='126464') ? 'selected="true"' : '' } value="126464">Alveolitis Calcification</option>
+										<option ${ (vd163591=='116197') ? 'selected="true"' : '' } value="116197">Mass/nodule</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<select id="139060_valueDropdown" value="" name="139060_valueDropdown" size="1">
+							<option value=""></option>
+							<option ${ (vd139060=='163550') ? 'selected="true"' : '' } value="163550">COPD</option>
+							<option ${ (vd139060=='130002') ? 'selected="true"' : '' } value="130002">Pneumonia/ pneumonitis</option>
+							<option ${ (vd139060=='42') ? 'selected="true"' : '' } value="42">Pulmonary TB</option>
+							<option ${ (vd139060=='163070') ? 'selected="true"' : '' } value="163070">Miliary TB</option>
+							<option ${ (vd139060=='150586') ? 'selected="true"' : '' } value="150586">Lung abscess</option>
+							<option ${ (vd139060=='162948') ? 'selected="true"' : '' } value="162948">Malignancy</option>
+							<option ${ (vd139060=='128134') ? 'selected="true"' : '' } value="128134">Emphysema</option>
+							<option ${ (vd139060=='152744') ? 'selected="true"' : '' } value="152744">Pleural thickening</option>
+							<option ${ (vd139060=='150547') ? 'selected="true"' : '' } value="150547">Pyothorax</option>
+							<option ${ (vd139060=='114108') ? 'selected="true"' : '' } value="114108">Pleural effusion</option>
+							<option ${ (vd139060=='122657') ? 'selected="true"' : '' } value="122657">Pneumothorax</option>
+							<option ${ (vd139060=='138361') ? 'selected="true"' : '' } value="138361">Hydropneumothorax</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Heart</td>
+					<td>
+						<select id="149710_valueDropdown" value="" name="149710_valueDropdown" size="1">
+							<option value=""></option>
+							<option ${ (vd149710=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
+							<option ${ (vd149710=='5158') ? 'selected="true"' : '' } value="5158">Cardiomegaly</option>
+							<option ${ (vd149710=='130562') ? 'selected="true"' : '' } value="130562">Pericardial effusion</option>
+							<option ${ (vd149710=='130562') ? 'selected="true"' : '' } value="130562">Tubular heart</option>
+							<option ${ (vd149710=='142491') ? 'selected="true"' : '' } value="142491">Dextrocardia</option>
+						</select>
+					</td><td></td>
+				</tr>
+				<tr>
+					<td>Bone</td>
+					<td>
+						<select id="122765_valueDropdown" value="" name="122765_valueDropdown" size="1">
+							<option value=""></option>
+							<option ${ (vd122765=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
+							<option ${ (vd122765=='163531') ? 'selected="true"' : '' } value="163531">Pott's spine (TB spine)</option>
+							<option ${ (vd122765=='118055') ? 'selected="true"' : '' } value="118055">Fracture</option>
+						</select>
+					</td><td></td>
+				</tr>
+				<tr>
+					<td>Mediastinum</td>
+					<td>
+						<select id="134486_valueDropdown" value="" name="134486_valueDropdown" size="1">
+							<option value=""></option>
+							<option ${ (vd134486=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
+							<option ${ (vd134486=='111873') ? 'selected="true"' : '' } value="111873">Lymphadenopathy</option>
+							<option ${ (vd134486=='163530') ? 'selected="true"' : '' } value="163530">Mediastinum shift</option>
+						</select>
+					</td><td></td>
+				</tr>
+			</table>
+		</td>
+	<% } else{ %> 
 		<td style="text-align:right"><input type="text" id="${test.conceptId}_value" name="${test.conceptId}_value" size="15" value="${test.result}"  onblur="calculateComment(${test.conceptId})"></td>
 		<td ><input disabled type="text" size="10" value="${test.units}"/></td>
 		<td><input disabled id="${test.conceptId}_range" size="10" type="text" value="${test.range}"/></td>
@@ -83,6 +256,8 @@ jq(function() {
 	var confirmed = jq("#confirm").val();
 	if (confirmed == "true") {
 		jq("#enterLabResultForm input[type=text]").each(function(){jq(this).attr("disabled","disabled");});
+		jq("#enterLabResultForm select").each(function(){jq(this).attr("disabled","disabled");});
+		
 	}
 	
 });
