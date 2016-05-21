@@ -160,7 +160,8 @@ kenyaemrApp.controller('PatientSearchResults', ['$scope', '$http', function($sco
 
 	$scope.query = '';
 	$scope.results = [];
-
+	$scope.page = '';
+	
 	/**
 	 * Initializes the controller
 	 * @param appId the current app id
@@ -184,7 +185,7 @@ kenyaemrApp.controller('PatientSearchResults', ['$scope', '$http', function($sco
 	/**
 	 * Listens for the 'patient-search2' event
 	 */
-	$scope.$on('patient-search2', function(event, data) {
+	$scope.$on('patient-search2', function(event, data, page) {
 		$scope.query = data.query;
 		$scope.which = data.which;
 		$scope.date = data.date;
@@ -225,7 +226,7 @@ kenyaemrApp.controller('PatientSearchResults', ['$scope', '$http', function($sco
 	 * Refreshes the person search
 	 */
 	$scope.refresh2 = function() {
-		$http.get(ui.fragmentActionLink('kenyaemr', 'search', 'patientsWithDate', { appId: $scope.appId, q: $scope.query, which: $scope.which, date: $scope.date })).
+		$http.get(ui.fragmentActionLink('kenyaemr', 'search', 'patientsWithDate', { appId: $scope.appId, q: $scope.query, which: $scope.which, date: $scope.date, page: $scope.page })).
 			success(function(data) {
 				$scope.results = data;
 			});

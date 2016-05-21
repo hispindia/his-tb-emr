@@ -94,7 +94,7 @@
 					[ object: command, property: "genSampleId", label: "Sample ID" ]
 			]	
 		]	 
-
+	
 	def genSpecificationDetail = [
 			[
 					[ object: command, property: "genSpecificationPlace", label: "Specimen Collection Place" ],
@@ -267,7 +267,6 @@
 
 		<fieldset>
 			<legend>Patient Source</legend>
-
 			 <% patientSource1.each { %>
 			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			 <% } %>
@@ -342,31 +341,36 @@
 	</div>
 
 	<div class="ke-panel-footer">
-		<% if (command.original) { %>
-			<button onClick="checkIn(1)" type="submit">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${"Save Changes" }
-			</button>		
-		<% } else {%>
-		<!--<button onClick="checkIn(1)" type="submit">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${ "Create Patient and Check In" }
-			</button>
-		-->
-			<button onClick="return validateDateOfRegistration();checkIn(0)" type="submit">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${ "Create Patient and Check In" }
-			</button>
-			<input type="text" id="dateOfRegistration" name="dateOfRegistration" placeholder="Date of registration">
-			<script type="text/javascript">
-                        jq(document).ready(function () {
-                            jq('#dateOfRegistration').datepicker({
-                                dateFormat: "dd-M-yy", 
-                                showAnim: 'blind'
-                            });
-                        });
-                    </script>
-		<% } %>
-		<% if (config.returnUrl) { %>
-			<button type="button" class="cancel-button"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/cancel.png") }" /> Cancel</button>
-		<% } %>
+		<table style="width:100%"> 	
+		<tr>
+			<td width="10%" align="left">
+				Lab Patient : <input type="checkbox" name="labPatient" value="true" ${ labPatient=='true' ? 'checked="checked"' : '' }/> 
+			</td>
+			<td width="90%" align="center">
+				<% if (command.original) { %>
+					<button onClick="checkIn(1)" type="submit">
+						<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${"Save Changes" }
+					</button>		
+				<% } else {%>
+					<button onClick="return validateDateOfRegistration();checkIn(0)" type="submit">
+						<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${ "Create Patient and Check In" }
+					</button>
+					<input type="text" id="dateOfRegistration" name="dateOfRegistration" placeholder="Date of registration">
+					<script type="text/javascript">
+		                jq(document).ready(function () {
+		                    jq('#dateOfRegistration').datepicker({
+		                        dateFormat: "dd-M-yy", 
+		                        showAnim: 'blind'
+		                    });
+		                });
+		            </script>
+				<% } %>
+				<% if (config.returnUrl) { %>
+					<button type="button" class="cancel-button"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/cancel.png") }" /> Cancel</button>
+				<% } %>
+			</td>
+		</tr>
+		</table
 	</div>
 	
 </form>

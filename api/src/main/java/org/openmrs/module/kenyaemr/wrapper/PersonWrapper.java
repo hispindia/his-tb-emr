@@ -151,5 +151,13 @@ public class PersonWrapper extends AbstractPersonWrapper {
 	public void setPreviousRegimenStartDate(String value) {
 		setAsAttribute(CommonMetadata._PersonAttributeType.PREVIOUS_REGIMEN_DATE, value);
 	}
+	
+	public String getLabPatient() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.LAB_PATIENT);
+	}
+
+	public void setLabPatient(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.LAB_PATIENT, value);
+	}	
 
 }

@@ -179,6 +179,7 @@ public class EditPatientFragmentController {
 			model.addAttribute("patientIdentifier",
 					wrapper.getSystemPatientId());
 			model.addAttribute("patientId", wrapper.getTarget().getPatientId());
+			model.addAttribute("labPatient", wrapper.getLabPatient());
 		} else {
 			model.addAttribute("patientIdentifier", noCheck + "-"
 					+ generateCheckdigit(noCheck));
@@ -349,6 +350,8 @@ public class EditPatientFragmentController {
 		private Concept genResult;
 		private Obs savedGenResult;
 		private Date genResultDate;
+		private String labPatient;
+		
 		/**
 		 * Creates an edit form for a new patient
 		 */
@@ -597,23 +600,6 @@ public class EditPatientFragmentController {
 					"drTBSuspectNumber",
 					CommonMetadata._PatientIdentifierType.DR_TB_SUSPECT_NUMBER);
 			
-
-			// Check, not more than two identifier number get entered (not
-			// required now)
-			/*
-			 * if(identifierCount > 2){ errors.rejectValue("systemPatientId",
-			 * "At max only two registration numbers can be entered."); }
-			 */
-
-			// validateIdentifierField(errors, "systemPatientId",
-			// CommonMetadata._PatientIdentifierType.SYSTEM_PATIENT_ID);
-			// validateIdentifierField(errors, "uniquePatientNumber",
-			// HivMetadata._PatientIdentifierType.UNIQUE_PATIENT_NUMBER);
-
-			// Check INGO name is entered, if INGO number is entered
-	
-		
-
 			// check birth date against future dates and really old dates
 			if (birthdate != null) {
 				if (birthdate.after(new Date()))
@@ -733,6 +719,12 @@ public class EditPatientFragmentController {
 			wrapper.getPerson().setGenSpecificationPlace(genSpecificationPlace);
 			wrapper.getPerson().setPreviousRegimenType(previousRegimenType);
 			
+			if(labPatient!=null){
+				wrapper.getPerson().setLabPatient(labPatient);
+			}
+			else{
+				wrapper.getPerson().setLabPatient("false");
+			}
 
 			DateFormat testDate = new SimpleDateFormat("dd-MMMM-yyyy");
 			if(genSpecificationDate!=null){
@@ -1416,6 +1408,14 @@ public class EditPatientFragmentController {
 
 		public void setGenResultDate(Date genResultDate) {
 			this.genResultDate = genResultDate;
+		}
+
+		public String getLabPatient() {
+			return labPatient;
+		}
+
+		public void setLabPatient(String labPatient) {
+			this.labPatient = labPatient;
 		}
 
 	}

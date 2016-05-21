@@ -374,5 +374,12 @@ public class PatientWrapper extends AbstractPatientWrapper {
 		setAsAttribute(CommonMetadata._PersonAttributeType.PREVIOUS_REGIMEN_DATE, value);
 	}
 
-		
+	public String getLabPatient() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.LAB_PATIENT);
+	}
+
+	public void setLabPatient(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.LAB_PATIENT, value);
+	}
+
 }

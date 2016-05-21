@@ -64,6 +64,7 @@ import org.openmrs.module.kenyaemr.calculation.library.VisitsOnDayCalculation;
 import org.openmrs.module.kenyaemr.metadata.CommonMetadata;
 import org.openmrs.module.kenyaemr.model.DrugObsProcessed;
 import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
+import org.openmrs.module.kenyaemr.wrapper.PatientWrapper;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.util.OpenmrsConstants;
@@ -207,8 +208,10 @@ public class SearchFragmentController {
 			@RequestParam(value = "q", required = false) String query,
 			@RequestParam(value = "which", required = false, defaultValue = "all") String which,
 			@RequestParam(value = "township", required = false) String township,
+			@RequestParam(value = "page", required = false) String page,
 			UiUtils ui) {
 		// log.error("info search patient query: " +query);
+		
 		Date scheduledDate = null;
 		try {
 			scheduledDate = parseDate(date);
@@ -326,7 +329,7 @@ public class SearchFragmentController {
 			// Simplify and attach active visits to patient objects
 			for (Patient patient : matched) {
 				SimpleObject simplePatient = ui.simplifyObject(patient);
-
+				
 				/*
 				 * List<Visit> visits =
 				 * Context.getVisitService().getActiveVisitsByPatient(patient);
@@ -355,10 +358,23 @@ public class SearchFragmentController {
 						}
 					}
 				}
-				simplePatients.add(simplePatient);
+				
+
+				//For normal Patients and Lab patients
+				PatientWrapper wrapper = new PatientWrapper(patient);
+				if(wrapper.getLabPatient().equals("true") && page.equals("intake/intakeViewPatient")){
+					simplePatients.add(simplePatient);
+				}
+				else if(wrapper.getLabPatient().equals("false") && !page.equals("intake/intakeViewPatient")){ 
+					simplePatients.add(simplePatient);
+				}
+				
+				
+
 			}
 		}
 
+	//	System.out.println(simplePatients);
 		return simplePatients;
 	}
 
@@ -426,9 +442,14 @@ public class SearchFragmentController {
 		}
 		
 		for (Patient patient : matchedd) {
-			SimpleObject simplePatientt = ui.simplifyObject(patient);
-			simplePatientt.put("patientName", patient.getGivenName());
-			simplePatientsJason.add(simplePatientt);
+			
+			//For normal Patients and Lab patients
+			PatientWrapper wrapper = new PatientWrapper(patient);
+			if(wrapper.getLabPatient().equals("false") ){ 
+				SimpleObject simplePatientt = ui.simplifyObject(patient);
+				simplePatientt.put("patientName", patient.getGivenName());
+				simplePatientsJason.add(simplePatientt);
+			}
 		}
 
 		HttpSession session = request.getSession();
@@ -510,18 +531,23 @@ public class SearchFragmentController {
 		
 		Integer count=0;
 		for (Patient patient : matchedd) {
-			SimpleObject simplePatientt = ui.simplifyObject(patient);
-			simplePatientt.put("patientName", patient.getGivenName());
-			//simplePatientt.put("patientId", patient.getPatientId());
 			
-			if(patient.getPatientIdentifier("Patient ID")!=null){
-			simplePatientt.put("patientIdentifier", patient.getPatientIdentifier("Patient ID").getIdentifier());
+			//For normal Patients and Lab patients
+			PatientWrapper wrapper = new PatientWrapper(patient);
+			if(wrapper.getLabPatient().equals("false") ){
+				SimpleObject simplePatientt = ui.simplifyObject(patient);
+				simplePatientt.put("patientName", patient.getGivenName());
+				//simplePatientt.put("patientId", patient.getPatientId());
+				
+				if(patient.getPatientIdentifier("Patient ID")!=null){
+				simplePatientt.put("patientIdentifier", patient.getPatientIdentifier("Patient ID").getIdentifier());
+				}
+				else{
+					simplePatientt.put("patientIdentifier", " ");
+				}
+				simplePatientt.put("count", ++count);
+				simplePatientsJasonn.add(simplePatientt);	
 			}
-			else{
-				simplePatientt.put("patientIdentifier", " ");
-			}
-			simplePatientt.put("count", ++count);
-			simplePatientsJasonn.add(simplePatientt);
 		}
 
 		HttpSession session = request.getSession();
