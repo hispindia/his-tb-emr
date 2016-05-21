@@ -18,12 +18,12 @@
 <tr>
 <td>${count++}</td>
 <td>${drugOrderProcessed.drugOrder.concept.name} </td>
-<td>${drugOrderProcessed.drugOrder.dose}</td>
+<td>${drugOrderProcessed.dose}</td>
 <td>${drugOrderProcessed.drugOrder.units} </td>
 <td>${drugOrderProcessed.drugOrder.frequency}</td>
 <td>${drugOrderProcessed.durationPreProcess}</td>
 <td><input type="text" id="${drugOrderProcessed.id}issueQuantity" name="${drugOrderProcessed.id}issueQuantity" size="12"></td>
-<td>${drugOrderProcessed.drugRegimen}</td>
+<td>${drugOrderProcessed.regimenConcept.name}</td>
 <td><input type="hidden" id="drugOrderProcessedIds" name="drugOrderProcessedIds" value="${drugOrderProcessed.id}"> </td>
 </tr>
 <% } %>
