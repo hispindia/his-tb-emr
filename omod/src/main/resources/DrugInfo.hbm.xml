@@ -12,6 +12,7 @@
 				<generator class="native" />
 		</id>
 		<property name="drugName" column="drug_name" />
+		<property name="drugCode" column="drug_code" />
 		<property name="toxicity" column="toxicity" />
 		<property name="riskFactor" column="risk_factor" />
 		<property name="suggestedManagement" column="suggested_management" />

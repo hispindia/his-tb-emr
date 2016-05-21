@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+<entry key="Km.strength">300/300/600 mg</entry>
+<entry key="Km.noOfTablet">1</entry>
+<entry key="Km.type">tab</entry>
+<entry key="Km.frequency">od</entry>
+</properties>

@@ -119,7 +119,7 @@
 		<comment>
 		</comment>
 		<sql>
-		CREATE TABLE IF NOT EXISTS drug_info (drug_info_id integer not null auto_increment, drug_name varchar(50),toxicity varchar(300),risk_factor varchar(300),suggested_management varchar(300),drug_interaction varchar(300),suggested_management_interaction varchar(300),primary key (drug_info_id));
+		CREATE TABLE IF NOT EXISTS drug_info (drug_info_id integer not null auto_increment,drug_name varchar(50),drug_code varchar(5),toxicity varchar(300),risk_factor varchar(300),suggested_management varchar(300),drug_interaction varchar(300),suggested_management_interaction varchar(300),primary key (drug_info_id));
 		</sql>
 	</changeSet>
 	
@@ -127,7 +127,7 @@
 		<comment>
 		</comment>
 		<sql>
-		CREATE TABLE IF NOT EXISTS drug_order_processed (id integer not null auto_increment, drug_order integer,patient_id integer,created_date datetime,processed_date datetime,processed_status tinyint(1),duration_preprocess integer,discontinued_date datetime,quantity_postprocess integer,drug_regimen varchar(70),primary key (id));
+		CREATE TABLE IF NOT EXISTS drug_order_processed (id integer not null auto_increment, drug_order integer,patient_id integer,created_date datetime,processed_date datetime,processed_status tinyint(1),dose varchar(30),no_of_tablet integer,route_concept integer,duration_preprocess integer,discontinued_date datetime,discontinued_reason integer,discontinued_reason_non_coded varchar(255),quantity_postprocess integer,regimen_concept integer,regimen_change_type varchar(70),type_of_regimen varchar(50),primary key (id));
 		</sql>
 	</changeSet>
 	

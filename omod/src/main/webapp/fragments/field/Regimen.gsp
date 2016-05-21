@@ -1,6 +1,4 @@
 <%
-	ui.includeJavascript("kenyaemr", "controllers/drugRegimenController.js")
-	
 	def formulations = [ "25", "30", "50", "60", "100", "150", "200" , "300" ,"400" , "600" ]
 	
 	def units = [ " " , "mg", "g", "ml"]
@@ -82,7 +80,7 @@
 			<optgroup label="${ group.name }">${ groupOptions(group) }</optgroup>
 		<% } %>
 	</select>
-<!--	<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="guide" name="guide" value="Guide" onClick="guidee();" />-->
+	<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="guide" name="guide" value="Guide" onClick="guidee();" />
 	<br />
 	<br />
 	
@@ -118,7 +116,9 @@
 </div>
 
 <div id="guideDiv" style="visibility:hidden;">
+</div>
 
+<div id="artRegimenDiv" style="visibility:hidden;">
 </div>
 
 <div id="drugInfoDiv" style="visibility:hidden;">		
@@ -144,7 +144,7 @@ var arvtreatment=${maxComponents+1};
 var drugRegimen="";
 
 function addDrugOrderForARVTreatment() {
-   var arvtretment = "arvtreatment"+arvtreatment;;
+   var arvtretment = "arvtreatment"+arvtreatment;
    var deleteString = 'deleteInputARVTreatment(\"'+arvtretment+'\")';
    var htmlText =  "<input id='slNo"+arvtreatment+"'  name='slNo"+arvtreatment+"' type='text' size='5' value="+arvtreatment+" readonly='readonly'/>&nbsp;"
 	       	
@@ -277,7 +277,7 @@ function guidee(){
 jQuery('#guideDiv').empty();
 jQuery('#drugInfoDiv').empty();
 var age=${patient.age};
-if(age>12){
+if(age>14){
 var htmlText =  "<img src='${ ui.resourceLink('kenyaui', 'images/glyphs/flow_chart_adult.JPG') }' />"
 var newElement = document.createElement('div');
 newElement.setAttribute("id", "guideDivAdult"); 

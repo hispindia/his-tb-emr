@@ -3,6 +3,7 @@ package org.openmrs.module.kenyaemr.model;
 public class DrugInfo {
 	private Integer drugInfoId;
 	private String drugName;
+	private String drugCode;
 	private String toxicity;
 	private String riskFactor;
 	private String suggestedManagement;
@@ -23,6 +24,14 @@ public class DrugInfo {
 
 	public void setDrugName(String drugName) {
 		this.drugName = drugName;
+	}
+	
+	public String getDrugCode() {
+		return drugCode;
+	}
+
+	public void setDrugCode(String drugCode) {
+		this.drugCode = drugCode;
 	}
 
 	public String getToxicity() {

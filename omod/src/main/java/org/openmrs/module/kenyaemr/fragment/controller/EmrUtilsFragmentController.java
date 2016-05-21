@@ -14,6 +14,22 @@
 
 package org.openmrs.module.kenyaemr.fragment.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -23,8 +39,11 @@ import org.dom4j.io.SAXReader;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 import org.jaxen.dom4j.Dom4jXPath;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
+import org.openmrs.DrugOrder;
 import org.openmrs.Patient;
 import org.openmrs.Relationship;
 import org.openmrs.Visit;
@@ -32,35 +51,26 @@ import org.openmrs.api.context.Context;
 import org.openmrs.api.context.ContextAuthenticationException;
 import org.openmrs.calculation.result.CalculationResult;
 import org.openmrs.module.kenyaemr.EmrConstants;
-import org.openmrs.module.kenyaemr.calculation.EmrCalculationUtils;
-import org.openmrs.module.kenyaemr.regimen.RegimenManager;
-import org.openmrs.module.kenyaemr.util.EmrUiUtils;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
+import org.openmrs.module.kenyaemr.calculation.EmrCalculationUtils;
 import org.openmrs.module.kenyaemr.calculation.library.hiv.art.InitialArtStartDateCalculation;
 import org.openmrs.module.kenyaemr.regimen.RegimenChange;
 import org.openmrs.module.kenyaemr.regimen.RegimenChangeHistory;
 import org.openmrs.module.kenyaemr.regimen.RegimenDefinition;
 import org.openmrs.module.kenyaemr.regimen.RegimenDefinitionGroup;
+import org.openmrs.module.kenyaemr.regimen.RegimenManager;
+import org.openmrs.module.kenyaemr.regimen.RegimenOrder;
+import org.openmrs.module.kenyaemr.regimen.RegimenPropertyConfiguration;
+import org.openmrs.module.kenyaemr.util.EmrUiUtils;
 import org.openmrs.module.kenyaui.KenyaUiUtils;
 import org.openmrs.module.kenyaui.annotation.AppAction;
 import org.openmrs.module.kenyaui.annotation.PublicAction;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
-import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.action.SuccessResult;
 import org.openmrs.util.OpenmrsUtil;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Fragment actions generally useful for KenyaEMR
@@ -195,18 +205,60 @@ public class EmrUtilsFragmentController {
 		return SimpleObject.create("birthdate", kenyaui.formatDateParam(cal.getTime()));
 	}
 	
-	public JSONObject drugConcept(@RequestParam(value= "listOfDrug", required = false) String listOfDrug,
+	public JSONObject drugConcept(@RequestParam("patientId") Patient patient,
+			@RequestParam(value= "drugKey", required = false) String drugKey,
 			UiUtils ui, 
 			@SpringBean RegimenManager regimenManager,
-			@SpringBean EmrUiUtils kenyaUi){
+			@SpringBean EmrUiUtils kenyaUi) throws FileNotFoundException, IOException{
+		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
 		JSONObject conceptNameJson = new JSONObject();
-		String[] parts = listOfDrug.split("+");
+		JSONArray conceptNameJsonArray = new JSONArray();
 		
-		for(int i=0;i<parts.length;i++){
-			String a=parts[i];	
-			Concept c=Context.getConceptService().getConcept(a);
-			conceptNameJson.put("drugConceptName", c.getName());
+		String category="TB";
+		Concept masterSet = regimenManager.getMasterSetConcept(category);
+		RegimenChangeHistory history = RegimenChangeHistory.forPatient(patient, masterSet);
+		RegimenChange lastChange = history.getLastChange();
+		RegimenOrder baseline = lastChange != null ? lastChange.getStarted() : null;
+		
+		Collection<ConceptAnswer> conceptAnswers=new LinkedHashSet<ConceptAnswer>();
+		
+			//First line regimen_TB
+			Concept concept1=Context.getConceptService().getConceptByUuid("aa5303a5-6f8f-4a3d-a4e1-22dc5c7b10ae");
+			//Second line drug_TB
+			Concept concept2=Context.getConceptService().getConceptByUuid("b488dfb0-c12f-41a3-833a-76f37f492864");
+			
+			conceptAnswers.addAll(concept1.getAnswers(false));
+			conceptAnswers.addAll(concept2.getAnswers(false));
+		
+		
+		for(ConceptAnswer conceptAnswer:conceptAnswers){
+			JSONObject conceptNameJson2 = new JSONObject();
+			String drugNam=conceptAnswer.getAnswerConcept().getName().getName();
+			Integer drugConcept=conceptAnswer.getAnswerConcept().getConceptId();
+			conceptNameJson2.put("drugName", drugNam);
+			conceptNameJson2.put("drugConcept", drugConcept);
+			
+			Properties props = new Properties();
+			InputStream stream=null;
+			for (RegimenPropertyConfiguration configuration : Context.getRegisteredComponents(RegimenPropertyConfiguration.class)) {
+					ClassLoader loader = configuration.getClassLoader();
+					stream = loader.getResourceAsStream(configuration.getDefinitionsPath());
+			}
+			props.loadFromXML(stream);
+		
+		    String strength = props.getProperty(drugNam+".strength");
+		    String noOfTablet = props.getProperty(drugNam+".noOfTablet");
+		    String type = props.getProperty(drugNam+".type");
+		    String frequency = props.getProperty(drugNam+".frequency");
+			
+			conceptNameJson2.put("strength", strength);
+			conceptNameJson2.put("noOfTablet", noOfTablet);
+			conceptNameJson2.put("type", type);
+			conceptNameJson2.put("frequency", frequency);
+			conceptNameJsonArray.add(conceptNameJson2);
 		}
+		
+		conceptNameJson.put("drugConceptName", conceptNameJsonArray);
 		
 		return conceptNameJson;
 	}

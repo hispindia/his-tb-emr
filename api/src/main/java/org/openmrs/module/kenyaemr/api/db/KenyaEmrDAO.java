@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
@@ -27,6 +29,7 @@ import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.Person;
+import org.openmrs.Visit;
 import org.openmrs.module.kenyaemr.model.DrugInfo;
 import org.openmrs.module.kenyaemr.model.DrugObsProcessed;
 import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
@@ -42,7 +45,12 @@ public interface KenyaEmrDAO {
 	 * @param patient
 	 * @return
 	 */
-	public Encounter getLastEncounter(Patient patient,Set<EncounterType> encounterTypes);
+	public Encounter getFirstEncounterByDateTime(Patient patient,Visit visit);
+	public Encounter getFirstEncounterByCreatedDateTime(Patient patient,Visit visit);
+	public Encounter getLastEncounterByDateTime(Patient patient,Visit visit);
+	public Encounter getLastEncounterByCreatedDateTime(Patient patient,Visit visit);
+	public Encounter getLastEncounterByDateTime(Patient patient,Set<EncounterType> encounterTypes);
+	public Encounter getLastEncounterByCreatedDateTime(Patient patient,Set<EncounterType> encounterTypes);
 	public List<Order> getOrderByDateAndOrderType(Date date,OrderType orderType);
 	public List<Obs> getObsGroupByDate(Date date);
 	public List<Obs> getObsGroupByDateAndPerson(Date date,Person person);
@@ -51,6 +59,8 @@ public interface KenyaEmrDAO {
 	public DrugOrderProcessed saveDrugOrderProcessed(DrugOrderProcessed drugOrderProcessed);
 	public DrugObsProcessed saveDrugObsProcessed(DrugObsProcessed drugObsProcessed);
 	public DrugOrderProcessed getDrugOrderProcessed(DrugOrder drugOrder);
+	public DrugOrderProcessed getLastDrugOrderProcessed(DrugOrder drugOrder);
+	public DrugOrderProcessed getLastDrugOrderProcessedNotDiscontinued(DrugOrder drugOrder);
 	public List<DrugOrderProcessed> getDrugOrderProcessedCompleted(DrugOrder drugOrder);
 	public DrugOrderProcessed getDrugOrderProcesedById(Integer id);
 	public List<DrugOrderProcessed> getDrugOrdersByProcessedDate(Date date);
@@ -59,4 +69,6 @@ public interface KenyaEmrDAO {
 	public List<DrugObsProcessed> getObsDrugOrdersByPatientAndProcessedDate(Patient patient,Date processedDate);
 	public List<DrugInfo> getDrugInfo();
 	public DrugInfo getDrugInfo(String drugName);
+	public DrugOrderProcessed getLastRegimenChangeType(Patient patient);
+	public List<ConceptAnswer> getConceptAnswerByAnsweConcept(Concept answerConcept);
 }

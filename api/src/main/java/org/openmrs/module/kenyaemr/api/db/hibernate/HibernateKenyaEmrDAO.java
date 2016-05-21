@@ -23,6 +23,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
@@ -30,6 +31,7 @@ import org.openmrs.Obs;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.Person;
+import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.kenyaemr.api.db.KenyaEmrDAO;
@@ -131,7 +133,52 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 	/*
 	 * ENCOUNTER
 	 */
-	public Encounter getLastEncounter(Patient patient,Set<EncounterType> encounterTypes) {
+	public Encounter getFirstEncounterByDateTime(Patient patient,Visit visit) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+		criteria.add(Restrictions.eq("patient", patient));
+		criteria.add(Restrictions.eq("visit", visit));
+		criteria.addOrder(Order.asc("encounterDatetime"));
+		criteria.setMaxResults(1);
+		return (Encounter) criteria.uniqueResult();
+	}
+	
+	public Encounter getFirstEncounterByCreatedDateTime(Patient patient,Visit visit) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+		criteria.add(Restrictions.eq("patient", patient));
+		criteria.add(Restrictions.eq("visit", visit));
+		criteria.addOrder(Order.asc("dateCreated"));
+		criteria.setMaxResults(1);
+		return (Encounter) criteria.uniqueResult();
+	}
+	
+	public Encounter getLastEncounterByDateTime(Patient patient,Visit visit) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+		criteria.add(Restrictions.eq("patient", patient));
+		criteria.add(Restrictions.eq("visit", visit));
+		criteria.addOrder(Order.desc("encounterDatetime"));
+		criteria.setMaxResults(1);
+		return (Encounter) criteria.uniqueResult();
+	}
+	
+	public Encounter getLastEncounterByCreatedDateTime(Patient patient,Visit visit) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+		criteria.add(Restrictions.eq("patient", patient));
+		criteria.add(Restrictions.eq("visit", visit));
+		criteria.addOrder(Order.desc("dateCreated"));
+		criteria.setMaxResults(1);
+		return (Encounter) criteria.uniqueResult();
+	}
+	
+	public Encounter getLastEncounterByDateTime(Patient patient,Set<EncounterType> encounterTypes) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+		criteria.add(Restrictions.eq("patient", patient));
+		criteria.add(Restrictions.in("encounterType", encounterTypes));
+		criteria.addOrder(Order.desc("encounterDatetime"));
+		criteria.setMaxResults(1);
+		return (Encounter) criteria.uniqueResult();
+	}
+	
+	public Encounter getLastEncounterByCreatedDateTime(Patient patient,Set<EncounterType> encounterTypes) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Encounter.class);
 		criteria.add(Restrictions.eq("patient", patient));
 		criteria.add(Restrictions.in("encounterType", encounterTypes));
@@ -234,6 +281,23 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 		return (DrugOrderProcessed) criteria.uniqueResult();
 	}
 	
+	public DrugOrderProcessed getLastDrugOrderProcessed(DrugOrder drugOrder) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugOrderProcessed.class,"drugOrderProcessed");
+		criteria.add(Restrictions.eq("drugOrder", drugOrder));
+		criteria.addOrder(Order.desc("createdDate"));
+		criteria.setMaxResults(1);
+		return (DrugOrderProcessed) criteria.uniqueResult();
+	}
+	
+	public DrugOrderProcessed getLastDrugOrderProcessedNotDiscontinued(DrugOrder drugOrder) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugOrderProcessed.class,"drugOrderProcessed");
+		criteria.add(Restrictions.eq("drugOrder", drugOrder));
+		criteria.add(Restrictions.isNull("discontinuedDate"));
+		criteria.addOrder(Order.desc("createdDate"));
+		criteria.setMaxResults(1);
+		return (DrugOrderProcessed) criteria.uniqueResult();
+	}
+	
 	public List<DrugOrderProcessed> getDrugOrderProcessedCompleted(DrugOrder drugOrder) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugOrderProcessed.class,"drugOrderProcessed");
 		criteria.add(Restrictions.eq("drugOrder", drugOrder));
@@ -315,10 +379,27 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 		return criteria.list();
 	}
 	
-	public DrugInfo getDrugInfo(String drugName) {
+	public DrugInfo getDrugInfo(String drugCode) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugInfo.class,"drugInfo");
-		criteria.add(Restrictions.eq("drugName", drugName));
+		criteria.add(Restrictions.eq("drugCode", drugCode));
 		return (DrugInfo) criteria.uniqueResult();
+	}
+	
+	public DrugOrderProcessed getLastRegimenChangeType(Patient patient) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugOrderProcessed.class,"drugOrderProcessed");
+		criteria.add(Restrictions.eq("patient", patient));
+		//criteria.add(Restrictions.isNotNull("regimenChangeType"));
+		//criteria.add(Restrictions.isNotNull("discontinuedDate"));
+		//criteria.addOrder(Order.desc("discontinuedDate"));
+		criteria.addOrder(Order.desc("createdDate"));
+		criteria.setMaxResults(1);
+		return (DrugOrderProcessed) criteria.uniqueResult();
+	}
+	
+	public List<ConceptAnswer> getConceptAnswerByAnsweConcept(Concept answerConcept) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(ConceptAnswer.class,"conceptAnswer");
+		criteria.add(Restrictions.eq("answerConcept", answerConcept));
+		return criteria.list();
 	}
 
 }

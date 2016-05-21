@@ -88,6 +88,10 @@
 	<bean id="kenyaemr.config.regimen" class="org.openmrs.module.kenyaemr.regimen.RegimenConfiguration">
 		<property name="definitionsPath" value="regimens.xml" />
 	</bean>
+	
+	<bean id="kenyaemr.config.regimenProerty" class="org.openmrs.module.kenyaemr.regimen.RegimenPropertyConfiguration">
+		<property name="definitionsPath" value="regimenProperties.xml" />
+	</bean>
 
 	<bean id="kenyaemr.config.lab" class="org.openmrs.module.kenyacore.lab.LabConfiguration">
 		<property name="commonCatalogs">

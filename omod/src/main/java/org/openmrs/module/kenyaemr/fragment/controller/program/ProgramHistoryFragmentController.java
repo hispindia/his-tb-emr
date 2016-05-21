@@ -79,9 +79,9 @@ public class ProgramHistoryFragmentController {
 		
 		String artEncounter="";
 		Set<EncounterType> encounterTypes = new HashSet<EncounterType>();
-		encounterTypes.add(Context.getEncounterService().getEncounterType("TB Enrollment"));
-		encounterTypes.add(Context.getEncounterService().getEncounterType("TB Discontinuation"));
-		Encounter encounter=Context.getService(KenyaEmrService.class).getLastEncounter(patient,encounterTypes);
+		encounterTypes.add(Context.getEncounterService().getEncounterType("Initiate ART"));
+		encounterTypes.add(Context.getEncounterService().getEncounterType("Stop ART"));
+		Encounter encounter=Context.getService(KenyaEmrService.class).getLastEncounterByCreatedDateTime(patient,encounterTypes);
 		if(encounter!=null){
 		artEncounter=encounter.getEncounterType().getName();
 		}

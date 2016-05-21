@@ -24,6 +24,8 @@ import org.openmrs.module.kenyaemr.regimen.RegimenChange;
 import org.openmrs.module.kenyaemr.regimen.RegimenChangeHistory;
 import org.openmrs.module.kenyaemr.EmrWebConstants;
 import org.openmrs.module.kenyaui.annotation.SharedPage;
+import org.openmrs.ui.framework.SimpleObject;
+import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.util.OpenmrsUtil;
@@ -42,7 +44,7 @@ public class RegimenEditorPageController {
 
 	public void controller(@RequestParam("category") String category,
 						   @RequestParam("returnUrl") String returnUrl,
-						   PageModel model,
+						   PageModel model,UiUtils ui,
 						   @SpringBean RegimenManager regimenManager) {
 
 		Patient patient = (Patient) model.getAttribute(EmrWebConstants.MODEL_ATTR_CURRENT_PATIENT);
@@ -69,7 +71,7 @@ public class RegimenEditorPageController {
 				e.printStackTrace();
 			}
 		}
-		
+
 		model.addAttribute("category", category);
 		model.addAttribute("returnUrl", returnUrl);
 
@@ -79,9 +81,12 @@ public class RegimenEditorPageController {
 
 		RegimenChange lastChange = history.getLastChange();
 		Date lastChangeDate =  (lastChange != null) ? lastChange.getDate() : null;
+		
 		Date now = new Date();
 		boolean futureChanges = OpenmrsUtil.compareWithNullAsEarliest(lastChangeDate, now) >= 0;
 
 		model.addAttribute("initialDate", futureChanges ? lastChangeDate : date);
+		String back="ui.navigate('kenyaemr', 'clinician/clinicianViewPatient', { patientId: "+patient.getId()+"});";
+		model.addAttribute("back", back);
 	}
 }

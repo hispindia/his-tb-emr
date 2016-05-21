@@ -24,6 +24,8 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
 import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
@@ -279,8 +281,28 @@ public class KenyaEmrServiceImpl extends BaseOpenmrsService implements KenyaEmrS
 		return dao.executeHqlQuery(query, substitutions);
 	}
 	
-	public Encounter getLastEncounter(Patient patient,Set<EncounterType> encounterTypes) {
-		return dao.getLastEncounter(patient,encounterTypes);
+	public Encounter getFirstEncounterByDateTime(Patient patient,Visit visit) {
+		return dao.getFirstEncounterByDateTime(patient,visit);
+	}
+	
+	public Encounter getFirstEncounterByCreatedDateTime(Patient patient,Visit visit) {
+		return dao.getFirstEncounterByCreatedDateTime(patient,visit);
+	}
+	
+	public Encounter getLastEncounterByDateTime(Patient patient,Visit visit) {
+		return dao.getLastEncounterByDateTime(patient,visit);
+	}
+	
+	public Encounter getLastEncounterByCreatedDateTime(Patient patient,Visit visit) {
+		return dao.getLastEncounterByCreatedDateTime(patient,visit);
+	}
+	
+	public Encounter getLastEncounterByDateTime(Patient patient,Set<EncounterType> encounterTypes) {
+		return dao.getLastEncounterByDateTime(patient,encounterTypes);
+	}
+	
+	public Encounter getLastEncounterByCreatedDateTime(Patient patient,Set<EncounterType> encounterTypes) {
+		return dao.getLastEncounterByCreatedDateTime(patient,encounterTypes);
 	}
 	
 	public List<Order> getOrderByDateAndOrderType(Date date,OrderType orderType) {
@@ -313,6 +335,14 @@ public class KenyaEmrServiceImpl extends BaseOpenmrsService implements KenyaEmrS
 	
 	public DrugOrderProcessed getDrugOrderProcessed(DrugOrder drugOrder) {
 		return dao.getDrugOrderProcessed(drugOrder);
+	}
+	
+	public DrugOrderProcessed getLastDrugOrderProcessed(DrugOrder drugOrder) {
+		return dao.getLastDrugOrderProcessed(drugOrder);
+	}
+	
+	public DrugOrderProcessed getLastDrugOrderProcessedNotDiscontinued(DrugOrder drugOrder) {
+		return dao.getLastDrugOrderProcessedNotDiscontinued(drugOrder);
 	}
 	
 	public List<DrugOrderProcessed> getDrugOrderProcessedCompleted(DrugOrder drugOrder) {
@@ -373,7 +403,15 @@ public class KenyaEmrServiceImpl extends BaseOpenmrsService implements KenyaEmrS
 		return dao.getDrugInfo();
 	}
 	
-	public DrugInfo getDrugInfo(String drugName) {
-		return dao.getDrugInfo(drugName);
+	public DrugInfo getDrugInfo(String drugCode) {
+		return dao.getDrugInfo(drugCode);
+	}
+	
+	public DrugOrderProcessed getLastRegimenChangeType(Patient patient) {
+		return dao.getLastRegimenChangeType(patient);
+	}
+	
+	public List<ConceptAnswer> getConceptAnswerByAnsweConcept(Concept answerConcept){
+		return dao.getConceptAnswerByAnsweConcept(answerConcept);
 	}
 }

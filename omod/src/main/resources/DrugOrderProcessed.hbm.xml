@@ -16,9 +16,16 @@
 		<property name="createdDate" column="created_date"  />
 		<property name="processedDate" column="processed_date"  />
 		<property name="processedStatus" column="processed_status" />
+		<property name="dose" column="dose" />
+		<property name="noOfTablet" column="no_of_tablet" />
+		<many-to-one name="route" column="route_concept" class="org.openmrs.Concept" foreign-key="fk_route"/>
 		<property name="durationPreProcess" column="duration_preprocess" />
 		<property name="discontinuedDate" column="discontinued_date" />
+		<many-to-one name="discontinuedReason" column="discontinued_reason" class="org.openmrs.Concept" foreign-key="fk_discontinuedReasonfordrugordernotprocessed"/>
+		<property name="discontinuedReasonNonCoded" column="discontinued_reason_non_coded" />
 		<property name="quantityPostProcess" column="quantity_postprocess" />
-		<property name="drugRegimen" column="drug_regimen" />
+		<many-to-one name="regimenConcept" column="regimen_concept" class="org.openmrs.Concept" foreign-key="fk_regimenconcept"/>
+		<property name="regimenChangeType" column="regimen_change_type" />
+		<property name="typeOfRegimen" column="type_of_regimen" />
 	</class>
 </hibernate-mapping>

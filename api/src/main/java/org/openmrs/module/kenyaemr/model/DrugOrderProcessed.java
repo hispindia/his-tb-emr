@@ -2,6 +2,7 @@ package org.openmrs.module.kenyaemr.model;
 
 import java.util.Date;
 
+import org.openmrs.Concept;
 import org.openmrs.DrugOrder;
 import org.openmrs.Patient;
 
@@ -13,10 +14,17 @@ public class DrugOrderProcessed implements java.io.Serializable {
 	private Date createdDate;
 	private Date processedDate;
 	private Boolean processedStatus = Boolean.FALSE;
+	private String dose;
+	private Integer noOfTablet;
+	private Concept route;
 	private Integer durationPreProcess;
 	private Date discontinuedDate;
+	private Concept discontinuedReason;
+	private String discontinuedReasonNonCoded;
 	private Integer quantityPostProcess;
-	private String drugRegimen;
+	private Concept regimenConcept;
+	private String regimenChangeType;
+	private String typeOfRegimen;
 
 	public Integer getId() {
 		return id;
@@ -66,6 +74,30 @@ public class DrugOrderProcessed implements java.io.Serializable {
 		this.processedStatus = processedStatus;
 	}
 
+	public String getDose() {
+		return dose;
+	}
+
+	public void setDose(String dose) {
+		this.dose = dose;
+	}
+
+	public Integer getNoOfTablet() {
+		return noOfTablet;
+	}
+
+	public void setNoOfTablet(Integer noOfTablet) {
+		this.noOfTablet = noOfTablet;
+	}
+
+	public Concept getRoute() {
+		return route;
+	}
+
+	public void setRoute(Concept route) {
+		this.route = route;
+	}
+
 	public Integer getDurationPreProcess() {
 		return durationPreProcess;
 	}
@@ -81,6 +113,22 @@ public class DrugOrderProcessed implements java.io.Serializable {
 	public void setDiscontinuedDate(Date discontinuedDate) {
 		this.discontinuedDate = discontinuedDate;
 	}
+	
+	public Concept getDiscontinuedReason() {
+		return discontinuedReason;
+	}
+
+	public void setDiscontinuedReason(Concept discontinuedReason) {
+		this.discontinuedReason = discontinuedReason;
+	}
+
+	public String getDiscontinuedReasonNonCoded() {
+		return discontinuedReasonNonCoded;
+	}
+
+	public void setDiscontinuedReasonNonCoded(String discontinuedReasonNonCoded) {
+		this.discontinuedReasonNonCoded = discontinuedReasonNonCoded;
+	}
 
 	public Integer getQuantityPostProcess() {
 		return quantityPostProcess;
@@ -90,11 +138,27 @@ public class DrugOrderProcessed implements java.io.Serializable {
 		this.quantityPostProcess = quantityPostProcess;
 	}
 
-	public String getDrugRegimen() {
-		return drugRegimen;
+	public Concept getRegimenConcept() {
+		return regimenConcept;
 	}
 
-	public void setDrugRegimen(String drugRegimen) {
-		this.drugRegimen = drugRegimen;
+	public void setRegimenConcept(Concept regimenConcept) {
+		this.regimenConcept = regimenConcept;
+	}
+
+	public String getTypeOfRegimen() {
+		return typeOfRegimen;
+	}
+
+	public void setTypeOfRegimen(String typeOfRegimen) {
+		this.typeOfRegimen = typeOfRegimen;
+	}
+
+	public String getRegimenChangeType() {
+		return regimenChangeType;
+	}
+
+	public void setRegimenChangeType(String regimenChangeType) {
+		this.regimenChangeType = regimenChangeType;
 	}
 }
