@@ -37,6 +37,7 @@
 <td class="colI" style="text-align:center"></td>
 <td class="colJ" style="text-align:center"></td>
 <td class="colK" style="text-align:center"><input type="hidden" id="srNumber${count}" name="srNo" value="${count++}"></td>
+<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept${count}" name="drugConcept${count}" value={{drugOrderProcessed.regimenConcept.conceptId}}></td>
 </tr>
 <% } %>
 </tbody>

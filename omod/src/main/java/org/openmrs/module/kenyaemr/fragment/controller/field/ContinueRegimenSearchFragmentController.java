@@ -63,8 +63,10 @@ public class ContinueRegimenSearchFragmentController {
 		List<DrugOrder> continueRegimen = new ArrayList<DrugOrder>(baseline.getDrugOrders());
 		List<DrugOrderProcessed> drugOrderProcessed = new ArrayList<DrugOrderProcessed>();
 		for(DrugOrder continueRegim:continueRegimen){
-			DrugOrderProcessed drugOrderProcess=kenyaEmrService.getDrugOrderProcessed(continueRegim);
+			DrugOrderProcessed drugOrderProcess=kenyaEmrService.getLastDrugOrderProcessed(continueRegim);
+			if(drugOrderProcess!=null){
 			drugOrderProcessed.add(drugOrderProcess);
+			}
 		}
 		//model.addAttribute("continueRegimen", continueRegimen);
 		model.addAttribute("drugOrderProcesseds", drugOrderProcessed);
