@@ -184,6 +184,7 @@ public class EditPatientFragmentController {
 			model.addAttribute("patientIdentifier", noCheck + "-"
 					+ generateCheckdigit(noCheck));
 			model.addAttribute("patientId", null);
+			model.addAttribute("labPatient", "");
 		}
 
 	}

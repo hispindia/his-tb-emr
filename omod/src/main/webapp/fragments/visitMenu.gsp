@@ -1,6 +1,6 @@
 <div class="ke-panelbar" style="text-align: right">
 	<% if (visit) { %>
-	<% if (visit.visitType.name=="Follow up visit" && typeOfUser=="clinician") { %>
+	<% if (visit.visitType.name=="Follow up visit" && (typeOfUser=="clinician" || typeOfUser=="intake")) { %>
 	<%= ui.includeFragment("kenyaui", "widget/dialogForm", [
 			buttonConfig: [ label: "Save & Close Visit", iconProvider: "kenyaui", icon: "buttons/visit_end.png" ],
 			dialogConfig: [ heading: "Check Out", width: 50, height: 30 ],

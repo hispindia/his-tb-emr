@@ -140,6 +140,10 @@ public class EnterLabResultFragmentController {
 				.getService(EncounterService.class);
 
 		Date curDate = new Date();
+		if(visit.getStopDatetime() != null){
+			curDate =visit.getStopDatetime();
+		}
+		
 		boolean isChestXRay = false;
 
 		List<String> ch = new ArrayList<String>();
@@ -249,7 +253,6 @@ public class EnterLabResultFragmentController {
 
 		} else {
 			// save new
-
 			Encounter encounter = new Encounter();
 			encounter.setDateCreated(curDate);
 			encounter.setEncounterType(encService
@@ -264,7 +267,8 @@ public class EnterLabResultFragmentController {
 				encounter.setDateChanged(curDate);
 			}
 			encounter.setDateChanged(curDate);
-
+			
+			Encounter savedEn = Context.getEncounterService().saveEncounter(encounter);
 			for (String conceptId : ch) {
 				String value = actionRequest.getParameter(conceptId + "_value");
 				Concept concept = Context.getConceptService().getConcept(
@@ -392,7 +396,12 @@ public class EnterLabResultFragmentController {
 							}
 						}
 					} else if (hasAnswers) {
-						valueDropdown = resultObs.getValueCoded().toString();
+						if(resultObs.getValueCoded()!=null){
+							valueDropdown = resultObs.getValueCoded().toString();
+						}
+						else{
+							valueDropdown = "";
+						}
 					} else {
 						if (resultObs.getValueText() != null) {
 							result = resultObs.getValueText();

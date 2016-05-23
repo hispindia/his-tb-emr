@@ -252,6 +252,7 @@
 				<!--<ref bean="kenyaemr.app.intake" /> -->
 				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.chart" />
+				<ref bean="kenyaemr.app.intake" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/labresults.png" />
@@ -279,8 +280,6 @@
 		<property name="targetUuid" value="7e603909-9ed5-4d0c-a688-26ecb05d8b6e" />
 		<property name="apps">
 			<set>
-				<ref bean="kenyaemr.app.intake" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/labresults.png" />

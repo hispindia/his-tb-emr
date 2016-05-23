@@ -344,7 +344,7 @@
 		<table style="width:100%"> 	
 		<tr>
 			<td width="10%" align="left">
-				Lab Patient : <input type="checkbox" name="labPatient" value="true" ${ labPatient=='true' ? 'checked="checked"' : '' }/> 
+				Lab Patient : <input type="checkbox" id="labPatient" name="labPatient" value="true" ${ labPatient=='true' ? 'checked="checked"' : '' }/> 
 			</td>
 			<td width="90%" align="center">
 				<% if (command.original) { %>

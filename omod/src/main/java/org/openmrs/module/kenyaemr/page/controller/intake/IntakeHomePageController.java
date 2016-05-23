@@ -30,12 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IntakeHomePageController {
 	
 	public String controller(UiUtils ui, PageModel model) {
-		Patient patient = (Patient) model.getAttribute(EmrWebConstants.MODEL_ATTR_CURRENT_PATIENT);
-
-		if (patient != null) {
-			return "redirect:" + ui.pageLink(EmrConstants.MODULE_ID, "intake/intakeViewPatient", SimpleObject.create("patientId", patient.getId()));
-		} else {
 			return null;
-		}
 	}
 }

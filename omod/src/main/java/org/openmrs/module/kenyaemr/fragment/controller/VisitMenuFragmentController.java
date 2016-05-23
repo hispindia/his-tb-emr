@@ -50,6 +50,9 @@ public class VisitMenuFragmentController {
 		else if(currenturl.toLowerCase().contains("clinician")){
 			typeOfUser="clinician";
 		}
+		else if(currenturl.toLowerCase().contains("intake")){
+			typeOfUser="intake";
+		}
 		
 		model.addAttribute("newCurrentVisit", newVisit);
 		model.addAttribute("typeOfUser", typeOfUser);	

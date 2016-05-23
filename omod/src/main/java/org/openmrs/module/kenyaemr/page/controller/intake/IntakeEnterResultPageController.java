@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.kenyaemr.page.controller.chart;
+package org.openmrs.module.kenyaemr.page.controller.intake;
 
 import org.openmrs.Patient;
 import org.openmrs.module.kenyaemr.EmrConstants;
@@ -24,12 +24,18 @@ import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * Homepage for the chart app
+ * Homepage for the intake app
  */
-@AppPage(EmrConstants.APP_CHART)
-public class ChartHomePageController {
+@AppPage(EmrConstants.APP_INTAKE)
+public class IntakeEnterResultPageController {
 
-	public void controller() {
+	public String controller(UiUtils ui, PageModel model) {
+		Patient patient = (Patient) model.getAttribute(EmrWebConstants.MODEL_ATTR_CURRENT_PATIENT);
+
+		if (patient != null) {
+			return "redirect:" + ui.pageLink(EmrConstants.MODULE_ID, "intake/intakeViewPatient", SimpleObject.create("patientId", patient.getId()));
+		} else {
+			return null;
+		}
 	}
-	
 }

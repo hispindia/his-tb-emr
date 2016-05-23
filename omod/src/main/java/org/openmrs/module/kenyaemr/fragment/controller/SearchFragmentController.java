@@ -359,18 +359,21 @@ public class SearchFragmentController {
 					}
 				}
 				
-
 				//For normal Patients and Lab patients
 				PatientWrapper wrapper = new PatientWrapper(patient);
-				if(wrapper.getLabPatient().equals("true") && page.equals("intake/intakeViewPatient")){
+				if(page.equals("intake/intakeTestForm")){
+					if(wrapper.getLabPatient().equals("true") ){
+						simplePatients.add(simplePatient);
+					}
+				}
+				else if(!page.equals("intake/intakeTestForm") && !page.equals("intake/intakeViewPatient") && !page.equals("registration/registrationViewPatient") ){
+					if(wrapper.getLabPatient().equals("false") ){
+						simplePatients.add(simplePatient);
+					}
+				}
+				else {
 					simplePatients.add(simplePatient);
 				}
-				else if(wrapper.getLabPatient().equals("false") && !page.equals("intake/intakeViewPatient")){ 
-					simplePatients.add(simplePatient);
-				}
-				
-				
-
 			}
 		}
 
