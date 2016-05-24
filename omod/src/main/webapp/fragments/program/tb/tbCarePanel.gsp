@@ -47,7 +47,7 @@ else{
 
 
 <div class="ke-stack-item">
-	<% if (activeVisit) { %>
+	<% if (activeVisit && currentApp.id != "kenyaemr.medicalChart") { %>
 	<button type="button" class="ke-compact" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "regimenEditor", [ patientId: currentPatient.id, category: "TB", appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">
 		<img src="${ ui.resourceLink("kenyaui", "images/glyphs/edit.png") }" />
 	</button>
@@ -70,48 +70,38 @@ else{
 <div class="ke-stack-item">
 	<% dataPoints.each { print ui.includeFragment("kenyaui", "widget/dataPoint", it) } %>
 </div>
+<% if (currentApp.id != "kenyaemr.medicalChart") { %>
 
 	<table style="background-color: #e8efdc" border="1" align="center" width="100%">
 		<tr>
 			<th><center>Month</center></th>
-			<th><center>1</center></th>
-			<th><center>2</center></th>
-			<th><center>3</center></th>
-			<th><center>4</center></th>
-			<th><center>5</center></th>
-			<th><center>6</center></th>
-			<th><center>7</center></th>
-			<th><center>8</center></th>
-			<th><center>9</center></th>
-			<th><center>10</center></th>
-			<th><center>11</center></th>
-			<th><center>12</center></th>
-			<th><center>13</center></th>
-			<th><center>14</center></th>
-			<th><center>15</center></th>
-			<th><center>16</center></th>
-			<th><center>17</center></th>
-			<th><center>18</center></th>
-			<th><center>19</center></th>
-			<th><center>20</center></th>
-			<th><center>21</center></th>
-			<th><center>22</center></th>
-			<th><center>23</center></th>
-			<th><center>24</center></th>
+			<% for ( d in smearCultureIndexList ) { %>
+				<td style="font-size: 15px;" colspan="1"><center><b>
+				<% println d.key %>
+				</b></center></td>	
+			<% }%>
 		</tr>
 		<tr>
 			<td><center>Smear</center></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
+			<% for ( d in smearCultureIndexList ) { %>
+				<td style="font-size: 15px;" colspan="1"><center><b>
+				<% def values = d.value.split(",")	%>
+					<% if (values[1].contains('Positive')) { %>  +
+					<% } else if (values[1].contains('Negative')) { %> -
+				<% }  %>
+				</b></center></td>	
+			<% }%>
 		</tr>
 		<tr>
 			<td><center>Culture</center></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
+			<% for ( d in smearCultureIndexList ) { %>
+				<td style="font-size: 15px;" colspan="1"><center><b>
+				<% def values = d.value.split(",")	%>
+					<% if (values[2].contains('Positive')) { %>  +
+					<% } else if (values[2].contains('Negative')) { %> -
+				<% }  %>
+				</b></center></td>	
+			<% }%>
 		</tr>	
 	</table>
-
+<% } %>

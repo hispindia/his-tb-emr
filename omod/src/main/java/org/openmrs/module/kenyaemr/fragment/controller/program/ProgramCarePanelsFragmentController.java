@@ -18,6 +18,7 @@ import org.openmrs.Patient;
 import org.openmrs.module.kenyacore.UiResource;
 import org.openmrs.module.kenyacore.program.ProgramDescriptor;
 import org.openmrs.module.kenyacore.program.ProgramManager;
+import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.EmrWebConstants;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
@@ -33,25 +34,34 @@ import java.util.List;
 public class ProgramCarePanelsFragmentController {
 
 	public void controller(FragmentModel model,
-						   @FragmentParam("patient") Patient patient,
-						   @FragmentParam("complete") boolean complete,
-						   @FragmentParam("activeOnly") boolean activeOnly,
-						   @SpringBean ProgramManager programManager) {
+			@FragmentParam("patient") Patient patient,
+			@FragmentParam("complete") boolean complete,
+			@FragmentParam("activeOnly") boolean activeOnly,
+			@SpringBean ProgramManager programManager) {
 
 		List<UiResource> carePanels = new ArrayList<UiResource>();
 
-/*		Collection<ProgramDescriptor> programs = activeOnly
-				? programManager.getPatientActivePrograms(patient)
-				: programManager.getPatientPrograms(patient);
-*/
-		//Show all care panels 
-		Collection<ProgramDescriptor> programs = programManager.getPatientPrograms(patient);
+		/*
+		 * Collection<ProgramDescriptor> programs = activeOnly ?
+		 * programManager.getPatientActivePrograms(patient) :
+		 * programManager.getPatientPrograms(patient);
+		 */
+		// Show all care panels
+		Collection<ProgramDescriptor> programs = programManager
+				.getPatientPrograms(patient);
 		for (ProgramDescriptor programDescriptor : programs) {
-			carePanels.add(programDescriptor.getFragments().get(EmrWebConstants.PROGRAM_CARE_PANEL_FRAGMENT));
+			carePanels.add(programDescriptor.getFragments().get(
+					EmrWebConstants.PROGRAM_CARE_PANEL_FRAGMENT));
 		}
 
 		model.addAttribute("patient", patient);
 		model.addAttribute("carePanels", carePanels);
 		model.addAttribute("complete", complete);
+
+		model.addAttribute("graphingConcepts", Dictionary.getConcepts(
+				Dictionary.WEIGHT_KG, Dictionary.SPUTUM_SMEAR_TEST,
+				Dictionary.CULTURE_SOLID, Dictionary.CULTURE_LIQUID,
+				Dictionary.COMORBIDITY_TB_ENROLL_FORM));
+
 	}
 }

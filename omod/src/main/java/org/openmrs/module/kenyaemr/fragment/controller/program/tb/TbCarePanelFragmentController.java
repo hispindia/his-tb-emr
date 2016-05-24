@@ -15,8 +15,12 @@
 package org.openmrs.module.kenyaemr.fragment.controller.program.tb;
 
 import org.openmrs.Concept;
+import org.openmrs.Obs;
 import org.openmrs.Patient;
+import org.openmrs.Visit;
+import org.openmrs.api.context.Context;
 import org.openmrs.calculation.result.CalculationResult;
+import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.calculation.EmrCalculationUtils;
 import org.openmrs.module.kenyaemr.regimen.RegimenManager;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbDiseaseClassificationCalculation;
@@ -28,11 +32,14 @@ import org.openmrs.module.kenyaemr.calculation.library.tb.TbTreatmentDrugSensiti
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbTreatmentDrugRegimen;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbTreatmentStartDateCalculation;
 import org.openmrs.module.kenyaemr.regimen.RegimenChangeHistory;
+import org.openmrs.module.kenyaemr.wrapper.EncounterWrapper;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,7 +53,7 @@ public class TbCarePanelFragmentController {
 						   @SpringBean RegimenManager regimenManager) {
 
 		Map<String, Object> calculationResults = new HashMap<String, Object>();
-
+/*
 		CalculationResult result = EmrCalculationUtils.evaluateForPatient(TbDiseaseClassificationCalculation.class, null, patient);
 		calculationResults.put("tbDiseaseSite", result != null ? result.getValue() : null);
 
@@ -72,9 +79,86 @@ public class TbCarePanelFragmentController {
 		calculationResults.put("tbTreatmentDrugStartDate", result != null ? result.getValue() : null);
 		
 		model.addAttribute("calculations", calculationResults);
+*/
+//		Dictionary.SPUTUM_SMEAR_TEST,
+//		Dictionary.CULTURE_SOLID, Dictionary.CULTURE_LIQUID
+	
+		
+		List<Obs> sputumSmear = getAllLatestObs(patient, Dictionary.SPUTUM_SMEAR_TEST);
+		List<Obs> cultureSolid = getAllLatestObs(patient, Dictionary.CULTURE_SOLID);
+		List<Obs> cultureLiquid = getAllLatestObs(patient, Dictionary.CULTURE_LIQUID);
+		List<Obs> cultureSputum = getAllLatestObs(patient, Dictionary.SPUTUM_CULTURE);
+	
+		List<Visit> visitList = Context.getVisitService().getVisitsByPatient(patient);
+		
+		Map<Integer, String> smearCultureIndexList = new HashMap<Integer, String>();
+		Integer visitIndex = 0;
+		if (visitList != null) {
+			for (Visit v : visitList) {
+				String sputumSmearVal = "";
+				String cultureVal = "";
+				String visitDate = new SimpleDateFormat("dd-MMMM-yyyy").format(v.getStartDatetime());
 
+				if (sputumSmear != null) {
+					for (Obs obs : sputumSmear) {
+						if (obs.getEncounter().getVisit().equals(v)) {
+							sputumSmearVal = obs.getValueCoded().getName().toString();
+						}
+					}
+				}
+
+				if (cultureSolid != null) {
+					for (Obs obs : cultureSolid) {
+						if (obs.getEncounter().getVisit().equals(v)) {
+							cultureVal = obs.getValueCoded().getName().toString();
+						}
+					}
+				}
+				else if(cultureLiquid != null){
+					for (Obs obs : cultureLiquid) {
+						if (obs.getEncounter().getVisit().equals(v)) {
+							cultureVal = obs.getValueCoded().getName().toString();
+						}
+					}
+				}
+				else if(cultureSputum != null){
+					for (Obs obs : cultureSputum) {
+						if (obs.getEncounter().getVisit().equals(v)) {
+							cultureVal = obs.getValueCoded().getName().toString();
+						}
+					}
+				}
+
+				String val = visitDate + ", " + sputumSmearVal+ ", " + cultureVal ;
+				smearCultureIndexList.put(visitIndex, val);
+				visitIndex++;
+			}
+		}
+	//	System.out.println(visitIndex);
+		for(int i=visitIndex;i< 24; i++){
+			System.out.println(i);	
+			smearCultureIndexList.put(i, " , , ");
+		}
+		model.addAttribute("smearCultureIndexList", smearCultureIndexList);
+				
 		Concept medSet = regimenManager.getMasterSetConcept("TB");
 		RegimenChangeHistory history = RegimenChangeHistory.forPatient(patient, medSet);
 		model.addAttribute("regimenHistory", history);
 	}
+	
+
+
+	private List<Obs> getAllLatestObs(Patient patient, String conceptIdentifier) {
+		Concept concept = Dictionary.getConcept(conceptIdentifier);
+		List<Obs> obs = Context.getObsService()
+				.getObservationsByPersonAndConcept(patient, concept);
+		int count = obs.size() - 1;
+		if (obs.size() > 0) {
+			// these are in reverse chronological order
+			return obs;
+		}
+		return null;
+	}	
+
+	
 }
