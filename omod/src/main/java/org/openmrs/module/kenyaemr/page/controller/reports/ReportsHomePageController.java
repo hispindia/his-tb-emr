@@ -55,7 +55,7 @@ public class ReportsHomePageController {
 			common.add(ui.simplifyObject(report));
 		}
 
-		reportsByProgram.put("Patient Lists", common);
+		reportsByProgram.put("", common);
 
 		for (ProgramDescriptor programDescriptor : programManager.getAllProgramDescriptors()) {
 			Program program = programDescriptor.getTarget();

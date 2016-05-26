@@ -26,6 +26,7 @@
 			<th>Name</th>
 			<th>Age</th>
 			<th>Gender</th>
+			<th>Contact No.</th>
 			<th>Patient ID</th>
 			<th>NIC</th>
 		</tr>

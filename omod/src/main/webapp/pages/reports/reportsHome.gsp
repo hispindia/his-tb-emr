@@ -30,7 +30,7 @@
 				<tr>
 					<td style="width: 50%; vertical-align: top">
 						<div class="ke-panel-frame">
-							<div class="ke-panel-heading">Indicator</div>
+							<div class="ke-panel-heading">NTP Report</div>
 							<div class="ke-panel-content">
 								${ ui.includeFragment("kenyaemr", "widget/reportStack", [ reports: indicatorReports(reports), onReportClick: onReportClick ]) }
 							</div>
@@ -38,7 +38,7 @@
 					</td>
 					<td style="width: 50%; vertical-align: top; padding-left: 5px">
 						<div class="ke-panel-frame">
-							<div class="ke-panel-heading">Cohort</div>
+							<div class="ke-panel-heading">Patient Lists</div>
 							<div class="ke-panel-content">
 								${ ui.includeFragment("kenyaemr", "widget/reportStack", [ reports: cohortReports(reports), onReportClick: onReportClick ]) }
 							</div>

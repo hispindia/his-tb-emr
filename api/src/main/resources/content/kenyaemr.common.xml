@@ -41,6 +41,8 @@
 				<ref bean="kenyaemr.tb.report.missingSputumResults" />
 				<ref bean="kenyaemr.common.report.missedAppointment" />
 				<ref bean="kenyaemr.hiv.report.lostToFollowUp" />
+				<ref bean="kenyaemr.tb.report.hepatitisbpositive" />
+				<ref bean="kenyaemr.tb.report.hepatitiscpositive" />
 	 	<!--
 				<ref bean="kenyaemr.common.report.moh711" />
 				<ref bean="kenyaemr.common.report.artDrug" />
@@ -402,7 +404,24 @@
 		<property name="displayIdentifier" ref="kenyaemr.hiv.identifier.upn" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
-
+    
+    
+    <bean id="kenyaemr.tb.report.hepatitisbpositive" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="22217af7-ba71-415c-9cd0-8dfb21f70a25" />
+		<property name="name" value="Patients who are diagnosed with hepatitis B positive" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientHepatitisBpositiveCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.hepatitiscpositive" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="0dd6e1e2-fa24-415b-a6ad-fb8ce3334d33" />
+		<property name="name" value="Patients who are diagnosed with hepatitis C positive" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientHepatitisCpositiveCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	
+	
 	<!--
 	
 	<bean id="kenyaemr.hiv.report.dueForCd4" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">

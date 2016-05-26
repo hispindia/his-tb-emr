@@ -261,6 +261,8 @@
 	<ref key="CULTURE_DRUG_KM_AMK" uuid="138201AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
 	<ref key="CULTURE_SOLID" uuid="d6cc0faf-db68-440d-a14a-d3f1e546d6d8" />
 	<ref key="CULTURE_LIQUID" uuid="47b188a3-3c9e-4e18-b05a-8362eff6b757" />
+	<ref key="HEPATITIS_B" uuid="111759AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+	<ref key="HEPATITIS_C" uuid="f7864e12-49f0-4070-a984-ad35365fe113" />
 </refs>
 
 
