@@ -14,6 +14,7 @@ import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.Person;
+import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
@@ -267,9 +268,70 @@ public class TbRegisterFragmentController {
 			}
 		}
 		model.addAttribute("cultureDstList", cultureDstList);
+	
 		
+		/*
+		 * Smear culture 
+		 */
 		
-	//	model.addAttribute("graphingConcepts", Dictionary.getConcepts(Dictionary.TUBERCULOSIS_TREATMENT_NUMBER, Dictionary.TUBERCULOSIS_DRUG_TREATMENT_START_DATE,Dictionary.TB_FORM_REGIMEN, Dictionary.CURRENT_WHO_STAGE));
+		List<Obs> sputumSmear = getAllLatestObsList(patient, Dictionary.SPUTUM_SMEAR_TEST);
+		List<Obs> cultureSolid = getAllLatestObsList(patient, Dictionary.CULTURE_SOLID);
+		List<Obs> cultureLiquid = getAllLatestObsList(patient, Dictionary.CULTURE_LIQUID);
+		List<Obs> cultureSputum = getAllLatestObsList(patient, Dictionary.SPUTUM_CULTURE);
+	
+		List<Visit> visitList = Context.getVisitService().getVisitsByPatient(patient);
+		
+		Map<Integer, String> smearCultureIndexList = new HashMap<Integer, String>();
+		Integer visitIndex = 0;
+		if (visitList != null) {
+			for (Visit v : visitList) {
+				String sputumSmearVal = "";
+				String cultureVal = "";
+				String sputumSmearDateVal = "";
+				String cultureDateVal = "";
+				String visitDate = new SimpleDateFormat("dd-MMMM-yyyy").format(v.getStartDatetime());
+
+				if (sputumSmear != null) {
+					for (Obs obs : sputumSmear) {
+						if (obs.getEncounter().getVisit().equals(v)) {
+							sputumSmearVal = obs.getValueCoded().getName().toString();
+							sputumSmearDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getObsDatetime());
+						}
+					}
+				}
+
+				if (cultureSolid != null) {
+					for (Obs obs : cultureSolid) {
+						if (obs.getEncounter().getVisit().equals(v)) {
+							cultureVal = obs.getValueCoded().getName().toString();
+							cultureDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getObsDatetime());
+						}
+					}
+				}
+				else if(cultureLiquid != null){
+					for (Obs obs : cultureLiquid) {
+						if (obs.getEncounter().getVisit().equals(v)) {
+							cultureVal = obs.getValueCoded().getName().toString();
+							cultureDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getObsDatetime());
+						}
+					}
+				}
+				else if(cultureSputum != null){
+					for (Obs obs : cultureSputum) {
+						if (obs.getEncounter().getVisit().equals(v)) {
+							cultureVal = obs.getValueCoded().getName().toString();
+							cultureDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getObsDatetime());
+						}
+					}
+				}
+
+				String val = visitDate + ", " + sputumSmearVal+ ", " + sputumSmearDateVal + ", " + cultureVal+", "+cultureDateVal ;
+				smearCultureIndexList.put(visitIndex, val);
+				visitIndex++;
+			}
+		}
+
+		model.addAttribute("smearCultureIndexList", smearCultureIndexList);		
 	}
 	
 	private Obs getLatestObs(Patient patient, String conceptIdentifier) {
@@ -291,6 +353,19 @@ public class TbRegisterFragmentController {
 		if (obs.size() > 0) {
 			// these are in reverse chronological order
 			return obs.get(count);
+		}
+		return null;
+	}
+	
+
+	private List<Obs> getAllLatestObsList(Patient patient, String conceptIdentifier) {
+		Concept concept = Dictionary.getConcept(conceptIdentifier);
+		List<Obs> obs = Context.getObsService()
+				.getObservationsByPersonAndConcept(patient, concept);
+		int count = obs.size() - 1;
+		if (obs.size() > 0) {
+			// these are in reverse chronological order
+			return obs;
 		}
 		return null;
 	}	

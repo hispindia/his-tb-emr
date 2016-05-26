@@ -114,6 +114,48 @@
 			          </table>
 				</td> 
 			</tr>
+            <tr>
+  				<td width="50%" colspan="6" valign="top">
+	                <table width="100%" border="1">
+	                	<tr bgcolor="#778899">
+							<td colspan="3">
+								<h4><center><strong>MDR TB Treatment (Smear (S) and culture (C) results during treatment)</strong></center></h4>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<table border="1" width="100%">
+									<tr >
+										<th colspan="1"><strong>Visit</strong></th>
+										<th colspan="1"><strong>Visit Date</strong></th>
+										<th colspan="1"><strong>Regimen</strong></th>
+										<th colspan="1"><strong>Date started</strong></th>
+										<th colspan="1"><strong>Sputum Result</strong></th>
+										<th colspan="1"><strong>Sputum Date</strong></th>
+										<th colspan="1"><strong>Culture Result</strong></th>
+										<th colspan="1"><strong>Culture Date</strong></th>
+									</tr>
+								<% for ( d in smearCultureIndexList ) { %>
+								<% def values = d.value.split(",")	%>
+									<tr>
+										<td colspan="1"><% println  d.key+1  %></td>
+										<td colspan="1"><% println  values[0] %> </td>
+										<td colspan="1"> </td>
+										<td colspan="1"></td>
+										<td colspan="1"><% println  values[1] %> </td>
+										<td colspan="1"><% println  values[2] %> </td>
+										<td colspan="1"><% println  values[3] %> </td>
+										<td colspan="1"><% println  values[4] %> </td>
+										<td colspan="1"> </td>
+									</tr>
+									<% } %>
+								</table>
+							</td>
+			             </tr>
+			          </table>
+				</td> 
+			</tr>
+
 		<% /** <tr>
 				<td colspan="6" width="50%" valign="top">
 				${ ui.includeFragment("kenyaui", "widget/obsHistoryTable", [ id: "tblhistory", patient: currentPatient, concepts: graphingConcepts ]) }

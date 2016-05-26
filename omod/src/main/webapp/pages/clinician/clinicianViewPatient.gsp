@@ -4,13 +4,6 @@
 
 <div class="ke-page-content">
 
-	${ /*ui.includeFragment("kenyaui", "widget/tabMenu", [ items: [
-			[ label: "Overview", tabid: "overview" ],
-			[ label: "Lab Tests", tabid: "labtests" ],
-			[ label: "Prescriptions", tabid: "prescriptions" ]
-	] ])*/ "" }
-
-	<!--<div class="ke-tab" data-tabid="overview">-->
 		<table cellpadding="0" cellspacing="0" border="0" width="100%">
 			<tr>
 			<td width="20%" valign="top" style="padding-left: 5px">
@@ -22,11 +15,6 @@
 				<td width="60%" valign="top">
 					${ ui.includeFragment("kenyaemr", "patient/patientSummary", [ patient: currentPatient ]) }
 					${ ui.includeFragment("kenyaemr", "patient/patientChart", [ patient: currentPatient ]) }
-					
-			<!-- 		${ ui.includeFragment("kenyaemr", "patient/patientRelationships", [ patient: currentPatient ]) } -->
-				
-					
-
 					${ ui.includeFragment("kenyaemr", "program/tb/tbCarePanel", [ patient: currentPatient, complete: false, activeOnly: false ]) }	
 				</td>
 				<td width="20%" valign="top" style="padding-left: 5px">
@@ -38,11 +26,6 @@ ${ ui.includeFragment("kenyaemr", "visitMenu", [ patient: currentPatient, visit:
 					<% } %>
 					${ ui.includeFragment("kenyaemr", "patient/patientWhiteCard", [ patient: currentPatient ]) }
 				</td>
-				
-				
-				
 			</tr>
 		</table>
-	<!--</div>-->
-
 </div>

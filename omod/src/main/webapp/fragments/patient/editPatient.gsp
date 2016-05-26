@@ -327,10 +327,18 @@
 		</fieldset>
 		<fieldset>
 			<legend>Gene Xpert Test</legend>
-			
-			<% genSampleIdDetail.each { %>
-			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
-			 <% } %>
+			<table style="width:20%">
+				<tr>
+					<td>
+						 <% genSampleIdDetail.each { %>
+						   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
+						 <% } %>
+					 </td>
+					 <td>
+					 	<button type="button" class="ke-compact" onclick="fetchGxResult()">Fetch</button>
+		 			 </td>
+	 			 </tr>
+ 			 </table>
 			<% genSpecificationDetail.each { %>
 			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 			 <% } %>
@@ -516,6 +524,27 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 	return false;
 	} 
 	}
+	
+	function fetchGxResult(){
+	   var def = jq.Deferred();
+/*      jq.ajax({
+           type: "GET",
+           contentType: "application/json",
+           crossDomain: true,
+           dataType:"jsonp",
+           headers: {
+               "Authorization": "Basic " + btoa("admin" + ":" + "district")
+           },
+           url: 'https://play.dhis2.org/demo/api/dataElements/FTRrcoaog83.jsonp?',
+           success: function (data) {
+	           def.resolve(data);
+               console.log(data);
+           },error:function(response){
+           }
+       }); */
+       return def;
+   }
+	
 </script>
 
 <style>

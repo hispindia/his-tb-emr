@@ -15,8 +15,10 @@
 package org.openmrs.module.kenyaemr.page.controller.chart;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Form;
+import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.PatientProgram;
 import org.openmrs.Program;
@@ -27,8 +29,10 @@ import org.openmrs.module.kenyacore.form.FormDescriptor;
 import org.openmrs.module.kenyacore.form.FormManager;
 import org.openmrs.module.kenyacore.program.ProgramDescriptor;
 import org.openmrs.module.kenyacore.program.ProgramManager;
+import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.EmrConstants;
 import org.openmrs.module.kenyaemr.EmrWebConstants;
+import org.openmrs.module.kenyaemr.wrapper.EncounterWrapper;
 import org.openmrs.module.kenyaui.KenyaUiUtils;
 import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.ui.framework.SimpleObject;
@@ -39,6 +43,7 @@ import org.openmrs.ui.framework.page.PageRequest;
 import org.openmrs.ui.framework.session.Session;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -115,6 +120,157 @@ public class ChartViewPatientPageController {
 		model.addAttribute("program", program);
 		model.addAttribute("section", section);
 		model.addAttribute("selection", selection);
+		
+		/*
+		 * Culture and DST History
+		 */
+		
+		Obs cultureDstDetail = getAllLatestObs(patient,
+				Dictionary.CULTURE_DRUG_GROUP);
+		Obs cultureDstDate = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_DATE);
+		Obs cultureDstS = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_S);
+		Obs cultureDstH = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_H);
+		Obs cultureDstR = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_R);
+		Obs cultureDstE = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_E);
+		Obs cultureDstPtoEto = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_PTO_ETO);
+		Obs cultureDstCM = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_CM);
+		Obs cultureDstKmAmk = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_KM_AMK);
+		Obs cultureDstOther = getAllLatestObs(patient, Dictionary.OTHER_NON_CODED);
+
+		
+		Map<Integer, String> cultureDstList = new HashMap<Integer, String>();
+		Integer cultureDstIndex = 0;
+		if (cultureDstDetail != null) {
+			EncounterWrapper wrappedObsGroup = new EncounterWrapper(
+					cultureDstDetail.getEncounter());
+			List<Obs> obsGroupList = wrappedObsGroup
+					.allObs(cultureDstDetail.getConcept());
+			for (Obs obsG : obsGroupList) {
+				String cultureDstDateVal = "";
+				String cultureDstSVal = "";
+				String cultureDstHVal = "";
+				String cultureDstRVal = "";
+				String cultureDstEVal = "";
+				String cultureDstPtoEtoVal = "";
+				String cultureDstCMVal = "";
+				String cultureDstKmAmkVal = "";
+				String cultureDstOtherVal = "";
+				
+				if (cultureDstDate != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstDate.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstDate.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getValueDate());
+						}
+					}
+				}
+
+				if (cultureDstS != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstS.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstS.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstSVal = cultureDstSVal.concat(obs
+									.getValueCoded().getName().toString());
+						}
+					}
+				}
+
+				if (cultureDstH != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstH.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstH.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstHVal = cultureDstHVal.concat(obs
+									.getValueCoded().getName().toString());
+						}
+					}
+				}
+				
+				if (cultureDstR != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstR.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstR.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstRVal = cultureDstRVal.concat(obs
+									.getValueCoded().getName().toString());
+						}
+					}
+				}
+
+				if (cultureDstE != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstE.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstE.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstEVal = cultureDstEVal.concat(obs
+									.getValueCoded().getName().toString());
+						}
+					}
+				}
+				
+				if (cultureDstPtoEto != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstPtoEto.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstPtoEto.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstPtoEtoVal = cultureDstPtoEtoVal.concat(obs
+									.getValueCoded().getName().toString());
+						}
+					}
+				}
+				
+				if (cultureDstCM != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstCM.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstCM.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstCMVal = cultureDstCMVal.concat(obs
+									.getValueCoded().getName().toString());
+						}
+					}
+				}
+				
+				if (cultureDstKmAmk != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstKmAmk.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstKmAmk.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstKmAmkVal = cultureDstKmAmkVal.concat(obs
+									.getValueCoded().getName().toString());
+						}
+					}
+				}
+
+				if (cultureDstOther != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstOther.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstOther.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstOtherVal = cultureDstOtherVal.concat(obs
+									.getValueText().toString());
+						}
+					}
+				}
+
+				String val = cultureDstDateVal + ", " + cultureDstSVal+ ", " + cultureDstHVal + ", " +cultureDstRVal+ ", " +cultureDstEVal
+				+ ", " +cultureDstPtoEtoVal+ ", " +cultureDstCMVal+ ", " +cultureDstKmAmkVal+ ", " +cultureDstOtherVal;
+				cultureDstList.put(cultureDstIndex, val);
+				cultureDstIndex++;
+			}
+		}
+		model.addAttribute("cultureDstList", cultureDstList);
+		
 	}
 
 	/**
@@ -156,4 +312,18 @@ public class ChartViewPatientPageController {
 
 		return summaries;
 	}
+	
+	private Obs getAllLatestObs(Patient patient, String conceptIdentifier) {
+		Concept concept = Dictionary.getConcept(conceptIdentifier);
+		List<Obs> obs = Context.getObsService()
+				.getObservationsByPersonAndConcept(patient, concept);
+		int count = obs.size() - 1;
+		if (obs.size() > 0) {
+			// these are in reverse chronological order
+			return obs.get(count);
+		}
+		return null;
+	}	
+
+	
 }

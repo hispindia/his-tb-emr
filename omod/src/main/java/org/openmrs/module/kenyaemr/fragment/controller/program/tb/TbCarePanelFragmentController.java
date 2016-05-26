@@ -134,11 +134,9 @@ public class TbCarePanelFragmentController {
 				visitIndex++;
 			}
 		}
-	//	System.out.println(visitIndex);
-		for(int i=visitIndex;i< 24; i++){
-			System.out.println(i);	
-			smearCultureIndexList.put(i, " , , ");
-		}
+//		for(int i=visitIndex;i< 24; i++){
+//			smearCultureIndexList.put(i, " , , ");
+//		}
 		model.addAttribute("smearCultureIndexList", smearCultureIndexList);
 				
 		Concept medSet = regimenManager.getMasterSetConcept("TB");

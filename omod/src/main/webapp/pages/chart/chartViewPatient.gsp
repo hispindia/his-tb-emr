@@ -83,10 +83,55 @@
 
 		${ ui.includeFragment("kenyaemr", "program/programCarePanels", [ patient: currentPatient, complete: true, activeOnly: false ]) }
 
-	<% } else if (section == "moh257") { %>
-
-		${ ui.includeFragment("kenyaemr", "moh257", [ patient: currentPatient ]) }
-
 	<% } %>
+
+	<br />
+           <tr>
+  				<td width="50%" colspan="6" valign="top">
+	                <table width="100%" border="1">
+	                	<tr bgcolor="#778899">
+							<td colspan="3">
+								<center><strong>DST Result</strong></center>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<table border="1" width="100%">
+									<tr >
+										<th colspan="1"><strong>Drug</strong></th>
+										<th colspan="1"><strong>R</strong></th>
+										<th colspan="1"><strong>H</strong></th>
+										<th colspan="1"><strong>E</strong></th>
+										<th colspan="1"><strong>S</strong></th>
+										<th colspan="1"><strong>Km</strong></th>
+										<th colspan="1"><strong>Cm</strong></th>
+										<th colspan="1"><strong>Fq</strong></th>
+										<th colspan="1"><strong>Pto/Eto</strong></th>
+										<th colspan="1"><strong>Other</strong></th>
+										<th colspan="1"><strong>Date of DST</strong></th>
+									</tr>
+								<% for ( d in cultureDstList ) { %>
+								<% def values = d.value.split(",")	%>
+									<tr>
+										<td colspan="1"><% println  d.key+1  %></td>
+										<td colspan="1"><% println  values[3] %> </td>
+										<td colspan="1"><% println  values[2] %> </td>
+										<td colspan="1"><% println  values[4] %> </td>
+										<td colspan="1"><% println  values[1] %> </td>
+										<td colspan="1"><% println  values[7] %> </td>
+										<td colspan="1"><% println  values[6] %> </td>
+										<td colspan="1"> </td>
+										<td colspan="1"><% println  values[5] %> </td>
+										<td colspan="1"><% println  values[8] %> </td>
+										<td colspan="1"><% println  values[0] %> </td>
+									</tr>
+									<% } %>
+								</table>
+							</td>
+			             </tr>
+			          </table>
+				</td> 
+			</tr>
+
 
 </div>
