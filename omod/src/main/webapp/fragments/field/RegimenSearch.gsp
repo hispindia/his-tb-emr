@@ -1,13 +1,12 @@
 <%
 	ui.includeJavascript("kenyaemr", "controllers/drugRegimenController.js")
 	
-	def strengths = ["300/150/200/50 mg","300/200/200/50 mg","300/300/200/50 mg","600/300/300/100 mg","300/300/600 mg","300/200/600 mg","300/200/200 mg","300/150/300 mg",
-	                 "300/150/200 mg","30/150/200 mg","600/300 mg","300/300 mg","300/200 mg","300/150 mg","300/100 mg","200/50 mg","100/25 mg","80/20 mg","60/30 mg",
-	                 "30/150 mg","6/30 mg","800 mg","600 mg","400 mg","300 mg","200 mg","150 mg","100 mg","60 mg","50 mg","30 mg","20 mg","10 mg"]
+	def strengths = ["150/75/400/275 mg","150/75/275 mg","60/30/150 mg","500/125 mg","150/75 mg","60/60 mg","600 mg","500 mg","400 mg","300 mg","250 mg",
+	                 "100 mg","50 mg","100 g jar","4 g sachets","500/500 mg Vial","1 g Vial"]
 	                 
-	def types = ["tab","ml"]
+	def types = ["tab","ml","vial","sachet"]
 	
-	def frequencys = ["od","bd","tds","qid","cm","hs","prn","stat"]
+	def frequencys = ["Once daily","Twice daily","Three times daily","Four times daily","Early morning","Night time","3 times per week","6 times per week","prn","stat"]
 	
 	def strengthOptions = strengths.collect( { """<option value="${ it }">${ it }</option>""" } ).join()
 	
@@ -23,7 +22,7 @@
 <tbody>
 <tr>
 <td><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="guide" name="guide" value="Guide" onClick="guidee();" /></td>
-<td><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="artRegimen" name="artRegimen" value="Art Regimen" onClick="artRegimenn();" /></td>
+<td><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="artRegimen" name="artRegimen" value="TB Regimen" onClick="artRegimenn();" /></td>
 </tr>
 <tr>
 <td class="colA" style="text-align:center">Drug</td>
@@ -82,7 +81,7 @@ newElement.setAttribute("id", "guideDivAdult");
 newElement.innerHTML = htmlText;
 var fieldsArea = document.getElementById('guideDiv');
 fieldsArea.appendChild(newElement);
-var url = "#TB_inline?height=750&width=1150&inlineId=guideDivAdult";
+var url = "#TB_inline?height=750&width=820&inlineId=guideDivAdult";
 tb_show("Guide",url,false);
 }
 else{
@@ -92,7 +91,7 @@ newElement.setAttribute("id", "guideDivChild");
 newElement.innerHTML = htmlText;
 var fieldsArea = document.getElementById('guideDiv');
 fieldsArea.appendChild(newElement);
-var url = "#TB_inline?height=750&width=1350&inlineId=guideDivChild";
+var url = "#TB_inline?height=500&width=840&inlineId=guideDivChild";
 tb_show("Guide",url,false);
 }
 }
@@ -100,26 +99,14 @@ tb_show("Guide",url,false);
 function artRegimenn(){
 jQuery('#artRegimenDiv').empty();
 var age=${patient.age};
-if(age>14){
-var htmlText =  "<img src='${ ui.resourceLink('kenyaui', 'images/glyphs/artRegimen_adultImage.jpg') }' />"
+var htmlText =  "<img src='${ ui.resourceLink('kenyaui', 'images/glyphs/tbRegimen.jpg') }' />"
 var newElement = document.createElement('div');
 newElement.setAttribute("id", "artRegimenDivAdult"); 
 newElement.innerHTML = htmlText;
 var fieldsArea = document.getElementById('artRegimenDiv');
 fieldsArea.appendChild(newElement);
-var url = "#TB_inline?height=700&width=1450&inlineId=artRegimenDivAdult";
+var url = "#TB_inline?height=500&width=1110&inlineId=artRegimenDivAdult";
 tb_show("Art Regimen",url,false);
-}
-else{
-var htmlText =  "<img src='${ ui.resourceLink('kenyaui', 'images/glyphs/artRegimen_childImage.jpg') }' />"
-var newElement = document.createElement('div');
-newElement.setAttribute("id", "artRegimenDivChild"); 
-newElement.innerHTML = htmlText;
-var fieldsArea = document.getElementById('artRegimenDiv');
-fieldsArea.appendChild(newElement);
-var url = "#TB_inline?height=1000&width=1450&inlineId=artRegimenDivChild";
-tb_show("Art Regimen",url,false);
-}
 }
 </script>
 

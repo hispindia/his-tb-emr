@@ -109,7 +109,7 @@ public class RegimenUtilFragmentController {
 		Change,
 		Substitute,
 		Switch,
-		//STOP,
+		Stop,
 		Continue,
 		Restart
 	}
@@ -412,6 +412,24 @@ public class RegimenUtilFragmentController {
 			  }
 			 }
 			}
+			else if(changeType == RegimenChangeType.Stop){
+				OrderService os = Context.getOrderService();
+				
+				List<DrugOrder> toStop = new ArrayList<DrugOrder>(baseline.getDrugOrders());
+				for (DrugOrder o : toStop) {
+					DrugOrderProcessed dop=kenyaEmrService.getDrugOrderProcessed(o);
+					if(dop!=null){
+					dop.setDiscontinuedDate(new Date());
+					kenyaEmrService.saveDrugOrderProcessed(dop);
+					}
+					o.setDiscontinued(true);
+					o.setDiscontinuedDate(date);
+					o.setDiscontinuedBy(Context.getAuthenticatedUser());
+					o.setDiscontinuedReason(changeReason);
+					o.setDiscontinuedReasonNonCoded(changeReasonNonCoded);
+					os.saveOrder(o);
+				}		  
+			 }
 		   }
 			return encounter;
 		}

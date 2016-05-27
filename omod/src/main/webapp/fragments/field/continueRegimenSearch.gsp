@@ -9,7 +9,7 @@
 <tbody>
 <tr>
 <td><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="guide" name="guide" value="Guide" onClick="guideForContinRegimen();" /></td>
-<td><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="artRegimen" name="artRegimen" value="Art Regimen" onClick="artForContinRegimen();" /></td>
+<td><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="artRegimen" name="artRegimen" value="TB Regimen" onClick="artForContinRegimen();" /></td>
 </tr>
 <tr>
 <td class="colA" style="text-align:center">Drug</td>
@@ -58,7 +58,7 @@ newElement.setAttribute("id", "guideDivAdult");
 newElement.innerHTML = htmlText;
 var fieldsArea = document.getElementById('guideDiv');
 fieldsArea.appendChild(newElement);
-var url = "#TB_inline?height=750&width=1150&inlineId=guideDivAdult";
+var url = "#TB_inline?height=750&width=820&inlineId=guideDivAdult";
 tb_show("Guide",url,false);
 }
 else{
@@ -68,7 +68,7 @@ newElement.setAttribute("id", "guideDivChild");
 newElement.innerHTML = htmlText;
 var fieldsArea = document.getElementById('guideDiv');
 fieldsArea.appendChild(newElement);
-var url = "#TB_inline?height=750&width=1350&inlineId=guideDivChild";
+var url = "#TB_inline?height=500&width=840&inlineId=guideDivChild";
 tb_show("Guide",url,false);
 }
 }
@@ -76,26 +76,14 @@ tb_show("Guide",url,false);
 function artForContinRegimen(){
 jQuery('#artRegimenDiv').empty();
 var age=${patient.age};
-if(age>14){
-var htmlText =  "<img src='${ ui.resourceLink('kenyaui', 'images/glyphs/artRegimen_adultImage.jpg') }' />"
+var htmlText =  "<img src='${ ui.resourceLink('kenyaui', 'images/glyphs/tbRegimen.jpg') }' />"
 var newElement = document.createElement('div');
 newElement.setAttribute("id", "artRegimenDivAdult"); 
 newElement.innerHTML = htmlText;
 var fieldsArea = document.getElementById('artRegimenDiv');
 fieldsArea.appendChild(newElement);
-var url = "#TB_inline?height=700&width=1450&inlineId=artRegimenDivAdult";
+var url = "#TB_inline?height=500&width=1110&inlineId=artRegimenDivAdult";
 tb_show("Art Regimen",url,false);
-}
-else{
-var htmlText =  "<img src='${ ui.resourceLink('kenyaui', 'images/glyphs/artRegimen_childImage.jpg') }' />"
-var newElement = document.createElement('div');
-newElement.setAttribute("id", "artRegimenDivChild"); 
-newElement.innerHTML = htmlText;
-var fieldsArea = document.getElementById('artRegimenDiv');
-fieldsArea.appendChild(newElement);
-var url = "#TB_inline?height=1000&width=1450&inlineId=artRegimenDivChild";
-tb_show("Art Regimen",url,false);
-}
 }
 </script>
 

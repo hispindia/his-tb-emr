@@ -44,6 +44,8 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	$('#noOfTablet'+srNo).val(drugKey.noOfTablet);
 	$('#type'+srNo).val(drugKey.type);
 	$('#frequncy'+srNo).val(drugKey.frequency);
+	alert("xxxxxx--- "+drugKey.route);
+	$('#route'+srNo).val(drugKey.route);
 	$('#drugConcept'+srNo).val(drugKey.drugConcept);
 	}
 	

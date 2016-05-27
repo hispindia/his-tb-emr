@@ -250,11 +250,13 @@ public class EmrUtilsFragmentController {
 		    String noOfTablet = props.getProperty(drugNam+".noOfTablet");
 		    String type = props.getProperty(drugNam+".type");
 		    String frequency = props.getProperty(drugNam+".frequency");
+		    String route = props.getProperty(drugNam+".route");
 			
 			conceptNameJson2.put("strength", strength);
-			conceptNameJson2.put("noOfTablet", noOfTablet);
+			//conceptNameJson2.put("noOfTablet", noOfTablet);
 			conceptNameJson2.put("type", type);
 			conceptNameJson2.put("frequency", frequency);
+			conceptNameJson2.put("route", route);
 			conceptNameJsonArray.add(conceptNameJson2);
 		}
 		
