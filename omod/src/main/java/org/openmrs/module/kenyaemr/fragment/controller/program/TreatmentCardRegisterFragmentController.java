@@ -7,15 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.openmrs.Concept;
+import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.Obs;
+import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
+import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
 import org.openmrs.module.kenyaemr.wrapper.EncounterWrapper;
 import org.openmrs.module.kenyaemr.wrapper.PatientWrapper;
 import org.openmrs.module.kenyaemr.wrapper.PersonWrapper;
@@ -28,6 +31,8 @@ public class TreatmentCardRegisterFragmentController {
 			@RequestParam(value = "patientId", required = false) Patient patient,
 			@RequestParam("returnUrl") String returnUrl,
 			FragmentModel model) {
+		
+		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
 		/*
 		 * Constant value across all visit
 		 */
@@ -296,6 +301,84 @@ public class TreatmentCardRegisterFragmentController {
 		
 		
 		model.addAttribute("graphingConcepts", Dictionary.getConcepts(Dictionary.TUBERCULOSIS_TREATMENT_NUMBER, Dictionary.TUBERCULOSIS_DRUG_TREATMENT_START_DATE,Dictionary.TB_FORM_REGIMEN, Dictionary.CURRENT_WHO_STAGE));
+		//ghanshyam
+		Map<Integer, String> regimenList = new HashMap<Integer, String>();
+		Integer regimenIndex = 0;
+		
+		List<DrugOrder> orderList =  Context.getOrderService().getDrugOrdersByPatient(patient);
+		
+		List<Encounter> encounterList =  Context.getEncounterService().getEncounters(patient);
+		for(Encounter en : encounterList ){
+			String regName = "";
+			String regName0 = " ";
+			String regName1 = " ";
+			String regName2 = " ";
+			String regName3 = " ";
+			String regName4 = " ";
+			String regName5 = " ";
+			String regName6 = " ";
+			String regName7 = " ";
+			String regName8 = " ";
+			String regName9 = " ";
+			String regName10 = " ";
+			String regName11 = " ";
+			String regName12 = " ";
+			String changeStopReason = "";
+			if(en.getEncounterType().getUuid().equals("00d1b629-4335-4031-b012-03f8af3231f8")){
+				DrugOrderProcessed drugOrderProcessed=new DrugOrderProcessed();
+				List<Order> orderListByEn =  Context.getOrderService().getOrdersByEncounter(en);
+					for(Order o : orderListByEn){
+						DrugOrder dr = Context.getOrderService().getDrugOrder(o.getOrderId());
+						DrugOrderProcessed dop=kenyaEmrService.getLastDrugOrderProcessed(dr);
+						String regNames=dr.getConcept().getName().getName();
+						String[] doseArray=dop.getDose().split("/");
+						Integer count=0;
+						 for (String druName: regNames.split("-")){
+							if(druName.equals("H")){
+								regName0 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";
+							}
+							else if(druName.equals("R")){
+								regName1 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("Z")){
+								regName2 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("E")){
+								regName3 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("S")){
+								regName4 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("Km")){
+								regName5 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("Am")){
+								regName6 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("Cm")){
+								regName7 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("FQ")){
+								regName8 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("Pto/Eto")){
+								regName9 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("Cs")){
+								regName10 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							else if(druName.equals("PAS")){
+								regName11 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+							}
+							count++;
+						 }
+						 regName=regName0+","+regName1+","+regName2+","+regName3+","+regName4+","+regName5+","+regName6+","+regName7+","+regName8+","+regName9+","+regName10+","+regName11;
+					}
+					regimenList.put(regimenIndex,new SimpleDateFormat("dd-MMMM-yyyy").format(en.getEncounterDatetime()) + ", " +regName  );
+					regimenIndex++;
+				}
+		}
+		model.addAttribute("regimenList", regimenList);
 	}
 	
 	private Obs getLatestObs(Patient patient, String conceptIdentifier) {

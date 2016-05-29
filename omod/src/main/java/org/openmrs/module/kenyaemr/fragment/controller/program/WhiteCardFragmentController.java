@@ -21,6 +21,7 @@ import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
+import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
 import org.openmrs.module.kenyaemr.wrapper.EncounterWrapper;
 import org.openmrs.module.kenyaemr.wrapper.PatientWrapper;
 import org.openmrs.module.kenyaemr.wrapper.PersonWrapper;
@@ -35,6 +36,8 @@ public class WhiteCardFragmentController {
 			@RequestParam("returnUrl") String returnUrl,
 			FragmentModel model) {
 
+		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
+		
 		/*
 		 * Constant value across all visit
 		 */
@@ -689,22 +692,32 @@ public class WhiteCardFragmentController {
 			String regName = "";
 			String changeStopReason = "";
 			if(en.getEncounterType().getUuid().equals("00d1b629-4335-4031-b012-03f8af3231f8")){
+				DrugOrderProcessed drugOrderProcessed=new DrugOrderProcessed();
 				List<Order> orderListByEn =  Context.getOrderService().getOrdersByEncounter(en);
 					for(Order o : orderListByEn){
 						DrugOrder dr = Context.getOrderService().getDrugOrder(o.getOrderId());
+						DrugOrderProcessed dop=kenyaEmrService.getLastDrugOrderProcessed(dr);
 						if(regName.equals("")){
-							regName = regName.concat(dr.getConcept().getName() + "(" + dr.getDose()+dr.getUnits()+" "+dr.getFrequency()+")");	
+							regName = regName.concat(dr.getConcept().getName() + "(" + dop.getDose()+" "+dr.getUnits()+" "+dr.getFrequency()+")");	
 						}
 						else{
-							regName = regName.concat(" + " +dr.getConcept().getName() + "(" + dr.getDose()+dr.getUnits()+" "+dr.getFrequency()+")");
+							regName = regName.concat(" + " +dr.getConcept().getName() + "(" + dop.getDose()+" "+dr.getUnits()+" "+dr.getFrequency()+")");
 						}
 						if(dr.getDiscontinuedReason()!=null){
 							changeStopReason = dr.getDiscontinuedReason().getName().toString();	
 						}
+						if(dop.getRegimenChangeType().equals("Restart")){
+							drugOrderProcessed=dop;	
+						}
 					}
 					
 					if(regName!=""){
-						regimenList.put(regimenIndex,new SimpleDateFormat("dd-MMMM-yyyy").format(en.getDateCreated()) + ", " + changeStopReason+ ", "+ new SimpleDateFormat("dd-MMMM-yyyy").format(en.getDateCreated()) + ", "+regName  );
+						if(drugOrderProcessed.getDrugOrder()!=null){
+							regimenList.put(regimenIndex,new SimpleDateFormat("dd-MMMM-yyyy").format(en.getEncounterDatetime()) + ", " + changeStopReason+ ", "+ new SimpleDateFormat("dd-MMMM-yyyy").format(drugOrderProcessed.getDrugOrder().getStartDate()) + ", "+regName  );
+							}
+							else{
+								regimenList.put(regimenIndex,new SimpleDateFormat("dd-MMMM-yyyy").format(en.getEncounterDatetime()) + ", " + changeStopReason+ ", "+ " "+ ", "+regName  );	
+							}
 						regimenIndex++;
 					}
 				}

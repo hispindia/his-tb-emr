@@ -182,7 +182,57 @@
 				${ ui.includeFragment("kenyaui", "widget/obsHistoryTable", [ id: "tblhistory", patient: currentPatient, concepts: graphingConcepts ]) }
 				</td>
 			</tr> */%>
-
+			
+		<tr>
+  				<td width="100%" colspan="6" valign="top">
+	                <table width="100%" border="1">
+	                	<tr bgcolor="#778899">
+							<td colspan="6">
+								<h4><center><strong>TB Regimen</strong></center></h4>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<table border="1" width="100%">
+									<tr>
+										<th colspan="1"><strong>Date</strong></th>
+										<th colspan="1"><strong>H</strong></th>
+										<th colspan="1"><strong>R</strong></th>
+										<th colspan="1"><strong>Z</strong></th>
+										<th colspan="1"><strong>E</strong></th>
+										<th colspan="1"><strong>S</strong></th>
+										<th colspan="1"><strong>Km</strong></th>
+										<th colspan="1"><strong>Am</strong></th>
+										<th colspan="1"><strong>Cm</strong></th>
+										<th colspan="1"><strong>FQ</strong></th>
+										<th colspan="1"><strong>Pto/Eto</strong></th>
+										<th colspan="1"><strong>Cs</strong></th>
+										<th colspan="1"><strong>PAS</strong></th>
+									</tr>
+									<% for ( rList in regimenList ) {  %>
+										<% def values = rList.value.split (",") %>	
+										<tr>
+											<td><% println  values[0] %> </td>
+											<td><% println  values[1] %> </td>
+											<td><% println  values[2] %> </td>
+											<td><% println  values[3] %> </td>
+											<td><% println  values[4] %> </td>
+											<td><% println  values[5] %> </td>
+											<td><% println  values[6] %> </td>
+											<td><% println  values[7] %> </td>
+											<td><% println  values[8] %> </td>
+											<td><% println  values[9] %> </td>
+											<td><% println  values[10] %> </td>
+											<td><% println  values[11] %> </td>
+											<td><% println  values[12] %> </td>
+										</tr>
+									<% } %>		
+								</table>
+							</td>
+			             </tr>
+			          </table>
+				</td> 
+			</tr>
 		</table>
 </div>
 	<a id="dlink"  style="display:none;"></a>
