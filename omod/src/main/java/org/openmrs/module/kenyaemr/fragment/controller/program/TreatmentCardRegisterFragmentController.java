@@ -335,40 +335,41 @@ public class TreatmentCardRegisterFragmentController {
 						Integer count=0;
 						 for (String druName: regNames.split("-")){
 							if(druName.equals("H")){
-								regName0 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";
+								//regName0 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";
+								regName0 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";
 							}
 							else if(druName.equals("R")){
-								regName1 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName1 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("Z")){
-								regName2 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName2 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("E")){
-								regName3 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName3 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("S")){
-								regName4 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName4 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("Km")){
-								regName5 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName5 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("Am")){
-								regName6 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName6 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("Cm")){
-								regName7 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName7 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("FQ")){
-								regName8 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName8 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("Pto/Eto")){
-								regName9 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName9 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("Cs")){
-								regName10 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName10 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							else if(druName.equals("PAS")){
-								regName11 = druName+"(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
+								regName11 = "(" + doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";	
 							}
 							count++;
 						 }
