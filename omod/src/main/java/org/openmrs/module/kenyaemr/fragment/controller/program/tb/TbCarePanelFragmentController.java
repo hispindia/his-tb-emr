@@ -20,6 +20,7 @@ import org.openmrs.Patient;
 import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
 import org.openmrs.calculation.result.CalculationResult;
+import org.openmrs.calculation.result.CalculationResultMap;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.calculation.EmrCalculationUtils;
 import org.openmrs.module.kenyaemr.regimen.RegimenManager;
@@ -82,7 +83,6 @@ public class TbCarePanelFragmentController {
 */
 //		Dictionary.SPUTUM_SMEAR_TEST,
 //		Dictionary.CULTURE_SOLID, Dictionary.CULTURE_LIQUID
-	
 		
 		List<Obs> sputumSmear = getAllLatestObs(patient, Dictionary.SPUTUM_SMEAR_TEST);
 		List<Obs> cultureSolid = getAllLatestObs(patient, Dictionary.CULTURE_SOLID);
@@ -92,7 +92,7 @@ public class TbCarePanelFragmentController {
 		List<Visit> visitList = Context.getVisitService().getVisitsByPatient(patient);
 		
 		Map<Integer, String> smearCultureIndexList = new HashMap<Integer, String>();
-		Integer visitIndex = 0;
+		Integer visitIndex = visitList.size();
 		if (visitList != null) {
 			for (Visit v : visitList) {
 				String sputumSmearVal = "";
@@ -128,10 +128,9 @@ public class TbCarePanelFragmentController {
 						}
 					}
 				}
-
+				visitIndex--;
 				String val = visitDate + ", " + sputumSmearVal+ ", " + cultureVal ;
 				smearCultureIndexList.put(visitIndex, val);
-				visitIndex++;
 			}
 		}
 //		for(int i=visitIndex;i< 24; i++){
