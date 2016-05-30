@@ -30,7 +30,7 @@
 
 	<label class="ke-field-label">Township</label>
 	<span class="ke-field-content">
-		<input type="text" name="township" ng-model="township" ng-change="updateSearch()" style="width: 260px" />
+		<input type="text" id="township" name="township" ng-model="township" ng-change="updateSearch()" style="width: 260px" />
 	</span>
 
 	<input type="button" value="Search" ng-click="updateSearch();"/>

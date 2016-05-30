@@ -19,6 +19,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Cohort;
@@ -31,6 +32,7 @@ import org.openmrs.Obs;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.Person;
+import org.openmrs.PersonAddress;
 import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.db.DAOException;
@@ -401,5 +403,10 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 		criteria.add(Restrictions.eq("answerConcept", answerConcept));
 		return criteria.list();
 	}
-
+	
+	public List<PersonAddress> getPatientsByTownship(String township) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAddress.class,"personAddress");
+		criteria.add(Restrictions.ilike("countyDistrict", township+"%"));
+		return criteria.list();
+	}
 }

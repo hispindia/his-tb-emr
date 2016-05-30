@@ -30,6 +30,7 @@ import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.Person;
+import org.openmrs.PersonAddress;
 import org.openmrs.Visit;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.kenyaemr.model.DrugInfo;
@@ -147,4 +148,5 @@ public interface KenyaEmrService extends OpenmrsService {
 	public DrugInfo getDrugInfo(String drugCode);
 	public DrugOrderProcessed getLastRegimenChangeType(Patient patient);
 	public List<ConceptAnswer> getConceptAnswerByAnsweConcept(Concept answerConcept);
+	public List<PersonAddress> getPatientsByTownship(String township);
 }

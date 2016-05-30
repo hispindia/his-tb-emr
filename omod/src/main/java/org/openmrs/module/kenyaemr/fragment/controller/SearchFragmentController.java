@@ -44,6 +44,7 @@ import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.Person;
+import org.openmrs.PersonAddress;
 import org.openmrs.Provider;
 import org.openmrs.User;
 import org.openmrs.Visit;
@@ -207,10 +208,11 @@ public class SearchFragmentController {
 			@RequestParam(value = "date", required = false) String date,
 			@RequestParam(value = "q", required = false) String query,
 			@RequestParam(value = "which", required = false, defaultValue = "all") String which,
-			@RequestParam(value = "township", required = false) String township,
+			@RequestParam(value = "townShip", required = false) String townShip,
 			@RequestParam(value = "page", required = false) String page,
 			UiUtils ui) {
 		// log.error("info search patient query: " +query);
+		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
 		
 		Date scheduledDate = null;
 		try {
@@ -270,6 +272,18 @@ public class SearchFragmentController {
 				}
 			}
 		}
+		
+        if (StringUtils.isNotEmpty(townShip)) {
+        	matched=new ArrayList<Patient>();
+        	List<PersonAddress> listPersonAddress=kenyaEmrService.getPatientsByTownship(townShip);
+        	for(PersonAddress personAddress:listPersonAddress){
+        		Patient patient=Context.getPatientService().getPatientOrPromotePerson(personAddress.getPerson().getPersonId());
+        		matched.add(patient);
+        	}	
+		}
+        else{
+        	matched=matched;	
+        }
 
 		List<SimpleObject> simplePatients = new ArrayList<SimpleObject>();
 
@@ -325,7 +339,8 @@ public class SearchFragmentController {
 				simplePatients.add(so);
 
 			}
-		} else {
+		}
+		else {
 			// Simplify and attach active visits to patient objects
 			for (Patient patient : matched) {
 				SimpleObject simplePatient = ui.simplifyObject(patient);
