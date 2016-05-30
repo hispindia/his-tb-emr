@@ -3,7 +3,7 @@
 
 %>
 
-<div ng-controller="DrugCtrl" data-ng-init="init()">
+<div id="continueRegimenSearch" ng-controller="DrugCtrl" data-ng-init="init()">
 
 <table>
 <tbody>

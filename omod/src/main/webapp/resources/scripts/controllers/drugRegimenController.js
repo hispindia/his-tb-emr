@@ -40,6 +40,7 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	//$scope.strength = $scope[drugKey].strength;
 	//$scope.strength = $scope.drugKey.strength;
 	var srNo=choice.srNo;
+	jQuery('#continueRegimenSearch').empty();
 	$('#strength'+srNo).val(drugKey.strength);
 	$('#noOfTablet'+srNo).val(drugKey.noOfTablet);
 	$('#type'+srNo).val(drugKey.type);
