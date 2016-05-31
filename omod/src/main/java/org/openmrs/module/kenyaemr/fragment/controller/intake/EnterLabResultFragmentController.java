@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -73,7 +74,7 @@ public class EnterLabResultFragmentController {
 
 		List<TestObject> listTests = null;
 		if (encounter != null) {
-			listTests = new ArrayList<EnterLabResultFragmentController.TestObject>();
+			listTests = new LinkedList<EnterLabResultFragmentController.TestObject>();
 
 			String[] strs = { "163586", "163587", "163588", "163589", "163590",
 					"163591", "139060", "149710", "122765", "134486" };
@@ -108,16 +109,31 @@ public class EnterLabResultFragmentController {
 				}
 			}
 
+			Obs obss=new Obs();
 			for (Obs obs : encounter.getAllObs()) {
 				if (obs.getValueCoded() != null) {
 					TestObject test = new TestObject(obs, visit.getPatient());
 					if (resultEncounter != null) {
 						test.setResult(listResultObs);
 					}
+					
+					if(!test.name.equals("CXR")){
 					listTests.add(test);
+					}
+					else{
+						obss=obs;
+					}
 				}
 			}
+			if(obss.getObsId()!=null)
+			{
+			TestObject test = new TestObject(obss, visit.getPatient());
+			listTests.add(test);
+			}
+			
 		}
+	
+	    
 		model.addAttribute("listTests", listTests);
 		model.addAttribute("confirmed", resultEncounter != null
 				&& resultEncounter.isVoided() ? true : false);
@@ -352,6 +368,7 @@ public class EnterLabResultFragmentController {
 			this.obs = obs;
 			this.concept = obs.getValueCoded();
 			this.conceptId = concept.getConceptId();
+			System.out.println("hgjg"+concept.getConceptId());
 			if (concept.getDatatype().isNumeric()) {
 				ConceptNumeric cn = Context.getConceptService()
 						.getConceptNumeric(conceptId);

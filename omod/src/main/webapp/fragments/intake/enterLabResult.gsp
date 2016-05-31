@@ -17,9 +17,9 @@ No record found.
 <th><b>No.</b></th>
 <th><b>Lab Test</b></th>
 <th><b>Test Result</b></th>
-<th>Unit</th>
-<th><b>Reference Range</b></th>
-<th><b>Comment</b></th>
+<th >Unit</th>
+<th ><b>Reference Range</b></th>
+<th ><b>Comment</b></th>
 </tr>
 </thead>
 <% listTests.eachWithIndex { test , count -> %>
@@ -29,8 +29,8 @@ No record found.
 	<tr class="ke-stack-item ke-navigable" border="1"> 
 	<td>${count+1}</td>
 	<td>
-		<input type="text" id="${test.obs.obsId}"  size="40" value="${test.name}" alt="${test.name}" disabled>
-		<input type="hidden" name="conceptIds" value="${test.conceptId}"/>
+		<table style="text-align:right"><input style='width: 190px;height: 30px;' type="text" id="${test.obs.obsId}"  size="40" value="${test.name}" alt="${test.name}" disabled>
+		<input type="hidden" name="conceptIds" value="${test.conceptId}"/></table>
 	</td> 
 	<% if (test.isRadioloy) { %>
 		<td >
@@ -40,17 +40,19 @@ No record found.
 		</table>
 		</td>
 	<% } else if (test.hasAnswers){ %> 
-		<td  style="text-align:right">
-			<select id="${test.conceptId}_valueDropdown" size="1" name="${test.conceptId}_valueDropdown" value="${test.valueDropdown}">
+		<td>
+		<table style="text-align:right">
+			<select style='width: 190px;height: 20px;' id="${test.conceptId}_valueDropdown" size="1" name="${test.conceptId}_valueDropdown" value="${test.valueDropdown}">
 				<option value=""></option>
 				<option ${ (test.valueDropdown=='703') ? 'selected="true"' : '' } value="703">Positive</option>
 				<option ${ (test.valueDropdown=='664') ? 'selected="true"' : '' } value="664">Negative</option>
 			</select>
+			</table>
 		</td>
-		
 	<% } else if (test.conceptId==12){ %> 	
-		<td  style="text-align:right">
-			<table border="1">
+		
+		<td colspan="4" >
+			<table  border="1">
 				<tr>
 					<td></td><td>Findings</td><td>Impressions</td>
 				</tr>
@@ -64,7 +66,7 @@ No record found.
 							<tr>
 								<td>Upper zone</td>
 								<td>
-									<select id="163586_valueDropdown" value="" name="163586_valueDropdown" size="1">
+									<select style='width: 190px;height: 20px;' id="163586_valueDropdown" value="" name="163586_valueDropdown" size="1">
 										<option value=""></option>
 										<option ${ (vd163586=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
 										<option ${ (vd163586=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
@@ -78,7 +80,7 @@ No record found.
 									</select>
 								</td>
 								<td>
-									<select id="163589_valueDropdown" value="" name="163589_valueDropdown" size="1">
+									<select style='width: 190px;height: 20px;' id="163589_valueDropdown" value="" name="163589_valueDropdown" size="1">
 										<option value=""></option>
 										<option ${ (vd163589=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
 										<option ${ (vd163589=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
@@ -95,7 +97,7 @@ No record found.
 							<tr>
 								<td>Middle zone</td>
 								<td>
-									<select id="163587_valueDropdown" value="" name="163587_valueDropdown" size="1">
+									<select style='width: 190px;height: 20px;' id="163587_valueDropdown" value="" name="163587_valueDropdown" size="1">
 										<option value=""></option>
 										<option ${ (vd163587=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
 										<option ${ (vd163587=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
@@ -109,7 +111,7 @@ No record found.
 									</select>
 								</td>
 								<td>
-									<select id="163590_valueDropdown" value="" name="163590_valueDropdown" size="1">
+									<select style='width: 190px;height: 20px;' id="163590_valueDropdown" value="" name="163590_valueDropdown" size="1">
 										<option value=""></option>
 										<option ${ (vd163590=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
 										<option ${ (vd163590=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
@@ -126,7 +128,7 @@ No record found.
 							<tr>
 								<td>Lower zone</td>
 								<td>
-									<select id="163588_valueDropdown" value="" name="163588_valueDropdown" size="1">
+									<select style='width: 190px;height: 20px;' id="163588_valueDropdown" value="" name="163588_valueDropdown" size="1">
 										<option value=""></option>
 										<option ${ (vd163588=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
 										<option ${ (vd163588=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
@@ -140,7 +142,7 @@ No record found.
 									</select>
 								</td>
 								<td>
-									<select id="163591_valueDropdown" value="" name="163591_valueDropdown" size="1">
+									<select style='width: 190px;height: 20px;' id="163591_valueDropdown" value="" name="163591_valueDropdown" size="1">
 										<option value=""></option>
 										<option ${ (vd163591=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
 										<option ${ (vd163591=='163526') ? 'selected="true"' : '' } value="163526">Cavity(ies)</option>
@@ -157,7 +159,7 @@ No record found.
 						</table>
 					</td>
 					<td>
-						<select id="139060_valueDropdown" value="" name="139060_valueDropdown" size="1">
+						<select style='width: 190px;height: 20px;' id="139060_valueDropdown" value="" name="139060_valueDropdown" size="1">
 							<option value=""></option>
 							<option ${ (vd139060=='163550') ? 'selected="true"' : '' } value="163550">COPD</option>
 							<option ${ (vd139060=='130002') ? 'selected="true"' : '' } value="130002">Pneumonia/ pneumonitis</option>
@@ -177,7 +179,7 @@ No record found.
 				<tr>
 					<td>Heart</td>
 					<td>
-						<select id="149710_valueDropdown" value="" name="149710_valueDropdown" size="1">
+						<select style='width: 190px;height: 20px;' id="149710_valueDropdown" value="" name="149710_valueDropdown" size="1">
 							<option value=""></option>
 							<option ${ (vd149710=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
 							<option ${ (vd149710=='5158') ? 'selected="true"' : '' } value="5158">Cardiomegaly</option>
@@ -190,7 +192,7 @@ No record found.
 				<tr>
 					<td>Bone</td>
 					<td>
-						<select id="122765_valueDropdown" value="" name="122765_valueDropdown" size="1">
+						<select style='width: 190px;height: 20px;' id="122765_valueDropdown" value="" name="122765_valueDropdown" size="1">
 							<option value=""></option>
 							<option ${ (vd122765=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
 							<option ${ (vd122765=='163531') ? 'selected="true"' : '' } value="163531">Pott's spine (TB spine)</option>
@@ -201,7 +203,7 @@ No record found.
 				<tr>
 					<td>Mediastinum</td>
 					<td>
-						<select id="134486_valueDropdown" value="" name="134486_valueDropdown" size="1">
+						<select style='width: 190px;height: 20px;' id="134486_valueDropdown" value="" name="134486_valueDropdown" size="1">
 							<option value=""></option>
 							<option ${ (vd134486=='163525') ? 'selected="true"' : '' } value="163525">NAD</option>
 							<option ${ (vd134486=='111873') ? 'selected="true"' : '' } value="111873">Lymphadenopathy</option>
@@ -211,8 +213,10 @@ No record found.
 				</tr>
 			</table>
 		</td>
-	<% } else{ %> 
-		<td style="text-align:right"><input type="text" id="${test.conceptId}_value" name="${test.conceptId}_value" size="15" value="${test.result}"  onblur="calculateComment(${test.conceptId})"></td>
+		
+<% } else{ %> 
+
+		<td><table style="text-align:right"><input style='width: 190px;height: 30px;' type="text" id="${test.conceptId}_value" name="${test.conceptId}_value" size="15" value="${test.result}"  onblur="calculateComment(${test.conceptId})"></table></td>
 		<td ><input disabled type="text" size="10" value="${test.units}"/></td>
 		<td><input disabled id="${test.conceptId}_range" size="10" type="text" value="${test.range}"/></td>
 		<td><input disabled id="${test.conceptId}_comment" class="comment" size="15" type="text" value=""/></td>
@@ -220,10 +224,10 @@ No record found.
 			<td> Creatinine clearance  rate :  
 				<input disabled id="${test.conceptId}_rate" class="comment" size="15" type="text" value=""/>
 			</td>
-		<% } %>
-	<% } %>
 	
+	<% } %>
 	</tr>
+<% } %>
 <% } %>
 </table> 
 </br>
