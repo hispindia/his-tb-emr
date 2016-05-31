@@ -93,8 +93,6 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 			boolean treatmentFailure = false;
 			boolean obsSmearPositive=false;
 			boolean obsCulturePositive=false;
-			boolean obsSolidCulturePositive=false;
-			boolean obsLiquidCulturePositive=false;
 			
 			int positiveCount = 0;
 			Patient patient = Context.getPatientService().getPatient(ptId);
@@ -103,15 +101,28 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 
 				List<Obs> obsSmear = Context.getObsService()
 						.getObservationsByPersonAndConcept(patient, tbSputumSmearTest);
+				List<Obs> obs = Context.getObsService()
+						.getObservationsByPerson(patient);
 				List<Obs> obsCulture = Context.getObsService()
 						.getObservationsByPersonAndConcept(patient, tbSputumCultureTest);
+				
 				List<Obs> obsSolidCulture = Context.getObsService()
 						.getObservationsByPersonAndConcept(patient, solidCulture);
 				List<Obs> obsLiquidCulture = Context.getObsService()
 						.getObservationsByPersonAndConcept(patient, liquidCulture);
-
+				List<Obs> requiredObs = new LinkedList<Obs>();
+				
+				for (Obs o : obs) 
+				{
+					if (o.getConcept().equals(tbSputumCultureTest)||o.getConcept().equals(solidCulture)||o.getConcept().equals(liquidCulture)) 
+					{
+						requiredObs.add(o);
+					}
+				}
+				
+				 
 				for (Obs o : obsSmear) {
-					if(positiveCount > 7){
+					if(positiveCount > 5){
 						obsSmearPositive=true;
 						break;
 					}
@@ -126,9 +137,13 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 					}
 				}
 				
+				 
+				
 				positiveCount = 0;
-				for (Obs o : obsCulture) {
-					if(positiveCount > 7){
+				for (Obs o : requiredObs) {
+					
+					
+					if(positiveCount > 5){
 						obsCulturePositive=true;
 						break;
 					}
@@ -141,41 +156,17 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 						}
 						break;
 					}
+				
+					}
+			
+				
+				
+				
+				if(obsCulturePositive==true||obsSmearPositive==true)
+				{ 
+					treatmentFailure=true;
 				}
 				
-				positiveCount = 0;
-				for (Obs o : obsSolidCulture) {
-					if(positiveCount > 7){
-						obsSolidCulturePositive=true;
-						break;
-					}
-					else if(o.getValueCoded().equals(positive)){
-						positiveCount++;
-					}
-					else if(o.getValueCoded().equals(negative)){
-						if(positiveCount>1){
-							obsSolidCulturePositive=true;
-						}
-						break;
-					}
-				}
-				
-				positiveCount = 0;
-				for (Obs o : obsLiquidCulture) {
-					if(positiveCount > 7){
-						obsLiquidCulturePositive=true;
-						break;
-					}
-					else if(o.getValueCoded().equals(positive)){
-						positiveCount++;
-					}
-					else if(o.getValueCoded().equals(negative)){
-						if(positiveCount>1){
-							obsLiquidCulturePositive=true;
-						}
-						break;
-					}
-				}
 				
 			}
 			/*
