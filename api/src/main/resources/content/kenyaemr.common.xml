@@ -45,6 +45,17 @@
 				<ref bean="kenyaemr.tb.report.hepatitiscpositive" />
 				<ref bean="kenyaemr.tb.report.needsCultureTest" />
 				<ref bean="kenyaemr.tb.report.treatmentfailure" />
+				<ref bean="kenyaemr.tb.report.nottosubmitcommittee" />
+				<ref bean="kenyaemr.tb.report.rejectedcommittee" />
+				<ref bean="kenyaemr.tb.report.pregnancystatus" />
+				<ref bean="kenyaemr.tb.report.artstarted"/>
+				<ref bean="kenyaemr.tb.report.cptstarted"/>
+				<ref bean="kenyaemr.tb.report.drugsideeffect"/>
+				<ref bean="kenyaemr.tb.report.refusedtaketreatment"/>
+				<ref bean="kenyaemr.tb.report.failedCatI"/>
+				<ref bean="kenyaemr.tb.report.failedCatII"/>
+				<ref bean="kenyaemr.tb.report.failedMDRTBtreatment"/>
+				
 	 	<!--
 				<ref bean="kenyaemr.common.report.moh711" />
 				<ref bean="kenyaemr.common.report.artDrug" />
@@ -437,6 +448,83 @@
 		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>	
+	<bean id="kenyaemr.tb.report.nottosubmitcommittee" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="daca0786-3b82-4ec4-846b-f422182249b2" />
+		<property name="name" value="Patients who have not been submitted to MDR-TB committee" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.MDRTbNotSubmittedCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.rejectedcommittee" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="d6bab8fa-0609-46c2-8403-6f336b0b8fd1" />
+		<property name="name" value="Patients who have been rejected by MDR-TB committee" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.MDRTbRejectedCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+		<bean id="kenyaemr.tb.report.pregnancystatus" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="6e51a4e9-ea63-48ff-a4c5-ca6187cb4c3d" />
+		<property name="name" value="List of pregnant patients" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbPatientPregnantCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+			<bean id="kenyaemr.tb.report.artstarted" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="f4cf79d6-4ba3-4123-bb77-1dc99013a8ae" />
+		<property name="name" value="Patient taking ART" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbPatientsARTCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+			<bean id="kenyaemr.tb.report.cptstarted" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="2f6bc69c-7117-4145-9a42-e07fe9d24a04" />
+		<property name="name" value="Patient taking CPT" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbPatientsCPTCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.drugsideeffect" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="731d15c2-8a1b-441e-89e9-cfc47bc81cb7" />
+		<property name="name" value="Patients list by drug side effect" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientDrugSideeffectCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	
+	<bean id="kenyaemr.tb.report.refusedtaketreatment" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="4b0be4da-be71-4a68-88f8-8d3bd7f79ae0" />
+		<property name="name" value="Patients who refused to take treatment (before MDR-TB treatment)" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientRefusedTreatmentCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.failedCatI" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="b3df478d-f0e7-40af-9915-d1d0aa5b9cc3" />
+		<property name="name" value="Patients who failed Cat-I treatment" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientFailedCatICalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	
+		<bean id="kenyaemr.tb.report.failedCatII" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="44f0f7e3-4acc-407d-9fec-9234f63fa6ac" />
+		<property name="name" value="Patients who failed Cat-II treatment" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientFailedCatIICalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	
+		<bean id="kenyaemr.tb.report.failedMDRTBtreatment" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="d949a74e-fcab-4228-a085-2401d61537af" />
+		<property name="name" value="Patients who failed MDR-TB treatment" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientfailedMDRTBCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	
+		
+	
+	
 	
 	<!--
 	
