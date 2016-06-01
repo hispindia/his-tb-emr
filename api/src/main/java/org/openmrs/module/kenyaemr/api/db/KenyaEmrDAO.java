@@ -73,4 +73,5 @@ public interface KenyaEmrDAO {
 	public DrugOrderProcessed getLastRegimenChangeType(Patient patient);
 	public List<ConceptAnswer> getConceptAnswerByAnsweConcept(Concept answerConcept);
 	public List<PersonAddress> getPatientsByTownship(String township);
+	public List<Obs> getObsByScheduledDate(Date date);
 }

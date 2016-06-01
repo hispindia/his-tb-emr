@@ -211,23 +211,20 @@ public class SearchFragmentController {
 			@RequestParam(value = "townShip", required = false) String townShip,
 			@RequestParam(value = "page", required = false) String page,
 			UiUtils ui) {
-		// log.error("info search patient query: " +query);
+
 		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
 		
+		SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat(
+				"MM/dd/yyyy HH:mm:ss");
 		Date scheduledDate = null;
+		if(!date.equals("")){
 		try {
-			scheduledDate = parseDate(date);
+			scheduledDate = mysqlDateTimeFormatter.parse(date+" "+"00:00:00");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// Return empty list if we don't have enough input to search on
-		if (StringUtils.isBlank(query) && "all".equals(which)
-				&& StringUtils.isBlank(date)) {
-			return Collections.emptyList();
 		}
-
+		
 		// Run main patient search query based on id/name
 		List<Patient> matchedByNameOrID = Context.getPatientService()
 				.getPatients(query);
@@ -248,10 +245,13 @@ public class SearchFragmentController {
 		// of checked in patients
 		if (StringUtils.isBlank(query) && "checked-in".equals(which)) {
 			matched.addAll(patientActiveVisits.keySet());
-			Collections.sort(matched, new PersonByNameComparator()); // Sort by
-																		// person
-																		// name
-		} else {
+			Collections.sort(matched, new PersonByNameComparator()); // Sort by	person name
+		}
+		else if (StringUtils.isBlank(query) && "all".equals(which)) {
+			matched = matchedByNameOrID;
+			Collections.sort(matched, new PersonByNameComparator()); // Sort by	person name
+		} 
+		else {
 			if ("all".equals(which)) {
 				matched = matchedByNameOrID;
 			} else if ("checked-in".equals(which)) {
@@ -273,76 +273,45 @@ public class SearchFragmentController {
 			}
 		}
 		
-        if (StringUtils.isNotEmpty(townShip)) {
-        	matched=new ArrayList<Patient>();
-        	List<PersonAddress> listPersonAddress=kenyaEmrService.getPatientsByTownship(townShip);
+		Set<Patient> searchedPatients=new LinkedHashSet<Patient>();
+		if (StringUtils.isNotEmpty(townShip) && StringUtils.isNotEmpty(date)) {
+			List<PersonAddress> listPersonAddress=new ArrayList<PersonAddress>();
+			if(!townShip.equals("")){
+        	listPersonAddress=kenyaEmrService.getPatientsByTownship(townShip);
+			}
+        	List<Obs> obsList=kenyaEmrService.getObsByScheduledDate(scheduledDate);
         	for(PersonAddress personAddress:listPersonAddress){
         		Patient patient=Context.getPatientService().getPatientOrPromotePerson(personAddress.getPerson().getPersonId());
-        		matched.add(patient);
+        		searchedPatients.add(patient);
+        	}
+        	for(Obs obs:obsList){
+        		searchedPatients.add(obs.getPatient());
         	}	
 		}
+        else if(StringUtils.isNotEmpty(townShip) || StringUtils.isNotEmpty(date)){
+        	List<PersonAddress> listPersonAddress=new ArrayList<PersonAddress>();
+        	if(!townShip.equals("")){
+        	listPersonAddress=kenyaEmrService.getPatientsByTownship(townShip);
+        	}
+        	List<Obs> obsList=kenyaEmrService.getObsByScheduledDate(scheduledDate);
+        	for(PersonAddress personAddress:listPersonAddress){
+        		Patient patient=Context.getPatientService().getPatientOrPromotePerson(personAddress.getPerson().getPersonId());
+        		searchedPatients.add(patient);
+        	}
+        	for(Obs obs:obsList){
+        		searchedPatients.add(obs.getPatient());
+        	}		
+        }
         else{
-        	matched=matched;	
+        	for(Patient match:matched){
+    			searchedPatients.add(match);	
+    		}	
         }
 
 		List<SimpleObject> simplePatients = new ArrayList<SimpleObject>();
 
-		// query by scheduled date
-		if (StringUtils.isNotEmpty(date)) {
-			PatientCalculationService cs = Context
-					.getService(PatientCalculationService.class);
-			Set<Integer> allPatients = new HashSet<Integer>();
-			if (!matched.isEmpty()) {
-				for (Patient p : matched) {
-					allPatients.add(p.getPatientId());
-				}
-			} else {
-				allPatients = Context.getPatientSetService().getAllPatients()
-						.getMemberIds();
-			}
-
-			Map<String, Object> params = new HashMap<String, Object>();
-
-			params.put("date", scheduledDate);
-
-			PatientCalculationContext calcContext = cs
-					.createCalculationContext();
-
-			Set<Integer> scheduled = CalculationUtils.patientsThatPass(cs
-					.evaluate(allPatients,
-							new ScheduledVisitOnDayCalculation(), params,
-							calcContext));
-
-			CalculationResultMap actual = cs.evaluate(scheduled,
-					new VisitsOnDayCalculation(), params, calcContext);
-
-			// Sort patients and convert to simple objects
-			List<Patient> scheduledPatients = Context.getPatientSetService()
-					.getPatients(scheduled);
-
-			Collections.sort(scheduledPatients, new PersonByNameComparator());
-
-			simplePatients = new ArrayList<SimpleObject>();
-
-			for (Patient p : scheduledPatients) {
-
-				SimpleObject so = ui.simplifyObject(p);
-
-				ListResult visitsResult = (ListResult) actual.get(p
-						.getPatientId());
-
-				List<Visit> visits = CalculationUtils
-						.extractResultValues(visitsResult);
-
-				so.put("visits", ui.simplifyCollection(visits));
-
-				simplePatients.add(so);
-
-			}
-		}
-		else {
 			// Simplify and attach active visits to patient objects
-			for (Patient patient : matched) {
+			for (Patient patient : searchedPatients) {
 				SimpleObject simplePatient = ui.simplifyObject(patient);
 				
 				/*
@@ -390,7 +359,6 @@ public class SearchFragmentController {
 					simplePatients.add(simplePatient);
 				}
 			}
-		}
 
 	//	System.out.println(simplePatients);
 		return simplePatients;

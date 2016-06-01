@@ -35,12 +35,7 @@ kenyaemrApp.service('PatientService2', function ($rootScope) {
 	 * Broadcasts new patient search parameters
 	 */
 	this.updateSearch = function(query, which, date,townShip) {
-		if(which!="scheudled"){
-			$rootScope.$broadcast('patient-search2', { query: query, which: which,townShip:townShip});
-		}
-		else{
-			$rootScope.$broadcast('patient-search2', { query: query, which: which, date: date,townShip:townShip });
-		}
+	$rootScope.$broadcast('patient-search2', { query: query, which: which, date: date,townShip:townShip });
 
 	};
 });
@@ -104,7 +99,7 @@ kenyaemrApp.controller('PatientSearchForm2', ['$scope', 'PatientService2', funct
 	};
 
 	$scope.updateSearch = function() {
-		var scheduledDate = jQuery("#scheduledDate").val();
+		var scheduledDate = jQuery("#date").val();
 		console.debug(scheduledDate);
 		var townShip = jQuery("#township").val();
 		patientService.updateSearch($scope.query, $scope.which, scheduledDate,townShip);

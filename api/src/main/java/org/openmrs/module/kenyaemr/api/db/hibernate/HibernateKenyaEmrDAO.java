@@ -409,4 +409,11 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 		criteria.add(Restrictions.ilike("countyDistrict", township+"%"));
 		return criteria.list();
 	}
+	
+	public List<Obs> getObsByScheduledDate(Date date) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Obs.class,"obs");
+		criteria.add(Restrictions.eq("concept", Context.getConceptService().getConceptByUuid("5096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
+		criteria.add(Restrictions.eq("valueDatetime", date));
+		return criteria.list();
+	}
 }

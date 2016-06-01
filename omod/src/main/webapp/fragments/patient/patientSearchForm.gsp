@@ -13,9 +13,6 @@
 		<input type="radio" ng-model="which" ng-change="updateSearch()" value="all" /> All
 		&nbsp;&nbsp;
 		<input type="radio" ng-model="which" ng-change="updateSearch()" value="checked-in" /> Only Checked In
-		&nbsp;&nbsp;
-		<br><br>
-		<input type="radio" ng-model="which" ng-change="updateSearch()" value="scheduled" /> Scheduled Patients
 	</span>
 
 	<label class="ke-field-label">Patient ID or Name (3 chars min)</label>
@@ -25,13 +22,25 @@
 	
 	<label class="ke-field-label">Scheduled Date</label>
 	<span class="ke-field-content">
-		${ ui.includeFragment("kenyaui", "field/java.util.Date" ,[id:'scheduledDate',  formFieldName:'date', showTime: false])}
+		<input type="text" id="date" name="date" ng-model="date" ng-change="updateSearch()" style="width: 260px" />
+		<script type="text/javascript">
+                        jQuery(document).ready(function () {
+                            jQuery('#date').datepicker({
+                                showAnim: 'blind'
+                            });
+                        });
+                    </script>
 	</span>
 
 	<label class="ke-field-label">Township</label>
 	<span class="ke-field-content">
 		<input type="text" id="township" name="township" ng-model="township" ng-change="updateSearch()" style="width: 260px" />
 	</span>
-
-	<input type="button" value="Search" ng-click="updateSearch();"/>
 </form>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+
+});
+	
+</script>

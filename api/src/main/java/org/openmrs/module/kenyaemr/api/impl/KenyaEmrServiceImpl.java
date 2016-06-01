@@ -419,4 +419,8 @@ public class KenyaEmrServiceImpl extends BaseOpenmrsService implements KenyaEmrS
 	public List<PersonAddress> getPatientsByTownship(String township){
 		return dao.getPatientsByTownship(township);
 	}
+	
+	public List<Obs> getObsByScheduledDate(Date date){
+		return dao.getObsByScheduledDate(date);
+	}
 }
