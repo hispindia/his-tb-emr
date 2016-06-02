@@ -1,6 +1,7 @@
 package org.openmrs.module.kenyaemr.fragment.controller.program;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,9 +19,15 @@ import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
+import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
+import org.openmrs.module.kenyaemr.regimen.RegimenChange;
+import org.openmrs.module.kenyaemr.regimen.RegimenChangeHistory;
+import org.openmrs.module.kenyaemr.regimen.RegimenManager;
+import org.openmrs.module.kenyaemr.regimen.RegimenOrder;
 import org.openmrs.module.kenyaemr.wrapper.EncounterWrapper;
 import org.openmrs.module.kenyaemr.wrapper.PatientWrapper;
 import org.openmrs.module.kenyaemr.wrapper.PersonWrapper;
+import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,11 +35,13 @@ public class TbRegisterFragmentController {
 	public void controller(
 			@RequestParam(value = "patientId", required = false) Person person,
 			@RequestParam(value = "patientId", required = false) Patient patient,
-			@RequestParam("returnUrl") String returnUrl,
+			@RequestParam("returnUrl") String returnUrl,@SpringBean RegimenManager regimenManager,
 			FragmentModel model) {
 		/*
 		 * Constant value across all visit
 		 */
+		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
+		
 		model.addAttribute("returnUrl", returnUrl);
 		model.addAttribute("patientName", person.getGivenName());
 		model.addAttribute("patientAge", person.getAge());
@@ -323,6 +332,16 @@ public class TbRegisterFragmentController {
 							cultureDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getObsDatetime());
 						}
 					}
+				}
+				
+				String category="TB";
+				Concept masterSet = regimenManager.getMasterSetConcept(category);
+				RegimenChangeHistory history = RegimenChangeHistory.forPatient(patient, masterSet);
+				RegimenChange lastChange = history.getLastChange();
+				RegimenOrder baseline = lastChange != null ? lastChange.getStarted() : null;
+				List<DrugOrder> drugOrders = new ArrayList<DrugOrder>(baseline.getDrugOrders());
+				for (DrugOrder drugOrder : drugOrders){
+					DrugOrderProcessed dop=kenyaEmrService.getLastDrugOrderProcessed(drugOrder);	
 				}
 
 				String val = visitDate + ", " + sputumSmearVal+ ", " + sputumSmearDateVal + ", " + cultureVal+", "+cultureDateVal ;

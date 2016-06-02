@@ -119,7 +119,7 @@
 		<comment>
 		</comment>
 		<sql>
-		CREATE TABLE IF NOT EXISTS drug_info (drug_info_id integer not null auto_increment,drug_name varchar(50),drug_code varchar(5),toxicity varchar(300),risk_factor varchar(300),suggested_management varchar(300),drug_interaction varchar(300),suggested_management_interaction varchar(300),primary key (drug_info_id));
+		CREATE TABLE IF NOT EXISTS drug_info (drug_info_id integer not null auto_increment,drug_name varchar(50),drug_code varchar(5),adverse_effect varchar(900),primary key (drug_info_id));
 		</sql>
 	</changeSet>
 	

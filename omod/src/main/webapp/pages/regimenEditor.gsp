@@ -246,6 +246,27 @@
 			<% } %>
 
 			<% if (allowRestart) { %>
+			<fieldset id="restart-regim" class="regimen-action-form" style="display: none">
+				<legend>Restart Regimen</legend>
+
+				${ ui.includeFragment("kenyaui", "widget/form", [
+					fragmentProvider: "kenyaemr",
+					fragment: "regimenUtil",
+					action: "changeRegimen",
+					fields: [
+							[ hiddenInputName: "patient", value: currentPatient.id ],
+							[ hiddenInputName: "changeType", value: "Restart" ],
+							[ hiddenInputName: "category", value: category ],
+							changeDateField("Restart date"),
+							regimenField()
+					],
+					submitLabel: "Save",
+					successCallbacks: [ "ui.reloadPage();" ],
+					cancelLabel: "Cancel",
+					cancelFunction: "cancelAction"
+				]) }
+			</fieldset>
+			
 			<fieldset id="restart-regimen" class="regimen-action-form" style="display: none">
 				<legend>Restart Regimen</legend>
 

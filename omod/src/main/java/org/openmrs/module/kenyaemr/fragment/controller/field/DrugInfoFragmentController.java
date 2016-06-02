@@ -14,24 +14,16 @@ public class DrugInfoFragmentController {
 	JSONObject drugsInfoDetailsJson = new JSONObject();
 	JSONArray drugsInfoDetailsJsonArray = new JSONArray();
 	KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
-	   for (String drugCode: drugCodes.split("/")){
+	   for (String drugCode: drugCodes.split("-")){
 		   JSONObject drugInfoDetailsJson = new JSONObject();
 		   DrugInfo drugInfo=kenyaEmrService.getDrugInfo(drugCode);  
 		   if(drugInfo!=null){
-			   drugInfoDetailsJson.put("drugName", drugInfo.getDrugName());
-			   drugInfoDetailsJson.put("toxicity", drugInfo.getToxicity());
-			   drugInfoDetailsJson.put("riskFactor", drugInfo.getRiskFactor());
-			   drugInfoDetailsJson.put("suggestedManagement", drugInfo.getSuggestedManagement());
-			   drugInfoDetailsJson.put("drugInteraction", drugInfo.getDrugInteraction());
-			   drugInfoDetailsJson.put("suggestedManagementInteraction", drugInfo.getSuggestedManagementInteraction());
+			   drugInfoDetailsJson.put("drugCode", drugInfo.getDrugCode());
+			   drugInfoDetailsJson.put("adverseEffect", drugInfo.getAdverseEffect());
 				}
 				else{
-					drugInfoDetailsJson.put("drugName", "");
-					drugInfoDetailsJson.put("toxicity", "");
-					drugInfoDetailsJson.put("riskFactor", "");
-					drugInfoDetailsJson.put("suggestedManagement", "");
-					drugInfoDetailsJson.put("drugInteraction", "");
-					drugInfoDetailsJson.put("suggestedManagementInteraction", "");
+					drugInfoDetailsJson.put("drugCode", "");
+					drugInfoDetailsJson.put("adverseEffect", "");
 				}
 		   drugsInfoDetailsJsonArray.add(drugInfoDetailsJson);
 	   }

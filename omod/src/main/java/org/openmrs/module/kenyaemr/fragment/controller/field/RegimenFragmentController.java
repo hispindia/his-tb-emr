@@ -60,7 +60,7 @@ public class RegimenFragmentController {
 		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
 		Map<String, DrugInfo> drugInfoMap = new LinkedHashMap<String, DrugInfo>();
 		for(DrugInfo drugInfo:kenyaEmrService.getDrugInfo()){
-			drugInfoMap.put(drugInfo.getDrugName().toString(), drugInfo);
+			//drugInfoMap.put(drugInfo.getDrugName().toString(), drugInfo);
 		}
 		
 		model.addAttribute("maxComponents", 5);

@@ -57,22 +57,10 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
         var htmlText =  "<table style='width: 100%'>"
         +"<tr>"
         +"<th>"
-        +"Drug Name&nbsp;"
+        +"Drug Code&nbsp;"
         +"</th>"
         +"<th>"
-        +'Toxicity&nbsp;'
-        +"</th>"
-        +"<th>"
-        +"Risk Factor&nbsp;"
-        +"</th>"
-        +"<th>"
-        +"Suggested Management&nbsp;"
-        +"</th>"
-        +"<th>"
-        +"Drug Interaction&nbsp;"
-        +"</th>"
-        +"<th>"
-        +'Suggested Management Interaction'
+        +'Adverse Effect&nbsp;'
         +"</th>"
         +"</tr>"
 
@@ -82,22 +70,10 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
             	htmlText=htmlText
             	 +"<tr>"
             	 +"<td>"
-                 +this.drugName
+                 +this.drugCode
                  +"</td>"
                  +"<td>"
-                 +this.toxicity
-                 +"</td>"
-                 +"<td>"
-                 +this.riskFactor
-                 +"</td>"
-                 +"<td>"
-                 +this.suggestedManagement
-                 +"</td>"
-                 +"<td>"
-                 +this.drugInteraction
-                 +"</td>"
-                 +"<td>"
-                 +this.suggestedManagementInteraction
+                 +this.adverseEffect
                  +"</td>"
                  +"</tr>"
             });
@@ -121,22 +97,10 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
         var htmlText =  "<table style='width: 100%'>"
         +"<tr>"
         +"<th>"
-        +"Drug Name&nbsp;"
+        +"Drug Code&nbsp;"
         +"</th>"
         +"<th>"
-        +'Toxicity&nbsp;'
-        +"</th>"
-        +"<th>"
-        +"Risk Factor&nbsp;"
-        +"</th>"
-        +"<th>"
-        +"Suggested Management&nbsp;"
-        +"</th>"
-        +"<th>"
-        +"Drug Interaction&nbsp;"
-        +"</th>"
-        +"<th>"
-        +'Suggested Management Interaction'
+        +'Adverse Effect&nbsp;'
         +"</th>"
         +"</tr>"
 
@@ -146,22 +110,10 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
             	htmlText=htmlText
             	 +"<tr>"
             	 +"<td>"
-                 +this.drugName
+                 +this.drugCode
                  +"</td>"
                  +"<td>"
-                 +this.toxicity
-                 +"</td>"
-                 +"<td>"
-                 +this.riskFactor
-                 +"</td>"
-                 +"<td>"
-                 +this.suggestedManagement
-                 +"</td>"
-                 +"<td>"
-                 +this.drugInteraction
-                 +"</td>"
-                 +"<td>"
-                 +this.suggestedManagementInteraction
+                 +this.adverseEffect
                  +"</td>"
                  +"</tr>"
             });
