@@ -103,86 +103,180 @@ input[type=text] {
 			});
 			
 			jq("#w58,#w60,#w62,#w64,#w66,#w68,#w70,#w72,#w74,#w76").change(function() {
-					if(document.getElementById(this.id).value==111177 ){
-						alert("Please check ANTIBIOTICS is included in the regimen.");
-					}
-					
-					if(document.getElementById(this.id).value==135842 || document.getElementById(this.id).value==113654 || document.getElementById(this.id).value==163547|| document.getElementById(this.id).value==136162){
-						alert("Please check LINEZOLID is included in the regimen.");
-					}
-					
-					if(document.getElementById(this.id).value==163517 ){
-						alert("Please check Pto/Eto,Gfx is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==163518){
-						alert("Please check Pto/Eto is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==117321 || document.getElementById(this.id).value==142412){
-						alert("Please check Pto/Eto, PAS is included in the regimen.");
-					}
-
-					if(document.getElementById(this.id).value==121681){
-						alert("Please check H, Eto/Pto is included in the regimen.");
-					}
-					
-					
-					if(document.getElementById(this.id).value==116986|| document.getElementById(this.id).value==163519 || document.getElementById(this.id).value==136443){
-						alert("Please check Z, H, R, Pto/Eto, and PAS is included in the regimen.");
-					}
-
-
-					if(document.getElementById(this.id).value==133473){
-						alert("Please check Eto/Pto, PAS, H, E, Z, AMX/CLV, Cfz is included in the regimen.");
-					}
-
-		
-					if(document.getElementById(this.id).value==110834 ||document.getElementById(this.id).value==151){
-						alert("Please check PAS, Eto, Pto, Cfz, FQs, H, E, and Z is included in the regimen.");
-					}
-
-					if(document.getElementById(this.id).value==134255){
-						alert("Please check Eto/Pto, Clr, FQs is included in the regimen.");
-					}
-
-					if(document.getElementById(this.id).value==80){
-						alert("Please check Z, Fluoroquinolones is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==163520){
-						alert("Please check Fluoroquinolones  is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==117762){
-						alert("Please check Z  is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==163521||document.getElementById(this.id).value==113338||document.getElementById(this.id).value==163522){
-						alert("Please check S, Km, Am, Cm  is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==117698){
-						alert("Please check S, Km, Am, Cm, Clr  is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==163548){
-						alert("Please check S, Km, Am, Cm, Cs, FQs, H Eto, Lzd  is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==118983){
-						alert("Please check Cs, Lzd, H, S, Km, Cm, H, Fluoroquinolones, Pto/Eto, E  is included in the regimen.");
-					}
-					
-					if(document.getElementById(this.id).value==162313 || document.getElementById(this.id).value==155190){
-						alert("Please check Cs, H, FQs  is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==119537 ){
-						alert("Please check Cs, fluoroquinolones, H, Eto/Pto  is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==125562)
-					{
-						alert("Please check Cs, H, Eto/Pto  is included in the regimen.");
-					}
-					if(document.getElementById(this.id).value==114736 ||document.getElementById(this.id).value==111164)
-						{
-						alert("Please check E, Eto/Pto, Lzd, Cfz, rifabutin, H, S  is included in the regimen.");
+				    
+				    if(document.getElementById(this.id).value==134255){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+				    	jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Abnormalmetallic taste134255.jpg')" />" width="654" height="161" /&gt;');
+						var url = "#TB_inline?width=679;height=186;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+					    }
+				    
+				    if(document.getElementById(this.id).value==121681){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Alopecia121681.jpg')" />" width="653" height="180" /&gt;');
+						var url = "#TB_inline?width=678;height=205;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+					    }
+				    
+				    if(document.getElementById(this.id).value==135842){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Anaemiared cell aplasia 163547.jpg')" />" width="800" height="322" /&gt;');
+						var url = "#TB_inline?width=825;height=347;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
 						}
-					if(document.getElementById(this.id).value==128384)
-						{
-						alert("Please check FQs is included in the regimen.");
+				    
+				    if(document.getElementById(this.id).value==148888){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Anaphylaxis148888.jpg')" />" width="2000" height="1500" /&gt;');
+						var url = "#TB_inline?width=2025;height=1525;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    //
+				    if(document.getElementById(this.id).value==80){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Arthralgia80.jpg')" />" width="800" height="547" /&gt;');
+						var url = "#TB_inline?width=825;height=572;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==119537){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Depression119537.jpg')" />" width="650" height="505" /&gt;');
+						var url = "#TB_inline?width=675;height=530;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==142412){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Diarrheo and or flatulence142412.jpg')" />" width="2000" height="1500" /&gt;');
+						var url = "#TB_inline?width=2025;height=1525;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==163517){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Dysglycemia and hyperglycemia163517.jpg')" />" width="800" height="196" /&gt;');
+						var url = "#TB_inline?width=825;height=221;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==163521){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Electrolyte disturbances163521.jpg')" />" width="800" height="440" /&gt;');
+						var url = "#TB_inline?width=825;height=465;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==110834 && document.getElementById(this.id).value==151){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Gastritis and abdominal pain 110834,151.jpg')" />" width="1177" height="886" /&gt;');
+						var url = "#TB_inline?width=1202;height=911;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==163518){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Gyenaecomastia163518.jpg')" />" width="648" height="162" /&gt;');
+						var url = "#TB_inline?width=673;height=187;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==116986){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Hepatitis116986.jpg')" />" width="1024" height="366" /&gt;');
+						var url = "#TB_inline?width=1049;height=1525;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==117321){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/hypothyroidism117321.jpg')" />" width="800" height="549" /&gt;');
+						var url = "#TB_inline?width=825;height=574;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==136162){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Lactic acidosis136162.jpg')" />" width="800" height="159" /&gt;');
+						var url = "#TB_inline?width=825;height=184;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==133473){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Nausea and vomitting133473.jpg')" />" width="800" height="554" /&gt;');
+						var url = "#TB_inline?width=825;height=579;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==163522){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Nephrotoxicity163522.jpg')" />" width="800" height="461" /&gt;');
+						var url = "#TB_inline?width=825;height=486;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==114736){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Optic neuritis114736.jpg')" />" width="645" height="207" /&gt;');
+						var url = "#TB_inline?width=670;height=232;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==118983){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Peripheral neuropathy118983.jpg')" />" width="653" height="553" /&gt;');
+						var url = "#TB_inline?width=678;height=578;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==128185){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Psychotic symptoms128185.jpg')" />" width="649" height="702" /&gt;');
+						var url = "#TB_inline?width=674;height=727;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==128384){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/QT prolongation128384.jpg')" />" width="2000" height="1500" /&gt;');
+						var url = "#TB_inline?width=2025;height=1525;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==155190){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Seizures155190.jpg')" />" width="960" height="720" /&gt;');
+						var url = "#TB_inline?width=985;height=745;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==125562){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Suicidal Ideation125562.jpg')" />" width="645" height="265" /&gt;');
+						var url = "#TB_inline?width=670;height=290;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==111177){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Superficial fungal infection111177.jpg')" />" width="800" height="660" /&gt;');
+						var url = "#TB_inline?width=825;height=685;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==163520){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Tendonitis and tendon rupture163520.jpg')" />" width="645" height="334" /&gt;');
+						var url = "#TB_inline?width=670;height=359;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
+						}
+				    
+				    if(document.getElementById(this.id).value==163548){
+						jQuery('#guideDivAdultForTbScreeningg').empty();
+						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Vestibular toxicity163548.jpg')" />" width="643" height="545" /&gt;');
+						var url = "#TB_inline?width=668;height=570;inlineId=guideDivAdultForTbScreeningg";
+						tb_show("WHO Clinical Stage",url,false);
 						}
 					
 			});
@@ -567,6 +661,8 @@ input[type=text] {
 	</fieldset>
 
 </div>
+
+<div id="guideDivAdultForTbScreeningg" style="visibility:hidden;"></div>
 
 <div class="ke-form-footer">
 	<submit />
