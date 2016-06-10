@@ -167,7 +167,7 @@ input[type=text] {
 						tb_show("WHO Clinical Stage",url,false);
 						}
 				    
-				    if(document.getElementById(this.id).value==110834 && document.getElementById(this.id).value==151){
+				    if(document.getElementById(this.id).value==110834 || document.getElementById(this.id).value==151){
 						jQuery('#guideDivAdultForTbScreeningg').empty();
 						jq('#guideDivAdultForTbScreeningg').html('&lt;img src="<lookup expression="ui.resourceLink('kenyaui', '/images/glyphs/Gastritis and abdominal pain 110834,151.jpg')" />" width="1177" height="886" /&gt;');
 						var url = "#TB_inline?width=1202;height=911;inlineId=guideDivAdultForTbScreeningg";
