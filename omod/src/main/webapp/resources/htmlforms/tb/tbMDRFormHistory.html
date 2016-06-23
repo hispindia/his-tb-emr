@@ -13,6 +13,24 @@
 -->
 <htmlform> <script type="text/javascript">
 		jq(document).ready(function () {
+			
+			if (getValue('decision.value') == 163496){ 
+			jq('#notinitate :input').prop('disabled', false);	
+			jq('#other_regional :input').prop('disabled', false);	
+			jq('#next_date :input').prop('disabled', false);
+		}
+		else {
+			jq('#notinitate :input').prop('disabled', true);	
+			jq('#other_regional :input').prop('disabled', true);
+			jq('#next_date :input').prop('disabled', true);
+		}
+		  if (getValue('notinitate.value') == 5622){ 
+		  jq('#other_regional :input').prop('disabled', false);					
+	                 }
+	      else {
+		  jq('#other_regional :input').prop('disabled', true);					
+	       }
+          
 			if (getValue('therapySelection.value') == 163505) {
 				jq('#therapyName :input').prop('disabled', false);
 				if (getValue('therapyName.value') == 5622){
@@ -51,6 +69,33 @@
 					jq('#otherReason :input').prop('disabled', true);					
 				}
 			});
+			
+			jq("#decision").change(function() { 
+				if (getValue('decision.value') == 163496){ 
+					jq('#notinitate :input').prop('disabled', false);	
+					jq('#next_date :input').prop('disabled', false);
+					if (getValue('notinitate.value') == 5622){ 
+						  jq('#other_regional :input').prop('disabled', false);					
+					                 }
+					      else {
+						  jq('#other_regional :input').prop('disabled', true);					
+					       }
+				          
+				}
+				else {
+					jq('#notinitate :input').prop('disabled', true);	
+					jq('#other_regional :input').prop('disabled', true);	
+					jq('#next_date :input').prop('disabled', true);
+				}
+			});
+			jq("#notinitate").change(function() { 
+				if (getValue('notinitate.value') == 5622){ 
+					jq('#other_regional :input').prop('disabled', false);					
+				}
+				else {
+					jq('#other_regional :input').prop('disabled', true);					
+				}
+			});
 	/*		
 			if (getValue('alcohol.value') == 1066) {
 				jq('#alcoholType :input').prop('disabled', true);
@@ -74,7 +119,7 @@
 			fieldIndex = 26; 
 			j=1;
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 4){
-				//alert(document.getElementById("w"+38).value);
+				
 				jQuery('#'+j+'-toggleContainer').show();   
 				fieldIndex=fieldIndex+10;
 				if(document.getElementById("w"+fieldIndex).value != '')
@@ -253,15 +298,15 @@ input[type=button], button {
 							</td>
 							<td valign="top"><obs
 									conceptId="92f96cb4-1ffe-4d1b-bdae-b848cc135fe3"
-									style="dropdown" /></td>
+									style="dropdown" id="decision" /></td>
 							<td valign="top"><obs
 									conceptId="361d0d95-1d74-4e02-a678-d3ebf5dff7cb"
-									style="dropdown" /></td>
+									style="dropdown"  id="notinitate" /></td>
 							<td valign="top"><obs
-									conceptId="133863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+									conceptId="133863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  id="other_regional"/></td>
 							<td valign="top"><obs
 									conceptId="116314AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									allowFutureDates="true" /></td>
+									allowFutureDates="true" id="next_date"/></td>
 							<td><button id="{n}-addEntry" class="addEntry">Add</button>
 								<button id="{n}-removeEntry" class="removeEntry">Remove</button>
 							</td>
