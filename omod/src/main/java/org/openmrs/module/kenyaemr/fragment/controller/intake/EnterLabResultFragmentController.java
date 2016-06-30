@@ -81,10 +81,12 @@ public class EnterLabResultFragmentController {
 			Boolean isChestXRay = false;
 			List<String> ch = new ArrayList<String>();
 			for (Obs obs : encounter.getAllObs()) {
+				if(obs.getValueCoded()!=null){
 				if (obs.getValueCoded().toString().equals("12")) {
 					isChestXRay = true;
 					ch.addAll(Arrays.asList(strs));
 				}
+			  }
 			}
 			if (isChestXRay && listResultObs != null) {
 				for (Obs resultVal : listResultObs) {
@@ -368,7 +370,6 @@ public class EnterLabResultFragmentController {
 			this.obs = obs;
 			this.concept = obs.getValueCoded();
 			this.conceptId = concept.getConceptId();
-			System.out.println("hgjg"+concept.getConceptId());
 			if (concept.getDatatype().isNumeric()) {
 				ConceptNumeric cn = Context.getConceptService()
 						.getConceptNumeric(conceptId);

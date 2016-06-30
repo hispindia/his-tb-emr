@@ -102,7 +102,9 @@ public class TbCarePanelFragmentController {
 				if (sputumSmear != null) {
 					for (Obs obs : sputumSmear) {
 						if (obs.getEncounter().getVisit().equals(v)) {
+							if(obs.getValueCoded()!=null){
 							sputumSmearVal = obs.getValueCoded().getName().toString();
+							}
 						}
 					}
 				}
@@ -124,7 +126,9 @@ public class TbCarePanelFragmentController {
 				else if(cultureSputum != null){
 					for (Obs obs : cultureSputum) {
 						if (obs.getEncounter().getVisit().equals(v)) {
+							if(obs.getValueCoded()!=null){
 							cultureVal = obs.getValueCoded().getName().toString();
+							}
 						}
 					}
 				}
