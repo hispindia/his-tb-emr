@@ -463,7 +463,7 @@ public class EditPatientFragmentController {
 				previousRegimenStartDateType = savedPreviousRegimenStartDateType.getValueCoded();
 			}
 			
-			savedPreviousTBOutcome = getLatestObs(patient, Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+			savedPreviousTBOutcome = getLatestObs(patient, Dictionary.PREVIOUS_TREATMENT_OUTCOME);
 			if(savedPreviousTBOutcome!=null){
 				previousTBOutcome = savedPreviousTBOutcome.getValueCoded();
 				previousTBOutcomeDate = savedPreviousTBOutcome.getValueDate();
