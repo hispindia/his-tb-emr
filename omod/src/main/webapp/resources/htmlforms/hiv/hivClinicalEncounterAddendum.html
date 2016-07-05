@@ -343,11 +343,22 @@ input[type=text] {
 			// show fields with data 
 			fieldIndex = 8; 
 			j=1;
+			if(document.getElementById("w"+fieldIndex))
+				{
 			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 11){
 				jQuery('#'+j+'-toggleContainer').show();   
 				fieldIndex=fieldIndex+2;
+				if(document.getElementById("w"+fieldIndex)!=null){ 
+					if(document.getElementById("w"+fieldIndex).value != '')
+						{ 
+					
+					$j('#'+j+'-removeEntry').toggle(false);
+					$j('#'+j+'-addEntry').toggle(false);
+						}
+				}
 				j++;
 			}
+				}
 			
 	
 			$j('#1-removeEntry').remove();
@@ -375,12 +386,23 @@ input[type=text] {
 			
 			
 			// show fields with data 
-			fieldIndex1 = 36; 
+			fieldIndex1 = 44; 
 			count=1;
+			if(document.getElementById("w"+fieldIndex1))
+			{
 			while(document.getElementById("w"+fieldIndex1).value!="" &amp;&amp; count &lt; 11){
 				jQuery('#'+count+'-toggleContainer1').show();   
 				fieldIndex1=fieldIndex1+2;
+				if(document.getElementById("w"+fieldIndex1)!=null){ 
+					if(document.getElementById("w"+fieldIndex1).value != '')
+						{ 
+					
+					$j('#'+count+'-removeEntry1').toggle(false);
+					$j('#'+count+'-addEntry1').toggle(false);
+						}
+				}
 				count++;
+			}
 			}
 			
 			$j('#1-removeEntry1').remove();
@@ -408,14 +430,24 @@ input[type=text] {
 			
 			
 			// show fields with data 
-			fieldIndex2 = 54; 
+			fieldIndex2 =54; 
 			count2=1;
+			if(document.getElementById("w"+fieldIndex2))
+			{
 			while(document.getElementById("w"+fieldIndex2).value!="" &amp;&amp; count &lt; 11){
 				jQuery('#'+count2+'-toggleContainer2').show();   
-				fieldIndex1=fieldIndex1+2;
+				fieldIndex2=fieldIndex2+2;
+				if(document.getElementById("w"+fieldIndex2)!=null){ 
+					if(document.getElementById("w"+fieldIndex2).value != '')
+						{ 
+					
+					$j('#'+count2+'-removeEntry2').toggle(false);
+					$j('#'+count2+'-addEntry2').toggle(false);
+						}
+				}
 				count2++;
 			}
-			
+			}
 			$j('#1-removeEntry2').remove();
 			$j('#10-addEntry2').remove();
 			$j('#1-toggleContainer2').show();
