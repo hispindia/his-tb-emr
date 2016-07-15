@@ -15,6 +15,7 @@
 				<td width="60%" valign="top">
 					${ ui.includeFragment("kenyaemr", "patient/patientSummary", [ patient: currentPatient ]) }
 					${ ui.includeFragment("kenyaemr", "patient/patientChart", [ patient: currentPatient ]) }
+					${ ui.includeFragment("kenyaemr", "program/hiv/hivCarePanel", [ patient: currentPatient, complete: false, activeOnly: false ]) }	
 					${ ui.includeFragment("kenyaemr", "program/tb/tbCarePanel", [ patient: currentPatient, complete: false, activeOnly: false ]) }	
 				</td>
 				<td width="20%" valign="top" style="padding-left: 5px">
