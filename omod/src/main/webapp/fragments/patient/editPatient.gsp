@@ -491,12 +491,14 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 					<% if (config.returnUrl) { %>
 					ui.navigate('${ config.returnUrl }');
 					<% } else { %>
-					
+
+   					 returnURL = 'registration/registrationViewPatient'+ '.page?patientId='+data.id;
+ 					 var formLink = ui.pageLink("kenyaemr", "enterForm", {patientId: data.id, formUuid:'7efa0ee0-6617-4cd7-8310-9f95dfee7a82', appId: 'kenyaemr.registration', returnUrl: returnURL });
 					 if (document.getElementById('checkInType').value==1) { 
-						ui.navigate('kenyaemr', 'registration/registrationViewPatient', { patientId: data.id });
+					 	ui.navigate(formLink);
 						} else { 
-						ui.navigate('kenyaemr', 'registration/registrationViewPatient', { patientId: data.id });
-					 } 
+						ui.navigate(formLink);
+						} 
 					<% } %>
 				} else {
 					kenyaui.notifyError('Saving patient was successful, but unexpected response');
