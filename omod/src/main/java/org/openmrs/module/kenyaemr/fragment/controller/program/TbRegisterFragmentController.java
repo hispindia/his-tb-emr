@@ -35,13 +35,14 @@ public class TbRegisterFragmentController {
 	public void controller(
 			@RequestParam(value = "patientId", required = false) Person person,
 			@RequestParam(value = "patientId", required = false) Patient patient,
-			@RequestParam("returnUrl") String returnUrl,@SpringBean RegimenManager regimenManager,
-			FragmentModel model) {
+			@RequestParam("returnUrl") String returnUrl,
+			@SpringBean RegimenManager regimenManager, FragmentModel model) {
 		/*
 		 * Constant value across all visit
 		 */
-		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
-		
+		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context
+				.getService(KenyaEmrService.class);
+
 		model.addAttribute("returnUrl", returnUrl);
 		model.addAttribute("patientName", person.getGivenName());
 		model.addAttribute("patientAge", person.getAge());
@@ -55,103 +56,115 @@ public class TbRegisterFragmentController {
 
 		model.addAttribute("patientWrap", wrapperPatient);
 		model.addAttribute("personWrap", wrapperPerson);
-		
-		PatientIdentifier mdrTBRegistrationId = patient.getPatientIdentifier(Context.getPatientService().getPatientIdentifierTypeByUuid("d8ee3b8c-a8fc-4d6b-af6a-9423be5f8906"));
-		if(mdrTBRegistrationId!=null){
+
+		PatientIdentifier mdrTBRegistrationId = patient
+				.getPatientIdentifier(Context.getPatientService()
+						.getPatientIdentifierTypeByUuid(
+								"d8ee3b8c-a8fc-4d6b-af6a-9423be5f8906"));
+		if (mdrTBRegistrationId != null) {
 			model.addAttribute("mdrTBRegistrationNumber", mdrTBRegistrationId);
-		}
-		else{
+		} else {
 			model.addAttribute("mdrTBRegistrationNumber", null);
 		}
-		
+
 		String registrationGroupVal = "";
-		Obs registrationGroup = getLatestObs(patient, Dictionary.REGISTRATION_GROUP);
+		Obs registrationGroup = getLatestObs(patient,
+				Dictionary.REGISTRATION_GROUP);
 		if (registrationGroup != null) {
-			registrationGroupVal = registrationGroup.getValueCoded().getName().toString();
+			registrationGroupVal = registrationGroup.getValueCoded().getName()
+					.toString();
 		}
 		model.addAttribute("registrationGroup", registrationGroupVal);
-		
+
 		String registrationDateVal = "";
-		Obs registrationDate = getLatestObs(patient, Dictionary.MDR_TB_RGISTRATION_DATE);
+		Obs registrationDate = getLatestObs(patient,
+				Dictionary.MDR_TB_RGISTRATION_DATE);
 		if (registrationDate != null) {
-			registrationDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(registrationDate.getValueDate());
+			registrationDateVal = new SimpleDateFormat("dd-MMMM-yyyy")
+					.format(registrationDate.getValueDate());
 		}
 		model.addAttribute("registrationDateVal", registrationDateVal);
-		
+
 		String hivTestVal = "";
 		Obs hivTest = getLatestObs(patient, Dictionary.HIV_TEST);
 		if (hivTest != null) {
 			hivTestVal = hivTest.getValueCoded().getName().toString();
 		}
-		model.addAttribute("hivTestVal", hivTestVal);		
-		
+		model.addAttribute("hivTestVal", hivTestVal);
+
 		String hivTestDateVal = "";
 		Obs hivTestDate = getLatestObs(patient, Dictionary.HIV_TEST_DATE);
 		if (hivTestDate != null) {
-			hivTestDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(hivTestDate.getValueDate());
+			hivTestDateVal = new SimpleDateFormat("dd-MMMM-yyyy")
+					.format(hivTestDate.getValueDate());
 		}
 		model.addAttribute("hivTestDateVal", hivTestDateVal);
-		
+
 		String hivTestResultVal = "";
 		Obs hivTestResult = getLatestObs(patient, Dictionary.RESULT_OF_HIV_TEST);
 		if (hivTestResult != null) {
-			hivTestResultVal = hivTestResult.getValueCoded().getName().toString();
+			hivTestResultVal = hivTestResult.getValueCoded().getName()
+					.toString();
 		}
-		model.addAttribute("hivTestResultVal", hivTestResultVal);		
-		
+		model.addAttribute("hivTestResultVal", hivTestResultVal);
+
 		String artStartedVal = "";
 		Obs artStarted = getLatestObs(patient, Dictionary.ART_STARTED);
 		if (artStarted != null) {
 			artStartedVal = artStarted.getValueCoded().getName().toString();
 		}
-		model.addAttribute("artStartedVal", artStartedVal);		
-		
+		model.addAttribute("artStartedVal", artStartedVal);
+
 		String cptStartedVal = "";
 		Obs cptStarted = getLatestObs(patient, Dictionary.CPT_STARTED);
 		if (cptStarted != null) {
 			artStartedVal = cptStarted.getValueCoded().getName().toString();
 		}
-		model.addAttribute("cptStartedVal", cptStartedVal);		
-		
+		model.addAttribute("cptStartedVal", cptStartedVal);
+
 		String artStartDateVal = "";
 		Obs artStartDate = getLatestObs(patient, Dictionary.ART_STARTED_DATE);
 		if (artStartDate != null) {
-			artStartDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(artStartDate.getValueDate());
+			artStartDateVal = new SimpleDateFormat("dd-MMMM-yyyy")
+					.format(artStartDate.getValueDate());
 		}
 		model.addAttribute("artStartDateVal", artStartDateVal);
-		
+
 		String cptStartDateVal = "";
 		Obs cptStartDate = getLatestObs(patient, Dictionary.INFANT_CPT_DATE);
 		if (cptStartDate != null) {
-			cptStartDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(cptStartDate.getValueDate());
+			cptStartDateVal = new SimpleDateFormat("dd-MMMM-yyyy")
+					.format(cptStartDate.getValueDate());
 		}
 		model.addAttribute("cptStartDateVal", cptStartDateVal);
-		
 
 		/*
 		 * Culture and DST History
 		 */
-		
+
 		Obs cultureDstDetail = getAllLatestObs(patient,
 				Dictionary.CULTURE_DRUG_GROUP);
-		Obs cultureDstDate = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_DATE);
+		Obs cultureDstDate = getAllLatestObs(patient,
+				Dictionary.CULTURE_DRUG_DATE);
 		Obs cultureDstS = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_S);
 		Obs cultureDstH = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_H);
 		Obs cultureDstR = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_R);
 		Obs cultureDstE = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_E);
-		Obs cultureDstPtoEto = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_PTO_ETO);
+		Obs cultureDstPtoEto = getAllLatestObs(patient,
+				Dictionary.CULTURE_DRUG_PTO_ETO);
 		Obs cultureDstCM = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_CM);
-		Obs cultureDstKmAmk = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_KM_AMK);
-		Obs cultureDstOther = getAllLatestObs(patient, Dictionary.OTHER_NON_CODED);
+		Obs cultureDstKmAmk = getAllLatestObs(patient,
+				Dictionary.CULTURE_DRUG_KM_AMK);
+		Obs cultureDstOther = getAllLatestObs(patient,
+				Dictionary.OTHER_NON_CODED);
 
-		
 		Map<Integer, String> cultureDstList = new HashMap<Integer, String>();
 		Integer cultureDstIndex = 0;
 		if (cultureDstDetail != null) {
 			EncounterWrapper wrappedObsGroup = new EncounterWrapper(
 					cultureDstDetail.getEncounter());
-			List<Obs> obsGroupList = wrappedObsGroup
-					.allObs(cultureDstDetail.getConcept());
+			List<Obs> obsGroupList = wrappedObsGroup.allObs(cultureDstDetail
+					.getConcept());
 			for (Obs obsG : obsGroupList) {
 				String cultureDstDateVal = "";
 				String cultureDstSVal = "";
@@ -162,14 +175,16 @@ public class TbRegisterFragmentController {
 				String cultureDstCMVal = "";
 				String cultureDstKmAmkVal = "";
 				String cultureDstOtherVal = "";
-				
+
 				if (cultureDstDate != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
 							cultureDstDate.getEncounter());
-					List<Obs> obsList = wrapped.allObs(cultureDstDate.getConcept());
+					List<Obs> obsList = wrapped.allObs(cultureDstDate
+							.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
-							cultureDstDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getValueDate());
+							cultureDstDateVal = new SimpleDateFormat(
+									"dd-MMMM-yyyy").format(obs.getValueDate());
 						}
 					}
 				}
@@ -177,7 +192,8 @@ public class TbRegisterFragmentController {
 				if (cultureDstS != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
 							cultureDstS.getEncounter());
-					List<Obs> obsList = wrapped.allObs(cultureDstS.getConcept());
+					List<Obs> obsList = wrapped
+							.allObs(cultureDstS.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
 							cultureDstSVal = cultureDstSVal.concat(obs
@@ -189,7 +205,8 @@ public class TbRegisterFragmentController {
 				if (cultureDstH != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
 							cultureDstH.getEncounter());
-					List<Obs> obsList = wrapped.allObs(cultureDstH.getConcept());
+					List<Obs> obsList = wrapped
+							.allObs(cultureDstH.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
 							cultureDstHVal = cultureDstHVal.concat(obs
@@ -197,11 +214,12 @@ public class TbRegisterFragmentController {
 						}
 					}
 				}
-				
+
 				if (cultureDstR != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
 							cultureDstR.getEncounter());
-					List<Obs> obsList = wrapped.allObs(cultureDstR.getConcept());
+					List<Obs> obsList = wrapped
+							.allObs(cultureDstR.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
 							cultureDstRVal = cultureDstRVal.concat(obs
@@ -213,7 +231,8 @@ public class TbRegisterFragmentController {
 				if (cultureDstE != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
 							cultureDstE.getEncounter());
-					List<Obs> obsList = wrapped.allObs(cultureDstE.getConcept());
+					List<Obs> obsList = wrapped
+							.allObs(cultureDstE.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
 							cultureDstEVal = cultureDstEVal.concat(obs
@@ -221,23 +240,26 @@ public class TbRegisterFragmentController {
 						}
 					}
 				}
-				
+
 				if (cultureDstPtoEto != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
 							cultureDstPtoEto.getEncounter());
-					List<Obs> obsList = wrapped.allObs(cultureDstPtoEto.getConcept());
+					List<Obs> obsList = wrapped.allObs(cultureDstPtoEto
+							.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
-							cultureDstPtoEtoVal = cultureDstPtoEtoVal.concat(obs
-									.getValueCoded().getName().toString());
+							cultureDstPtoEtoVal = cultureDstPtoEtoVal
+									.concat(obs.getValueCoded().getName()
+											.toString());
 						}
 					}
 				}
-				
+
 				if (cultureDstCM != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
 							cultureDstCM.getEncounter());
-					List<Obs> obsList = wrapped.allObs(cultureDstCM.getConcept());
+					List<Obs> obsList = wrapped.allObs(cultureDstCM
+							.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
 							cultureDstCMVal = cultureDstCMVal.concat(obs
@@ -245,11 +267,12 @@ public class TbRegisterFragmentController {
 						}
 					}
 				}
-				
+
 				if (cultureDstKmAmk != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
 							cultureDstKmAmk.getEncounter());
-					List<Obs> obsList = wrapped.allObs(cultureDstKmAmk.getConcept());
+					List<Obs> obsList = wrapped.allObs(cultureDstKmAmk
+							.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
 							cultureDstKmAmkVal = cultureDstKmAmkVal.concat(obs
@@ -261,7 +284,8 @@ public class TbRegisterFragmentController {
 				if (cultureDstOther != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
 							cultureDstOther.getEncounter());
-					List<Obs> obsList = wrapped.allObs(cultureDstOther.getConcept());
+					List<Obs> obsList = wrapped.allObs(cultureDstOther
+							.getConcept());
 					for (Obs obs : obsList) {
 						if (obs.getObsGroupId() == obsG.getObsId()) {
 							cultureDstOtherVal = cultureDstOtherVal.concat(obs
@@ -270,26 +294,33 @@ public class TbRegisterFragmentController {
 					}
 				}
 
-				String val = cultureDstDateVal + ", " + cultureDstSVal+ ", " + cultureDstHVal + ", " +cultureDstRVal+ ", " +cultureDstEVal
-				+ ", " +cultureDstPtoEtoVal+ ", " +cultureDstCMVal+ ", " +cultureDstKmAmkVal+ ", " +cultureDstOtherVal;
+				String val = cultureDstDateVal + ", " + cultureDstSVal + ", "
+						+ cultureDstHVal + ", " + cultureDstRVal + ", "
+						+ cultureDstEVal + ", " + cultureDstPtoEtoVal + ", "
+						+ cultureDstCMVal + ", " + cultureDstKmAmkVal + ", "
+						+ cultureDstOtherVal;
 				cultureDstList.put(cultureDstIndex, val);
 				cultureDstIndex++;
 			}
 		}
 		model.addAttribute("cultureDstList", cultureDstList);
-	
-		
+
 		/*
-		 * Smear culture 
+		 * Smear culture
 		 */
-		
-		List<Obs> sputumSmear = getAllLatestObsList(patient, Dictionary.SPUTUM_SMEAR_TEST);
-		List<Obs> cultureSolid = getAllLatestObsList(patient, Dictionary.CULTURE_SOLID);
-		List<Obs> cultureLiquid = getAllLatestObsList(patient, Dictionary.CULTURE_LIQUID);
-		List<Obs> cultureSputum = getAllLatestObsList(patient, Dictionary.SPUTUM_CULTURE);
-	
-		List<Visit> visitList = Context.getVisitService().getVisitsByPatient(patient);
-		
+
+		List<Obs> sputumSmear = getAllLatestObsList(patient,
+				Dictionary.SPUTUM_SMEAR_TEST);
+		List<Obs> cultureSolid = getAllLatestObsList(patient,
+				Dictionary.CULTURE_SOLID);
+		List<Obs> cultureLiquid = getAllLatestObsList(patient,
+				Dictionary.CULTURE_LIQUID);
+		List<Obs> cultureSputum = getAllLatestObsList(patient,
+				Dictionary.SPUTUM_CULTURE);
+
+		List<Visit> visitList = Context.getVisitService().getVisitsByPatient(
+				patient);
+
 		Map<Integer, String> smearCultureIndexList = new HashMap<Integer, String>();
 		Integer visitIndex = 0;
 		if (visitList != null) {
@@ -298,13 +329,17 @@ public class TbRegisterFragmentController {
 				String cultureVal = "";
 				String sputumSmearDateVal = "";
 				String cultureDateVal = "";
-				String visitDate = new SimpleDateFormat("dd-MMMM-yyyy").format(v.getStartDatetime());
+				String visitDate = new SimpleDateFormat("dd-MMMM-yyyy")
+						.format(v.getStartDatetime());
 
 				if (sputumSmear != null) {
 					for (Obs obs : sputumSmear) {
 						if (obs.getEncounter().getVisit().equals(v)) {
-							sputumSmearVal = obs.getValueCoded().getName().toString();
-							sputumSmearDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getObsDatetime());
+							sputumSmearVal = obs.getValueCoded().getName()
+									.toString();
+							sputumSmearDateVal = new SimpleDateFormat(
+									"dd-MMMM-yyyy")
+									.format(obs.getObsDatetime());
 						}
 					}
 				}
@@ -312,47 +347,63 @@ public class TbRegisterFragmentController {
 				if (cultureSolid != null) {
 					for (Obs obs : cultureSolid) {
 						if (obs.getEncounter().getVisit().equals(v)) {
-							cultureVal = obs.getValueCoded().getName().toString();
-							cultureDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getObsDatetime());
+							cultureVal = obs.getValueCoded().getName()
+									.toString();
+							cultureDateVal = new SimpleDateFormat(
+									"dd-MMMM-yyyy")
+									.format(obs.getObsDatetime());
 						}
 					}
-				}
-				else if(cultureLiquid != null){
+				} else if (cultureLiquid != null) {
 					for (Obs obs : cultureLiquid) {
 						if (obs.getEncounter().getVisit().equals(v)) {
-							cultureVal = obs.getValueCoded().getName().toString();
-							cultureDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getObsDatetime());
+							cultureVal = obs.getValueCoded().getName()
+									.toString();
+							cultureDateVal = new SimpleDateFormat(
+									"dd-MMMM-yyyy")
+									.format(obs.getObsDatetime());
 						}
 					}
-				}
-				else if(cultureSputum != null){
+				} else if (cultureSputum != null) {
 					for (Obs obs : cultureSputum) {
 						if (obs.getEncounter().getVisit().equals(v)) {
-							cultureVal = obs.getValueCoded().getName().toString();
-							cultureDateVal = new SimpleDateFormat("dd-MMMM-yyyy").format(obs.getObsDatetime());
+							cultureVal = obs.getValueCoded().getName()
+									.toString();
+							cultureDateVal = new SimpleDateFormat(
+									"dd-MMMM-yyyy")
+									.format(obs.getObsDatetime());
 						}
 					}
 				}
-				
-				String category="TB";
-				Concept masterSet = regimenManager.getMasterSetConcept(category);
-				RegimenChangeHistory history = RegimenChangeHistory.forPatient(patient, masterSet);
+
+				String category = "TB";
+				Concept masterSet = regimenManager
+						.getMasterSetConcept(category);
+				RegimenChangeHistory history = RegimenChangeHistory.forPatient(
+						patient, masterSet);
 				RegimenChange lastChange = history.getLastChange();
-				RegimenOrder baseline = lastChange != null ? lastChange.getStarted() : null;
-				List<DrugOrder> drugOrders = new ArrayList<DrugOrder>(baseline.getDrugOrders());
-				for (DrugOrder drugOrder : drugOrders){
-					DrugOrderProcessed dop=kenyaEmrService.getLastDrugOrderProcessed(drugOrder);	
+				RegimenOrder baseline = lastChange != null ? lastChange
+						.getStarted() : null;
+				if (baseline != null) {
+					List<DrugOrder> drugOrders = new ArrayList<DrugOrder>(
+							baseline.getDrugOrders());
+					for (DrugOrder drugOrder : drugOrders) {
+						DrugOrderProcessed dop = kenyaEmrService
+								.getLastDrugOrderProcessed(drugOrder);
+					}
 				}
 
-				String val = visitDate + ", " + sputumSmearVal+ ", " + sputumSmearDateVal + ", " + cultureVal+", "+cultureDateVal ;
+				String val = visitDate + ", " + sputumSmearVal + ", "
+						+ sputumSmearDateVal + ", " + cultureVal + ", "
+						+ cultureDateVal;
 				smearCultureIndexList.put(visitIndex, val);
 				visitIndex++;
 			}
 		}
 
-		model.addAttribute("smearCultureIndexList", smearCultureIndexList);		
+		model.addAttribute("smearCultureIndexList", smearCultureIndexList);
 	}
-	
+
 	private Obs getLatestObs(Patient patient, String conceptIdentifier) {
 		Concept concept = Dictionary.getConcept(conceptIdentifier);
 		List<Obs> obs = Context.getObsService()
@@ -375,9 +426,9 @@ public class TbRegisterFragmentController {
 		}
 		return null;
 	}
-	
 
-	private List<Obs> getAllLatestObsList(Patient patient, String conceptIdentifier) {
+	private List<Obs> getAllLatestObsList(Patient patient,
+			String conceptIdentifier) {
 		Concept concept = Dictionary.getConcept(conceptIdentifier);
 		List<Obs> obs = Context.getObsService()
 				.getObservationsByPersonAndConcept(patient, concept);
@@ -387,6 +438,6 @@ public class TbRegisterFragmentController {
 			return obs;
 		}
 		return null;
-	}	
-	
+	}
+
 }

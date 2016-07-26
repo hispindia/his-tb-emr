@@ -374,8 +374,8 @@ public class TreatmentCardRegisterFragmentController {
 							count++;
 						 }
 						 regName=regName0+","+regName1+","+regName2+","+regName3+","+regName4+","+regName5+","+regName6+","+regName7+","+regName8+","+regName9+","+regName10+","+regName11;
+						 regimenList.put(regimenIndex,new SimpleDateFormat("dd-MMMM-yyyy").format(en.getEncounterDatetime()) + ", " +regName  );
 					}
-					regimenList.put(regimenIndex,new SimpleDateFormat("dd-MMMM-yyyy").format(en.getEncounterDatetime()) + ", " +regName  );
 					regimenIndex++;
 				}
 		}
