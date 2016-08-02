@@ -15,22 +15,23 @@
 		jq(document).ready(function () {
 			
 			if (getValue('decision.value') == 163496){ 
-			jq('#notinitate :input').prop('disabled', false);	
-			jq('#other_regional :input').prop('disabled', false);	
-			jq('#next_date :input').prop('disabled', false);
+//			jq('#notinitate :input').prop('disabled', false);	
+//			jq('#other_regional :input').prop('disabled', false);	
+//			jq('#next_date :input').prop('disabled', false);
 		}
 		else {
-			jq('#notinitate :input').prop('disabled', true);	
-			jq('#other_regional :input').prop('disabled', true);
-			jq('#next_date :input').prop('disabled', true);
+//			jq('#notinitate :input').prop('disabled', true);	
+//			jq('#other_regional :input').prop('disabled', true);
+//			jq('#next_date :input').prop('disabled', true);
 		}
-		  if (getValue('notinitate.value') == 5622){ 
+/*
+			if (getValue('notinitate.value') == 5622){ 
 		  jq('#other_regional :input').prop('disabled', false);					
 	                 }
 	      else {
 		  jq('#other_regional :input').prop('disabled', true);					
 	       }
-          
+*/          
 			if (getValue('therapySelection.value') == 163505) {
 				jq('#therapyName :input').prop('disabled', false);
 				if (getValue('therapyName.value') == 5622){
@@ -69,7 +70,7 @@
 					jq('#otherReason :input').prop('disabled', true);					
 				}
 			});
-			
+			/*			
 			jq("#decision").change(function() { 
 				if (getValue('decision.value') == 163496){ 
 					jq('#notinitate :input').prop('disabled', false);	
@@ -96,7 +97,7 @@
 					jq('#other_regional :input').prop('disabled', true);					
 				}
 			});
-	/*		
+		
 			if (getValue('alcohol.value') == 1066) {
 				jq('#alcoholType :input').prop('disabled', true);
 			}

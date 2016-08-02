@@ -21,8 +21,8 @@
 -->		
 		<% for ( d in dotMembers ) { %>
 		<% def values = d.value.split(",")	%>
-			Contact Number : <strong><% println  values[1] %></strong> </br> 
-			DOT Provider Name : <strong> <% println  values[0] %> </strong>
+			DOT Provider Name : <strong> <% println  values[0] %> </strong> </br>
+			DOT Provider Contact No. : <strong><% println  values[1] %></strong>
 		<% } %>
 		</br> 
 		<% if (personWrap.fatherName) { %>

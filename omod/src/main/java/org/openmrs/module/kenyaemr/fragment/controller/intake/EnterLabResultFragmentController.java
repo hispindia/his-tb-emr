@@ -256,7 +256,7 @@ public class EnterLabResultFragmentController {
 					resultEncounter.setVoidedBy(Context.getAuthenticatedUser());
 					resultEncounter.setDateChanged(curDate);
 				}
-				resultEncounter.setEncounterDatetime(curDate);
+				resultEncounter.setEncounterDatetime(resultEncounter.getDateCreated());
 				/*
 				 * not sure if we need this try {
 				 * ValidateUtil.validate(resultEncounter); } catch (APIException
@@ -277,7 +277,7 @@ public class EnterLabResultFragmentController {
 					.getEncounterType("Lab Results"));
 			encounter.setVisit(visit);
 			encounter.setPatient(visit.getPatient());
-			encounter.setEncounterDatetime(curDate);
+			encounter.setEncounterDatetime(visit.getStartDatetime());
 			if (confirm) {
 				encounter.setVoided(true);
 				encounter.setVoidReason("Result Confirmed");

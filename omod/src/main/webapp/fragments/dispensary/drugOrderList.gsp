@@ -8,7 +8,7 @@
 <th>Strength </th>
 <th>Unit </th>
 <th>Frequency </th>
-<th>Duration </th>
+<th>Duration (Days)</th>
 <th>Issue Qunatity </th>
 <th>Drug Regimen </th>
 </tr>

@@ -19,16 +19,11 @@
 	<option value="${ concept("1258AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Drug formulation changed</option>
 <% } else if (category == "TB" && config.reasonType == "stop") { %>
 	<option value="${ concept("102AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Toxicity or side effects</option>
-	<option value="${ concept("9006b2a4-2f89-4083-867e-5099bbc3992f") }">Pregnancy</option>
 	<option value="${ concept("159874AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Treatment failure</option>
 	<option value="${ concept("159598AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Poor adherence</option>
 	<option value="${ concept("137793AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Illness or hospitalization</option>
 	<option value="${ concept("1754AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Drug out of stock</option>
 	<option value="${ concept("dde566ae-e1ef-49c7-a327-287f43e26949") }">Patient's decision to stop</option>
-	<option value="${ concept("160016AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Planned treatment interruption</option>
-	<option value="${ concept("1253AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Completed PMTCT</option>
-	<option value="${ concept("1253AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Completed total PMTCT</option>
-	<option value="${ concept("1270AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Tuberculosis treatment started</option>
 <% } %>
 	<option value="${ concept("5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA") }">Other</option>
 </select>

@@ -62,8 +62,15 @@ public class PastDispensingDrugFragmentController {
                 else if(obsDrugOrder.getConcept().getUuid().equals("163020AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
                 	drugDetailss.setDrug(obsDrugOrder.getValueCoded().getName().toString());		
         		}
+                else if(obsDrugOrder.getConcept().getUuid().equals("150622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                	drugDetailss.setDrug(obsDrugOrder.getValueText());		
+        		}
+
                 
                 if(obsDrugOrder.getConcept().getUuid().equals("1443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                	drugDetailss.setStrength(obsDrugOrder.getValueNumeric().toString());	
+        		}
+                else if(obsDrugOrder.getConcept().getUuid().equals("159533AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
                 	drugDetailss.setStrength(obsDrugOrder.getValueNumeric().toString());	
         		}
                 

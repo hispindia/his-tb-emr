@@ -59,7 +59,13 @@
 			[
 					[ object: command, property: "personAddress.address3", label: "Workplace/university/school address", config: [ type: "textarea",  rows: 2,size: 20 ] ],
 					[ object: command, property: "personAddress.address1", label: "Permanent Home Address ", config: [ type: "textarea", rows: 2, size: 20 ] ],
-					[ object: command, property: "personAddress.address2", label: "Temporary Address for Treatment", config: [ type: "textarea", rows: 2, size: 20 ] ],
+					[ object: command, property: "personAddress.address2", label: "Temporary Address for Treatment", config: [ type: "textarea", rows: 2, size: 20 ] ]
+			]
+	]
+	
+	
+	def addressContact = [
+			[
 					[ object: command, property: "telephoneContact", label: "Contact Number" ]
 			]
 	]
@@ -263,6 +269,12 @@
         </tr>
         </table>
         </div>
+
+			<% addressContact.each { %>
+				${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
+			<% } %>
+
+
 		</fieldset>
 
 		<fieldset>

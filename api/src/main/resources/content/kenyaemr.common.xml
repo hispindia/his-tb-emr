@@ -397,7 +397,7 @@
 
 	<bean id="kenyaemr.tb.report.needsCultureTest" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
 		<property name="targetUuid" value="316c9d65-fbce-402e-8e89-sdf34fg1j12v" />
-		<property name="name" value="Patients due for TB sputum culture test" />
+		<property name="name" value="Patients due for culture" />
 		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.NeedsTbCultureTestCalculation" />
 		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
@@ -443,7 +443,7 @@
 	</bean>
 	<bean id="kenyaemr.tb.report.treatmentfailure" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
 		<property name="targetUuid" value="0dd6e1e2-fa24-415b-a6ad-frdedfgt543d" />
-		<property name="name" value="Patients who has failed treatment" />
+		<property name="name" value="Patients who has failed MDR-TB treatment" />
 		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbTreatmentFailureCalculation" />
 		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>

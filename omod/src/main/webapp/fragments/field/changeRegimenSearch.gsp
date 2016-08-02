@@ -26,9 +26,9 @@
 </tr>
 <tr>
 <td class="colA" style="text-align:center">Drug</td>
-<td class="colB" style="text-align:center">Strength(per tab or ml)</td>
-<td class="colC" style="text-align:center">Tablets</td>
-<td class="colD" style="text-align:center">Tab/Ml</td>
+<td class="colB" style="text-align:center">Strength per unit</td>
+<td class="colC" style="text-align:center">Quantity of Unit</td>
+<td class="colD" style="text-align:center">Accounting unit</td>
 <td class="colE" style="text-align:center">Frequency</td>
 <td class="colF" style="text-align:center">Route</td>
 <td class="colG" style="text-align:center">Duration(in days)</td>

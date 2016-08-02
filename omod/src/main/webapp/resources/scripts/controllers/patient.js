@@ -297,7 +297,7 @@ kenyaemrApp.controller('PatientSearchResults', ['$scope', '$http', function($sco
                 +"Frequency&nbsp;"
                 +"</th>"
                 +"<th>"
-                +'Duration'
+                +'Duration (Days)'
                 +"</th>"
                 +"<th>"
                 +'Quantity'

@@ -237,7 +237,7 @@
 </div>
 	<a id="dlink"  style="display:none;"></a>
 	<div> 
-	<input type="button" onClick="tableToExcel('table1','PRE ART Register','${patientWrap.drTBSuspectNumber}-PRE ART Register.xls');"  value="Export as Excel" />
+	<input type="button" onClick="tableToExcel('table1','TREATMENT CARD','${patientWrap.drTBSuspectNumber}-TREATMENT CARD.xls');"  value="Export as Excel" />
 	<button onclick="ui.navigate('${returnUrl}')"><b>Back</b></button>
 	</div>
 	
