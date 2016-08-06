@@ -37,7 +37,7 @@
 	
 	def placeOfBirth = [
 			[
-					[ object: command, property: "placeOfBirth", label: "Place Of Birth" ]
+					[ object: command, property: "placeOfBirth", label: "Place Of Birth", config: [ style: "search", answerTo: townShipList ] ]
 			]
 	]
 	

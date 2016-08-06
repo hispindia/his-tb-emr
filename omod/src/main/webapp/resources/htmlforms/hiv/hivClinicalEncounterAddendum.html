@@ -525,7 +525,7 @@ input[type=text] {
 			</tr>
 
 			<tr>
-				<td style="padding-left: 10px;" valign="top" bgcolor="#FAFAD2">4.
+				<td style="padding-left: 10px;" valign="top">4.
 					Systematic Examination:</td>
 
 			</tr>
@@ -591,8 +591,7 @@ input[type=text] {
 						conceptId="159935AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="radio" /></td>
 			</tr>
 			<tr>
-				<td style="padding-left: 10px;" valign="top">a. Side Effect's:
-				</td>
+				<td style="padding-left: 28px;" valign="top">a. Side Effect:</td>
 				<td valign="top">
 					<div id="artSideEffectList">
 						<table>
@@ -607,13 +606,23 @@ input[type=text] {
 								</td>
 							</tr>
 							</template> <render n="1" concept=" " /> <render n="2" concept=" " /> <render
-								n="3" concept=" " /> <render n="4" concept=" " /> <render n="5"
-								concept=" " /> <render n="6" concept=" " /> <render n="7"
-								concept=" " /> <render n="8" concept=" " /> <render n="9"
-								concept=" " /> <render n="10" concept=" " /> </repeat>
+								n="3" concept=" " /> <render n="4" concept=" " /> <render
+								n="5" concept=" " /> <render n="6" concept=" " /> <render
+								n="7" concept=" " /> <render n="8" concept=" " /> <render
+								n="9" concept=" " /> <render n="10" concept=" " /> </repeat>
 						</table>
 					</div>
 				</td>
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;">9. Patient Support</td>
+				<td>Financial Support : <obs conceptId="162717AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						style="radio" /></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 10px;"></td>
+				<td>Nutrition Support : <obs conceptId="5484AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						style="radio" /></td>
 			</tr>
 			<!--  <tr>
 					<td style="padding-left:10px;">
@@ -647,7 +656,7 @@ input[type=text] {
  -->
 
 			<tr>
-				<td style="padding-left: 10px;">9. Temporary Referral</td>
+				<td style="padding-left: 10px;">10. Temporary Referral</td>
 				<td><obs id="temporaryReffered"
 						conceptId="5e05d243-e039-4f04-9988-18d5a499329e" style="radio" /></td>
 			</tr>
@@ -656,26 +665,30 @@ input[type=text] {
 				<td><obs id="temporaryRefferedReason"
 						conceptId="c648f69b-7065-4255-9af2-6076348c87dc" /></td>
 			</tr>
-			<!--  <tr>	
-					<td style="padding-left:10px;">10. Admitted</td>
-					<td><obs conceptId="c17ed847-31e8-4c6a-a3b6-e2d6493870ff" style="radio" id="admittedOption" /></td>
-				</tr>
-				<tr>
-					<td></td>	
-					<td>
-						<div id="admittedId">
-						<table>
-							<tr>
-								<td  style="padding: 5px">Admitted Date : <obs id="admittedDate" conceptId="b36da368-4705-4582-b213-74a7a990aff8" allowFutureDates="true"/> 
-								Admitted To : <obs id="admittedTo" conceptId="a3e2e25b-a44c-4622-845e-24c6db5c496b" /></td>
-							</tr>
-								<td  style="padding: 5px">Reason for admission : <obs id="admittedReason" conceptId="ec8b9ede-fd85-4809-9bf2-e4550efd968c" /></td>
-						</table>
-						</div>
-					</td>	
-				</tr>-->
+			<tr>	
+				<td style="padding-left:10px;">11. Admitted</td>
+				<td><obs conceptId="c17ed847-31e8-4c6a-a3b6-e2d6493870ff" style="radio" id="admittedOption" /></td>
+			</tr>
 			<tr>
-				<td style="padding-left: 10px;">10. Next Step</td>
+				<td></td>	
+				<td>
+					<div id="admittedId">
+					<table>
+						<tr>
+							<td  style="padding: 5px">Admitted Date : <obs id="admittedDate" conceptId="b36da368-4705-4582-b213-74a7a990aff8" allowFutureDates="true"/> 
+							Admitted To : <obs id="admittedTo" conceptId="a3e2e25b-a44c-4622-845e-24c6db5c496b" /></td>
+						</tr>
+							<td  style="padding: 5px">Reason for admission : <obs id="admittedReason" conceptId="ec8b9ede-fd85-4809-9bf2-e4550efd968c" /></td>
+					</table>
+					</div>
+				</td>	
+			</tr>
+			<tr>	
+				<td style="padding-left:10px;">12. Number of dose missing days</td>
+				<td><obs conceptId="05a061ba-2d76-4929-9788-afe650eaae7b" id="missedDoseCount" /></td>
+			</tr>
+<!-- 		<tr>
+				<td style="padding-left: 10px;">13. Next Step</td>
 				<td style="padding: 5px"><div>
 						Next appointment date :
 						<obs id="appointmentDate"
@@ -688,13 +701,14 @@ input[type=text] {
 							conceptId="161261AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
 					</div></td>
 			</tr>
+ -->			
 		</table>
 
 	</fieldset>
 
 </div>
 
-<div id="guideDivAdultForTbScreeningg" style="visibility:hidden;"></div>
+<div id="guideDivAdultForTbScreeningg" style="visibility: hidden;"></div>
 
 <div class="ke-form-footer">
 	<submit />

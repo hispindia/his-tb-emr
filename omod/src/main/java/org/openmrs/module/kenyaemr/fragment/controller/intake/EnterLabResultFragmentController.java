@@ -256,7 +256,7 @@ public class EnterLabResultFragmentController {
 					resultEncounter.setVoidedBy(Context.getAuthenticatedUser());
 					resultEncounter.setDateChanged(curDate);
 				}
-				resultEncounter.setEncounterDatetime(resultEncounter.getDateCreated());
+				resultEncounter.setEncounterDatetime(resultEncounter.getEncounterDatetime());
 				/*
 				 * not sure if we need this try {
 				 * ValidateUtil.validate(resultEncounter); } catch (APIException

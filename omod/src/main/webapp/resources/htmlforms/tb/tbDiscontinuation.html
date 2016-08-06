@@ -14,23 +14,26 @@
 <htmlform>
 
 <style type="text/css">
-		table.tb1 {
-			border: 1px solid black;
-			vertical-align: baseline;
-			text-align: left;
-			background-color: #FFFFFF;
-		}
-		table.tb1 tr th,table.tb1 tr td{
-			border: 0;
-			padding: 5px;
-		}
-		input[type=text]{
-			width:400px;
-		}
-		input[class=hasDatepicker]{
-			width:150px;
-		}
-	</style>
+table.tb1 {
+	border: 1px solid black;
+	vertical-align: baseline;
+	text-align: left;
+	background-color: #FFFFFF;
+}
+
+table.tb1 tr th, table.tb1 tr td {
+	border: 0;
+	padding: 5px;
+}
+
+input[type=text] {
+	width: 200px;
+}
+
+input[class=hasDatepicker] {
+	width: 150px;
+}
+</style>
 
 
 <script type="text/javascript">
@@ -39,35 +42,103 @@
 		if (outcome == "") {
 			jq('#transferredoutto :input').prop('disabled', true);
 			jq('#treatmentoutcomedate :input').prop('disabled', true);
+			jq('#stopTreatment :input').prop('disabled', true);
+			jq('#stopTreatmentOther :input').prop('disabled', true);
+			jq('#deathCause :input').prop('disabled', true);
 		}
-		if (outcome == 159492) {
+		else if (outcome == 159492) {
 			jq('#transferredoutto :input').prop('disabled', false);
 			jq('#treatmentoutcomedate :input').prop('disabled', false);
-		} else {
-			jq('#treatmentoutcomedate :input').prop('disabled', false);
-			jq('#transferredoutto :input').prop('disabled', true);
+			jq('#stopTreatment :input').prop('disabled', true);
+			jq('#stopTreatmentOther :input').prop('disabled', true);
+			jq('#deathCause :input').prop('disabled', true);
 		}
+		else if (outcome == 158939) {
+			jq('#transferredoutto :input').prop('disabled', true);
+			jq('#treatmentoutcomedate :input').prop('disabled', false);
+			jq('#stopTreatment :input').prop('disabled', false);
+			jq('#stopTreatmentOther :input').prop('disabled', true);
+			jq('#deathCause :input').prop('disabled', true);
+		}
+		else if (outcome == 160034) {
+			jq('#transferredoutto :input').prop('disabled', true);
+			jq('#treatmentoutcomedate :input').prop('disabled', false);
+			jq('#stopTreatment :input').prop('disabled', true);
+			jq('#stopTreatmentOther :input').prop('disabled', true);
+			jq('#deathCause :input').prop('disabled', false);
+		}
+		else {
+			jq('#transferredoutto :input').prop('disabled', true);
+			jq('#treatmentoutcomedate :input').prop('disabled', false);
+			jq('#stopTreatment :input').prop('disabled', true);
+			jq('#stopTreatmentOther :input').prop('disabled', true);
+			jq('#deathCause :input').prop('disabled', true);
+		}
+		
+		var stopTreatmentReason = getValue('stopTreatment.value');
+		if (stopTreatmentReason == 5622) {
+			jq('#stopTreatmentOther :input').prop('disabled', false);
+		}
+		else {
+			jq('#stopTreatmentOther :input').prop('disabled', true);
+		}
+
 	}
 
 	jq(function() {
 		treatmentoutcomes();
-		//		jq('#treatment_outcome').click(treatmentoutcomes);
 		jq("#treatment_outcome select").change(function() {
 			var outcome = getValue('treatment_outcome.value');
 			if (outcome == "") {
 				jq('#transferredoutto :input').prop('disabled', true);
 				jq('#treatmentoutcomedate :input').prop('disabled', true);
+				jq('#stopTreatment :input').prop('disabled', true);
+				jq('#stopTreatmentOther :input').prop('disabled', true);
+				jq('#deathCause :input').prop('disabled', true);
 			}
-			if (outcome == 159492) {
+			else if (outcome == 159492) {
 				jq('#transferredoutto :input').prop('disabled', false);
 				jq('#treatmentoutcomedate :input').prop('disabled', false);
-			} else {
-				jq('#treatmentoutcomedate :input').prop('disabled', false);
+				jq('#stopTreatment :input').prop('disabled', true);
+				jq('#stopTreatmentOther :input').prop('disabled', true);
+				jq('#deathCause :input').prop('disabled', true);
+			}
+			else if (outcome == 158939) {
 				jq('#transferredoutto :input').prop('disabled', true);
+				jq('#treatmentoutcomedate :input').prop('disabled', false);
+				jq('#stopTreatment :input').prop('disabled', false);
+				jq('#stopTreatmentOther :input').prop('disabled', true);
+				jq('#deathCause :input').prop('disabled', true);
+			}
+			else if (outcome == 160034) {
+				jq('#transferredoutto :input').prop('disabled', true);
+				jq('#treatmentoutcomedate :input').prop('disabled', false);
+				jq('#stopTreatment :input').prop('disabled', true);
+				jq('#stopTreatmentOther :input').prop('disabled', true);
+				jq('#deathCause :input').prop('disabled', false);
+			}
+			else {
+				jq('#transferredoutto :input').prop('disabled', true);
+				jq('#treatmentoutcomedate :input').prop('disabled', false);
+				jq('#stopTreatment :input').prop('disabled', true);
+				jq('#stopTreatmentOther :input').prop('disabled', true);
+				jq('#deathCause :input').prop('disabled', true);
 			}
 
 		});
-
+		
+		jq("#stopTreatment select").change(function() {
+			var stopTreatmentReason = getValue('stopTreatment.value');
+			if (stopTreatmentReason == 5622) {
+				jq('#stopTreatmentOther :input').prop('disabled', false);
+			}
+			else {
+				jq('#stopTreatmentOther :input').prop('disabled', true);
+			}
+			
+		});
+		
+		
 		beforeSubmit.push(function() {
 			if (getValue('treatment_outcome.value') == "") {
 				getField('treatment_outcome.error').html(
@@ -86,8 +157,9 @@
 	});
 </script>
 
-<div class="ke-form-header" style="width:100%;   padding: 2px;">
-	<table  style="background-color: #e8efdc" align="center" class="tb1"  cellspacing="0" width="100%">
+<div class="ke-form-header" style="width: 100%; padding: 2px;">
+	<table style="background-color: #e8efdc" align="center" class="tb1"
+		cellspacing="0" width="100%">
 		<tr>
 			<td>Date <encounterDate id="encounter-date" showTime="true" /></td>
 			<td>Location <encounterLocation
@@ -98,36 +170,46 @@
 </div>
 
 <div class="ke-form-content">
-
-		<table style="background-color: #e8efdc" align="center" class="tb1"  cellspacing="0" width="100%">
-			<tr>
-				<td>
-					<table border="0" cellspacing="15" align="center">
-						<tr>
-							<td>Treatment Outcome</td>
-							<td><obs conceptId="160136AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="dropdown" id="treatment_outcome" /></td>
-						</tr>
-						<tr>
-							<td id="id_treatment_outcome_date_ttle">Treatment Outcome
-								date</td>
-							<td id="id_treatment_outcome_date_value"><obs
-									conceptId="159787AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									id="treatmentoutcomedate" /></td>
-
-						</tr>
-
-						<tr>
-							<td>Transferred out to:</td>
-							<td><obs conceptId="159495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									labelText=" " id="transferredoutto" /></td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-
-
+	<table style="background-color: #e8efdc" align="center" class="tb1"
+		cellspacing="0" width="100%">
+		<tr>
+			<td>
+				<table border="0" cellspacing="15" align="center">
+					<tr>
+						<td>Treatment Outcome</td>
+						<td><obs conceptId="160136AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+								style="dropdown" id="treatment_outcome" /></td>
+					</tr>
+					<tr>
+						<td id="id_treatment_outcome_date_ttle">Treatment Outcome
+							date</td>
+						<td><obs conceptId="159787AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+								id="treatmentoutcomedate" /></td>
+					</tr>
+					<tr>
+						<td>Transferred out to:</td>
+						<td><obs conceptId="159495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+								labelText=" " id="transferredoutto" /></td>
+					</tr>
+					<tr>
+						<td>Treatment stopped Reason:</td>
+						<td><obs conceptId="1269AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+								labelText=" " id="stopTreatment" /></td>
+					</tr>
+					<tr>
+						<td>Treatment stopped Other Reason:</td>
+						<td><obs conceptId="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+								labelText=" " id="stopTreatmentOther" /></td>
+					</tr>
+					<tr>
+						<td>Cause of Death:</td>
+						<td><obs conceptId="1599AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+								labelText=" " id="deathCause" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 	<completeProgram programId="9f144a34-3a4a-44a9-8486-6b7af6cc64f6" />
 </div>
 

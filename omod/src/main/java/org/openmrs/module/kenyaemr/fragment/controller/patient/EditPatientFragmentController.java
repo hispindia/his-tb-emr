@@ -331,7 +331,8 @@ public class EditPatientFragmentController {
 		private String checkInType;
 
 		private String nationalId;
-		private String placeOfBirth;
+		private Concept placeOfBirth;
+		private Obs savedPlaceOfBirth;
 		private String dateOfRegistration;
 		private Concept township;
 		private Obs savedTownship;
@@ -407,7 +408,6 @@ public class EditPatientFragmentController {
 
 			fatherName = wrapper.getFatherName();
 			nationalId = wrapper.getNationalId();
-			placeOfBirth = wrapper.getPlaceOfBirth();
 			entrySourceId = wrapper.getEntrySourceId();
 			currentTownshipTBNumber = wrapper.getCurrentTownshipTBNumber();
 			previousTownshipTBNumber = wrapper.getPreviousTownshipTBNumber();
@@ -452,6 +452,12 @@ public class EditPatientFragmentController {
 				township = savedTownship.getValueCoded();
 			}
 			
+			savedPlaceOfBirth = getLatestObs(patient,
+					Dictionary.LOCATION_OF_BIRTH);
+			if (savedPlaceOfBirth != null) {
+				placeOfBirth = savedPlaceOfBirth.getValueCoded();
+			}
+
 			savedTBHistoryStatus = getLatestObs(patient, Dictionary.TB_PATIENT);
 			if(savedTBHistoryStatus != null){
 				tbHistoryStatus = savedTBHistoryStatus.getValueCoded();
@@ -516,12 +522,6 @@ public class EditPatientFragmentController {
 				errors.rejectValue("nationalId",
 						"Expected length of National Id is exceeding");
 			}
-
-			if (placeOfBirth.length() > 50) {
-				errors.rejectValue("placeOfBirth",
-						"Expected length of Birth Place is exceeding");
-			}
-
 
 			if (personAddress.getAddress1().length() > 200) {
 				errors.rejectValue("personAddress.address1",
@@ -712,7 +712,6 @@ public class EditPatientFragmentController {
 
 			wrapper.getPerson().setFatherName(fatherName);
 			wrapper.getPerson().setNationalId(nationalId);
-			wrapper.getPerson().setPlaceOfBirth(placeOfBirth);
 			wrapper.getPerson().setEntrySourceId(entrySourceId);
 			wrapper.getPerson().setPreviousTownshipTBNumber(previousTownshipTBNumber);
 			wrapper.getPerson().setCurrentTownshipTBNumber(currentTownshipTBNumber);
@@ -779,6 +778,10 @@ public class EditPatientFragmentController {
 					Dictionary.getConcept(Dictionary.TOWNSHIP),
 					savedTownship, township);
 			
+			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
+					Dictionary.getConcept(Dictionary.LOCATION_OF_BIRTH),
+					savedPlaceOfBirth, placeOfBirth);
+
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
 					Dictionary.getConcept(Dictionary.TB_REGIMEN_START_DATE_TYPE),
 					savedPreviousRegimenStartDateType, previousRegimenStartDateType);
@@ -1226,14 +1229,6 @@ public class EditPatientFragmentController {
 			this.nationalId = nationalId;
 		}
 
-		public String getPlaceOfBirth() {
-			return placeOfBirth;
-		}
-
-		public void setPlaceOfBirth(String placeOfBirth) {
-			this.placeOfBirth = placeOfBirth;
-		}
-
 		public String getDateOfRegistration() {
 			return dateOfRegistration;
 		}
@@ -1418,6 +1413,25 @@ public class EditPatientFragmentController {
 		public void setLabPatient(String labPatient) {
 			this.labPatient = labPatient;
 		}
+
+
+		public Obs getSavedPlaceOfBirth() {
+			return savedPlaceOfBirth;
+		}
+
+		public void setSavedPlaceOfBirth(Obs savedPlaceOfBirth) {
+			this.savedPlaceOfBirth = savedPlaceOfBirth;
+		}
+
+		public Concept getPlaceOfBirth() {
+			return placeOfBirth;
+		}
+
+		public void setPlaceOfBirth(Concept placeOfBirth) {
+			this.placeOfBirth = placeOfBirth;
+		}
+		
+		
 
 	}
 

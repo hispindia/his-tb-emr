@@ -45,7 +45,7 @@
 	<% if (currentEnrollment) { %>
 		<% if(defaultEnrollmentForm.targetUuid == '89994550-9939-40f3-afa6-173bce445c79') { %>	
 			<button type="button" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "enterForm", [ patientId: patient.id, formUuid: defaultCompletionForm.targetUuid, appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">
-				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/discontinue.png") }" /> Stop Enrollment
+				<img src="${ ui.resourceLink("kenyaui", "images/glyphs/discontinue.png") }" /> Enter outcome
 			</button>	
 		<% } else{ %>
 			<button type="button" onclick="ui.navigate('${ ui.pageLink("kenyaemr", "enterForm", [ patientId: patient.id, formUuid: defaultCompletionForm.targetUuid, appId: currentApp.id, returnUrl: ui.thisUrl() ]) }')">

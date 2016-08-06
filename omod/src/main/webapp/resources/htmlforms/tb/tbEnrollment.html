@@ -868,7 +868,7 @@ table.tb1 tr th, table.tb1 tr td {
 					<tr>
 						<td>Disease Classification<font color="red"><b>*</b></font></td>
 						<td><obs conceptId="160040AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-								style="radio" id="dclassification"  /></td>
+								style="radio" id="dclassification" /></td>
 					</tr>
 					<tr>
 						<td>If Extra -pulmonary, specific site</td>
@@ -900,9 +900,9 @@ table.tb1 tr th, table.tb1 tr td {
 					<tr>
 						<td>MDR-TB registration number<font color="red"><b>*</b></font></td>
 						<td><span id="patientreg"><patient field="identifier"
-								identifierTypeId="d8ee3b8c-a8fc-4d6b-af6a-9423be5f8906"  required="false"
-								 /></span>
-								 <span class="error field-error" id="reg"></span></td>
+									identifierTypeId="d8ee3b8c-a8fc-4d6b-af6a-9423be5f8906"
+									required="false" /></span> <span class="error field-error"
+							id="reg"></span></td>
 					</tr>
 					<tr>
 						<td>Date of the MDR-TB registration</td>
@@ -963,7 +963,7 @@ table.tb1 tr th, table.tb1 tr td {
 						<tr>
 							<td>Registration group<font color="red"><b>*</b></font></td>
 							<td><obs conceptId="159990AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									 id="regGroup" /></td>
+									id="regGroup" /></td>
 						</tr>
 						<tr>
 							<td>Contact of MDR-TB cases</td>
@@ -972,7 +972,8 @@ table.tb1 tr th, table.tb1 tr td {
 						</tr>
 						<tr>
 							<td>Treatment centre</td>
-							<td><obs conceptId="159804AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="location"/></td>
+							<td><obs conceptId="159804AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="location" /></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -980,68 +981,73 @@ table.tb1 tr th, table.tb1 tr td {
 		</tr>
 		<tr id="topMost">
 			<td width="50%" valign="top">
-					<h5>
-						<b>HIV Information</b>
-					</h5>
+				<h5>
+					<b>HIV Information</b>
+				</h5>
+				<table class="tb1" border="0" width="100%">
+					<col width="50%" />
+					<col width="50%" />
+					<tr>
+						<td>HIV testing done<font color="red"><b>*</b></font></td>
+						<td><obs conceptId="159938AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+								style="radio" id="hivSection" /></td>
+					</tr>
+				</table>
+				<div id="hivSectionField">
 					<table class="tb1" border="0" width="100%">
 						<col width="50%" />
-  						<col width="50%" />
+						<col width="50%" />
 						<tr>
-							<td>HIV testing done<font color="red"><b>*</b></font></td>
-							<td><obs conceptId="159938AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio"  id="hivSection"/></td>
+							<td>Date of test</td>
+							<td><obs conceptId="160751AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+						</tr>
+						<tr>
+							<td>Result</td>
+							<td><obs conceptId="159427AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									id="testResult" /></td>
+						</tr>
+						<tr>
+							<td>If reactive, treatment taking at NAP center</td>
+							<td><obs conceptId="dc3f16ef-1beb-4c57-8182-df37c70f40ed"
+									style="radio" id="napCenter" /></td>
+						</tr>
+						<tr>
+							<td>If yes, Pre ART/ART registration number</td>
+							<td><obs conceptId="1762AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									id="preArtRegNumber" /></td>
+						</tr>
+						<tr>
+							<td>If No, Name of HIV treatment center</td>
+							<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba"
+									id="treatmentCenter" /></td>
+						</tr>
+						<tr>
+							<td>Started on ART</td>
+							<td><obs conceptId="162127AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="radio" id="artOption" /></td>
+						</tr>
+						<tr>
+							<td>Date</td>
+							<td><obs conceptId="162550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									id="artDate" /></td>
+						</tr>
+						<tr>
+							<td>Current HIV regimen</td>
+							<td><obs conceptId="1088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="autocomplete" id="artRegimen" /></td>
+						</tr>
+						<tr>
+							<td>Started on CPT</td>
+							<td><obs conceptId="112234AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="radio" id="cptOption" /></td>
+						</tr>
+						<tr>
+							<td>Date</td>
+							<td><obs conceptId="431adda7-582e-4822-83a6-25344f21fc7c"
+									id="cptDate" /></td>
 						</tr>
 					</table>
-					<div id="hivSectionField">
-						<table class="tb1" border="0" width="100%">
-							<col width="50%" />
-							<col width="50%" />
-							<tr>
-								<td>Date of test</td>
-								<td><obs conceptId="160751AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-							</tr>
-							<tr>
-								<td>Result</td>
-								<td><obs conceptId="159427AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="testResult"/></td>
-							</tr>
-							<tr>
-								<td>If reactive, treatment taking at NAP center</td>
-								<td><obs conceptId="dc3f16ef-1beb-4c57-8182-df37c70f40ed"
-										style="radio" id="napCenter"/></td>
-							</tr>
-							<tr>
-								<td>If yes, Pre ART/ART registration number</td>
-								<td><obs conceptId="1762AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="preArtRegNumber"/></td>
-							</tr>
-							<tr>
-								<td>If No, Name of HIV treatment center</td>
-								<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba" id="treatmentCenter"/></td>
-							</tr>
-							<tr>
-								<td>Started on ART</td>
-								<td><obs conceptId="162127AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-										style="radio" id="artOption"/></td>
-							</tr>
-							<tr>
-								<td>Date</td>
-								<td><obs conceptId="162550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="artDate"/></td>
-							</tr>
-							<tr>
-								<td>Current HIV regimen</td>
-								<td><obs conceptId="1088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-										style="autocomplete"  id="artRegimen"/></td>
-							</tr>
-							<tr>
-								<td>Started on CPT</td>
-								<td><obs conceptId="112234AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-										style="radio" id="cptOption"/></td>
-							</tr>
-							<tr>
-								<td>Date</td>
-								<td><obs conceptId="431adda7-582e-4822-83a6-25344f21fc7c" id="cptDate"/></td>
-							</tr>
-						</table>
-					</div>
+				</div>
 			</td>
 			<td valign="top">
 				<fieldset>
@@ -1072,18 +1078,20 @@ table.tb1 tr th, table.tb1 tr td {
 						<tr>
 							<td>Drug Allergy<font color="red"><b>*</b></font></td>
 							<td><obs conceptId="141760AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" id="drugOption"/></td>
+									style="radio" id="drugOption" /></td>
 						</tr>
 						<tr>
 							<td>If yes, name of drug</td>
-							<td><obs conceptId="160558AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="drugName"/></td>
+							<td><obs conceptId="160558AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									id="drugName" /></td>
 						</tr>
-					<tr>
+						<tr>
 							<td>Other</td>
-						<td valign="top"><obs
-									conceptId="133863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  id="other_regional"/></td>
-					     </tr>
-						
+							<td valign="top"><obs
+									conceptId="133863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									id="other_regional" /></td>
+						</tr>
+
 						<includeIf logicTest="GENDER = F">
 						<tr>
 							<td>Pregnancy</td>
@@ -1103,6 +1111,13 @@ table.tb1 tr th, table.tb1 tr td {
 						<tr>
 							<td>MBD</td>
 							<td><span id="mbddate" class="value"></span></td>
+						</tr>
+						<tr>
+							<td>Pregnacny Outcome/Date</td>
+							<td><obs conceptId="161033AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /> / 
+							<obs conceptId="141346AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									allowFutureDates="false" />
+							</td>
 						</tr>
 						</includeIf>
 					</table>
