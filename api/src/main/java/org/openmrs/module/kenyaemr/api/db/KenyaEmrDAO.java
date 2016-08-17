@@ -74,4 +74,5 @@ public interface KenyaEmrDAO {
 	public List<ConceptAnswer> getConceptAnswerByAnsweConcept(Concept answerConcept);
 	public List<PersonAddress> getPatientsByTownship(String township);
 	public List<Obs> getObsByScheduledDate(Date date);
+	public List<DrugOrderProcessed> getPatientWithPASregime();
 }

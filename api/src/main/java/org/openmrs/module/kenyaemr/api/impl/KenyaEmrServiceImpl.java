@@ -423,4 +423,9 @@ public class KenyaEmrServiceImpl extends BaseOpenmrsService implements KenyaEmrS
 	public List<Obs> getObsByScheduledDate(Date date){
 		return dao.getObsByScheduledDate(date);
 	}
+
+	@Override
+	public List<DrugOrderProcessed> getPatientWithPASregime() {
+		return dao.getPatientWithPASregime();
+	}
 }

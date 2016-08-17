@@ -55,7 +55,11 @@
 				<ref bean="kenyaemr.tb.report.failedCatI"/>
 				<ref bean="kenyaemr.tb.report.failedCatII"/>
 				<ref bean="kenyaemr.tb.report.failedMDRTBtreatment"/>
+				<!-- NTP Reports -->
 				
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.pas"/>
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.without.pas"/>
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.total"/>
 	 	<!--
 				<ref bean="kenyaemr.common.report.moh711" />
 				<ref bean="kenyaemr.common.report.artDrug" />
@@ -523,9 +527,30 @@
 	</bean>
 	
 		
+	<!-- NTP reports TB -->
+
+		<bean id="kenyaemr.tb.report.patient.mdrtb.pas" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<property name="targetUuid" value="fda0848f-e964-4e60-93e3-5be68054e11c" />
+		<property name="name" value="MDR TB patients with pas regimen" />
+		<property name="description" value="MDR-TB patients will be treated with either (Amk/ Z/ Lfx/ Eto/ Cs/ PAS)" />
 	
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.patient.mdrtb.without.pas" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<property name="targetUuid" value="304d7e42-726b-4c41-8240-5b1a2c83ef0e" />
+		<property name="name" value="MDR TB patients without pas regimen" />
+		<property name="description" value="MDR-TB patients will be treated with  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS)  regimen" />
 	
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
 	
+	<bean id="kenyaemr.tb.report.patient.mdrtb.total" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<property name="targetUuid" value="f770f809-9600-4f5c-aa8a-c9217ce29091" />
+		<property name="name" value="MDR TB patients with either  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS) or( Amk/ Z/ Lfx/ Eto/ Cs)  regimen" />
+		<property name="description" value="MDR-TB patients will be treated with either  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS) or( Amk/ Z/ Lfx/ Eto/ Cs)   regimen" />
+	
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
 	<!--
 	
 	<bean id="kenyaemr.hiv.report.dueForCd4" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">

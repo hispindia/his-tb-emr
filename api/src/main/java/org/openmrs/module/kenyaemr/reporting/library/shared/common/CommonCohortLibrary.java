@@ -26,6 +26,8 @@ import org.openmrs.module.kenyaemr.calculation.library.DeceasedPatientsCalculati
 import org.openmrs.module.kenyaemr.calculation.library.InProgramCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.RecordedDeceasedCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.hiv.art.OnAlternateFirstLineArtCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.PatientOnRegimeWithPASCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TypeOfPatientWitMDRTBnumber;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.reporting.cohort.definition.AgeCohortDefinition;
@@ -38,6 +40,7 @@ import org.openmrs.module.reporting.cohort.definition.ProgramEnrollmentCohortDef
 import org.openmrs.module.reporting.common.SetComparator;
 import org.openmrs.module.reporting.common.TimeQualifier;
 import org.openmrs.module.reporting.evaluation.parameter.Parameter;
+
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -312,4 +315,141 @@ public class CommonCohortLibrary {
 		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
 		return cd;
 	}
+
+	public CohortDefinition treatmentOutcome_Cure() {
+        Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+		Concept outcomresult=Dictionary.getConcept(Dictionary.CURE_OUTCOME);
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled with cure outcome");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		
+		cd.addSearch("givencureOutcome", ReportUtils.map(hasObs(tboutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+		
+		cd.setCompositionString("givencureOutcome");
+		return cd;
+
+			
+		
+	}
+
+	public CohortDefinition treatmentOutcome_TreatmentCompleted() {
+		    Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+			Concept outcomresult=Dictionary.getConcept(Dictionary.TREATMENT_COMPLETE);
+			CompositionCohortDefinition cd = new CompositionCohortDefinition();
+			cd.setName("Total enrolled with treatment complete outcome");
+			cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+			cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+			
+			cd.addSearch("givencompletedOutcome", ReportUtils.map(hasObs(tboutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+			
+			cd.setCompositionString("givencompletedOutcome");
+			return cd;
+	}
+
+	public CohortDefinition treatmentOutcome_Failure() {
+        Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+		Concept outcomresult=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_FAILURE);
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled with treatment failure outcome");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		
+		cd.addSearch("givenfailureOutcome", ReportUtils.map(hasObs(tboutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+		
+		cd.setCompositionString("givenfailureOutcome");
+		return cd;
+	}
+
+	public CohortDefinition treatmentOutcome_Defaulted() {
+		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+		Concept outcomresult=Dictionary.getConcept(Dictionary.LOSS_TO_FOLLOW_UP);
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled with treatment loss to follow up outcome");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		
+		cd.addSearch("givenlosstofollowupOutcome", ReportUtils.map(hasObs(tboutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+		
+		cd.setCompositionString("givenlosstofollowupOutcome");
+		return cd;
+	}
+
+	public CohortDefinition treatmentOutcome_Died() {
+		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+		Concept outcomresult=Dictionary.getConcept(Dictionary.DIED);
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled with treatment  outcome died");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		
+		cd.addSearch("givenOutcomeDied", ReportUtils.map(hasObs(tboutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+		
+		cd.setCompositionString("givenOutcomeDied");
+		return cd;
+	}
+	
+	public CohortDefinition treatmentOutcome_Transferedout() {
+		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+		Concept outcomresult=Dictionary.getConcept(Dictionary.TRANSFERRED_OUT);
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled with treatment  outcome transferred");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		
+		cd.addSearch("givenOutcometransferredout", ReportUtils.map(hasObs(tboutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+		
+		cd.setCompositionString("givenOutcometransferredout");
+		return cd;
+	}
+
+	public CohortDefinition treatmentOutcome_Enroll() {
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled"  );
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter},enrolledOnOrBefore=${onOrBefore}"));
+		cd.addSearch("cureOutcome", ReportUtils.map(treatmentOutcome_Cure(), "onOrBefore=${onOrBefore}"));
+		cd.addSearch("transferredoutOutcome", ReportUtils.map(treatmentOutcome_Transferedout(), "onOrBefore=${onOrBefore}"));
+		cd.addSearch("diedOutcome", ReportUtils.map(treatmentOutcome_Died(), "onOrBefore=${onOrBefore}"));
+		cd.addSearch("defaultedOutcome", ReportUtils.map(treatmentOutcome_Defaulted(), "onOrBefore=${onOrBefore}"));
+		cd.addSearch("failureOutcome", ReportUtils.map(treatmentOutcome_Failure(), "onOrBefore=${onOrBefore}"));
+		cd.addSearch("CompletedOutcome", ReportUtils.map(treatmentOutcome_TreatmentCompleted(), "onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND NOT cureOutcome AND NOT transferredoutOutcome  AND NOT diedOutcome AND NOT  defaultedOutcome AND NOT failureOutcome AND NOT CompletedOutcome");
+		return cd;
+	}
+
+	public CohortDefinition  conventionaldDst() {
+		Concept tbgeneoutcome=Dictionary.getConcept(Dictionary.TB_GENE_RESULT);
+		Concept outcomresult=Dictionary.getConcept(Dictionary.RIFAMPCIN_RESISTANT);
+		Concept cultureDstoutcome=Dictionary.getConcept(Dictionary.CULTURE_DRUG_R);
+		Concept cultureDstresult=Dictionary.getConcept(Dictionary.RESULT_RESISTANT);
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled with treatment  outcome transferred");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		
+		cd.addSearch("givenxpertResult", ReportUtils.map(hasObs(tbgeneoutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+		cd.addSearch("givenDSTResult", ReportUtils.map(hasObs(cultureDstoutcome,cultureDstresult), "onOrBefore=${onOrBefore}"));
+		
+		cd.setCompositionString("givenxpertResult OR givenDSTResult");
+		return cd;
+	}
+
+	public CohortDefinition enrollTbnum() {
+		CalculationCohortDefinition cd = new CalculationCohortDefinition(new TypeOfPatientWitMDRTBnumber());
+		cd.setName("Patients havinfg MDR TB registration number ");
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+
+		CompositionCohortDefinition comp = new CompositionCohortDefinition();
+		comp.setName("Patients with tb registration number");
+		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		comp.addSearch("tbregnumber", ReportUtils.map(cd, "onDate=${onOrBefore}"));
+		comp.setCompositionString("tbregnumber");
+
+		return comp;
+	}
+
 }

@@ -416,4 +416,11 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 		criteria.add(Restrictions.eq("valueDatetime", date));
 		return criteria.list();
 	}
+
+	@Override
+	public List<DrugOrderProcessed> getPatientWithPASregime() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugOrderProcessed.class,"drugOrderProcessed");
+		criteria.add(Restrictions.eq("regimenConcept",Context.getConceptService().getConceptByUuid("86767AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
+		return criteria.list();
+	}
 }

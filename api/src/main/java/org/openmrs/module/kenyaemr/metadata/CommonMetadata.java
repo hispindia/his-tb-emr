@@ -166,7 +166,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 				"\\d{5,10}", "Between 5 and 10 consecutive digits", null,
 				LocationBehavior.NOT_USED, false, _PatientIdentifierType.NATIONAL_ID));
 		install(patientIdentifierType("DR TB Suspect Number", "Identifier for dr tb suspect number",
-				"(.{1,15})", "Between 5 to 10 digit", null,
+				"((?=.*\\d).{1,15})", "At most 7 characters long with aleast one digit.", null,
 				LocationBehavior.NOT_USED, false, _PatientIdentifierType.DR_TB_SUSPECT_NUMBER));
 		install(patientIdentifierType("MDR TB registration Number", "Identifier for dr tb suspect number",
 				null, null, null,

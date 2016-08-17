@@ -14,6 +14,7 @@
 
 package org.openmrs.module.kenyaemr.reporting.library.shared.tb;
 
+import org.openmrs.module.reporting.evaluation.parameter.Parameterizable;
 import org.openmrs.module.reporting.indicator.CohortIndicator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -1053,4 +1054,54 @@ public class TbIndicatorLibrary {
 		);
 	}
 
+
+	public CohortIndicator confirmedTB() {
+		return cohortIndicator("Total Patient confirmed on TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedtb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator confirmedCatITB() {
+		return cohortIndicator("Total Patient confirmed on Cat I TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedCatItb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator confirmedCatIITB() {
+		return cohortIndicator("Total Patient confirmed on Cat II TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedCatIItb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator confirmedDefaultTB() {
+		return cohortIndicator("Total Patient confirmed on Default TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedDefaulttb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator confirmedstandardMDRTB() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedStandardtb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator Tbsmearculturewithpas() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment smear (+)ve  culture (+)ve with pas",
+				map(tbCohorts.totalpatientOutcomewithpasmearpositive(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator Tbsmearnegativeculturewithpas() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment smear (-)ve culture(+) ve with pas",
+				map(tbCohorts.totalpatientOutcomewithpaswithsmearnegative(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator confirmednewCategoryMDRTB() {
+		return cohortIndicator("Total Patient confirmed on New category with pas",
+				map(tbCohorts.totalpatientOutcomewithpaswithNewCategory(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	
 }

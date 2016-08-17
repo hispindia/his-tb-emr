@@ -57,4 +57,27 @@ public class CommonDimensionLibrary {
 		dim.addCohortDefinition("15+", map(commonCohortLibrary.agedAtLeast(15), "effectiveDate=${onDate}"));
 		return dim;
 	}
+
+	public CohortDefinitionDimension treatmentOutcome() {
+		CohortDefinitionDimension dim = new CohortDefinitionDimension();
+		dim.setName("TreatmentOutcme");
+		dim.addParameter(new Parameter("onDate", "Date", Date.class));
+		dim.addCohortDefinition("Cure", map(commonCohortLibrary.treatmentOutcome_Cure()));
+		dim.addCohortDefinition("Completed", map(commonCohortLibrary.treatmentOutcome_TreatmentCompleted()));
+		dim.addCohortDefinition("Failure", map(commonCohortLibrary.treatmentOutcome_Failure()));
+		dim.addCohortDefinition("Defaulted", map(commonCohortLibrary.treatmentOutcome_Defaulted()));
+		dim.addCohortDefinition("Died", map(commonCohortLibrary.treatmentOutcome_Died()));
+		dim.addCohortDefinition("TransferedOut", map(commonCohortLibrary.treatmentOutcome_Transferedout()));
+		dim.addCohortDefinition("StillEnroll", map(commonCohortLibrary.treatmentOutcome_Enroll()));
+		
+		return dim;
+	}
+	public CohortDefinitionDimension typeOfPatients() {
+		CohortDefinitionDimension dim = new CohortDefinitionDimension();
+		dim.setName("PatientType");
+		dim.addParameter(new Parameter("onDate", "Date", Date.class));
+		dim.addCohortDefinition("conventionalDST", map(commonCohortLibrary.conventionaldDst()));
+		dim.addCohortDefinition("enrollmentTbRegnumber", map(commonCohortLibrary.enrollTbnum()));
+		return dim;
+	}
 }
