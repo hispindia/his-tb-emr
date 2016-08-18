@@ -56,7 +56,7 @@
 <!-- <entry key="S.route">IM (Intramuscular)</entry> -->
 <entry key="S.route">160243</entry>
 
-<entry key="Km.strength">1 g vial</entry>
+<entry key="Km.strength">500 mg</entry>
 <entry key="Km.type">vial</entry>
 <entry key="Km.frequency">6 times per week</entry>
 <!-- <entry key="Km.route">IM (Intramuscular)</entry> -->
@@ -80,11 +80,17 @@
 <!-- <entry key="Ofx.route">Oral</entry> -->
 <entry key="Ofx.route">160240</entry>
 
-<entry key="Lfx.strength">400 mg</entry>
+<entry key="Lfx.strength">250 mg</entry>
 <entry key="Lfx.type">tab</entry>
 <entry key="Lfx.frequency">Twice daily</entry>
 <!-- <entry key="Lfx.route">Oral</entry> -->
 <entry key="Lfx.route">160240</entry>
+
+<entry key="Lfx2.strength">500 mg</entry>
+<entry key="Lfx2.type">tab</entry>
+<entry key="Lfx2.frequency">Twice daily</entry>
+<!-- <entry key="Lfx2.route">Oral</entry> -->
+<entry key="Lfx2.route">160240</entry>
 
 <entry key="Mfx.strength">400 mg</entry>
 <entry key="Mfx.type">tab</entry>
@@ -128,11 +134,11 @@
 <!-- <entry key="PAS.route">Oral</entry> -->
 <entry key="PAS.route">160240</entry>
 
-<entry key="sodium PAS.strength">100 g jar</entry>
-<entry key="sodium PAS.type">scoop</entry>
-<entry key="sodium PAS.frequency">Twice daily</entry>
+<entry key="Sodium PAS.strength">100 g jar</entry>
+<entry key="Sodium PAS.type">scoop</entry>
+<entry key="Sodium PAS.frequency">Twice daily</entry>
 <!-- <entry key="sodium PAS.route">Oral</entry> -->
-<entry key="sodium PAS.route">160240</entry> 
+<entry key="Sodium PAS.route">160240</entry> 
 
 <entry key="Cfz.strength">100 mg</entry>
 <entry key="Cfz.type">tab</entry>

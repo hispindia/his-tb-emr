@@ -14,10 +14,14 @@
 
 package org.openmrs.module.kenyaemr.fragment.controller.field;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.InvalidPropertiesFormatException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.openmrs.Concept;
@@ -25,9 +29,11 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.module.kenyaemr.model.DrugInfo;
+import org.openmrs.module.kenyaemr.model.RegimenDetails;
 import org.openmrs.module.kenyaemr.regimen.RegimenDefinition;
 import org.openmrs.module.kenyaemr.regimen.RegimenDefinitionGroup;
 import org.openmrs.module.kenyaemr.regimen.RegimenManager;
+import org.openmrs.module.kenyaemr.regimen.RegimenPropertyConfiguration;
 import org.openmrs.module.kenyaemr.util.EmrUiUtils;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
@@ -73,6 +79,89 @@ public class RegimenSearchFragmentController {
 		model.addAttribute("count", 1);
 		Concept routeCon=Context.getConceptService().getConceptByUuid("162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		model.addAttribute("routeConAnss",routeCon.getAnswers());
+		
+		Properties props = new Properties();
+		InputStream stream=null;
+		for (RegimenPropertyConfiguration configuration : Context.getRegisteredComponents(RegimenPropertyConfiguration.class)) {
+				ClassLoader loader = configuration.getClassLoader();
+				stream = loader.getResourceAsStream(configuration.getDefinitionsPath());
+		}
+		try {
+			props.loadFromXML(stream);
+		} catch (InvalidPropertiesFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Concept concept1=Context.getConceptService().getConceptByUuid("71060AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept2=Context.getConceptService().getConceptByUuid("86767AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept3=Context.getConceptService().getConceptByUuid("78788AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept4=Context.getConceptService().getConceptByUuid("75976AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept5=Context.getConceptService().getConceptByUuid("74123AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept6=Context.getConceptService().getConceptByUuid("71108AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		
+		String drugNam="";
+	    
+		RegimenDetails regimenDetails1=new RegimenDetails();
+		drugNam=concept1.getName().getName();
+		regimenDetails1.setDrugName(concept1.getName().getName());
+		regimenDetails1.setDrugConcept(concept1.getConceptId());
+		regimenDetails1.setStrength(props.getProperty(drugNam+".strength"));
+		regimenDetails1.setFormulation(props.getProperty(drugNam+".type"));
+		regimenDetails1.setFrequency(props.getProperty(drugNam+".frequency"));
+		regimenDetails1.setRoute(props.getProperty(drugNam+".route"));
+		model.addAttribute("regimenDetails1",regimenDetails1);
+		
+		RegimenDetails regimenDetails2=new RegimenDetails();
+		drugNam=concept2.getName().getName();
+		regimenDetails2.setDrugName(concept2.getName().getName());
+		regimenDetails2.setDrugConcept(concept2.getConceptId());
+		regimenDetails2.setStrength(props.getProperty(drugNam+".strength"));
+		regimenDetails2.setFormulation(props.getProperty(drugNam+".type"));
+		regimenDetails2.setFrequency(props.getProperty(drugNam+".frequency"));
+		regimenDetails2.setRoute(props.getProperty(drugNam+".route"));
+		model.addAttribute("regimenDetails2",regimenDetails2);
+		
+		RegimenDetails regimenDetails3=new RegimenDetails();
+		drugNam=concept3.getName().getName();
+		regimenDetails3.setDrugName(concept3.getName().getName());
+		regimenDetails3.setDrugConcept(concept3.getConceptId());
+		regimenDetails3.setStrength(props.getProperty(drugNam+".strength"));
+		regimenDetails3.setFormulation(props.getProperty(drugNam+".type"));
+		regimenDetails3.setFrequency(props.getProperty(drugNam+".frequency"));
+		regimenDetails3.setRoute(props.getProperty(drugNam+".route"));
+		model.addAttribute("regimenDetails3",regimenDetails3);
+		
+		RegimenDetails regimenDetails4=new RegimenDetails();
+		drugNam=concept4.getName().getName();
+		regimenDetails4.setDrugName(concept4.getName().getName());
+		regimenDetails4.setDrugConcept(concept4.getConceptId());
+		regimenDetails4.setStrength(props.getProperty(drugNam+".strength"));
+		regimenDetails4.setFormulation(props.getProperty(drugNam+".type"));
+		regimenDetails4.setFrequency(props.getProperty(drugNam+".frequency"));
+		regimenDetails4.setRoute(props.getProperty(drugNam+".route"));
+		model.addAttribute("regimenDetails4",regimenDetails4);
+		
+		RegimenDetails regimenDetails5=new RegimenDetails();
+		drugNam=concept5.getName().getName();
+		regimenDetails5.setDrugName(concept5.getName().getName());
+		regimenDetails5.setDrugConcept(concept5.getConceptId());
+		regimenDetails5.setStrength(props.getProperty(drugNam+".strength"));
+		regimenDetails5.setFormulation(props.getProperty(drugNam+".type"));
+		regimenDetails5.setFrequency(props.getProperty(drugNam+".frequency"));
+		regimenDetails5.setRoute(props.getProperty(drugNam+".route"));
+		model.addAttribute("regimenDetails5",regimenDetails5);
+		
+		RegimenDetails regimenDetails6=new RegimenDetails();
+		drugNam=concept6.getName().getName();
+		regimenDetails6.setDrugName(concept6.getName().getName());
+		regimenDetails6.setDrugConcept(concept6.getConceptId());
+		regimenDetails6.setStrength(props.getProperty(drugNam+".strength"));
+		regimenDetails6.setFormulation(props.getProperty(drugNam+".type"));
+		regimenDetails6.setFrequency(props.getProperty(drugNam+".frequency"));
+		regimenDetails6.setRoute(props.getProperty(drugNam+".route"));
+		model.addAttribute("regimenDetails6",regimenDetails6);
 	}
 
 	/**

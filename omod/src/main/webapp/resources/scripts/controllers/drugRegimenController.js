@@ -19,7 +19,7 @@ $scope.drugSearch = function(drugKey){
 
 kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	
-	$scope.choices = [{srNo:'1',srNumber:'srNumber1',id:'choice1',drugKey:'drugKey1',drugConcept:'drugConcept1',strength:'strength1',noOfTablet:'noOfTablet1',route:'route1',type: 'type1',frequncy: 'frequncy1',duration:'duration1'}];
+	$scope.choices = [{srNo:'6',srNumber:'srNumber6',id:'choice6',drugKey:'drugKey6',drugConcept:'drugConcept6',strength:'strength6',noOfTablet:'noOfTablet6',route:'route6',type: 'type6',frequncy: 'frequncy6',duration:'duration6'}];
 	$scope.addNewChoice = function() {
 		var newItemNo = $scope.choices.length+1;
 		$scope.choices.push({srNo:newItemNo,srNumber:'srNumber'+newItemNo,id:'choice'+newItemNo,drugKey:'drugKey'+newItemNo,drugConcept:'drugConcept'+newItemNo,strength:'strength'+newItemNo,noOfTablet:'noOfTablet'+newItemNo,route:'route'+newItemNo,type: 'type'+newItemNo,frequncy:'frequncy'+newItemNo,duration:'duration'+newItemNo});
