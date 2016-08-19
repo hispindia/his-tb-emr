@@ -57,10 +57,12 @@
 				<ref bean="kenyaemr.tb.report.failedMDRTBtreatment"/>
 				<!-- NTP Reports -->
 				
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.detection"/>
+				<ref bean="kenyaemr.tb.report.patient.registered.12.15"/>
 				<ref bean="kenyaemr.tb.report.patient.mdrtb.pas"/>
 				<ref bean="kenyaemr.tb.report.patient.mdrtb.without.pas"/>
 				<ref bean="kenyaemr.tb.report.patient.mdrtb.total"/>
-	 	<!--
+	 	<!-- 
 				<ref bean="kenyaemr.common.report.moh711" />
 				<ref bean="kenyaemr.common.report.artDrug" />
 				<ref bean="kenyaemr.common.report.moh731" />
@@ -529,6 +531,21 @@
 		
 	<!-- NTP reports TB -->
 
+<bean id="kenyaemr.tb.report.patient.mdrtb.detection" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<property name="targetUuid" value="f29cc076-5e7d-4bc7-89c2-421d4f59b1ed" />
+		<property name="name" value="Quarterly  Report on MDR-TB case detection" />
+		<property name="description" value="Quarterly  Report on MDR-TB case detection" />
+		
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.patient.registered.12.15" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<property name="targetUuid" value="11dfba2f-1510-4180-afa2-48a9be8bce59" />
+		<property name="name" value="TB patients registered 12-15 months earlier" />
+		<property name="description" value="Quarterly report on the result of TB patients registered 12-15 months earlier" />
+	
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	
 		<bean id="kenyaemr.tb.report.patient.mdrtb.pas" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
 		<property name="targetUuid" value="fda0848f-e964-4e60-93e3-5be68054e11c" />
 		<property name="name" value="MDR TB patients with pas regimen" />

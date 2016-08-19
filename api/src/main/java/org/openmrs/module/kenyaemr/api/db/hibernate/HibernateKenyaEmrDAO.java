@@ -420,7 +420,21 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 	@Override
 	public List<DrugOrderProcessed> getPatientWithPASregime() {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugOrderProcessed.class,"drugOrderProcessed");
-		criteria.add(Restrictions.eq("regimenConcept",Context.getConceptService().getConceptByUuid("86767AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
+		criteria.add(Restrictions.eq("regimenNo",new String("Standard Regimen 2")));
+		return criteria.list();
+	}
+
+	@Override
+	public List<DrugOrderProcessed> getPatientWithoutPASregime() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugOrderProcessed.class,"drugOrderProcessed");
+		criteria.add(Restrictions.eq("regimenNo",new String("Standard Regimen 1")));
+		return criteria.list();
+	}
+
+	@Override
+	public List<DrugOrderProcessed> getPatientWitheitherPASregime() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DrugOrderProcessed.class,"drugOrderProcessed");
+		criteria.add(Restrictions.in("regimenNo",new String[]{"Standard Regimen 1","Standard Regimen 2"}));
 		return criteria.list();
 	}
 }

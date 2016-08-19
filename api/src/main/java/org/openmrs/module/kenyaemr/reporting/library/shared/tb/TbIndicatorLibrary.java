@@ -1053,55 +1053,244 @@ public class TbIndicatorLibrary {
 				map(tbCohorts.transferOutOutOfControlDiedCompletedTreatmentExtraPulmonaryTbResultsAt8Months(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
-
-
 	public CohortIndicator confirmedTB() {
 		return cohortIndicator("Total Patient confirmed on TB Treatment ",
 				map(tbCohorts.totalpatientOnConfirmedtb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
 
+	public CohortIndicator confirmedTBwithpas() {
+		return cohortIndicator("Total Patient confirmed on TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedtbwithpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedTBwithoutpas() {
+		return cohortIndicator("Total Patient confirmed on TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedtbwithoutpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedTBwitheitherpas() {
+		return cohortIndicator("Total Patient confirmed on TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedtbwitheitherpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 	public CohortIndicator confirmedCatITB() {
 		return cohortIndicator("Total Patient confirmed on Cat I TB Treatment ",
 				map(tbCohorts.totalpatientOnConfirmedCatItb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
-
+	public CohortIndicator confirmedCatITBwithpas() {
+		return cohortIndicator("Total Patient confirmed on Cat I TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedCatItbwithpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedCatITBwithoutpas() {
+		return cohortIndicator("Total Patient confirmed on Cat I TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedCatItbwithoutpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedCatITBwitheitherpas() {
+		return cohortIndicator("Total Patient confirmed on Cat I TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedCatItbwitheitherpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 	public CohortIndicator confirmedCatIITB() {
 		return cohortIndicator("Total Patient confirmed on Cat II TB Treatment ",
 				map(tbCohorts.totalpatientOnConfirmedCatIItb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
-
+	
+	public CohortIndicator confirmedCatIITBwithpas() {
+		return cohortIndicator("Total Patient confirmed on Cat II TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedCatIItbwithpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedCatIITBwithoutpas() {
+		return cohortIndicator("Total Patient confirmed on Cat II TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedCatIItbwithoutpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedCatIITBwitheitherpas() {
+		return cohortIndicator("Total Patient confirmed on Cat II TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedCatIItbwitheitherpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 	public CohortIndicator confirmedDefaultTB() {
 		return cohortIndicator("Total Patient confirmed on Default TB Treatment ",
 				map(tbCohorts.totalpatientOnConfirmedDefaulttb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
-
+	public CohortIndicator confirmedDefaultwithpasTB() {
+		return cohortIndicator("Total Patient confirmed on Default TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedDefaulttbwithpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedDefaultwithoutpasTB() {
+		return cohortIndicator("Total Patient confirmed on Default TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedDefaulttbwithoutpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedDefaultTBwitheitherpas() {
+		return cohortIndicator("Total Patient confirmed on Default TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedDefaulttbwitheitherpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 	public CohortIndicator confirmedstandardMDRTB() {
 		return cohortIndicator("Total Patient confirmed on Standard TB Treatment ",
 				map(tbCohorts.totalpatientOnConfirmedStandardtb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
-
+	public CohortIndicator confirmedstandardMDRTBwithpas() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedStandardtbwithpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedstandardMDRTBwithoutpas() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedStandardtbwithoutpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmedstandardMDRTBwitheitherpas() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment ",
+				map(tbCohorts.totalpatientOnConfirmedStandardtbwitheitherpas(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 	public CohortIndicator Tbsmearculturewithpas() {
 		return cohortIndicator("Total Patient confirmed on Standard TB Treatment smear (+)ve  culture (+)ve with pas",
 				map(tbCohorts.totalpatientOutcomewithpasmearpositive(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
+	public CohortIndicator Tbsmearculturewithoutpas() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment smear (+)ve  culture (+)ve with pas",
+				map(tbCohorts.totalpatientOutcomewithoutpasmearpositive(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 
+	public CohortIndicator Tbsmearculturewitheitherpas() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment smear (+)ve  culture (+)ve with pas",
+				map(tbCohorts.totalpatientOutcomewitheitherpasmearpositive(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 	public CohortIndicator Tbsmearnegativeculturewithpas() {
 		return cohortIndicator("Total Patient confirmed on Standard TB Treatment smear (-)ve culture(+) ve with pas",
 				map(tbCohorts.totalpatientOutcomewithpaswithsmearnegative(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
-
+	
+	
+	public CohortIndicator Tbsmearnegativeculturewithoutpas() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment smear (-)ve culture(+) ve with pas",
+				map(tbCohorts.totalpatientOutcomewithoutpaswithsmearnegative(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator Tbsmearnegativeculturewitheitherpas() {
+		return cohortIndicator("Total Patient confirmed on Standard TB Treatment smear (-)ve culture(+) ve with pas",
+				map(tbCohorts.totalpatientOutcomewithpaswitheithersmearnegative(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 	public CohortIndicator confirmednewCategoryMDRTB() {
+		return cohortIndicator("Total Patient confirmed on New category with pas",
+				map(tbCohorts.totalpatientOutcomewithNewCategory(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmednewCategoryMDRTBwithpas() {
 		return cohortIndicator("Total Patient confirmed on New category with pas",
 				map(tbCohorts.totalpatientOutcomewithpaswithNewCategory(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
-
+	public CohortIndicator confirmednewCategoryMDRTBwithoutpas() {
+		return cohortIndicator("Total Patient confirmed on New category with pas",
+				map(tbCohorts.totalpatientOutcomewithoutpaswithoutNewCategory(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator confirmednewCategoryMDRTBwitheitherpas() {
+		return cohortIndicator("Total Patient confirmed on New category with pas",
+				map(tbCohorts.totalpatientOutcomewithoutpaswitheitherNewCategory(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public  CohortIndicator registeredTB() {
+		return cohortIndicator("Total Enrolled ",
+				map(tbCohorts.totalpatientRegisteredInTb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator startedTB() {
+		return cohortIndicator("Total Patient started on TB Treatment ",
+				map(tbCohorts.totalpatientOnMedicationInTb(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator totalenrolledtbpatientwithsmearnegativeculturenegative() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultswithsmearnegativeculturenegativeAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator totalenrolledtbpatientwithsmearnegativeculturepositive() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultswithsmearnegativeculturepositiveAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 	
+	
+	public CohortIndicator totalenrolledtbpatientwithsmearpositiveculturenegative() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultswithsmearpositiveculturenegativeAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	
+	public CohortIndicator totalenrolledtbpatientwithsmearpositivecultureunknown() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultswithsmearpositivecultureunknownAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator totalenrolledtbpatientwithsmearunknownculturenegative() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultswithsmearunknownculturenegativeAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator totalenrolledtbpatientwithsmearunknownculturepositive() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultswithsmearunknownculturepositiveAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+    
+	public CohortIndicator totalenrolledtbpatientwithsmearunknowncultureunknown() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultswithsmearunknowncultureunknownAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator totalenrolledtbpatientwithsmearnegativecultureunknown() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultswithsmearnegativecultureunknownAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	
+	public CohortIndicator totalenrolledtbpatientwithsmearpositiveculturepositive() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultswithsmearpositiveculturepositiveAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator totalenrolledtbpatientwithdiedoutcome() {
+		return cohortIndicator("Total patients  with died out come",
+				map(tbCohorts.treatmentOutcome_Died(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator totalenrolledtbpatientwithlosstofollowupoutcome() {
+		return cohortIndicator("Total patients  with loss to follow up to come",
+				map(tbCohorts.treatmentOutcome_Defaulted(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator totalenrolledtbpatientwithnotevaluatedoutcome() {
+		return cohortIndicator("Total patients  with transferred outcome",
+				map(tbCohorts.treatmentOutcome_Transferedout(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+	public CohortIndicator totalenrolledtbpatient() {
+		return cohortIndicator("Total enrolled patients",
+				map(tbCohorts.totalEnrolledResultsAtMonths(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+
+
 }

@@ -428,4 +428,14 @@ public class KenyaEmrServiceImpl extends BaseOpenmrsService implements KenyaEmrS
 	public List<DrugOrderProcessed> getPatientWithPASregime() {
 		return dao.getPatientWithPASregime();
 	}
+	@Override
+	public List<DrugOrderProcessed> getPatientWithoutPASregime() {
+		return dao.getPatientWithoutPASregime();
+	}
+
+	@Override
+	public List<DrugOrderProcessed> getPatientWitheitherPASregime() {
+		return dao.getPatientWitheitherPASregime();
+	}
+	
 }

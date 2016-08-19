@@ -151,4 +151,6 @@ public interface KenyaEmrService extends OpenmrsService {
 	public List<PersonAddress> getPatientsByTownship(String township);
 	public List<Obs> getObsByScheduledDate(Date date);
 	public List<DrugOrderProcessed> getPatientWithPASregime();
+	public List<DrugOrderProcessed> getPatientWithoutPASregime();
+	public List<DrugOrderProcessed> getPatientWitheitherPASregime();
 }
