@@ -127,7 +127,7 @@
 		<comment>
 		</comment>
 		<sql>
-		CREATE TABLE IF NOT EXISTS drug_order_processed (id integer not null auto_increment, drug_order integer,patient_id integer,created_date datetime,processed_date datetime,processed_status tinyint(1),dose varchar(30),no_of_tablet integer,route_concept integer,duration_preprocess integer,discontinued_date datetime,discontinued_reason integer,discontinued_reason_non_coded varchar(255),quantity_postprocess integer,regimen_concept integer,regimen_change_type varchar(70),type_of_regimen varchar(50),primary key (id));
+		CREATE TABLE IF NOT EXISTS drug_order_processed (id integer not null auto_increment, drug_order integer,patient_id integer,created_date datetime,processed_date datetime,processed_status tinyint(1),dose varchar(30),no_of_tablet integer,route_concept integer,duration_preprocess integer,discontinued_date datetime,discontinued_reason integer,discontinued_reason_non_coded varchar(255),quantity_postprocess integer,regimen_concept integer,regimen_change_type varchar(70),type_of_regimen varchar(50),regimen_no varchar(30),primary key (id));
 		</sql>
 	</changeSet>
 	

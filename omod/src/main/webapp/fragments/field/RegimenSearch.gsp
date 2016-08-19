@@ -184,6 +184,14 @@
 </table>
 </fieldset>
 
+<table>
+<tbody>
+<tr>
+<td class="colA" style="text-align:center"><input type="hidden" id="regimenNo" name="regimenNo"></td>
+</tr>
+</tbody>
+</table>
+
 </div>
 
 <script type="text/javascript">
@@ -271,6 +279,8 @@ jQuery('#type6').val("");
 jQuery('#frequncy6').val("");
 jQuery('#route6').val("");
 jQuery('#drugConcept6').val("");
+
+jQuery('#regimenNo').val("Standard Regimen 1");
 }
 else{
 jQuery('#drugKey1').val('${regimenDetails1.drugName}');
@@ -314,6 +324,8 @@ jQuery('#type6').val('${regimenDetails6.formulation}');
 jQuery('#frequncy6').val('${regimenDetails6.frequency}');
 jQuery('#route6').val('${regimenDetails6.route}');
 jQuery('#drugConcept6').val('${regimenDetails6.drugConcept}');
+
+jQuery('#regimenNo').val("Standard Regimen 2");
 }
 
 }

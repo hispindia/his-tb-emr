@@ -296,6 +296,7 @@ public class RegimenUtilFragmentController {
 				drugOrderProcessed.setRegimenConcept(drugConcept);
 				drugOrderProcessed.setRegimenChangeType(changeType.name());
 				drugOrderProcessed.setTypeOfRegimen(typeOfRegimen);	
+				drugOrderProcessed.setRegimenNo(request.getParameter("regimenNo"));
 				kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
 				}
 			   }

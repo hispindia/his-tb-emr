@@ -27,5 +27,6 @@
 		<many-to-one name="regimenConcept" column="regimen_concept" class="org.openmrs.Concept" foreign-key="fk_regimenconcept"/>
 		<property name="regimenChangeType" column="regimen_change_type" />
 		<property name="typeOfRegimen" column="type_of_regimen" />
+		<property name="regimenNo" column="regimen_no" />
 	</class>
 </hibernate-mapping>

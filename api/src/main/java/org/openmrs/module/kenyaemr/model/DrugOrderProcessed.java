@@ -25,6 +25,7 @@ public class DrugOrderProcessed implements java.io.Serializable {
 	private Concept regimenConcept;
 	private String regimenChangeType;
 	private String typeOfRegimen;
+	private String regimenNo;
 
 	public Integer getId() {
 		return id;
@@ -161,4 +162,13 @@ public class DrugOrderProcessed implements java.io.Serializable {
 	public void setRegimenChangeType(String regimenChangeType) {
 		this.regimenChangeType = regimenChangeType;
 	}
+
+	public String getRegimenNo() {
+		return regimenNo;
+	}
+
+	public void setRegimenNo(String regimenNo) {
+		this.regimenNo = regimenNo;
+	}
+
 }
