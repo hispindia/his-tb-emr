@@ -16,7 +16,7 @@
 
 %>
 
-<div ng-controller="DrugCtrl" data-ng-init="init()">
+<div id="regimenSearch" ng-controller="DrugCtrl" data-ng-init="init()">
 
 <table>
 <tbody>
@@ -151,7 +151,7 @@
 <td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForRegimenSearch(drugKey);" /></td>
 <td class="colI" style="text-align:center"></td>
 <td class="colJ" style="text-align:center"></td>
-<td class="colK" style="text-align:center"><input type="hidden" id="srNumber4" name="srNo" value="5"></td>
+<td class="colK" style="text-align:center"><input type="hidden" id="srNumber5" name="srNo" value="5"></td>
 <td class="colL" style="text-align:center"><input type="hidden" id="drugConcept5" name="drugConcept5"></td>
 </tr>
 </tbody>

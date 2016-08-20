@@ -36,8 +36,8 @@
 <td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForContinueRegimenSearch('${drugOrderProcessed.drugOrder.concept.name}');" /></td>
 <td class="colI" style="text-align:center"></td>
 <td class="colJ" style="text-align:center"></td>
-<td class="colK" style="text-align:center"><input type="hidden" id="srNumber${count}" name="srNo" value="${count++}"></td>
-<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept${count}" name="drugConcept${count}" value={{drugOrderProcessed.regimenConcept.conceptId}}></td>
+<td class="colK" style="text-align:center"><input type="hidden" id="srNumber${count}" name="srNo" value="${count}"></td>
+<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept${count}" name="drugConcept${count++}" value="${drugOrderProcessed.regimenConcept.conceptId}"></td>
 </tr>
 <% } %>
 </tbody>

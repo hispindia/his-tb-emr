@@ -331,6 +331,7 @@ public class RegimenUtilFragmentController {
 							drugOrderProcessed.setRegimenConcept(dop.getRegimenConcept());
 							drugOrderProcessed.setRegimenChangeType(changeType.name());
 							drugOrderProcessed.setTypeOfRegimen(dop.getTypeOfRegimen());	
+							drugOrderProcessed.setRegimenNo(dop.getRegimenNo());
 							kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
 					}	
 				}
@@ -338,15 +339,31 @@ public class RegimenUtilFragmentController {
 				if (srNo != null) {
 					for (String srn : srNo) {
 				Concept drugConcept=null;
-				//String drugRegimen=request.getParameter("drugKey"+srn);
-				Integer drugConceptId=Integer.parseInt(request.getParameter("drugConcept"+srn));
-				//Double dose=Double.parseDouble(request.getParameter("strength"+srn));
-				String dose=request.getParameter("strength"+srn);
-				Integer noOfTablet=Integer.parseInt(request.getParameter("noOfTablet"+srn));
-				String units=request.getParameter("type"+srn);
-				String frequency=request.getParameter("frequncy"+srn);
-				Integer route=Integer.parseInt(request.getParameter("route"+srn));
-				Integer duration=Integer.parseInt(request.getParameter("duration"+srn));
+				String drugConcepString=request.getParameter("drugConcept"+srn);
+				String noOfTabletString=request.getParameter("noOfTablet"+srn);
+				String routeString=request.getParameter("route"+srn);
+				String durationString=request.getParameter("duration"+srn);
+				
+				String doseString=request.getParameter("strength"+srn);
+				String unitsString=request.getParameter("type"+srn);
+				String frequencyString=request.getParameter("frequncy"+srn);
+				
+				Integer drugConceptId=null;
+				Integer noOfTablet=null;
+				Integer route=null;
+				Integer duration=null;
+				String dose=null;
+				String units=null;
+				String frequency=null;
+				if(drugConcepString!="" && noOfTabletString!="" && routeString!="" && durationString!="" && doseString!="" && unitsString!="" && frequencyString!=""){
+				drugConceptId=Integer.parseInt(drugConcepString);
+				noOfTablet=Integer.parseInt(request.getParameter("noOfTablet"+srn));
+				route=Integer.parseInt(routeString);
+				duration=Integer.parseInt(durationString);
+				dose=request.getParameter("strength"+srn);
+				units=request.getParameter("type"+srn);
+				frequency=request.getParameter("frequncy"+srn);
+				}
 
 				if(drugConceptId!=null){
 					 drugConcept=Context.getConceptService().getConcept(drugConceptId);
@@ -385,6 +402,7 @@ public class RegimenUtilFragmentController {
 						drugOrderProcessed.setRegimenConcept(drugConcept);
 						drugOrderProcessed.setRegimenChangeType(changeType.name());
 						drugOrderProcessed.setTypeOfRegimen(typeOfRegimen);	
+						drugOrderProcessed.setRegimenNo(request.getParameter("regimenNo"));
 						kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
 						}
 					}
@@ -427,6 +445,7 @@ public class RegimenUtilFragmentController {
 				drugOrderProcessed.setRegimenConcept(drugConcept);
 				drugOrderProcessed.setRegimenChangeType(changeType.name());
 				drugOrderProcessed.setTypeOfRegimen(typeOfRegimen);	
+				drugOrderProcessed.setRegimenNo(request.getParameter("regimenNo"));
 				kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
 			  }
 			 }

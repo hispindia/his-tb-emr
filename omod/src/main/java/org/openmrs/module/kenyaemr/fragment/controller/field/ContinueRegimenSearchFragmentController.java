@@ -55,7 +55,6 @@ public class ContinueRegimenSearchFragmentController {
 		KenyaEmrService kenyaEmrService = (KenyaEmrService) Context.getService(KenyaEmrService.class);
 		model.addAttribute("patient", patient);
 		
-		OrderService os = Context.getOrderService();
 		Concept masterSet = regimenManager.getMasterSetConcept(category);
 		RegimenChangeHistory history = RegimenChangeHistory.forPatient(patient, masterSet);
 		RegimenChange lastChange = history.getLastChange();
