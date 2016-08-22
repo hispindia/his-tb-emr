@@ -142,20 +142,19 @@ table.tb1 tr th, table.tb1 tr td {
 				return false;
 				});
 
+			/*
 			// show fields with data 
 			
 			if( checkData!="" &amp;&amp; document.getElementById("w19").value!='' &amp;&amp; optValues == 42 ){ 
 				fieldIndex = 55;
 			}
-			else if( checkData!="" &amp;&amp; document.getElementById("w87").value!=null &amp;&amp; optValues == 42 )
-				{ 
+			else if(checkData!="" &amp;&amp; optValues == 42 ){
 				fieldIndex = 49;
-				}
+			}
 			else if( checkData!="" &amp;&amp; optValues == 156204 || optValues == 163055)
-			{  if(document.getElementById("w87").value!='')
+			{  if(document.getElementById("w87")!=null)
 				{
-				
-			fieldIndex = 59;
+					fieldIndex = 59;
 				}
 			else
 				{
@@ -167,8 +166,12 @@ table.tb1 tr th, table.tb1 tr td {
 			else{ 
 				fieldIndex = 71;
 			}
+			
+			*/
+			
+			
 			j=1;
-		
+
 			if(document.getElementById("w"+fieldIndex)!=null)
 			{	
 			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
@@ -188,6 +191,81 @@ table.tb1 tr th, table.tb1 tr td {
 			}
 			}
 
+			fieldIndex = 71;
+			if(document.getElementById("w"+fieldIndex)!=null)
+			{	
+			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
+				//alert(document.getElementById("w"+38).value);
+				
+				jQuery('#'+j+'-toggleContainer2').show();   
+				fieldIndex=fieldIndex+2; 
+				if(document.getElementById("w"+fieldIndex)!=null)
+				{
+				if(document.getElementById("w"+fieldIndex).value != '')
+					{
+				$j('#'+j+'-removeEntry2').toggle(false);
+				$j('#'+j+'-addEntry2').toggle(false);
+					}
+				}
+				j++;
+			}
+			}
+
+			else if(document.getElementById("w59")!=null)
+			{	
+			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
+				//alert(document.getElementById("w"+38).value);
+				
+				jQuery('#'+j+'-toggleContainer2').show();   
+				fieldIndex=fieldIndex+2; 
+				if(document.getElementById("w"+fieldIndex)!=null)
+				{
+				if(document.getElementById("w"+fieldIndex).value != '')
+					{
+				$j('#'+j+'-removeEntry2').toggle(false);
+				$j('#'+j+'-addEntry2').toggle(false);
+					}
+				}
+				j++;
+			}
+			}
+			else if(document.getElementById("w65")!=null)
+			{	
+			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
+				//alert(document.getElementById("w"+38).value);
+				
+				jQuery('#'+j+'-toggleContainer2').show();   
+				fieldIndex=fieldIndex+2; 
+				if(document.getElementById("w"+fieldIndex)!=null)
+				{
+				if(document.getElementById("w"+fieldIndex).value != '')
+					{
+				$j('#'+j+'-removeEntry2').toggle(false);
+				$j('#'+j+'-addEntry2').toggle(false);
+					}
+				}
+				j++;
+			}
+			}
+			else if(document.getElementById("w49")!=null)
+			{	
+			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
+				//alert(document.getElementById("w"+38).value);
+				
+				jQuery('#'+j+'-toggleContainer2').show();   
+				fieldIndex=fieldIndex+2; 
+				if(document.getElementById("w"+fieldIndex)!=null)
+				{
+				if(document.getElementById("w"+fieldIndex).value != '')
+					{
+				$j('#'+j+'-removeEntry2').toggle(false);
+				$j('#'+j+'-addEntry2').toggle(false);
+					}
+				}
+				j++;
+			}
+			}
+			
 			$j('#1-removeEntry2').remove();
 			$j('#5-addEntry2').remove();
 			$j('#1-toggleContainer2').show();
@@ -970,7 +1048,7 @@ table.tb1 tr th, table.tb1 tr td {
 							<td><obs conceptId="1526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 									style="radio" /></td>
 						</tr>
-						<tr>
+						<tr style="display: none">
 							<td>Treatment centre</td>
 							<td><obs conceptId="159804AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 									style="location" /></td>

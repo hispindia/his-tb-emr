@@ -76,7 +76,7 @@
 					<table width="100%" border="1">
 			            <tr bgcolor="#778899">
 							<td colspan="3">
-								<h4><strong><center>Drug abbreviations</center> </strong></h4>
+								<h4><strong><center>Treatment related details</center> </strong></h4>
 							</td>
 						</tr>
 			            <tr>
@@ -177,13 +177,69 @@
 			    
 				</td>
 			</tr>
-		<% /** <tr>
-				<td colspan="6" width="50%" valign="top">
-				${ ui.includeFragment("kenyaui", "widget/obsHistoryTable", [ id: "tblhistory", patient: currentPatient, concepts: graphingConcepts ]) }
+			<tr bgcolor="#778899">
+				<td colspan="6">
+					<h4><strong><center>Daignosis</center> </strong></h4>
 				</td>
-			</tr> */%>
+			</tr>
+			<tr>
+				<td valign="top"  colspan="6">
+					${ ui.includeFragment("kenyaui", "widget/obsHistoryTable", [ id: "tblhistory", patient: currentPatient, concepts: graphingConcepts ]) }
+				</td>
+			</tr>
 			
-		<tr>
+			<tr>
+  				<td width="50%" colspan="6" valign="top">
+	                <table width="100%" border="1">
+	                	<tr bgcolor="#778899">
+							<td colspan="3">
+								<h4><center><strong>DST Result</strong></center></h4>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<table border="1" width="100%">
+									<tr >
+										<th colspan="1"><strong>Drug</strong></th>
+										<th colspan="1"><strong>R</strong></th>
+										<th colspan="1"><strong>H</strong></th>
+										<th colspan="1"><strong>E</strong></th>
+										<th colspan="1"><strong>S</strong></th>
+										<th colspan="1"><strong>Km</strong></th>
+										<th colspan="1"><strong>Cm</strong></th>
+										<th colspan="1"><strong>Fq</strong></th>
+										<th colspan="1"><strong>Pto/Eto</strong></th>
+										<th colspan="1"><strong>Other</strong></th>
+										<th colspan="1"><strong>Date of DST</strong></th>
+										<th colspan="1"><strong>Culture Number</strong></th>
+									</tr>
+								<% for ( d in cultureDstList ) { %>
+								<% def values = d.value.split(",")	%>
+									<tr>
+										<td colspan="1"><% println  d.key+1  %></td>
+										<td colspan="1"><% println  values[3] %> </td>
+										<td colspan="1"><% println  values[2] %> </td>
+										<td colspan="1"><% println  values[4] %> </td>
+										<td colspan="1"><% println  values[1] %> </td>
+										<td colspan="1"><% println  values[7] %> </td>
+										<td colspan="1"><% println  values[6] %> </td>
+										<td colspan="1"><% println  values[10] %> </td>
+										<td colspan="1"><% println  values[5] %> </td>
+										<td colspan="1"><% println  values[8] %> </td>
+										<td colspan="1"><% println  values[0] %> </td>
+										<td colspan="1"><% println  values[9] %> </td>
+									</tr>
+									<% } %>
+								</table>
+							</td>
+			             </tr>
+			          </table>
+				</td> 
+			</tr>
+			
+			
+
+			<tr>
   				<td width="100%" colspan="6" valign="top">
 	                <table width="100%" border="1">
 	                	<tr bgcolor="#778899">

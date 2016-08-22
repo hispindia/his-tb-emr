@@ -136,8 +136,10 @@ public class ChartViewPatientPageController {
 		Obs cultureDstCM = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_CM);
 		Obs cultureDstKmAmk = getAllLatestObs(patient, Dictionary.CULTURE_DRUG_KM_AMK);
 		Obs cultureDstOther = getAllLatestObs(patient, Dictionary.OTHER_NON_CODED);
-
+		Obs cultureNumber = getAllLatestObs(patient, Dictionary.CULTURE_NUMBER);
+		Obs cultureDstFq = getAllLatestObs(patient, Dictionary.OFLOXACIN);
 		
+				
 		Map<Integer, String> cultureDstList = new HashMap<Integer, String>();
 		Integer cultureDstIndex = 0;
 		if (cultureDstDetail != null) {
@@ -155,6 +157,21 @@ public class ChartViewPatientPageController {
 				String cultureDstCMVal = "";
 				String cultureDstKmAmkVal = "";
 				String cultureDstOtherVal = "";
+				String cultureNumberVal = "";
+				String cultureDstFqVal = "";
+				
+
+				if (cultureNumber != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureNumber.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureNumber.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureNumberVal = cultureNumberVal.concat(obs
+									.getValueText());
+						}
+					}
+				}
 				
 				if (cultureDstDate != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
@@ -166,6 +183,19 @@ public class ChartViewPatientPageController {
 						}
 					}
 				}
+				
+				if (cultureDstFq != null) {
+					EncounterWrapper wrapped = new EncounterWrapper(
+							cultureDstFq.getEncounter());
+					List<Obs> obsList = wrapped.allObs(cultureDstFq.getConcept());
+					for (Obs obs : obsList) {
+						if (obs.getObsGroupId() == obsG.getObsId()) {
+							cultureDstFqVal =  cultureDstFqVal.concat(obs
+									.getValueCoded().getName().toString());
+						}
+					}
+				}
+				
 
 				if (cultureDstS != null) {
 					EncounterWrapper wrapped = new EncounterWrapper(
@@ -264,7 +294,8 @@ public class ChartViewPatientPageController {
 				}
 
 				String val = cultureDstDateVal + ", " + cultureDstSVal+ ", " + cultureDstHVal + ", " +cultureDstRVal+ ", " +cultureDstEVal
-				+ ", " +cultureDstPtoEtoVal+ ", " +cultureDstCMVal+ ", " +cultureDstKmAmkVal+ ", " +cultureDstOtherVal;
+				+ ", " +cultureDstPtoEtoVal+ ", " +cultureDstCMVal+ ", " +cultureDstKmAmkVal+ ", " +cultureDstOtherVal
+				+ ", " + cultureNumberVal + ", " + cultureDstFqVal;
 				cultureDstList.put(cultureDstIndex, val);
 				cultureDstIndex++;
 			}

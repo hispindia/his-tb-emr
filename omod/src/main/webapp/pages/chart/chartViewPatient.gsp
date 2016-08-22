@@ -109,6 +109,7 @@
 										<th colspan="1"><strong>Pto/Eto</strong></th>
 										<th colspan="1"><strong>Other</strong></th>
 										<th colspan="1"><strong>Date of DST</strong></th>
+										<th colspan="1"><strong>Culture Number</strong></th>
 									</tr>
 								<% for ( d in cultureDstList ) { %>
 								<% def values = d.value.split(",")	%>
@@ -120,10 +121,11 @@
 										<td colspan="1"><% println  values[1] %> </td>
 										<td colspan="1"><% println  values[7] %> </td>
 										<td colspan="1"><% println  values[6] %> </td>
-										<td colspan="1"> </td>
+										<td colspan="1"><% println  values[10] %> </td>
 										<td colspan="1"><% println  values[5] %> </td>
 										<td colspan="1"><% println  values[8] %> </td>
 										<td colspan="1"><% println  values[0] %> </td>
+										<td colspan="1"><% println  values[9] %> </td>
 									</tr>
 									<% } %>
 								</table>
