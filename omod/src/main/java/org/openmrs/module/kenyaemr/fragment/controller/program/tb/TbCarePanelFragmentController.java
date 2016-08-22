@@ -116,14 +116,14 @@ public class TbCarePanelFragmentController {
 						}
 					}
 				}
-				else if(cultureLiquid != null){
+				if(cultureLiquid != null){
 					for (Obs obs : cultureLiquid) {
 						if (obs.getEncounter().getVisit().equals(v)) {
 							cultureVal = obs.getValueCoded().getName().toString();
 						}
 					}
 				}
-				else if(cultureSputum != null){
+		/*		if(cultureSputum != null){
 					for (Obs obs : cultureSputum) {
 						if (obs.getEncounter().getVisit().equals(v)) {
 							if(obs.getValueCoded()!=null){
@@ -131,7 +131,7 @@ public class TbCarePanelFragmentController {
 							}
 						}
 					}
-				}
+				}*/
 				visitIndex--;
 				String val = visitDate + ", " + sputumSmearVal+ ", " + cultureVal ;
 				smearCultureIndexList.put(visitIndex, val);
@@ -153,7 +153,6 @@ public class TbCarePanelFragmentController {
 		Concept concept = Dictionary.getConcept(conceptIdentifier);
 		List<Obs> obs = Context.getObsService()
 				.getObservationsByPersonAndConcept(patient, concept);
-		int count = obs.size() - 1;
 		if (obs.size() > 0) {
 			// these are in reverse chronological order
 			return obs;
