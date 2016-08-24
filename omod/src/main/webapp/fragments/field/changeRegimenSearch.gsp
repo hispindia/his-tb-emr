@@ -4,7 +4,7 @@
 	def strengths = ["150/75/400/275 mg","150/75/275 mg","60/30/150 mg","500/125 mg","150/75 mg","60/60 mg","600 mg","500 mg","400 mg","300 mg","250 mg",
 	                 "100 mg","50 mg","100 g jar","4 g sachets","500/500 mg vial","1 g vial"]
 	                 
-	def types = ["tab","ml","vial","sachet"]
+	def types = ["tab","ml","vial","sachet","scoop"]
 	
 	def frequencys = ["Once daily","Twice daily","Three times daily","Four times daily","Early morning","Night time","3 times per week","6 times per week","prn","stat"]
 	
@@ -52,7 +52,7 @@
 <tbody>
 <% drugOrderProcesseds.each { drugOrderProcessed -> %>
 <tr>
-<td class="colA" style="text-align:center"><input type="text" id="drugKey${count}" name="drugKey${count}" value="${drugOrderProcessed.drugOrder.concept.name}" disabled></td>
+<td class="colA" style="text-align:center"><input type="text" ng-model="drugKey${count}" id="drugKey${count}" name="drugKey${count}" value="${drugOrderProcessed.drugOrder.concept.name}" uib-typeahead="drug as drug.drugName for drug in myDrug | filter : drugKey${count}" typeahead-on-select="drugSearchForRegimenChange(drugKey${count},${count});"></td>
 <td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id="strength${count}"  name="strength${count}"><option value="${drugOrderProcessed.dose}" > ${drugOrderProcessed.dose}</option>${ strengthOptions }</select></td>
 <td class="colC" style="text-align:center"><input type="text" id="noOfTablet${count}" name="noOfTablet${count}" value="${drugOrderProcessed.noOfTablet}"></td>
 <td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' id="type${count}"  name="type${count}"><option value="${drugOrderProcessed.drugOrder.units}" > ${drugOrderProcessed.drugOrder.units}</option>${typeOptions}</select></td>
@@ -173,7 +173,7 @@ jQuery('#route2').val('${regimenDetails2.route}');
 jQuery('#drugConcept2').val('${regimenDetails2.drugConcept}');
 
 jQuery('#drugKey3').val('${regimenDetails3.drugName}');
-jQuery('#strength3').val('${regimenDetails3.strength}');
+jQuery('#strength3').val('250 mg');
 jQuery('#type3').val('${regimenDetails3.formulation}');
 jQuery('#frequncy3').val('${regimenDetails3.frequency}');
 jQuery('#route3').val('${regimenDetails3.route}');
@@ -195,6 +195,7 @@ jQuery('#drugConcept5').val('${regimenDetails5.drugConcept}');
 
 jQuery('#drugKey6').val("");
 jQuery('#strength6').val("");
+jQuery('#noOfTablet6').val("");
 jQuery('#type6').val("");
 jQuery('#frequncy6').val("");
 jQuery('#route6').val("");
@@ -218,7 +219,7 @@ jQuery('#route2').val('${regimenDetails2.route}');
 jQuery('#drugConcept2').val('${regimenDetails2.drugConcept}');
 
 jQuery('#drugKey3').val('${regimenDetails3.drugName}');
-jQuery('#strength3').val('${regimenDetails3.strength}');
+jQuery('#strength3').val('500 mg');
 jQuery('#type3').val('${regimenDetails3.formulation}');
 jQuery('#frequncy3').val('${regimenDetails3.frequency}');
 jQuery('#route3').val('${regimenDetails3.route}');
@@ -251,7 +252,7 @@ jQuery('#regimenNo').val("Standard Regimen 2");
 }
 
 jQuery(document).ready(function(){
-
+jQuery('#regimenNo').val("${regimenNo}");
 });
 </script>
 

@@ -6,11 +6,13 @@
 <th>S.No</th>
 <th>Drug Name </th>
 <th>Strength </th>
+<th>Quantity</th>
 <th>Unit </th>
 <th>Frequency </th>
+<th>Route </th>
 <th>Duration (Days)</th>
 <th>Issue Qunatity </th>
-<th>Drug Regimen </th>
+<th>Regimen Name</th>
 </tr>
 
 <% drugOrderProcesseds.each { drugOrderProcessed -> %>
@@ -19,11 +21,13 @@
 <td>${count++}</td>
 <td>${drugOrderProcessed.drugOrder.concept.name} </td>
 <td>${drugOrderProcessed.dose}</td>
+<td>${drugOrderProcessed.noOfTablet}</td>
 <td>${drugOrderProcessed.drugOrder.units} </td>
 <td>${drugOrderProcessed.drugOrder.frequency}</td>
+<td>${drugOrderProcessed.route.name}</td>
 <td>${drugOrderProcessed.durationPreProcess}</td>
 <td><input type="text" id="${drugOrderProcessed.id}issueQuantity" name="${drugOrderProcessed.id}issueQuantity" size="12"></td>
-<td>${drugOrderProcessed.regimenConcept.name}</td>
+<td>${drugOrderProcessed.regimenName}</td>
 <td><input type="hidden" id="drugOrderProcessedIds" name="drugOrderProcessedIds" value="${drugOrderProcessed.id}"> </td>
 </tr>
 <% } %>
@@ -35,8 +39,10 @@
 <td>${count++}</td>
 <td>${drugOrderObs.drug} </td>
 <td>${drugOrderObs.strength}</td>
+<td> </td>
 <td>${drugOrderObs.formulation} </td>
 <td>${drugOrderObs.frequency}</td>
+<td> </td>
 <td>${drugOrderObs.duration}</td>
 <td><input type="text" id="${drugOrderObs.obsGroupId}obsIssueQuantity" name="${drugOrderObs.obsGroupId}obsIssueQuantity" size="12"></td>
 <td><input type="hidden" id="obsGroupIds" name="obsGroupIds" value="${drugOrderObs.obsGroupId}"></td>

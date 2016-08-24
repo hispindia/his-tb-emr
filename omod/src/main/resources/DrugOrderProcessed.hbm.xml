@@ -28,5 +28,6 @@
 		<property name="regimenChangeType" column="regimen_change_type" />
 		<property name="typeOfRegimen" column="type_of_regimen" />
 		<property name="regimenNo" column="regimen_no" />
+		<property name="regimenName" column="regimen_name" />
 	</class>
 </hibernate-mapping>

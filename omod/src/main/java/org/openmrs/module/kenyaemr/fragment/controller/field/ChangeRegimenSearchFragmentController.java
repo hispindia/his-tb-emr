@@ -174,14 +174,17 @@ public class ChangeRegimenSearchFragmentController {
 		RegimenOrder baseline = lastChange != null ? lastChange.getStarted() : null;
 		List<DrugOrder> continueRegimen = new ArrayList<DrugOrder>(baseline.getDrugOrders());
 		List<DrugOrderProcessed> drugOrderProcessed = new ArrayList<DrugOrderProcessed>();
+		String regimenNo="";
 		for(DrugOrder continueRegim:continueRegimen){
 			DrugOrderProcessed drugOrderProcess=kenyaEmrService.getLastDrugOrderProcessed(continueRegim);
 			if(drugOrderProcess!=null){
 			drugOrderProcessed.add(drugOrderProcess);
+			regimenNo=drugOrderProcess.getRegimenNo();
 			}
 		}
 		model.addAttribute("drugOrderProcesseds", drugOrderProcessed);
 		model.addAttribute("count", 1);
+		model.addAttribute("regimenNo", regimenNo);
 	}
 
 	/**

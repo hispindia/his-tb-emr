@@ -86,12 +86,6 @@
 <!-- <entry key="Lfx.route">Oral</entry> -->
 <entry key="Lfx.route">160240</entry>
 
-<entry key="Lfx2.strength">500 mg</entry>
-<entry key="Lfx2.type">tab</entry>
-<entry key="Lfx2.frequency">Twice daily</entry>
-<!-- <entry key="Lfx2.route">Oral</entry> -->
-<entry key="Lfx2.route">160240</entry>
-
 <entry key="Mfx.strength">400 mg</entry>
 <entry key="Mfx.type">tab</entry>
 <entry key="Mfx.frequency">Once daily</entry>

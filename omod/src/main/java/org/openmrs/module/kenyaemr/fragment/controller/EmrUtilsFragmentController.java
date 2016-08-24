@@ -262,6 +262,19 @@ public class EmrUtilsFragmentController {
 		
 		conceptNameJson.put("drugConceptName", conceptNameJsonArray);
 		
+		Concept concept11=Context.getConceptService().getConceptByUuid("71060AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept22=Context.getConceptService().getConceptByUuid("86767AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept33=Context.getConceptService().getConceptByUuid("78788AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept44=Context.getConceptService().getConceptByUuid("75976AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept55=Context.getConceptService().getConceptByUuid("74123AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept concept66=Context.getConceptService().getConceptByUuid("71108AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		conceptNameJson.put("drugConceptName1", concept11.getName().getName());
+		conceptNameJson.put("drugConceptName2", concept22.getName().getName());
+		conceptNameJson.put("drugConceptName3", concept33.getName().getName());
+		conceptNameJson.put("drugConceptName4", concept44.getName().getName());
+		conceptNameJson.put("drugConceptName5", concept55.getName().getName());
+		conceptNameJson.put("drugConceptName6", concept66.getName().getName());
+		
 		return conceptNameJson;
 	}
 	

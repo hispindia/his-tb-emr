@@ -19,7 +19,7 @@ $scope.drugSearch = function(drugKey){
 
 kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	
-	$scope.choices = [{srNo:'6',srNumber:'srNumber6',id:'choice6',drugKey:'drugKey6',drugConcept:'drugConcept6',strength:'strength6',noOfTablet:'noOfTablet6',route:'route6',type: 'type6',frequncy: 'frequncy6',duration:'duration6'}];
+	$scope.choices = [{srNo:'11',srNumber:'srNumber11',id:'choice11',drugKey:'drugKey11',drugConcept:'drugConcept11',strength:'strength11',noOfTablet:'noOfTablet11',route:'route11',type: 'type11',frequncy: 'frequncy11',duration:'duration11'}];
 	$scope.addNewChoice = function() {
 		var newItemNo = $scope.choices.length+1;
 		$scope.choices.push({srNo:newItemNo,srNumber:'srNumber'+newItemNo,id:'choice'+newItemNo,drugKey:'drugKey'+newItemNo,drugConcept:'drugConcept'+newItemNo,strength:'strength'+newItemNo,noOfTablet:'noOfTablet'+newItemNo,route:'route'+newItemNo,type: 'type'+newItemNo,frequncy:'frequncy'+newItemNo,duration:'duration'+newItemNo});
@@ -135,6 +135,12 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	    .done(function(data) {
 	    	$scope.$apply(function(){ 
 	    		$scope.myDrug = data.drugConceptName;
+	    		$scope.drugKey1 = data.drugConceptName1;
+	    		$scope.drugKey2 = data.drugConceptName2;
+	    		$scope.drugKey3 = data.drugConceptName3;
+	    		$scope.drugKey4 = data.drugConceptName4;
+	    		$scope.drugKey5 = data.drugConceptName5;
+	    		$scope.drugKey6 = data.drugConceptName6;
 			});
 	    	
 	     });
