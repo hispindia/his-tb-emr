@@ -47,6 +47,7 @@ public class TbPositiveResulRatientRegistered1215ReportBuilder extends AbstractR
 		/**
 		 * @see org.openmrs.module.kenyacore.report.builder.AbstractReportBuilder#buildDataSets(org.openmrs.module.kenyacore.report.ReportDescriptor, org.openmrs.module.reporting.report.definition.ReportDefinition)
 		 */
+		@SuppressWarnings("unchecked")
 		@Override
 		protected List<Mapped<DataSetDefinition>> buildDataSets(ReportDescriptor descriptor, ReportDefinition report) {
 			return Arrays.asList(
@@ -95,10 +96,7 @@ public class TbPositiveResulRatientRegistered1215ReportBuilder extends AbstractR
 			dsd.setDescription("Quarterly report on the result of TB patients registered 12-15 months earlier with smear negative culture negative ");
 			dsd.addParameter(new Parameter("startDate", "Start Date", Date.class));
 			dsd.addParameter(new Parameter("endDate", "End Date", Date.class));
-
-			
 			List<ColumnParameters> columns = new ArrayList<ColumnParameters>();
-			
 			columns.add(new ColumnParameters("T", "total", ""));
 			String indParams = "startDate=${startDate},endDate=${endDate}";
 

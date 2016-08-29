@@ -55,13 +55,20 @@
 				<ref bean="kenyaemr.tb.report.failedCatI"/>
 				<ref bean="kenyaemr.tb.report.failedCatII"/>
 				<ref bean="kenyaemr.tb.report.failedMDRTBtreatment"/>
+				<ref bean="kenyaemr.tb.report.decisiontostoptaketreatment"/>
+				<ref bean="kenyaemr.tb.report.financialSupport"/>
+				<ref bean="kenyaemr.tb.report.nutritionalSupport"/>
+				<ref bean="kenyaemr.tb.report.diagnosedHivpositive"/>
 				<!-- NTP Reports -->
-				
+				<ref bean="kenyaemr.tb.report.patient.registered.6"/>
 				<ref bean="kenyaemr.tb.report.patient.mdrtb.detection"/>
 				<ref bean="kenyaemr.tb.report.patient.registered.12.15"/>
-				<ref bean="kenyaemr.tb.report.patient.mdrtb.pas"/>
-				<ref bean="kenyaemr.tb.report.patient.mdrtb.without.pas"/>
-				<ref bean="kenyaemr.tb.report.patient.mdrtb.total"/>
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.pas.24"/>
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.without.pas.24"/>
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.total.24"/>
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.pas.36"/>
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.without.pas.36"/>
+				<ref bean="kenyaemr.tb.report.patient.mdrtb.total.36"/>
 	 	<!-- 
 				<ref bean="kenyaemr.common.report.moh711" />
 				<ref bean="kenyaemr.common.report.artDrug" />
@@ -527,45 +534,99 @@
 		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
-	
-		
+	<bean id="kenyaemr.tb.report.decisiontostoptaketreatment" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="d1b1ef38-afbe-41fc-bc5c-a03ad2fd60d6" />
+		<property name="name" value="Patient who refuse to continue treatment" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientRefusedToContinueTreatmentCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.financialSupport" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="979cf49d-db9d-430b-b7bb-58a1f656e7b5" />
+		<property name="name" value="Patient provided with financial support" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientOnFinancialSupportCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.nutritionalSupport" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="51fe39cc-9a4b-4006-a8f3-b3b29f69295c" />
+		<property name="name" value="Patient provided with nutritional support" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientOnNutritionalSupportCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.diagnosedHivpositive" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+		<property name="targetUuid" value="958c7f1b-d891-4177-8097-a28c933c9897" />
+		<property name="name" value=" Patient who are diagnosed HIV positive" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientDiagnosdedHIVpositiveCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.systemPatientId" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
 	<!-- NTP reports TB -->
-
+	<bean id="kenyaemr.tb.report.patient.registered.6" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+     <property name="targetUuid" value="35ac01a5-16ea-4ddf-b75a-e0971f583128" />
+		<property name="name" value="Six month interim outcome assessment" />
+		<property name="description" value="Six month interim outcome assessment" />
+		<property name="template" value="kenyaemr:tb/patientontreatmentlast6mnth.xls" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	
 <bean id="kenyaemr.tb.report.patient.mdrtb.detection" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
 		<property name="targetUuid" value="f29cc076-5e7d-4bc7-89c2-421d4f59b1ed" />
 		<property name="name" value="Quarterly  Report on MDR-TB case detection" />
 		<property name="description" value="Quarterly  Report on MDR-TB case detection" />
-		
+		<property name="template" value="kenyaemr:tb/mdrtbdetection.xls" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 	<bean id="kenyaemr.tb.report.patient.registered.12.15" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
 		<property name="targetUuid" value="11dfba2f-1510-4180-afa2-48a9be8bce59" />
 		<property name="name" value="TB patients registered 12-15 months earlier" />
 		<property name="description" value="Quarterly report on the result of TB patients registered 12-15 months earlier" />
-	
+        <property name="template" value="kenyaemr:tb/patientregistred1215mnth.xls" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 	
-		<bean id="kenyaemr.tb.report.patient.mdrtb.pas" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<bean id="kenyaemr.tb.report.patient.mdrtb.pas.24" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
 		<property name="targetUuid" value="fda0848f-e964-4e60-93e3-5be68054e11c" />
 		<property name="name" value="MDR TB patients with pas regimen" />
-		<property name="description" value="MDR-TB patients will be treated with either (Amk/ Z/ Lfx/ Eto/ Cs/ PAS)" />
-	
+		<property name="description" value="MDR-TB patients will be treated with  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS)" />
+	     <property name="template" value="kenyaemr:tb/patientwithpas24mnth.xls" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
-	<bean id="kenyaemr.tb.report.patient.mdrtb.without.pas" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+	<bean id="kenyaemr.tb.report.patient.mdrtb.without.pas.24" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
 		<property name="targetUuid" value="304d7e42-726b-4c41-8240-5b1a2c83ef0e" />
 		<property name="name" value="MDR TB patients without pas regimen" />
 		<property name="description" value="MDR-TB patients will be treated with  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS)  regimen" />
-	
+	     <property name="template" value="kenyaemr:tb/patientwithoutpas24mnth.xls" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 	
-	<bean id="kenyaemr.tb.report.patient.mdrtb.total" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+	<bean id="kenyaemr.tb.report.patient.mdrtb.total.24" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
 		<property name="targetUuid" value="f770f809-9600-4f5c-aa8a-c9217ce29091" />
 		<property name="name" value="MDR TB patients with either  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS) or( Amk/ Z/ Lfx/ Eto/ Cs)  regimen" />
 		<property name="description" value="MDR-TB patients will be treated with either  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS) or( Amk/ Z/ Lfx/ Eto/ Cs)   regimen" />
-	
+	     <property name="template" value="kenyaemr:tb/patientwitheitherpas24mnth.xls" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.patient.mdrtb.pas.36" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<property name="targetUuid" value="8ee56406-c682-436a-a952-9474dec0bdba" />
+		<property name="name" value="MDR TB patients with pas regimen at 36 Month" />
+		<property name="description" value="MDR-TB patients will be treated with  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS)" />
+	     <property name="template" value="kenyaemr:tb/patientwithpas36mnth.xls" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.patient.mdrtb.without.pas.36" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<property name="targetUuid" value="52c26fb7-20b7-41e9-a134-ae4e16ccaa6a" />
+		<property name="name" value="MDR TB patients without pas regimen at 36 Month" />
+		<property name="description" value="MDR-TB patients will be treated with  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS)  regimen" />
+	     <property name="template" value="kenyaemr:tb/patientwithoutpas36mnth.xls" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.tb.report.patient.mdrtb.total.36" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<property name="targetUuid" value="6a6c2f05-f38c-4c86-88bc-f049884f26e6" />
+		<property name="name" value="MDR TB patients with either  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS) or( Amk/ Z/ Lfx/ Eto/ Cs)  regimen At 36 Months" />
+		<property name="description" value="MDR-TB patients will be treated with either  (Amk/ Z/ Lfx/ Eto/ Cs/ PAS) or( Amk/ Z/ Lfx/ Eto/ Cs)   regimen" />
+	     <property name="template" value="kenyaemr:tb/patientwitheitherpas36mnth.xls" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 	<!--

@@ -27,7 +27,29 @@ import org.openmrs.module.kenyaemr.calculation.library.tb.PatientOnRegimeWithPAS
 import org.openmrs.module.kenyaemr.calculation.library.tb.PatientOnRegimeWithoutPASCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbInitialTreatmentCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbTreatmentStartDateCalculation;
-
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientonMedication6mnthsagoCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.Tbpatients24monthsagoCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.Tbpatients36monthsagoCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientswithFailuretreatmentCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientswithNewCategoryCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientswithRelapseCategoryCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientswithsmearpositiveculturenegativeCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithDiedOutcomeAt6mnthCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithLossTofollowupOutcomeCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithNonConverterCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithOtherCategoryCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithSmearCulturepositiveCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithStandardMDRcasesCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithTransferredOutOutComeCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithlosstoFollowupCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearCulturenegativeCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearnegativeCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearpositiveCultureunknownCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearnegativecultureunknownCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearunknownCulturenegativeCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearunknownCulturepositiveCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearunknownCultureunknownCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithwithsmearpositiveculturepositiveCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TotalPatientOnMedicationCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TotalPatientRegisteredCalculation;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata;
@@ -115,13 +137,17 @@ public class TbCohortLibrary {
 	 *
 	 */
 	public CohortDefinition startedTbTreatmentBetweenDates() {
-		DateObsCohortDefinition cd = new DateObsCohortDefinition();
-		Concept tbStartDate = Dictionary.getConcept(Dictionary.TUBERCULOSIS_DRUG_TREATMENT_START_DATE);
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with Relapse ( IR, RR)");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("started TB treatment 12 months ago");
+		//Concept tbStartDate = Dictionary.getConcept(Dictionary.TUBERCULOSIS_DRUG_TREATMENT_START_DATE);
 		cd.setName("Patients who started Tb treatment between dates");
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
-		cd.setQuestion(tbStartDate);
-		cd.setTimeModifier(PatientSetService.TimeModifier.LAST);
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrAfter}"));
+		cd.setCompositionString("usingRegime");
 		return cd;
 	}
 
@@ -133,12 +159,35 @@ public class TbCohortLibrary {
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("started TB treatment 12 months ago");
 		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolledInTbProgram", ReportUtils.map(enrolled(), "enrolledOnOrBefore=${onDate}"));
-		cd.addSearch("startedTreatmentInTheMonthAyYearBefore", ReportUtils.map(startedTbTreatmentBetweenDates(), "onOrAfter=${onDate-13},onOrBefore=${onDate-12}"));
+		
+		cd.addSearch("startedTreatmentInTheMonthAyYearBefore", ReportUtils.map(startedTbTreatmentBetweenDates(), "onOrAfter=${onDate-12m},onOrBefore=${onDate}"));
+		cd.setCompositionString("enrolledInTbProgram AND startedTreatmentInTheMonthAyYearBefore");
+		
+		return cd;
+	}
+	// TB patients who started treatment 24 month ago
+	public CohortDefinition started24MonthsAgo() {
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("started TB treatment 24 months ago");
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		cd.addSearch("enrolledInTbProgram", ReportUtils.map(enrolled(), "enrolledOnOrBefore=${onDate}"));
+		cd.addSearch("startedTreatmentInTheMonthAyYearBefore", ReportUtils.map(startedTbTreatmentBetweenDates(), "onOrAfter=${onDate-25},onOrBefore=${onDate-24}"));
 		cd.setCompositionString("enrolledInTbProgram AND startedTreatmentInTheMonthAyYearBefore");
 		return cd;
 	}
-
+	// TB patients who started treatment 36 month ago
+	public CohortDefinition started36MonthsAgo() {
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("started TB treatment 36 months ago");
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		cd.addSearch("enrolledInTbProgram", ReportUtils.map(enrolled(), "enrolledOnOrBefore=${onDate}"));
+		cd.addSearch("startedTreatmentInTheMonthYearBefore", ReportUtils.map(startedTbTreatmentBetweenDates(), "onOrAfter=${onDate-37},onOrBefore=${onDate-36}"));
+		cd.setCompositionString("enrolledInTbProgram AND startedTreatmentInTheMonthYearBefore");
+		return cd;
+	}
 	/**
 	 * TB patients started treatment in the month a year before and died between ${onOrAfter} and ${onOrBefore}
 	 * @return the cohort definition
@@ -1474,8 +1523,24 @@ public class TbCohortLibrary {
 		cd.addSearch("transferredOut", ReportUtils.map(transferredOutExtraPulmonaryTbResultsAt8Months(), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.setCompositionString("treatmentCompleted OR died OR outOfControl OR transferredOut");
 		return cd;
-	}
+	}       
 
+	public CohortDefinition totalEnrolledResultswithsmearnegativeculturenegativeAt6Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearCulturenegativeCalculation());
+		cp.setName("Patients who are on smear negative and culture negative");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		return cd;
+	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativeculturenegativeAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
@@ -1488,6 +1553,22 @@ public class TbCohortLibrary {
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.setCompositionString("enrolled AND labresult  AND labtest");
+		return cd;
+	}
+	public CohortDefinition totalEnrolledResultswithsmearnegativeculturepositiveAt6Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativeCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativeculturepositiveAtMonths(int highMonths, int leastMonths) {
@@ -1509,18 +1590,36 @@ public class TbCohortLibrary {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter},enrolledOnOrBefore=${onOrBefore}"));
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND labresult  AND labtest");
+		cd.addSearch("labsolidtest", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labliquidtest", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND labresult  AND labsolidtest OR labliquidtest");
 		return cd;
 	}
     
+	public CohortDefinition totalEnrolledResultswithsmearnegativecultureunknownAt6Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativecultureunknownCalculation());
+		cp.setName("Patients who are on smear negative and culture unknown");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		return cd;
+	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativecultureunknownAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
@@ -1551,6 +1650,22 @@ public class TbCohortLibrary {
 		cd.setCompositionString("enrolled AND labresult  AND labtest");
 		return cd;
 	}
+	public CohortDefinition totalEnrolledResultswithsmearpositiveculturenegativeAt6Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientswithsmearpositiveculturenegativeCalculation());
+		cp.setName("Patients who are on smear positive and culture negative");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		return cd;
+	}
 	public CohortDefinition totalEnrolledResultswithsmearpositiveculturepositiveAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
@@ -1565,18 +1680,20 @@ public class TbCohortLibrary {
 		cd.setCompositionString("enrolled AND labresult  AND labtest");
 		return cd;
 	}
-	public CohortDefinition totalEnrolledResultswithsmearpositiveculturepositiveAtMonths() {
-		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
-		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+	public CohortDefinition totalEnrolledResultswithsmearpositiveculturepositiveAt6Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithwithsmearpositiveculturepositiveCalculation());
+		cp.setName("Patients who are on smear positive and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
-		cd.setName("Total enrolled"  );
+		cd.setName("Total enrolled ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
-		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter},enrolledOnOrBefore=${onOrBefore}"));
-		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND labresult  AND labtest");
+		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositivecultureunknownAtMonths(int highMonths, int leastMonths) {
@@ -1594,6 +1711,22 @@ public class TbCohortLibrary {
 		cd.setCompositionString("enrolled AND labresult  AND NOT labtest");
 		return cd;
 	}
+	public CohortDefinition totalEnrolledResultswithsmearpositivecultureunknownAt6Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearpositiveCultureunknownCalculation());
+		cp.setName("Patients who are on smear negative and culture unknown");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		return cd;
+	}
 	public CohortDefinition totalEnrolledResultswithsmearunknownculturenegativeAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
@@ -1607,6 +1740,22 @@ public class TbCohortLibrary {
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.setCompositionString("enrolled AND NOT labresult  AND labtest");
+		return cd;
+	}
+	public CohortDefinition totalEnrolledResultswithsmearunknownculturenegativeAt6Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearunknownCulturenegativeCalculation());
+		cp.setName("Patients who are on smear unknown and culture negative");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknownculturepositiveAtMonths(int highMonths, int leastMonths) {
@@ -1624,6 +1773,22 @@ public class TbCohortLibrary {
 		cd.setCompositionString("enrolled AND NOT labresult  AND labtest");
 		return cd;
 	}
+	public CohortDefinition totalEnrolledResultswithsmearunknownculturepositiveAt6Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearunknownCulturepositiveCalculation());
+		cp.setName("Patients who are on smear unknown and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		return cd;
+	}
 	public CohortDefinition totalEnrolledResultswithsmearunknowncultureunknownAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
@@ -1637,6 +1802,22 @@ public class TbCohortLibrary {
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.setCompositionString("enrolled AND NOT labresult  AND NOT labtest");
+		return cd;
+	}
+	public CohortDefinition totalEnrolledResultswithsmearunknowncultureunknownAt6Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearunknownCultureunknownCalculation());
+		cp.setName("Patients who are on smear unknown and culture unkown");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
 		return cd;
 	}
 	public CohortDefinition totalenrolledResultstbpatientwithdiedoutcome() {
@@ -1704,41 +1885,74 @@ public class TbCohortLibrary {
 	}
 
 	public CohortDefinition totalpatientOnMedicationInTb() {
+		
 		CalculationCohortDefinition cd = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
 		cd.setName("medication");
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedtb() {
 		
-		
 		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept relapse=Dictionary.getConcept(Dictionary.RELAPSE);
+		Concept relapseIR=Dictionary.getConcept(Dictionary.RELAPSE_IR);
+		Concept relapseRR=Dictionary.getConcept(Dictionary.RELAPSE_RR);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 	
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,relapse), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("reggroup");
+		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,relapseIR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("reggroupTwo", ReportUtils.map(commonCohorts.hasObs(registration_group,relapseRR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+        cd.setCompositionString("reggroupOne OR reggroupTwo ");
        
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedtbwithpas() {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
-		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with Relapse ( IR, RR)");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithRelapseCategoryCalculation());
+		rel.setName("Patients who are on relapse category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
 		
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept relapse=Dictionary.getConcept(Dictionary.RELAPSE);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,relapse), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		
+        cd.setCompositionString(" usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	
+	public CohortDefinition totalpatientOnConfirmedtbwithpasAt36Mnth() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with Relapse ( IR, RR)");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithRelapseCategoryCalculation());
+		rel.setName("Patients who are on relapse category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		
+        cd.setCompositionString(" usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -1747,16 +1961,46 @@ public class TbCohortLibrary {
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept relapse=Dictionary.getConcept(Dictionary.RELAPSE);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithRelapseCategoryCalculation());
+		rel.setName("Patients who are on relapse category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,relapse), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
-       
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		
+        cd.setCompositionString(" usingRegime AND usingMonthsAgo AND usingCategory");
+		return cd;
+	}
+	
+	public CohortDefinition totalpatientOnConfirmedtbwithoutpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithRelapseCategoryCalculation());
+		rel.setName("Patients who are on relapse category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		
+        cd.setCompositionString(" usingRegime AND usingMonthsAgo AND usingCategory");
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedtbwitheitherpas() {
@@ -1764,44 +2008,103 @@ public class TbCohortLibrary {
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept relapse=Dictionary.getConcept(Dictionary.RELAPSE);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithRelapseCategoryCalculation());
+		rel.setName("Patients who are on relapse category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,relapse), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
-       
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		
+        cd.setCompositionString(" usingRegime AND usingMonthsAgo AND usingCategory");
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedtbwitheitherpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithRelapseCategoryCalculation());
+		rel.setName("Patients who are on relapse category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		
+        cd.setCompositionString(" usingRegime AND usingMonthsAgo AND usingCategory");
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedCatItb() {
 	
 		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept catI=Dictionary.getConcept(Dictionary.FAILURE_CAT_I);
+		Concept catIR=Dictionary.getConcept(Dictionary.NONCONVERTER_IR);
+		Concept catRR=Dictionary.getConcept(Dictionary.NONCONVERTER_RR);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,catI), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("reggroup");
+		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,catIR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("reggroupTwo", ReportUtils.map(commonCohorts.hasObs(registration_group,catRR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("reggroupOne OR reggroupTwo");
        
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedCatItbwithpas() {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
-		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with Non-Converter (IR , RR)");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept catI=Dictionary.getConcept(Dictionary.FAILURE_CAT_I);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithNonConverterCalculation());
+		rel.setName("Patients who are on Non coverter category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,catI), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND  reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedCatItbwithpasAt36Mnth() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with Non-Converter (IR , RR)");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithNonConverterCalculation());
+		rel.setName("Patients who are on Non coverter category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -1809,15 +2112,44 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept catI=Dictionary.getConcept(Dictionary.FAILURE_CAT_I);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithNonConverterCalculation());
+		rel.setName("Patients who are on Non coverter category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,catI), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	
+	public CohortDefinition totalpatientOnConfirmedCatItbwithoutpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithNonConverterCalculation());
+		rel.setName("Patients who are on Non coverter category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -1825,29 +2157,58 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept catI=Dictionary.getConcept(Dictionary.FAILURE_CAT_I);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithNonConverterCalculation());
+		rel.setName("Patients who are on Non coverter category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,catI), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedCatItbwitheitherpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithNonConverterCalculation());
+		rel.setName("Patients who are on Non coverter category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedCatIItb() {
 		
 		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept catII=Dictionary.getConcept(Dictionary.FAILURE_CAT_II);
+		Concept catIIIR=Dictionary.getConcept(Dictionary.TREATMENT_AFTER_FAILURE_TREATMENT_IR);
+		Concept catIIRR=Dictionary.getConcept(Dictionary.TREATMENT_AFTER_FAILURE_TREATMENT_RR);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
-		
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,catII), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("reggroup");
+		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,catIIRR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("reggroupTwo", ReportUtils.map(commonCohorts.hasObs(registration_group,catIIIR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+        cd.setCompositionString("reggroupOne OR reggroupTwo ");
        
 		return cd;
 	}
@@ -1855,15 +2216,43 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept catII=Dictionary.getConcept(Dictionary.FAILURE_CAT_II);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithFailuretreatmentCalculation());
+		rel.setName("Patients who are on Failure category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,catII), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedCatIItbwithpasAt36Months() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithFailuretreatmentCalculation());
+		rel.setName("Patients who are on Failure category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -1871,98 +2260,239 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept catII=Dictionary.getConcept(Dictionary.FAILURE_CAT_II);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithFailuretreatmentCalculation());
+		rel.setName("Patients who are on Failure category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,catII), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
     
-	public CohortDefinition totalpatientOnConfirmedCatIItbwitheitherpas() {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+	public CohortDefinition totalpatientOnConfirmedCatIItbwithoutpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept catII=Dictionary.getConcept(Dictionary.FAILURE_CAT_II);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithFailuretreatmentCalculation());
+		rel.setName("Patients who are on Failure category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,catII), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedCatIItbwitheitherpas() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithFailuretreatmentCalculation());
+		rel.setName("Patients who are on Failure category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedCatIItbwitheitherpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithFailuretreatmentCalculation());
+		rel.setName("Patients who are on Failure category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedDefaulttb() {
 		
 		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept defaut=Dictionary.getConcept(Dictionary.RETREATMENT_AFTER_DEFAULT_TUBERCULOSIS);
+		Concept losstofolloupIR=Dictionary.getConcept(Dictionary.TREATMENT_AFTER_LOSS_FOLLOW_UP_IR);
+		Concept losstofolloupRR=Dictionary.getConcept(Dictionary.TREATMENT_AFTER_LOSS_FOLLOW_UP_RR);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,defaut), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("reggroup");
+		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,losstofolloupIR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("reggroupTwo", ReportUtils.map(commonCohorts.hasObs(registration_group,losstofolloupRR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("reggroupOne OR reggroupTwo");
 	       
        
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedDefaulttbwithpas() {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
-		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with Treatment after lost to follow up (IR , RR)");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept defaut=Dictionary.getConcept(Dictionary.RETREATMENT_AFTER_DEFAULT_TUBERCULOSIS);
+		
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 OR 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithlosstoFollowupCalculation());
+		rel.setName("Patients who are on lossto follow up category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,defaut), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("usingRegime AND reggroup");
-	       
-       
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedDefaulttbwithpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with Treatment after lost to follow up (IR , RR)");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered  36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithlosstoFollowupCalculation());
+		rel.setName("Patients who are on lossto follow up category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedDefaulttbwithoutpas() {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept defaut=Dictionary.getConcept(Dictionary.RETREATMENT_AFTER_DEFAULT_TUBERCULOSIS);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 OR 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithlosstoFollowupCalculation());
+		rel.setName("Patients who are on lossto follow up category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,defaut), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		 cd.setCompositionString("usingRegime AND reggroup");
-       
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
 		return cd;
+       
+		
 	}
    
+	public CohortDefinition totalpatientOnConfirmedDefaulttbwithoutpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered  36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithlosstoFollowupCalculation());
+		rel.setName("Patients who are on lossto follow up category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+		return cd;
+       
+		
+	}
 	public CohortDefinition totalpatientOnConfirmedDefaulttbwitheitherpas() {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept defaut=Dictionary.getConcept(Dictionary.RETREATMENT_AFTER_DEFAULT_TUBERCULOSIS);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 OR 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithlosstoFollowupCalculation());
+		rel.setName("Patients who are on lossto follow up category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,defaut), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		 cd.setCompositionString("usingRegime AND reggroup");
-       
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedDefaulttbwitheitherpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered  36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithlosstoFollowupCalculation());
+		rel.setName("Patients who are on lossto follow up category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
 		return cd;
 	}
 	public CohortDefinition totalpatientOnConfirmedStandardtb() {
@@ -1983,15 +2513,43 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept stndard=Dictionary.getConcept(Dictionary.FAILURE_MDR_TB_REGIMEN);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 OR 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithStandardMDRcasesCalculation());
+		rel.setName("Patients who are on Standard category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,stndard), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND  reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedStandardtbwithpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered  36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithStandardMDRcasesCalculation());
+		rel.setName("Patients who are on Standard category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -1999,15 +2557,43 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept stndard=Dictionary.getConcept(Dictionary.FAILURE_MDR_TB_REGIMEN);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 OR 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithStandardMDRcasesCalculation());
+		rel.setName("Patients who are on Standard category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,stndard), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedStandardtbwithoutpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered  36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithStandardMDRcasesCalculation());
+		rel.setName("Patients who are on Standard category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -2015,15 +2601,43 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept stndard=Dictionary.getConcept(Dictionary.FAILURE_MDR_TB_REGIMEN);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 OR 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithStandardMDRcasesCalculation());
+		rel.setName("Patients who are on Standard category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,stndard), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime AND reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOnConfirmedStandardtbwitheitherpasAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered  36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithStandardMDRcasesCalculation());
+		rel.setName("Patients who are on Standard category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -2031,14 +2645,41 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
 		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS");
 		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
-
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithSmearCulturepositiveCalculation());
+		cp.setName("Patients who are on smear positive and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		rel.setName("Patients who are registered 24 months ago");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition comp = new CompositionCohortDefinition();
 		comp.setName("Patients with smear positive and culture positive");
 		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
-		comp.addSearch("obsSaved", ReportUtils.map(totalEnrolledResultswithsmearpositiveculturepositiveAtMonths(), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		comp.setCompositionString("usingRegime and obsSaved");
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
+
+		return comp;
+	}
+	public CohortDefinition totalpatientOutcomewithpasmearpositiveAt36Months() {
+		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS");
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithSmearCulturepositiveCalculation());
+		cp.setName("Patients who are on smear positive and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		rel.setName("Patients who are registered 36 months ago");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition comp = new CompositionCohortDefinition();
+		comp.setName("Patients with smear positive and culture positive");
+		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
 
 		return comp;
 	}
@@ -2047,14 +2688,41 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
 		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
-
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativeCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		rel.setName("Patients who are registered 24 OR 36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition comp = new CompositionCohortDefinition();
-		comp.setName("Patients with smear negativee and culture positive");
+		comp.setName("Patients with smear positive and culture positive");
 		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
-		comp.addSearch("obsSaved", ReportUtils.map(totalEnrolledResultswithsmearnegativeculturepositiveAtMonths(), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		comp.setCompositionString("usingRegime and obsSaved");
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
+
+		return comp;
+	}
+	public CohortDefinition totalpatientOutcomewithpaswithsmearnegativeAt36Months() {
+		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativeCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		rel.setName("Patients who are registered 24 OR 36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition comp = new CompositionCohortDefinition();
+		comp.setName("Patients with smear positive and culture positive");
+		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
 
 		return comp;
 	}
@@ -2062,14 +2730,41 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
 		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS");
 		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
-
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithSmearCulturepositiveCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		rel.setName("Patients who are registered 24 OR 36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition comp = new CompositionCohortDefinition();
 		comp.setName("Patients with smear positive and culture positive");
 		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
-		comp.addSearch("obsSaved", ReportUtils.map(totalEnrolledResultswithsmearpositiveculturepositiveAtMonths(), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		comp.setCompositionString("usingRegime and obsSaved");
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
+
+		return comp;
+	}
+	public CohortDefinition totalpatientOutcomewithoutpasmearpositiveAt36Month() {
+		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
+		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS");
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithSmearCulturepositiveCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		rel.setName("Patients who are registered  36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition comp = new CompositionCohortDefinition();
+		comp.setName("Patients with smear positive and culture positive");
+		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
 
 		return comp;
 	}
@@ -2077,14 +2772,41 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
 		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS");
 		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
-
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithSmearCulturepositiveCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		rel.setName("Patients who are registered 24 OR 36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition comp = new CompositionCohortDefinition();
 		comp.setName("Patients with smear positive and culture positive");
 		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
-		comp.addSearch("obsSaved", ReportUtils.map(totalEnrolledResultswithsmearpositiveculturepositiveAtMonths(), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		comp.setCompositionString("usingRegime and obsSaved");
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
+
+		return comp;
+	}
+	public CohortDefinition totalpatientOutcomewitheitherpasmearpositiveAt36Month() {
+		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS");
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithSmearCulturepositiveCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		rel.setName("Patients who are registered 36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition comp = new CompositionCohortDefinition();
+		comp.setName("Patients with smear positive and culture positive");
+		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
 
 		return comp;
 	}
@@ -2092,14 +2814,43 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
 		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
-
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativeCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		rel.setName("Patients who are registered 24 OR 36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition comp = new CompositionCohortDefinition();
-		comp.setName("Patients with smear negativee and culture positive");
+		comp.setName("Patients with smear positive and culture positive");
 		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
-		comp.addSearch("obsSaved", ReportUtils.map(totalEnrolledResultswithsmearnegativeculturepositiveAtMonths(), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		comp.setCompositionString("usingRegime and obsSaved");
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
+
+
+		return comp;
+	}
+	public CohortDefinition totalpatientOutcomewithoutpaswithsmearnegativeAt36Month() {
+		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
+		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativeCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		rel.setName("Patients who are registered  36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition comp = new CompositionCohortDefinition();
+		comp.setName("Patients with smear positive and culture positive");
+		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
+
 
 		return comp;
 	}
@@ -2108,43 +2859,106 @@ public class TbCohortLibrary {
 		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
 
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativeCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		rel.setName("Patients who are registered 24 OR 36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition comp = new CompositionCohortDefinition();
-		comp.setName("Patients with smear negativee and culture positive");
+		comp.setName("Patients with smear positive and culture positive");
 		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
-		comp.addSearch("obsSaved", ReportUtils.map(totalEnrolledResultswithsmearnegativeculturepositiveAtMonths(), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		comp.setCompositionString("usingRegime and obsSaved");
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
+
+
+		return comp;
+	}
+	public CohortDefinition totalpatientOutcomewithpaswitheithersmearnegativeAt36Month() {
+		CalculationCohortDefinition cd = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		cd.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativeCalculation());
+		cp.setName("Patients who are on smear negative and culture positive");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		rel.setName("Patients who are registered 24 OR 36 months ago ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition comp = new CompositionCohortDefinition();
+		comp.setName("Patients with smear positive and culture positive");
+		comp.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		comp.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		comp.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
+		comp.addSearch("usingLabresult", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		comp.addSearch("usingMonthsresult", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		comp.setCompositionString("usingRegime and usingLabresult AND usingMonthsresult");
+
 
 		return comp;
 	}
 	public CohortDefinition totalpatientOutcomewithNewCategory() {
 		
 		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept stndard=Dictionary.getConcept(Dictionary.NEW_PATIENT);
+		Concept newpat=Dictionary.getConcept(Dictionary.NEW_PATIENT);
+		Concept newmdr=Dictionary.getConcept(Dictionary.NEW_MDR);
+		Concept newplhiv=Dictionary.getConcept(Dictionary.NEW_PLHIV);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 	
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,stndard), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("reggroup");
+		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,newpat), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("reggroupTwo", ReportUtils.map(commonCohorts.hasObs(registration_group,newmdr), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("reggroupThree", ReportUtils.map(commonCohorts.hasObs(registration_group,newplhiv), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("reggroupOne OR reggroupTwo OR reggroupThree");
        
 		return cd;
 	}
 	public CohortDefinition totalpatientOutcomewithpaswithNewCategory() {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
-		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS ");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept stndard=Dictionary.getConcept(Dictionary.NEW_PATIENT);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithNewCategoryCalculation());
+		rel.setName("Patients who are on New category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,stndard), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime and reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOutcomewithpaswithNewCategoryAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS ");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithNewCategoryCalculation());
+		rel.setName("Patients who are on New category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -2152,15 +2966,44 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept stndard=Dictionary.getConcept(Dictionary.NEW_PATIENT);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithNewCategoryCalculation());
+		rel.setName("Patients who are on New category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,stndard), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime and reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	
+	public CohortDefinition totalpatientOutcomewithoutpaswithoutNewCategoryAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithNewCategoryCalculation());
+		rel.setName("Patients who are on New category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -2168,15 +3011,193 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
 		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept stndard=Dictionary.getConcept(Dictionary.NEW_PATIENT);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithNewCategoryCalculation());
+		rel.setName("Patients who are on New category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.addSearch("reggroup", ReportUtils.map(commonCohorts.hasObs(registration_group,stndard), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-        cd.setCompositionString("usingRegime and reggroup");
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOutcomewithoutpaswitheitherNewCategoryAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientswithNewCategoryCalculation());
+		rel.setName("Patients who are on New category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+public CohortDefinition totalpatientOutcomewithOtherCategory() {
+		
+	Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
+	Concept previuoslytreated=Dictionary.getConcept(Dictionary.PREVIOUSLY_TREATED_EP);
+	Concept unknownmdr=Dictionary.getConcept(Dictionary.UNKNOWN_OUTCOME_PREVIOUSLY_TREATED_EP);
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+	
+		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,previuoslytreated), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("reggroupTwo", ReportUtils.map(commonCohorts.hasObs(registration_group,unknownmdr), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		
+		cd.setCompositionString("reggroupOne OR reggroupTwo ");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOutcomewithpaswithOtherCategory() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithOtherCategoryCalculation());
+		rel.setName("Patients who are on Other category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+		
+		return cd;
+	}
+	public CohortDefinition totalpatientOutcomewithpaswithOtherCategoryAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithOtherCategoryCalculation());
+		rel.setName("Patients who are on Other category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+		
+		return cd;
+	}
+	public CohortDefinition totalpatientOutcomewithoutpaswithoutOtherCategory() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithOtherCategoryCalculation());
+		rel.setName("Patients who are on Other category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	
+	public CohortDefinition totalpatientOutcomewithoutpaswithoutOtherCategoryAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithoutPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithOtherCategoryCalculation());
+		rel.setName("Patients who are on Other category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOutcomewithoutpaswitheitherOtherCategory() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients24monthsagoCalculation());
+		cp.setName("Patients who are registered 24 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithOtherCategoryCalculation());
+		rel.setName("Patients who are on Other category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
+       
+		return cd;
+	}
+	public CohortDefinition totalpatientOutcomewithoutpaswitheitherOtherCategoryAt36Month() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new PatientOnRegimeWithEitherPASCalculation());
+		comp.setName("Patients who are on regime Amk/ Z/ Lfx/ Eto/ Cs/ PAS with smear negative");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new Tbpatients36monthsagoCalculation());
+		cp.setName("Patients who are registered 36 months ago ");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition rel = new CalculationCohortDefinition(new TbpatientwithOtherCategoryCalculation());
+		rel.setName("Patients who are on Other category ");
+		rel.addParameter(new Parameter("onDate", "On Date", Date.class));
+		
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingCategory", ReportUtils.map(rel, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingRegime AND usingMonthsAgo AND usingCategory");
        
 		return cd;
 	}
@@ -2192,6 +3213,23 @@ public class TbCohortLibrary {
 		
 		cd.setCompositionString("enrolled AND givenOutcomeDied");
 		return cd;
+	}
+	public CohortDefinition treatmentOutcome_DiedAt6Mnth() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithDiedOutcomeAt6mnthCalculation());
+		cp.setName("Patients with died outcome");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingOutcomeAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingOutcomeAgo AND usingMonthsAgo");
+		return cd;
+		
 	}
 	public CohortDefinition treatmentOutcome_Died() {
 		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
@@ -2219,6 +3257,22 @@ public class TbCohortLibrary {
 		cd.setCompositionString("enrolled AND givenlosstofollowupOutcome");
 		return cd;
 	}
+	public CohortDefinition treatmentOutcome_DefaultedAt6mnth() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithLossTofollowupOutcomeCalculation());
+		cp.setName("Patients with loss to follow up outcome");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingOutcomeAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingOutcomeAgo AND usingMonthsAgo");
+		return cd;
+	}
 	public CohortDefinition treatmentOutcome_Transferedout(int highMonths, int leastMonths) {
 		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
 		Concept outcomresult=Dictionary.getConcept(Dictionary.TRANSFERRED_OUT);
@@ -2232,7 +3286,23 @@ public class TbCohortLibrary {
 		cd.setCompositionString("enrolled AND givenOutcometransferredout");
 		return cd;
 	}
-
+   
+	public CohortDefinition treatmentOutcome_TransferedoutAt6mnth() {
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+		comp.setName("medication");
+		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithTransferredOutOutComeCalculation());
+		cp.setName("Patients with Transferred outcome");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("usingOutcomeAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+		cd.setCompositionString("usingOutcomeAgo AND usingMonthsAgo");
+		return cd;
+	}
 	public CohortDefinition totalEnrolledResultsAtMonths(int highMonths, int leastMonths) {
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
 		comp.setName("medication");
@@ -2248,8 +3318,41 @@ public class TbCohortLibrary {
 		return cd;
 	
 	}
+	
+public CohortDefinition totalEnrolledResultsAtMonths() {
+	CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+	comp.setName("medication");
+	comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+	
+	CompositionCohortDefinition cd = new CompositionCohortDefinition();
+	cd.setName("Total enrolled  ");
+	cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+	cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+	cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+	cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter},enrolledOnOrBefore=${onOrBefore}"));
+	cd.setCompositionString("usingRegime AND enrolled ");
+	return cd;
 
-		
+}
+	
+public CohortDefinition totalEnrolledResults() {
+	CalculationCohortDefinition cp = new CalculationCohortDefinition(new TotalPatientRegisteredCalculation());
+	cp.setName("registration");
+	cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+	CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+	comp.setName("medication");
+	comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+	
+	CompositionCohortDefinition cd = new CompositionCohortDefinition();
+	cd.setName("Total enrolled  ");
+	cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+	cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+	cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+	cd.addSearch("enrolled", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+	cd.setCompositionString("usingRegime AND enrolled ");
+	return cd;
+
+}
 		
 		
 	}
