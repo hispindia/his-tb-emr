@@ -312,6 +312,16 @@
 			<name>OpenMRS Nexus Repository</name>
 			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
 		</repository>
+		<repository>
+			<id>shimla-nexus-releases</id>
+			<name>OpenMRS Nexus Repository</name>
+			<url>http://hospdev.hispindia.org/nexus/content/repositories/tb-releases</url>
+		</repository>
+		<repository>
+			<id>shimla-nexus-snapshots</id>
+			<name>OpenMRS Nexus Repository</name>
+			<url>http://hospdev.hispindia.org/nexus/content/repositories/tb-snapshots</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -323,19 +333,38 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
+		<pluginRepository>
+			<id>shimla-nexus-releases</id>
+			<name>shimla nexus releases</name>
+			<url>http://hospdev.hispindia.org/nexus/content/repositories/tb-releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>shimla-nexus-snapshots</id>
+			<name>shimla nexus snapshots</name>
+			<url>http://hospdev.hispindia.org/nexus/content/repositories/tb-snapshots</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
 	</pluginRepositories>
 
 	<distributionManagement>
-		<repository>
-			<id>openmrs-repo-modules</id>
-			<name>Modules</name>
-			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/modules/</url>
-		</repository>
-		<snapshotRepository>
-			<id>openmrs-repo-snapshots</id>
-			<name>OpenMRS Snapshots</name>
-			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+        <!-- use the following if you're not using a snapshot version. -->
+            <repository>
+                <id>shimla-nexus</id>
+                <name>Shimla nexus repo</name>
+                <url>http://hospdev.hispindia.org/nexus/content/repositories/tb-releases/</url>
+            </repository>
+        <!-- use the following if you ARE using a snapshot version. -->
+            <snapshotRepository>
+                <id>shimla-nexus</id>
+                <name>Shimla nexus repo</name>
+                <url>http://hospdev.hispindia.org/nexus/content/repositories/tb-snapshots/</url>
+                <uniqueVersion>false</uniqueVersion>
+             </snapshotRepository>
+   </distributionManagement>
 
 </project>
