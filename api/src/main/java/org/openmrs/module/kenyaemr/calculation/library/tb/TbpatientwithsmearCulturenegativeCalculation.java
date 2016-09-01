@@ -46,24 +46,28 @@ public class TbpatientwithsmearCulturenegativeCalculation extends AbstractPatien
 		if ((obsResultsClassification != null))  {
 			
 			if(obsResultsCulture != null)
-			{
-				if ((obsResultsClassification.getValue().getValueCoded().equals(cultureresult))
+			{ if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultsCulture.getValue().getValueCoded()==null)))
+				{if ((obsResultsClassification.getValue().getValueCoded().equals(cultureresult))
 						&& (((obsResultsCulture.getValue().getValueCoded().equals(cultureresult)))))
 				{
 					
 					oncultureTest = true;
 					
 				}
+				}
 			}
 			if(obsResultLastCultureLiquidResults!=null)
-			{
+			{ if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultLastCultureLiquidResults.getValue().getValueCoded()==null)))
+				
+				{
 				if((obsResultsClassification.getValue().getValueCoded().equals(cultureresult))
+				
 						&& (((obsResultLastCultureLiquidResults.getValue().getValueCoded().equals(cultureresult)))))
 				{
 					
 					oncultureTest = true;
 				}
-				
+			}
 				
 			}
 		

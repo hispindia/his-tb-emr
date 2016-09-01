@@ -33,7 +33,7 @@ public class TbpatientonMedication6mnthsagoCalculation  extends AbstractPatientC
 		 			
 		 			
 		 			
-		 			if(mnths==6)
+		 			if(mnths<=6)
 		 			{
 		 				onVisit=true;
 		 				

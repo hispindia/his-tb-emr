@@ -67,7 +67,7 @@ public class CommonDimensionLibrary {
 		dim.addCohortDefinition("Failure", map(commonCohortLibrary.treatmentOutcome_Failure()));
 		dim.addCohortDefinition("Defaulted", map(commonCohortLibrary.treatmentOutcome_Defaulted()));
 		dim.addCohortDefinition("Died", map(commonCohortLibrary.treatmentOutcome_Died()));
-		dim.addCohortDefinition("TransferedOut", map(commonCohortLibrary.treatmentOutcome_Transferedout()));
+		dim.addCohortDefinition("MoveToXDR", map(commonCohortLibrary.treatmentOutcome_Transferedout()));
 		dim.addCohortDefinition("StillEnroll", map(commonCohortLibrary.treatmentOutcome_Enroll()));
 		
 		return dim;

@@ -391,7 +391,7 @@ public class CommonCohortLibrary {
 	
 	public CohortDefinition treatmentOutcome_Transferedout() {
 		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
-		Concept outcomresult=Dictionary.getConcept(Dictionary.TRANSFERRED_OUT);
+		Concept outcomresult=Dictionary.getConcept(Dictionary.MOVE_TO_XDR);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled with treatment  outcome transferred");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));

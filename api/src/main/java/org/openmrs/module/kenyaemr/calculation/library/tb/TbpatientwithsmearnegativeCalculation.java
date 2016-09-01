@@ -47,25 +47,26 @@ public class TbpatientwithsmearnegativeCalculation extends AbstractPatientCalcul
 		if ((obsResultsClassification != null))  {
 			
 			if(obsResultsCulture != null)
-			{
-				if ((obsResultsClassification.getValue().getValueCoded().equals(labresult))
+			{ if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultsCulture.getValue().getValueCoded()==null)))
+				{if ((obsResultsClassification.getValue().getValueCoded().equals(labresult))
 						&& (((obsResultsCulture.getValue().getValueCoded().equals(cultureresult)))))
 				{
 					
 					oncultureTest = true;
 					
 				}
+				}
 			}
 			if(obsResultLastCultureLiquidResults!=null)
-			{
-				if((obsResultsClassification.getValue().getValueCoded().equals(labresult))
+			{if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultLastCultureLiquidResults.getValue().getValueCoded()==null)))
+				{if((obsResultsClassification.getValue().getValueCoded().equals(labresult))
 						&& (((obsResultLastCultureLiquidResults.getValue().getValueCoded().equals(cultureresult)))))
 				{
 					
 					oncultureTest = true;
 				}
 				
-				
+				}
 			}
 		
 		}

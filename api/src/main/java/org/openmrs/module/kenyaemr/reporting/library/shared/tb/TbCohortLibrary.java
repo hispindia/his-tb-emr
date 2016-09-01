@@ -1538,13 +1538,18 @@ public class TbCohortLibrary {
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_DiedAt6Mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_DefaultedAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_TransferedoutAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+	
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativeculturenegativeAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
@@ -1552,7 +1557,11 @@ public class TbCohortLibrary {
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND labresult  AND labtest");
+		cd.addSearch("labtestOne", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_Defaulted(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_Transferedout(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND labresult  AND (labtest OR labtestOne) AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativeculturepositiveAt6Months() {
@@ -1568,14 +1577,19 @@ public class TbCohortLibrary {
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_DiedAt6Mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_DefaultedAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_TransferedoutAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+	
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativeculturepositiveAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
@@ -1583,7 +1597,11 @@ public class TbCohortLibrary {
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND labresult  AND labtest");
+		cd.addSearch("labtestOne", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_Defaulted(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_Transferedout(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND labresult  AND (labtest OR labtestOne) AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativeculturepositiveAtMonths() {
@@ -1617,29 +1635,40 @@ public class TbCohortLibrary {
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_DiedAt6Mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_DefaultedAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_TransferedoutAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo  AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativecultureunknownAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND labresult  AND NOT labtest");
+		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestOne", ReportUtils.map(commonCohorts.hasObs(cultureliquidtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+
+		cd.addSearch("labtestsolid", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestliquid", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_Defaulted(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_Transferedout(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND labresult AND NOT (labtest OR labtestOne) AND NOT (labtestsolid OR labtestliquid)AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositiveculturenegativeAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
@@ -1647,7 +1676,11 @@ public class TbCohortLibrary {
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND labresult  AND labtest");
+		cd.addSearch("labtestOne", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_Defaulted(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_Transferedout(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND labresult  AND (labtest OR labtestOne) AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositiveculturenegativeAt6Months() {
@@ -1663,13 +1696,17 @@ public class TbCohortLibrary {
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_DiedAt6Mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_DefaultedAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_TransferedoutAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo  AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositiveculturepositiveAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled"  );
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
@@ -1677,7 +1714,12 @@ public class TbCohortLibrary {
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND labresult  AND labtest");
+		cd.addSearch("labtestOne", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestTwo", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_Defaulted(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_Transferedout(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND labresult  AND (labtest OR labtestOne) AND NOT labtestTwo AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree) ");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositiveculturepositiveAt6Months() {
@@ -1693,22 +1735,32 @@ public class TbCohortLibrary {
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_DiedAt6Mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_DefaultedAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_TransferedoutAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositivecultureunknownAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND labresult  AND NOT labtest");
+		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestOne", ReportUtils.map(commonCohorts.hasObs(cultureliquidtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestsolid", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestliquid", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_Defaulted(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_Transferedout(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND labresult AND NOT(labtest OR labtestOne) AND NOT(labtestsolid OR labtestliquid) AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositivecultureunknownAt6Months() {
@@ -1724,22 +1776,34 @@ public class TbCohortLibrary {
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_DiedAt6Mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_DefaultedAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_TransferedoutAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+	
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo  AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknownculturenegativeAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
-		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestNeg", ReportUtils.map(commonCohorts.hasObs( labtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestPos", ReportUtils.map(commonCohorts.hasObs( labtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND NOT labresult  AND labtest");
+		cd.addSearch("labtestOne", ReportUtils.map(commonCohorts.hasObs(cultureliquidtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestsolid", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestliquid", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_Defaulted(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_Transferedout(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled  AND (labtest OR labtestOne) AND  NOT (labtestNeg OR labtestPos) AND NOT (labtestsolid OR labtestliquid)  NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknownculturenegativeAt6Months() {
@@ -1755,22 +1819,33 @@ public class TbCohortLibrary {
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_DiedAt6Mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_DefaultedAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_TransferedoutAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo  AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknownculturepositiveAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
-		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestNeg", ReportUtils.map(commonCohorts.hasObs( labtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestPos", ReportUtils.map(commonCohorts.hasObs( labtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND NOT labresult  AND labtest");
+		cd.addSearch("labtestOne", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest,cultureresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestsolid", ReportUtils.map(commonCohorts.hasObs( culturetest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("labtestliquid", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest,labresult), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_Defaulted(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_Transferedout(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND NOT (labtestNeg OR labtestPos) AND NOT (labtestsolid OR labtestliquid) AND (labtest OR labtestOne) AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)  ");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknownculturepositiveAt6Months() {
@@ -1786,14 +1861,18 @@ public class TbCohortLibrary {
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_DiedAt6Mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_DefaultedAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_TransferedoutAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknowncultureunknownAtMonths(int highMonths, int leastMonths) {
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
-		Concept culturetest=Dictionary.getConcept(Dictionary.SPUTUM_CULTURE);
+		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
+		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
@@ -1801,7 +1880,11 @@ public class TbCohortLibrary {
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
 		cd.addSearch("labresult", ReportUtils.map(commonCohorts.hasObs(labtest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("labtest", ReportUtils.map(commonCohorts.hasObs( culturetest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND NOT labresult  AND NOT labtest");
+		cd.addSearch("labtestOne", ReportUtils.map(commonCohorts.hasObs( cultureliquidtest), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeOne", ReportUtils.map(treatmentOutcome_Died(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeTwo", ReportUtils.map(treatmentOutcome_Defaulted(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("OutcomeThree", ReportUtils.map(treatmentOutcome_Transferedout(15,12),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("enrolled AND NOT labresult AND NOT ( labtest OR labtestOne ) AND NOT (OutcomeOne OR OutcomeTwo OR OutcomeThree)");
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknowncultureunknownAt6Months() {
@@ -1817,7 +1900,10 @@ public class TbCohortLibrary {
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("usingCultureAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo");
+		cd.addSearch("usingtreatmentdied", ReportUtils.map(treatmentOutcome_DiedAt6Mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("usingtreatmentloss", ReportUtils.map(treatmentOutcome_DefaultedAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.addSearch("usingtreatmenteval", ReportUtils.map(treatmentOutcome_TransferedoutAt6mnth(),"onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("usingCultureAgo AND usingMonthsAgo AND NOT (usingtreatmentdied OR usingtreatmentloss OR usingtreatmenteval)");
 		return cd;
 	}
 	public CohortDefinition totalenrolledResultstbpatientwithdiedoutcome() {
@@ -3323,13 +3409,15 @@ public CohortDefinition totalEnrolledResultsAtMonths() {
 	CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
 	comp.setName("medication");
 	comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-	
+	CalculationCohortDefinition cp = new CalculationCohortDefinition(new TotalPatientRegisteredCalculation());
+	cp.setName("registration");
+	cp.addParameter(new Parameter("onDate", "On Date", Date.class));
 	CompositionCohortDefinition cd = new CompositionCohortDefinition();
 	cd.setName("Total enrolled  ");
 	cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 	cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 	cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-	cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter},enrolledOnOrBefore=${onOrBefore}"));
+	cd.addSearch("enrolled", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 	cd.setCompositionString("usingRegime AND enrolled ");
 	return cd;
 

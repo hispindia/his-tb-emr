@@ -114,19 +114,22 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 				
 				for (Obs o : obs) 
 				{
-					if (o.getConcept().equals(tbSputumCultureTest)||o.getConcept().equals(solidCulture)||o.getConcept().equals(liquidCulture)) 
+					if (o.getConcept().equals(solidCulture)||o.getConcept().equals(liquidCulture)) 
 					{
 						requiredObs.add(o);
 					}
 				}
 				
-				 
-				for (Obs o : obsSmear) {
+				
+				for (Obs o : obsSmear) { 
 					if(positiveCount > 5){
 						obsSmearPositive=true;
 						break;
 					}
-					else if(o.getValueCoded().equals(positive)){
+					else if(!(o.getValueCoded()==null))
+					{
+					
+					 if(o.getValueCoded().equals(positive)){
 						positiveCount++;
 					}
 					else if(o.getValueCoded().equals(negative)){
@@ -135,8 +138,9 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 						}
 						break;
 					}
+					}
 				}
-				
+				 
 				 
 				
 				positiveCount = 0;
@@ -147,7 +151,9 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 						obsCulturePositive=true;
 						break;
 					}
-					else if(o.getValueCoded().equals(positive)){
+					else if(!(o.getValueCoded()==null))
+					{
+					if(o.getValueCoded().equals(positive)){
 						positiveCount++;
 					}
 					else if(o.getValueCoded().equals(negative)){
@@ -156,7 +162,7 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 						}
 						break;
 					}
-				
+					}
 					}
 			
 				
