@@ -347,6 +347,7 @@ public class RegimenUtilFragmentController {
 					}	
 				}
 				else if(changeType == RegimenChangeType.Change){
+				encounter=createEncounterForBaseLine(patient);
 				if (srNo != null) {
 					for (String srn : srNo) {
 				Concept drugConcept=null;
@@ -437,7 +438,7 @@ public class RegimenUtilFragmentController {
 							drugOrder.setDiscontinuedReasonNonCoded(changeReasonNonCoded);
 							Context.getOrderService().saveOrder(drugOrder);	
 							
-							encounter=createEncounterForBaseLine(patient);
+						
 							DrugOrder drugOder = new DrugOrder();
 							drugOder.setOrderType(Context.getOrderService().getOrderType(OpenmrsConstants.ORDERTYPE_DRUG));
 							drugOder.setEncounter(encounter);

@@ -404,11 +404,11 @@ public class TreatmentCardRegisterFragmentController {
 							regName7 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
-						} else if (druName.equals("FQ")) {
+						} else if (druName.equals("Lfx")) {
 							regName8 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
-						} else if (druName.equals("Pto/Eto")) {
+						} else if (druName.equals("Eto")) {
 							regName9 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
@@ -416,7 +416,7 @@ public class TreatmentCardRegisterFragmentController {
 							regName10 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
-						} else if (druName.equals("PAS")) {
+						} else if (druName.equals("Sodium PAS")) {
 							regName11 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
