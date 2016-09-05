@@ -9,16 +9,16 @@
 	<description>OpenMRS-based EMR for Kenya</description>
 
 	<organization>
-		<name>I-TECH</name>
-		<url>http://www.go2itech.org</url>
+		<name>HISP India</name>
+		<url>http://www.hispindia.org</url>
 	</organization>
 
 	<scm>
-		<connection>scm:git:git@github.com:I-TECH/openmrs-module-kenyaemr.git</connection>
-		<developerConnection>scm:git:git@github.com:I-TECH/openmrs-module-kenyaemr.git</developerConnection>
-		<url>scm:git:git@github.com:I-TECH/openmrs-module-kenyaemr.git</url>
-	  <tag>14.2</tag>
-  </scm>
+		<connection>scm:git:git@github.com:hispindia/his-tb-emr.git</connection>
+		<developerConnection>scm:git:git@github.com:hispindia/his-tb-emr.git</developerConnection>
+		<url>scm:git:git@github.com:hispindia/his-tb-emr.git</url>
+		<tag>1.0</tag>
+	</scm>
 
 	<modules>
 		<module>api</module>
