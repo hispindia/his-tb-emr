@@ -382,19 +382,19 @@ public class TreatmentCardRegisterFragmentController {
 				DrugOrderProcessed drugOrderProcessed = new DrugOrderProcessed();
 				List<Order> orderListByEn = Context.getOrderService()
 						.getOrdersByEncounter(en);
-				System.out.println("orderlist"+orderListByEn.size());
+			
 				for (Order o : orderListByEn) {
-					System.out.println("cxcc"+o);
+					
 					DrugOrder dr = Context.getOrderService().getDrugOrder(
 							o.getOrderId());
 					DrugOrderProcessed dop = kenyaEmrService
 							.getLastDrugOrderProcessed(dr);
 					String regNames = dr.getConcept().getName().getName();
-					System.out.println("regnames"+regNames);
+				
 					String[] doseArray = dop.getDose().split("/");
 					Integer count = 0;
 					for (String druName : regNames.split("-")) {
-						System.out.println("lfx"+druName);
+					
 						if (druName.equals("H")) {
 							// regName0 = druName+"(" +
 							// doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";
@@ -410,7 +410,7 @@ public class TreatmentCardRegisterFragmentController {
 							regName2 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
-							System.out.println("zzzz"+regName2);
+							
 						} else if (druName.equals("E")) {
 							regName3 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
@@ -427,7 +427,7 @@ public class TreatmentCardRegisterFragmentController {
 							regName6 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
-							System.out.println("hhhhhh"+regName6);
+							
 						} else if (druName.equals("Cm")) {
 							regName7 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
@@ -450,7 +450,7 @@ public class TreatmentCardRegisterFragmentController {
 									+ ")";
 						}
 						count++;
-						System.out.println("count"+count);
+						
 					}
 					
 					
@@ -464,9 +464,9 @@ public class TreatmentCardRegisterFragmentController {
 							+ ", " + regName);
 					
 				}
-				System.out.println("regimn***"+regimenIndex);
+				
 				regimenIndex++;
-				System.out.println("regimn"+regimenIndex);
+				
 			}
 			
 		}
