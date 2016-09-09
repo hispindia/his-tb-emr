@@ -40,6 +40,7 @@ import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithNonConver
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithOtherCategoryCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithSmearCulturepositiveCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithStandardMDRcasesCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithTransferredInCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithTransferredOutOutComeCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithlosstoFollowupCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearCulturenegativeCalculation;
@@ -3441,8 +3442,55 @@ public CohortDefinition totalEnrolledResults() {
 	return cd;
 
 }
+public CohortDefinition totalEnrolledResultswithTransferIn() {
+	Concept registration_group=Dictionary.getConcept(Dictionary.METHOD_OF_ENROLLMENT);
+	Concept previuoslytreated=Dictionary.getConcept(Dictionary.TRANSFER_IN);
+	
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total confirmed  ");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+	
+		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,previuoslytreated), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+	
 		
+		cd.setCompositionString("reggroupOne");
+       
+		return cd;
+
+}	
+public CohortDefinition totalEnrolledResultswithTransferIn(int highMonths, int leastMonths) {
+	Concept registration_group=Dictionary.getConcept(Dictionary.METHOD_OF_ENROLLMENT);
+	Concept previuoslytreated=Dictionary.getConcept(Dictionary.TRANSFER_IN);
+	
+		CompositionCohortDefinition cd = new CompositionCohortDefinition();
+		cd.setName("Total enrolled with treatment  outcome transferred");
+		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
+		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,previuoslytreated), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
+		cd.setCompositionString("reggroupOne");
 		
+		cd.setCompositionString("enrolled AND reggroupOne");
+		return cd;
+		
+}
+public CohortDefinition totalEnrolledResultswithTransferInAtMonths() {
+	CalculationCohortDefinition comp = new CalculationCohortDefinition(new TbpatientonMedication6mnthsagoCalculation());
+	comp.setName("medication");
+	comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+	CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithTransferredInCalculation());
+	cp.setName("Patients with Transferred outcome");
+	cp.addParameter(new Parameter("onDate", "On Date", Date.class));
+	CompositionCohortDefinition cd = new CompositionCohortDefinition();
+	cd.setName("Total enrolled ");
+	cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+	cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+	cd.addSearch("usingOutcomeAgo", ReportUtils.map(cp, "onDate=${onOrBefore}"));
+	cd.addSearch("usingMonthsAgo", ReportUtils.map(comp, "onDate=${onOrBefore}"));
+	cd.setCompositionString("usingOutcomeAgo AND usingMonthsAgo");
+	return cd;
+}
 	}
 	
    

@@ -1519,4 +1519,20 @@ public class TbIndicatorLibrary {
 				map(tbCohorts.totalEnrolledResults(), "onOrAfter=${startDate},onOrBefore=${endDate}")
 		);
 	}
+	
+	public CohortIndicator patientwithTransferIn() {
+		return cohortIndicator("Total enrolled patients with patient Transfer In",
+				map(tbCohorts.totalEnrolledResultswithTransferIn(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator patientwithTransferInbefor1215() {
+		return cohortIndicator("Total enrolled patients with patient Transfer In befor 12 to 15 mnths",
+				map(tbCohorts.totalEnrolledResultswithTransferIn(15,12), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
+	public CohortIndicator patientwithTransferIn6mnth() {
+		return cohortIndicator("Total enrolled patients with patient Transfer In before 6 mnth",
+				map(tbCohorts.totalEnrolledResultswithTransferInAtMonths(), "onOrAfter=${startDate},onOrBefore=${endDate}")
+		);
+	}
 }

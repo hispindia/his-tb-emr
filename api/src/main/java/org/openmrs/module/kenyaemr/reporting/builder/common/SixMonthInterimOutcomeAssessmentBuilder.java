@@ -64,8 +64,8 @@ public class SixMonthInterimOutcomeAssessmentBuilder extends AbstractReportBuild
 				ReportUtils.map(createTbsmearunknowncultureunknown(), "startDate=${startDate},endDate=${endDate}"),
 				ReportUtils.map(createTboutcomeDied(), "startDate=${startDate},endDate=${endDate}"),
 				ReportUtils.map(createTboutcomeLossToFollowUp(), "startDate=${startDate},endDate=${endDate}"),
-				ReportUtils.map(createTboutcomeNotEvaluated(), "startDate=${startDate},endDate=${endDate}")
-				
+				ReportUtils.map(createTboutcomeNotEvaluated(), "startDate=${startDate},endDate=${endDate}"),
+				ReportUtils.map(createTbDataSetwithTransferInpatient(), "startDate=${startDate},endDate=${endDate}")
 			);
 	}
 
@@ -315,4 +315,18 @@ public class SixMonthInterimOutcomeAssessmentBuilder extends AbstractReportBuild
 		   return  dsd;
 		}
 	
+		private DataSetDefinition createTbDataSetwithTransferInpatient() {
+			CohortIndicatorDataSetDefinition dsd = new CohortIndicatorDataSetDefinition();
+			dsd.setName("N");
+			dsd.setDescription(" Patient in MDR-TB registered with transfer In entry point" );
+			dsd.addParameter(new Parameter("startDate", "Start Date", Date.class));
+			dsd.addParameter(new Parameter("endDate", "End Date", Date.class));
+			List<ColumnParameters> columns = new ArrayList<ColumnParameters>();
+			
+			columns.add(new ColumnParameters("T", "total", ""));
+			String indParams = "startDate=${startDate},endDate=${endDate}";
+
+			EmrReportingUtils.addRow(dsd, "N1", "No. of detected cases with entry point TransferIn ", ReportUtils.map(tbIndicatorLibrary.patientwithTransferIn6mnth(), indParams), columns);
+			return dsd;
+		}
 }

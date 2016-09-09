@@ -68,7 +68,8 @@ public class PatientHavingMDRTBcaseDetectinBuilder extends AbstractReportBuilder
 				   ReportUtils.map( createTbDataSetMDRTB(),"startDate=${startDate},endDate=${endDate}"),
 				   ReportUtils.map( createTbDataSetNewpatient(),"startDate=${startDate},endDate=${endDate}"),
 				   ReportUtils.map( createTbDataSetTotalTbpatient(),"startDate=${startDate},endDate=${endDate}"),
-				   ReportUtils.map( createTbDataSetOtherpatient(),"startDate=${startDate},endDate=${endDate}")
+				   ReportUtils.map( createTbDataSetOtherpatient(),"startDate=${startDate},endDate=${endDate}"),
+				   ReportUtils.map( createTbDataSetwithTransferInpatient(),"startDate=${startDate},endDate=${endDate}")
 				);                      
 	}
 
@@ -291,6 +292,26 @@ public class PatientHavingMDRTBcaseDetectinBuilder extends AbstractReportBuilder
 		List<String> indSuffixes = Arrays.asList("FM","MA", "TT");    
              
 		EmrReportingUtils.addRow(dsd, "Y1", "No. of detected cases with Other(Previously treated EP OR Unknown outcome of previously treated Pul:TB)", ReportUtils.map(tbIndicators.confirmedOtherCategoryMDRTB(), indParams), allColumns,indSuffixes);
+		return dsd;
+	}
+	
+	private DataSetDefinition createTbDataSetwithTransferInpatient() {
+		CohortIndicatorDataSetDefinition dsd = new CohortIndicatorDataSetDefinition();
+		dsd.setName("Z");
+		dsd.setDescription(" Patient in MDR-TB registered with transfer In entry point" );
+		dsd.addParameter(new Parameter("startDate", "Start Date", Date.class));
+		dsd.addParameter(new Parameter("endDate", "End Date", Date.class));
+		dsd.addDimension("patienttype",map(commonDimensions.typeOfPatients()));
+		
+		
+		
+		List<ColumnParameters> columns = new ArrayList<ColumnParameters>();
+		columns.add(new ColumnParameters("T", "total", "patienttype=enrollmentTbRegnumber"));
+		
+		
+		String indParams = "startDate=${startDate},endDate=${endDate}";
+
+		EmrReportingUtils.addRow(dsd, "Z1", "No. of detected cases with entry point TransferIn ", ReportUtils.map(tbIndicators.patientwithTransferIn(), indParams),columns);
 		return dsd;
 	}
 }
