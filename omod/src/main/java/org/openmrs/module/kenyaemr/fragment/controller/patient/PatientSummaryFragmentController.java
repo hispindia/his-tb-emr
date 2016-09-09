@@ -119,14 +119,15 @@ public class PatientSummaryFragmentController {
 			}
 		}
 
-		Obs drugName = getLatestObs(patient, Dictionary.ALERGIC_DRUG_NAME);
+		Obs drugName = getLatestObs(patient, Dictionary.ALLERGY_DRUG);
 		if (drugName != null) {
 			EncounterWrapper wrapped = new EncounterWrapper(
 					drugName.getEncounter());
 			List<Obs> obsList = wrapped.allObs(drugName.getConcept());
-			for (Obs obs : obsList) {
+			for (Obs obs : obsList) { 
 				drugAllergiesName = drugAllergiesName.concat(obs
 						.getValueCoded().getName().toString());
+				 
 			}
 		}
 

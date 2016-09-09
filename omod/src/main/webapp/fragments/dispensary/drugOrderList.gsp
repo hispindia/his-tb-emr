@@ -11,7 +11,7 @@
 <th>Frequency </th>
 <th>Route </th>
 <th>Duration (Days)</th>
-<th>Issue Qunatity </th>
+<th>Issue Quantity </th>
 <th>Regimen Name</th>
 </tr>
 
