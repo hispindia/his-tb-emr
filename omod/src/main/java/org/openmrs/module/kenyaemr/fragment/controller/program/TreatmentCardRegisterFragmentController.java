@@ -59,7 +59,28 @@ public class TreatmentCardRegisterFragmentController {
 		} else {
 			model.addAttribute("mdrTBRegistrationNumber", null);
 		}
-
+    //Record vitals value
+		Integer height =0;Integer weight =0;
+		List <Obs> heightValue=Context.getObsService().getObservationsByPersonAndConcept(patient,Dictionary.getConcept(Dictionary.HEIGHT_CM));
+		for(Obs o:heightValue)
+		{
+			if(o!=null)
+			{
+				height=o.getValueNumeric().intValue();
+				
+			}
+		}
+		model.addAttribute("height", height);
+		List <Obs> weightValue=Context.getObsService().getObservationsByPersonAndConcept(patient,Dictionary.getConcept(Dictionary.WEIGHT_KG));
+		for(Obs o:weightValue)
+		{
+			if(o!=null)
+			{
+				weight=o.getValueNumeric().intValue();
+				
+			}
+		}
+		model.addAttribute("weight", weight);
 		String registrationGroupVal = "";
 		Obs registrationGroup = getLatestObs(patient,
 				Dictionary.REGISTRATION_GROUP);
@@ -333,7 +354,7 @@ public class TreatmentCardRegisterFragmentController {
 				Dictionary.SUGAR));
 		
 		Map<Integer, String> regimenList = new HashMap<Integer, String>();
-		Integer regimenIndex = 0;
+		  Integer regimenIndex =0 ;
 
 		List<DrugOrder> orderList = Context.getOrderService()
 				.getDrugOrdersByPatient(patient);
@@ -361,21 +382,26 @@ public class TreatmentCardRegisterFragmentController {
 				DrugOrderProcessed drugOrderProcessed = new DrugOrderProcessed();
 				List<Order> orderListByEn = Context.getOrderService()
 						.getOrdersByEncounter(en);
+				System.out.println("orderlist"+orderListByEn.size());
 				for (Order o : orderListByEn) {
+					System.out.println("cxcc"+o);
 					DrugOrder dr = Context.getOrderService().getDrugOrder(
 							o.getOrderId());
 					DrugOrderProcessed dop = kenyaEmrService
 							.getLastDrugOrderProcessed(dr);
 					String regNames = dr.getConcept().getName().getName();
+					System.out.println("regnames"+regNames);
 					String[] doseArray = dop.getDose().split("/");
 					Integer count = 0;
 					for (String druName : regNames.split("-")) {
+						System.out.println("lfx"+druName);
 						if (druName.equals("H")) {
 							// regName0 = druName+"(" +
 							// doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";
 							regName0 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
+							
 						} else if (druName.equals("R")) {
 							regName1 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
@@ -384,6 +410,7 @@ public class TreatmentCardRegisterFragmentController {
 							regName2 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
+							System.out.println("zzzz"+regName2);
 						} else if (druName.equals("E")) {
 							regName3 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
@@ -400,6 +427,7 @@ public class TreatmentCardRegisterFragmentController {
 							regName6 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
 									+ ")";
+							System.out.println("hhhhhh"+regName6);
 						} else if (druName.equals("Cm")) {
 							regName7 = "(" + doseArray[count] + " "
 									+ dr.getUnits() + " " + dr.getFrequency()
@@ -422,18 +450,27 @@ public class TreatmentCardRegisterFragmentController {
 									+ ")";
 						}
 						count++;
+						System.out.println("count"+count);
 					}
+					
+					
 					regName = regName0 + "," + regName1 + "," + regName2 + ","
 							+ regName3 + "," + regName4 + "," + regName5 + ","
 							+ regName6 + "," + regName7 + "," + regName8 + ","
 							+ regName9 + "," + regName10 + "," + regName11;
+					
 					regimenList.put(regimenIndex, new SimpleDateFormat(
 							"dd-MMMM-yyyy").format(en.getEncounterDatetime())
 							+ ", " + regName);
+					
 				}
+				System.out.println("regimn***"+regimenIndex);
 				regimenIndex++;
+				System.out.println("regimn"+regimenIndex);
 			}
+			
 		}
+		
 		model.addAttribute("regimenList", regimenList);
 		
 		

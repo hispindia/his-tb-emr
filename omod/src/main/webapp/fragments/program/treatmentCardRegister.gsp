@@ -19,6 +19,8 @@
 							<br/><strong>Name :</strong>
 							<br/><strong>Sex :  </strong>
 							<br/><strong>Age/DOB : </strong>
+							<br/><strong>Weight(Kg) : </strong>
+							<br/><strong>Height(Cm) : </strong>
 							<br/><strong>Registration group :  </strong>
 							<br/><strong>MDR-TB registration number : </strong>
 							<br/><strong>Date of Registration : </strong>
@@ -30,6 +32,8 @@
 							<br/> ${ patientName }
 							<br/> ${ patientGender } 
 							<br/> ${ patientAge } / ${ birthDate }
+							<br/> ${ weight} 
+							<br/> ${ height} 
 							<br/> ${ registrationGroup } 
 							<br/> <% if(mdrTBRegistrationNumber) {%> ${mdrTBRegistrationNumber  }	<% } %>
 							<br/>  ${registrationDateVal}
