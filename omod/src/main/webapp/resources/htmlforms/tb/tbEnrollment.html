@@ -1,3 +1,4 @@
+
 <!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
@@ -18,14 +19,12 @@ table.tb {
 	background-color: #c7d8a7;
 	border: 1px solid black;
 }
-
 table.tb1 {
 	border: 1px solid black;
 	vertical-align: baseline;
 	text-align: left;
 	background-color: #e8efdc;
 }
-
 table.tb1 tr th, table.tb1 tr td {
 	border: 0;
 	padding: 10px;
@@ -37,25 +36,34 @@ table.tb1 tr th, table.tb1 tr td {
 			var checkData = getValue('regGroup.value');
 			// show fields with data 
 		
-			if( checkData!="" &amp;&amp; document.getElementById("w10").value==null ){
+			if( checkData!="" &amp;&amp; document.getElementById("w10").value==null )
+			{
 				fieldIndex = 69;
 			}
 			else{
+				
 				fieldIndex = 10;
 			}
 			j=1;
 			if(document.getElementById("w"+fieldIndex)!=null)
 				{
-			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 6){
+			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
+				
 				jQuery('#'+j+'-toggleContainer').show();   
 				fieldIndex=fieldIndex+2;
 				if(document.getElementById("w"+fieldIndex)!=null){ 
 					if(document.getElementById("w"+fieldIndex).value != '')
-						{ 
+						{
 					
 					$j('#'+j+'-removeEntry').toggle(false);
 					$j('#'+j+'-addEntry').toggle(false);
 						}
+					if(document.getElementById("w"+fieldIndex).value != '' &amp;&amp; j==5)
+					{ 
+				
+					$j('#'+j+'-removeEntry').toggle(true);
+				$j('#'+j+'-addEntry').toggle(false);
+					}
 				}
 				j++;
 			}
@@ -87,16 +95,34 @@ table.tb1 tr th, table.tb1 tr td {
 			var optValues = getValue('dclassification.value');
 			
 			// show fields with data 
+			var pgender    = "<lookup expression="patient.gender" />";
+
+			if (pgender == 'F' )
+				{
 			if( checkData!="" &amp;&amp; document.getElementById("w10").value==null ){ 
-				fieldIndex = 81;
+				fieldIndex = 85;
 			}
 			else if( checkData!="" &amp;&amp; optValues == 156204 || optValues == 163055 &amp;&amp;document.getElementById("w10").value!=null)
 				{
-				  fieldIndex = 81;
+				  fieldIndex = 85;
 				}
 			else{
 				fieldIndex = 29;
 			}
+				}
+			else
+				{
+				if( checkData!="" &amp;&amp; document.getElementById("w10").value==null ){ 
+					fieldIndex = 75;
+				}
+				else if( checkData!="" &amp;&amp; optValues == 156204 || optValues == 163055 &amp;&amp;document.getElementById("w10").value!=null)
+					{
+					  fieldIndex = 75;
+					}
+				else{
+					fieldIndex = 29;
+				}
+				}
 			j=1;
 			
 			if(document.getElementById("w"+fieldIndex)!=null)
@@ -141,20 +167,21 @@ table.tb1 tr th, table.tb1 tr td {
 				$j('#' + correctedRemoveButtonId + '-removeEntry1').toggle(true);
 				return false;
 				});
-
-			/*
 			// show fields with data 
-			
+			if (pgender == 'F' )
+				{
 			if( checkData!="" &amp;&amp; document.getElementById("w19").value!='' &amp;&amp; optValues == 42 ){ 
 				fieldIndex = 55;
 			}
-			else if(checkData!="" &amp;&amp; optValues == 42 ){
+			else if( checkData!="" &amp;&amp; document.getElementById("w87").value!=null &amp;&amp; optValues == 42 )
+				{ 
 				fieldIndex = 49;
-			}
+				}
 			else if( checkData!="" &amp;&amp; optValues == 156204 || optValues == 163055)
-			{  if(document.getElementById("w87")!=null)
+			{  if(document.getElementById("w87").value!='')
 				{
-					fieldIndex = 59;
+				
+			fieldIndex = 59;
 				}
 			else
 				{
@@ -166,12 +193,35 @@ table.tb1 tr th, table.tb1 tr td {
 			else{ 
 				fieldIndex = 71;
 			}
-			
-			*/
-			
-			
+				}
+			else
+				{
+				if( checkData!="" &amp;&amp; document.getElementById("w19").value!='' &amp;&amp; optValues == 42 ){ 
+					fieldIndex = 55;
+				}
+				else if( checkData!="" &amp;&amp; document.getElementById("w81").value!=null &amp;&amp; optValues == 42 )
+					{ 
+					fieldIndex = 49;
+					}
+				else if( checkData!="" &amp;&amp; optValues == 156204 || optValues == 163055)
+				{  if(document.getElementById("w81").value!='')
+					{
+					
+				fieldIndex = 59;
+					}
+				else
+					{
+					
+					fieldIndex = 65;
+					}
+				}
+				
+				else{ 
+					fieldIndex = 71;
+				}
+				}
 			j=1;
-
+		
 			if(document.getElementById("w"+fieldIndex)!=null)
 			{	
 			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
@@ -190,82 +240,6 @@ table.tb1 tr th, table.tb1 tr td {
 				j++;
 			}
 			}
-
-			fieldIndex = 71;
-			if(document.getElementById("w"+fieldIndex)!=null)
-			{	
-			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
-				//alert(document.getElementById("w"+38).value);
-				
-				jQuery('#'+j+'-toggleContainer2').show();   
-				fieldIndex=fieldIndex+2; 
-				if(document.getElementById("w"+fieldIndex)!=null)
-				{
-				if(document.getElementById("w"+fieldIndex).value != '')
-					{
-				$j('#'+j+'-removeEntry2').toggle(false);
-				$j('#'+j+'-addEntry2').toggle(false);
-					}
-				}
-				j++;
-			}
-			}
-
-			else if(document.getElementById("w59")!=null)
-			{	
-			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
-				//alert(document.getElementById("w"+38).value);
-				
-				jQuery('#'+j+'-toggleContainer2').show();   
-				fieldIndex=fieldIndex+2; 
-				if(document.getElementById("w"+fieldIndex)!=null)
-				{
-				if(document.getElementById("w"+fieldIndex).value != '')
-					{
-				$j('#'+j+'-removeEntry2').toggle(false);
-				$j('#'+j+'-addEntry2').toggle(false);
-					}
-				}
-				j++;
-			}
-			}
-			else if(document.getElementById("w65")!=null)
-			{	
-			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
-				//alert(document.getElementById("w"+38).value);
-				
-				jQuery('#'+j+'-toggleContainer2').show();   
-				fieldIndex=fieldIndex+2; 
-				if(document.getElementById("w"+fieldIndex)!=null)
-				{
-				if(document.getElementById("w"+fieldIndex).value != '')
-					{
-				$j('#'+j+'-removeEntry2').toggle(false);
-				$j('#'+j+'-addEntry2').toggle(false);
-					}
-				}
-				j++;
-			}
-			}
-			else if(document.getElementById("w49")!=null)
-			{	
-			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
-				//alert(document.getElementById("w"+38).value);
-				
-				jQuery('#'+j+'-toggleContainer2').show();   
-				fieldIndex=fieldIndex+2; 
-				if(document.getElementById("w"+fieldIndex)!=null)
-				{
-				if(document.getElementById("w"+fieldIndex).value != '')
-					{
-				$j('#'+j+'-removeEntry2').toggle(false);
-				$j('#'+j+'-addEntry2').toggle(false);
-					}
-				}
-				j++;
-			}
-			}
-			
 			$j('#1-removeEntry2').remove();
 			$j('#5-addEntry2').remove();
 			$j('#1-toggleContainer2').show();
@@ -299,6 +273,7 @@ table.tb1 tr th, table.tb1 tr td {
 					if( checkData!=""){
 						if(d!="Invalid Date"){
 							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+							
 							d.setDate(d.getDate() + 280);
 							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 							document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
@@ -307,7 +282,6 @@ table.tb1 tr th, table.tb1 tr td {
 							document.getElementById("w79-display").value =  "";
 							document.getElementById("w79").value = "";
 						}
-
 					}
 					else{
 						if(d!="Invalid Date"){
@@ -324,7 +298,7 @@ table.tb1 tr th, table.tb1 tr td {
 				}	
 				else{
 					if( checkData!=""){
-						if(document.getElementById("w81")=='' )
+						if(document.getElementById("w85")=='' )
 						{if(d!="Invalid Date"){ 
 							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
 							d.setDate(d.getDate() + 280);
@@ -337,7 +311,7 @@ table.tb1 tr th, table.tb1 tr td {
 						}
 					}
 						
-						else if(document.getElementById("w87")=='')
+						else if(document.getElementById("w81")=='')
 							{
 							if(d!="Invalid Date"){
 								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
@@ -350,7 +324,6 @@ table.tb1 tr th, table.tb1 tr td {
 								document.getElementById("w85").value = "";
 							}
 							}
-
 					}
 					else{
 						if(d!="Invalid Date"){ 
@@ -365,11 +338,10 @@ table.tb1 tr th, table.tb1 tr td {
 						
 					}
 				}
-
 					}
 				else
 					{
-					if(document.getElementById("w51")){
+					if(document.getElementById("w49")){
 						if( checkData!=""){
 							if(d!="Invalid Date"){
 								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
@@ -381,7 +353,6 @@ table.tb1 tr th, table.tb1 tr td {
 								document.getElementById("w69-display").value =  "";
 								document.getElementById("w69").value = "";
 							}
-
 						}
 						else{
 							if(d!="Invalid Date"){
@@ -408,7 +379,6 @@ table.tb1 tr th, table.tb1 tr td {
 								document.getElementById("w75-display").value =  "";
 								document.getElementById("w75").value = "";
 							}
-
 						}
 						else{
 							if(d!="Invalid Date"){
@@ -448,6 +418,7 @@ table.tb1 tr th, table.tb1 tr td {
 					if( checkData!=""){
 						if(d!="Invalid Date"){
 							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+							
 							d.setDate(d.getDate() + 280);
 							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 							document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
@@ -456,7 +427,6 @@ table.tb1 tr th, table.tb1 tr td {
 							document.getElementById("w79-display").value =  "";
 							document.getElementById("w79").value = "";
 						}
-
 					}
 					else{
 						if(d!="Invalid Date"){
@@ -490,6 +460,7 @@ table.tb1 tr th, table.tb1 tr td {
 							{
 							if(d!="Invalid Date"){
 								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+								 
 								d.setDate(d.getDate() + 280);
 								document.getElementById("w85-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 								document.getElementById("w85").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
@@ -499,7 +470,6 @@ table.tb1 tr th, table.tb1 tr td {
 								document.getElementById("w85").value = "";
 							}
 							}
-
 					}
 					else{
 						if(d!="Invalid Date"){
@@ -514,23 +484,25 @@ table.tb1 tr th, table.tb1 tr td {
 						
 					}
 				}
-
 					}
 				else
 					{
-					if(document.getElementById("w51")){
+					if(document.getElementById("w49")){
 						if( checkData!=""){
 							if(d!="Invalid Date"){
 								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+								
+							    
 								d.setDate(d.getDate() + 280);
+								
 								document.getElementById("w69-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 								document.getElementById("w69").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
+							
 							}
 							else{
 								document.getElementById("w69-display").value =  "";
 								document.getElementById("w69").value = "";
 							}
-
 						}
 						else{
 							if(d!="Invalid Date"){
@@ -557,7 +529,6 @@ table.tb1 tr th, table.tb1 tr td {
 								document.getElementById("w75-display").value =  "";
 								document.getElementById("w75").value = "";
 							}
-
 						}
 						else{
 							if(d!="Invalid Date"){
@@ -574,7 +545,6 @@ table.tb1 tr th, table.tb1 tr td {
 					}
 					}
 				});
-
 			}
 			
 			
@@ -645,7 +615,6 @@ table.tb1 tr th, table.tb1 tr td {
 						else{
 							jq('#cptDate :input').prop('disabled', true);
 						}
-
 					}
 				}
 				else {
@@ -686,7 +655,6 @@ table.tb1 tr th, table.tb1 tr td {
     					else{
     						jq('#cptDate :input').prop('disabled', true);
     					}
-
     				}
     				else {
         				jq('#hivSectionField :input').prop('disabled', true);
@@ -865,7 +833,6 @@ table.tb1 tr th, table.tb1 tr td {
     				}
     			});
 			beforeSubmit.push (function() {
-
 					var count=0;
 					$('#expul').find('select :selected').each(function(){
 					        count+=Number($(this).val());
@@ -898,6 +865,7 @@ table.tb1 tr th, table.tb1 tr td {
 			var today = new Date();
 			if(d!="Invalid Date"){
 				display=Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7) + " week";
+				
 			}
 			jQuery('#mbddate').html(display );
 		}
@@ -946,7 +914,7 @@ table.tb1 tr th, table.tb1 tr td {
 					<tr>
 						<td>Disease Classification<font color="red"><b>*</b></font></td>
 						<td><obs conceptId="160040AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-								style="radio" id="dclassification" /></td>
+								style="radio" id="dclassification"  /></td>
 					</tr>
 					<tr>
 						<td>If Extra -pulmonary, specific site</td>
@@ -978,9 +946,9 @@ table.tb1 tr th, table.tb1 tr td {
 					<tr>
 						<td>MDR-TB registration number<font color="red"><b>*</b></font></td>
 						<td><span id="patientreg"><patient field="identifier"
-									identifierTypeId="d8ee3b8c-a8fc-4d6b-af6a-9423be5f8906"
-									required="false" /></span> <span class="error field-error"
-							id="reg"></span></td>
+								identifierTypeId="d8ee3b8c-a8fc-4d6b-af6a-9423be5f8906"  required="false"
+								 /></span>
+								 <span class="error field-error" id="reg"></span></td>
 					</tr>
 					<tr>
 						<td>Date of the MDR-TB registration</td>
@@ -1041,17 +1009,16 @@ table.tb1 tr th, table.tb1 tr td {
 						<tr>
 							<td>Registration group<font color="red"><b>*</b></font></td>
 							<td><obs conceptId="159990AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									id="regGroup" /></td>
+									 id="regGroup" /></td>
 						</tr>
 						<tr>
 							<td>Contact of MDR-TB cases</td>
 							<td><obs conceptId="1526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 									style="radio" /></td>
 						</tr>
-						<tr style="display: none">
+						<tr>
 							<td>Treatment centre</td>
-							<td><obs conceptId="159804AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="location" /></td>
+							<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba" style="location"/></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -1059,73 +1026,68 @@ table.tb1 tr th, table.tb1 tr td {
 		</tr>
 		<tr id="topMost">
 			<td width="50%" valign="top">
-				<h5>
-					<b>HIV Information</b>
-				</h5>
-				<table class="tb1" border="0" width="100%">
-					<col width="50%" />
-					<col width="50%" />
-					<tr>
-						<td>HIV testing done<font color="red"><b>*</b></font></td>
-						<td><obs conceptId="159938AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-								style="radio" id="hivSection" /></td>
-					</tr>
-				</table>
-				<div id="hivSectionField">
+					<h5>
+						<b>HIV Information</b>
+					</h5>
 					<table class="tb1" border="0" width="100%">
 						<col width="50%" />
-						<col width="50%" />
+  						<col width="50%" />
 						<tr>
-							<td>Date of test</td>
-							<td><obs conceptId="160751AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
-						</tr>
-						<tr>
-							<td>Result</td>
-							<td><obs conceptId="159427AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									id="testResult" /></td>
-						</tr>
-						<tr>
-							<td>If reactive, treatment taking at NAP center</td>
-							<td><obs conceptId="dc3f16ef-1beb-4c57-8182-df37c70f40ed"
-									style="radio" id="napCenter" /></td>
-						</tr>
-						<tr>
-							<td>If yes, Pre ART/ART registration number</td>
-							<td><obs conceptId="1762AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									id="preArtRegNumber" /></td>
-						</tr>
-						<tr>
-							<td>If No, Name of HIV treatment center</td>
-							<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba"
-									id="treatmentCenter" /></td>
-						</tr>
-						<tr>
-							<td>Started on ART</td>
-							<td><obs conceptId="162127AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" id="artOption" /></td>
-						</tr>
-						<tr>
-							<td>Date</td>
-							<td><obs conceptId="162550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									id="artDate" /></td>
-						</tr>
-						<tr>
-							<td>Current HIV regimen</td>
-							<td><obs conceptId="1088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="autocomplete" id="artRegimen" /></td>
-						</tr>
-						<tr>
-							<td>Started on CPT</td>
-							<td><obs conceptId="112234AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" id="cptOption" /></td>
-						</tr>
-						<tr>
-							<td>Date</td>
-							<td><obs conceptId="431adda7-582e-4822-83a6-25344f21fc7c"
-									id="cptDate" /></td>
+							<td>HIV testing done<font color="red"><b>*</b></font></td>
+							<td><obs conceptId="159938AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+									style="radio"  id="hivSection"/></td>
 						</tr>
 					</table>
-				</div>
+					<div id="hivSectionField">
+						<table class="tb1" border="0" width="100%">
+							<col width="50%" />
+							<col width="50%" />
+							<tr>
+								<td>Date of test</td>
+								<td><obs conceptId="160751AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+							</tr>
+							<tr>
+								<td>Result</td>
+								<td><obs conceptId="159427AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="testResult"/></td>
+							</tr>
+							<tr>
+								<td>If reactive, treatment taking at NAP center</td>
+								<td><obs conceptId="dc3f16ef-1beb-4c57-8182-df37c70f40ed"
+										style="radio" id="napCenter"/></td>
+							</tr>
+							<tr>
+								<td>If yes, Pre ART/ART registration number</td>
+								<td><obs conceptId="1762AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="preArtRegNumber"/></td>
+							</tr>
+							<tr>
+								<td>If No, Name of HIV treatment center</td>
+								<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba" id="treatmentCenter"/></td>
+							</tr>
+							<tr>
+								<td>Started on ART</td>
+								<td><obs conceptId="162127AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+										style="radio" id="artOption"/></td>
+							</tr>
+							<tr>
+								<td>Date</td>
+								<td><obs conceptId="162550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="artDate"/></td>
+							</tr>
+							<tr>
+								<td>Current HIV regimen</td>
+								<td><obs conceptId="1088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+										style="autocomplete"  id="artRegimen"/></td>
+							</tr>
+							<tr>
+								<td>Started on CPT</td>
+								<td><obs conceptId="112234AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+										style="radio" id="cptOption"/></td>
+							</tr>
+							<tr>
+								<td>Date</td>
+								<td><obs conceptId="431adda7-582e-4822-83a6-25344f21fc7c" id="cptDate"/></td>
+							</tr>
+						</table>
+					</div>
 			</td>
 			<td valign="top">
 				<fieldset>
@@ -1156,20 +1118,18 @@ table.tb1 tr th, table.tb1 tr td {
 						<tr>
 							<td>Drug Allergy<font color="red"><b>*</b></font></td>
 							<td><obs conceptId="141760AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									style="radio" id="drugOption" /></td>
+									style="radio" id="drugOption"/></td>
 						</tr>
 						<tr>
 							<td>If yes, name of drug</td>
-							<td><obs conceptId="160558AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									id="drugName" /></td>
+							<td><obs conceptId="160558AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="drugName"/></td>
 						</tr>
-						<tr>
+					<tr>
 							<td>Other</td>
-							<td valign="top"><obs
-									conceptId="133863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									id="other_regional" /></td>
-						</tr>
-
+						<td valign="top"><obs
+									conceptId="133863AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  id="other_regional"/></td>
+					     </tr>
+						
 						<includeIf logicTest="GENDER = F">
 						<tr>
 							<td>Pregnancy</td>
@@ -1190,7 +1150,7 @@ table.tb1 tr th, table.tb1 tr td {
 							<td>MBD</td>
 							<td><span id="mbddate" class="value"></span></td>
 						</tr>
-						<tr>
+				        <tr>
 							<td>Pregnacny Outcome/Date</td>
 							<td><obs conceptId="161033AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /> / 
 							<obs conceptId="141346AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
