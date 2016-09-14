@@ -183,11 +183,11 @@
 			</tr>
 			<tr bgcolor="#778899">
 				<td colspan="6">
-					<h4><strong><center>Daignosis</center> </strong></h4>
+					<h4><strong><center>Diagnosis</center> </strong></h4>
 				</td>
 			</tr>
 			<tr>
-				<td valign="top"  colspan="6">
+				<td valign="top" class="table"  colspan="6">
 					${ ui.includeFragment("kenyaui", "widget/obsHistoryTable", [ id: "tblhistory", patient: currentPatient, concepts: graphingConcepts ]) }
 				</td>
 			</tr>

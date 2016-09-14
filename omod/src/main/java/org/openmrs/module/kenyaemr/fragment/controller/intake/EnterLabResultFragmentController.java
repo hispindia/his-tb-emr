@@ -48,7 +48,7 @@ public class EnterLabResultFragmentController {
 			@RequestParam(required = false, value = "encounterId") Encounter encounter,
 			@RequestParam(required = false, value = "returnUrl") String returnUrl,
 			UiUtils ui, PageModel model) {
-
+    
 		Set<Obs> listResultObs = null;
 		Encounter resultEncounter = null;
 		Visit visit = encounter.getVisit();
@@ -156,7 +156,7 @@ public class EnterLabResultFragmentController {
 			throws Exception {
 		EncounterService encService = Context
 				.getService(EncounterService.class);
-
+       
 		Date curDate = new Date();
 		if(visit.getStopDatetime() != null){
 			curDate =visit.getStopDatetime();
@@ -177,7 +177,7 @@ public class EnterLabResultFragmentController {
 		if (isChestXRay) {
 			ch.addAll(Arrays.asList(strs));
 		}
-
+		
 		if (resultEncounter != null) {
 			// edit
 			Set<Obs> listObs = resultEncounter.getAllObs();
@@ -191,7 +191,7 @@ public class EnterLabResultFragmentController {
 						.getParameter(submittedConceptId + "_isRadiology");
 				String hasAnswers = actionRequest
 						.getParameter(submittedConceptId + "_hasAnswers");
-				System.out.println(hasAnswers);
+				
 				if (Arrays.asList(strs).contains(submittedConceptId)) {
 					hasAnswers = "true";
 				}
@@ -213,6 +213,7 @@ public class EnterLabResultFragmentController {
 
 				Concept concept = Context.getConceptService().getConcept(
 						NumberUtils.toInt(submittedConceptId));
+				
 				for (Obs obs : listObs) {
 					if (obs.getConcept().getConceptId()
 							.equals(concept.getConceptId())) {
@@ -221,6 +222,16 @@ public class EnterLabResultFragmentController {
 
 						// value has been changed
 						obs.setValueText(value);
+						
+						if(obs.getConcept().getConceptId()==857 || obs.getConcept().getConceptId()==159825 
+						   || obs.getConcept().getConceptId()==161505 ||obs.getConcept().getConceptId()==887||
+						   obs.getConcept().getConceptId()==790)
+						{ 
+							if(value!=null && value!=""){
+								obs.setValueNumeric(Double.parseDouble(value));
+							}
+							
+						}
 						obs.setDateChanged(curDate);
 						changed = true;
 						obs.setValueCoded(Context.getConceptService()
@@ -231,12 +242,19 @@ public class EnterLabResultFragmentController {
 					// save new Obs
 					Obs newObs = new Obs();
 					newObs.setConcept(concept);
-					if (value != null && value != "") {
+					
+					if(value!=null && value!=""){
 						newObs.setValueText(value);
-					} else {
+
+						if(concept.getConceptId()==857 || concept.getConceptId()==159825 
+						   ||concept.getConceptId()==161505 ||concept.getConceptId()==887||
+								   concept.getConceptId()==790){
+							newObs.setValueNumeric(Double.parseDouble(value));
+						}
+					}
+					else{
 						newObs.setValueText("");
 					}
-
 					if ("true".equals(hasAnswers)) {
 						newObs.setValueCoded(Context.getConceptService()
 								.getConcept(value));
@@ -315,6 +333,12 @@ public class EnterLabResultFragmentController {
 				} else {
 					if (value != null && value != "") {
 						obs.setValueText(value);
+						if(obs.getConcept().getConceptId()==857 || obs.getConcept().getConceptId()==159825 
+								   || obs.getConcept().getConceptId()==161505 ||obs.getConcept().getConceptId()==887||
+								   obs.getConcept().getConceptId()==790)
+						{
+							obs.setValueNumeric(Double.parseDouble(value));
+						}
 					} else {
 						obs.setValueText("");
 					}
