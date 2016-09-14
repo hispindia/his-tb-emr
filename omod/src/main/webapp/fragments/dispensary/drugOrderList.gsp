@@ -39,10 +39,10 @@
 <td>${count++}</td>
 <td>${drugOrderObs.drug} </td>
 <td>${drugOrderObs.strength}</td>
-<td> </td>
+<td>${drugOrderObs.quantity} </td>
 <td>${drugOrderObs.formulation} </td>
 <td>${drugOrderObs.frequency}</td>
-<td> </td>
+<td>${drugOrderObs.route} </td>
 <td>${drugOrderObs.duration}</td>
 <td><input type="text" id="${drugOrderObs.obsGroupId}obsIssueQuantity" name="${drugOrderObs.obsGroupId}obsIssueQuantity" size="12"></td>
 <td><input type="hidden" id="obsGroupIds" name="obsGroupIds" value="${drugOrderObs.obsGroupId}"></td>

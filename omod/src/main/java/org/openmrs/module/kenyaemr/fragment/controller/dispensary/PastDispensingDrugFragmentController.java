@@ -67,10 +67,7 @@ public class PastDispensingDrugFragmentController {
         		}
 
                 
-                if(obsDrugOrder.getConcept().getUuid().equals("1443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
-                	drugDetailss.setStrength(obsDrugOrder.getValueNumeric().toString());	
-        		}
-                else if(obsDrugOrder.getConcept().getUuid().equals("159533AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                if(obsDrugOrder.getConcept().getUuid().equals("159533AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
                 	drugDetailss.setStrength(obsDrugOrder.getValueNumeric().toString());	
         		}
                 
@@ -78,8 +75,16 @@ public class PastDispensingDrugFragmentController {
                 	drugDetailss.setFormulation(obsDrugOrder.getValueCoded().getName().toString());	
         		}
                 
+                if(obsDrugOrder.getConcept().getUuid().equals("160856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                	drugDetailss.setQuantity(obsDrugOrder.getValueNumeric().toString());	
+        		}
+                
                 if(obsDrugOrder.getConcept().getUuid().equals("160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
                 	drugDetailss.setFrequency(obsDrugOrder.getValueCoded().getName().toString());			
+        		}
+                
+                if(obsDrugOrder.getConcept().getUuid().equals("162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                	drugDetailss.setRoute(obsDrugOrder.getValueCoded().getName().toString());			
         		}
                 
                 if(obsDrugOrder.getConcept().getUuid().equals("159368AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){

@@ -7,6 +7,7 @@ public class DrugDetails {
 	private String frequency;
 	private String duration;
 	private String quantity;
+	private String route;
 
 	public String getDrug() {
 		return drug;
@@ -55,4 +56,13 @@ public class DrugDetails {
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
+
+	public String getRoute() {
+		return route;
+	}
+
+	public void setRoute(String route) {
+		this.route = route;
+	}
+
 }

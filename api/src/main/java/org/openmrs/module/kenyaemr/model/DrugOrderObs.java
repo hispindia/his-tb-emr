@@ -6,6 +6,8 @@ public class DrugOrderObs {
 	private String strength;
 	private String frequency;
 	private String duration;
+	private String quantity;
+	private String route;
 	private Integer obsGroupId;
 
 	public String getDrug() {
@@ -46,6 +48,22 @@ public class DrugOrderObs {
 
 	public void setDuration(String duration) {
 		this.duration = duration;
+	}
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+	
+	public String getRoute() {
+		return route;
+	}
+
+	public void setRoute(String route) {
+		this.route = route;
 	}
 
 	public Integer getObsGroupId() {

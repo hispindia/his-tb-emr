@@ -293,8 +293,11 @@ kenyaemrApp.controller('PatientSearchResults', ['$scope', '$http', function($sco
                 +"<th>"
                 +"Unit&nbsp;"
                 +"</th>"
-                 +"<th>"
+                +"<th>"
                 +"Frequency&nbsp;"
+                +"</th>"
+                +"<th>"
+                +"Route&nbsp;"
                 +"</th>"
                 +"<th>"
                 +'Duration (Days)'
@@ -323,6 +326,9 @@ kenyaemrApp.controller('PatientSearchResults', ['$scope', '$http', function($sco
 	                 +"</td>"
 	                 +"<td>"
 	                 +this.frequency
+	                 +"</td>"
+	                 +"<td>"
+	                 +this.route
 	                 +"</td>"
 	                 +"<td>"
 	                 +this.duration

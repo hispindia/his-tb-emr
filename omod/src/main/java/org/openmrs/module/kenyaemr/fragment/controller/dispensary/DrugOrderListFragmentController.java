@@ -62,15 +62,20 @@ public class DrugOrderListFragmentController {
                 	drugOrder.setFormulation(obsDrugOrder.getValueCoded().getName().toString());	
         		}
                 
-                if(obsDrugOrder.getConcept().getUuid().equals("1443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                if(obsDrugOrder.getConcept().getUuid().equals("159533AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
                 	drugOrder.setStrength(obsDrugOrder.getValueNumeric().toString());	
         		}
-                else if(obsDrugOrder.getConcept().getUuid().equals("159533AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
-                	drugOrder.setStrength(obsDrugOrder.getValueNumeric().toString());	
+                
+                if(obsDrugOrder.getConcept().getUuid().equals("160856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                	drugOrder.setQuantity(obsDrugOrder.getValueNumeric().toString());	
         		}
                 
                 if(obsDrugOrder.getConcept().getUuid().equals("160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
                 	drugOrder.setFrequency(obsDrugOrder.getValueCoded().getName().toString());		
+        		}
+                
+                if(obsDrugOrder.getConcept().getUuid().equals("162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                	drugOrder.setRoute(obsDrugOrder.getValueCoded().getName().toString());			
         		}
                 
                 if(obsDrugOrder.getConcept().getUuid().equals("159368AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){

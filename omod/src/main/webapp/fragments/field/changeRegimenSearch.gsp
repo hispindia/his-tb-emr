@@ -52,7 +52,7 @@
 <tbody>
 <% drugOrderProcesseds.each { drugOrderProcessed -> %>
 <tr>
-<td class="colA" style="text-align:center"><input type="text" ng-model="drugKey${count}" id="drugKey${count}" name="drugKey${count}" value="${drugOrderProcessed.drugOrder.concept.name}" uib-typeahead="drug as drug.drugName for drug in myDrug | filter : drugKey${count}" typeahead-on-select="drugSearchForRegimenChange(drugKey${count},${count});"></td>
+<td class="colA" style="text-align:center"><input type="text" id="drugKey${count}" name="drugKey${count}" value="${drugOrderProcessed.drugOrder.concept.name}"></td>
 <td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id="strength${count}"  name="strength${count}"><option value="${drugOrderProcessed.dose}" > ${drugOrderProcessed.dose}</option>${ strengthOptions }</select></td>
 <td class="colC" style="text-align:center"><input type="text" id="noOfTablet${count}" name="noOfTablet${count}" value="${drugOrderProcessed.noOfTablet}"></td>
 <td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' id="type${count}"  name="type${count}"><option value="${drugOrderProcessed.drugOrder.units}" > ${drugOrderProcessed.drugOrder.units}</option>${typeOptions}</select></td>
