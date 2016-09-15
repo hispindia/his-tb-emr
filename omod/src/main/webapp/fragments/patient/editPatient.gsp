@@ -334,6 +334,29 @@
 				<% previousTBOutcomeDetail.each { %>
 				   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
 				 <% } %>
+				 	<table>
+					<tr><td><b>Used Second Line Drug Previously:</b>
+						<% if(command.onSecondlineDrug) {%> 
+							<input type="radio" name="onSecondlineDrug" value="1065" ${ command.onSecondlineDrug.conceptId == 1065 ? 'checked="checked"' : '' }/> Yes
+							<input type="radio" name="onSecondlineDrug" value="1066" ${ command.onSecondlineDrug.conceptId == 1066 ? 'checked="checked"' : '' } /> No	
+						<% } else {%>
+							<input type="radio" name="onSecondlineDrug" value="1065" />Yes
+							<input type="radio" name="onSecondlineDrug" value="1066"  /> No
+						<% } %>
+						</td>
+					</tr>
+					<tr>
+						 <td>
+						 <div id="iffyees">
+						<label class="ke-field-label">If Yes, Please specify</label>
+						<span class="ke-field-content">
+							${ ui.includeFragment("kenyaui", "widget/field",[ id:"ifyes",object:command, property:"specifysecondLine" ]) }
+						</span>	
+						</div>
+					</td>
+					</tr>
+					
+				</table>
 			</div>			 
 			 
 		</fieldset>
@@ -372,7 +395,7 @@
 						<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${"Save Changes" }
 					</button>		
 				<% } else {%>
-					<button onClick="return validateDateOfRegistration();checkIn(0)" type="submit">
+					<button onClick="checkIn(0)" type="submit">
 						<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${ "Create Patient and Check In" }
 					</button>
 					<input type="text" id="dateOfRegistration" name="dateOfRegistration" placeholder="Date of registration">
@@ -419,6 +442,7 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 	    { 
 	      	jq("#otherStatus").hide();
 	      	document.getElementById("previousTBHistory").style.display = 'none';
+	      	 document.getElementById("iffyees").style.display = 'none';
 	    }
 	    else
 	    {
@@ -441,7 +465,16 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 	        {
 		          document.getElementById("previousTBHistory").style.display = 'none';
 	        }
-	        
+	         var secondline = ${secondlineDrug};
+	       
+	        if(secondline==1065)
+	        { 
+	        	  document.getElementById("iffyees").style.display = "";
+	        }
+	         else
+	        {
+		          document.getElementById("iffyees").style.display = 'none';
+	        }
 	        
 	     }   
 
@@ -474,8 +507,16 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 	                  document.getElementById("previousTBHistory").style.display = 'none';
 	        }
  		   });
+ 		   jq('input[type=radio][name=onSecondlineDrug]').change(function() {
+	        if (this.value == 1065) {
+	                 document.getElementById("iffyees").style.display = "";
+	        }
+	        else  {
+	                  document.getElementById("iffyees").style.display = 'none';
+	        }
+ 		   });
 	});
-	
+	 
     function getSelectOption(elem)
     {   
         
@@ -531,7 +572,7 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 		kenyaui.setRadioField('patient-birthdate-estimated', 'true');
 	}
 	
-	function validateDateOfRegistration() {
+	function validateDateOfRegistration() { 
 	var dateOfRegistration = jQuery("#dateOfRegistration").val();
 	if(dateOfRegistration==""){
 	alert("Please Enter Date Of Registration");

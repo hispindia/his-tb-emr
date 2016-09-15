@@ -125,6 +125,16 @@ public class EditPatientFragmentController {
 		} else {
 			model.addAttribute("tbHistory", 0);
 		}
+		//Second line drug
+		Obs secondlineDrug ;
+		secondlineDrug = getLatestObs(patient,
+				Dictionary.SECOND_LINE_DRUG);
+		if (secondlineDrug != null) {
+			model.addAttribute("secondlineDrug",
+					secondlineDrug.getValueCoded());
+		} else {
+			model.addAttribute("secondlineDrug", 0);
+		}
 	/*
 		model.addAttribute("tbRegimenType",
 				Dictionary.getConcept(Dictionary.TB_FORM_REGIMEN));
@@ -353,6 +363,11 @@ public class EditPatientFragmentController {
 		private Obs savedGenResult;
 		private Date genResultDate;
 		private String labPatient;
+		//On second line drug
+		private Concept onSecondlineDrug;
+		private Obs savedSecondlineStatus;
+		private String specifysecondLine;
+		
 		
 		/**
 		 * Creates an edit form for a new patient
@@ -412,6 +427,7 @@ public class EditPatientFragmentController {
 			currentTownshipTBNumber = wrapper.getCurrentTownshipTBNumber();
 			previousTownshipTBNumber = wrapper.getPreviousTownshipTBNumber();
 			genSampleId = wrapper.getGenSampleId() ;
+			specifysecondLine=wrapper.getSecondline();
 			
 			try {
 				String datestr = wrapper.getGenSpecificationDate();
@@ -461,6 +477,11 @@ public class EditPatientFragmentController {
 			savedTBHistoryStatus = getLatestObs(patient, Dictionary.TB_PATIENT);
 			if(savedTBHistoryStatus != null){
 				tbHistoryStatus = savedTBHistoryStatus.getValueCoded();
+			}
+			
+			savedSecondlineStatus = getLatestObs(patient, Dictionary.SECOND_LINE_DRUG);
+			if(savedSecondlineStatus != null){
+				onSecondlineDrug = savedSecondlineStatus.getValueCoded();
 			}
 			
 			savedPreviousRegimenStartDateType = getLatestObs(patient,
@@ -551,6 +572,7 @@ public class EditPatientFragmentController {
 					require(errors, "previousTownshipTBNumber");
 				}
 			}
+			
 
 			if(genSpecificationDate!=null && genResultDate!=null){
 				if(genResultDate.before(genSpecificationDate)){
@@ -588,7 +610,7 @@ public class EditPatientFragmentController {
 						"Must be empty if patient not deceased");
 			}
 
-			if (StringUtils.isNotBlank(telephoneContact)) {
+		      	if (StringUtils.isNotBlank(telephoneContact)) {
 				validateField(errors, "telephoneContact",
 						new TelephoneNumberValidator());
 			}
@@ -718,6 +740,16 @@ public class EditPatientFragmentController {
 			wrapper.getPerson().setGenSampleId(genSampleId);
 			wrapper.getPerson().setGenSpecificationPlace(genSpecificationPlace);
 			wrapper.getPerson().setPreviousRegimenType(previousRegimenType);
+			if(onSecondlineDrug!=null)
+			{
+				if(onSecondlineDrug.getConceptId()==1065)
+					{
+					
+					wrapper.getPerson().setSecondline(specifysecondLine);
+					
+					}
+			}
+			
 			
 			if(labPatient!=null){
 				wrapper.getPerson().setLabPatient(labPatient);
@@ -789,6 +821,10 @@ public class EditPatientFragmentController {
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
 					Dictionary.getConcept(Dictionary.TB_PATIENT),
 					savedTBHistoryStatus, tbHistoryStatus);
+			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
+					Dictionary.getConcept(Dictionary.SECOND_LINE_DRUG),
+					savedSecondlineStatus, onSecondlineDrug);
+			
 			
 			if (occupation != null) {
 				if (occupation.getName().toString().equals("Other")) {
@@ -1430,6 +1466,34 @@ public class EditPatientFragmentController {
 		public void setPlaceOfBirth(Concept placeOfBirth) {
 			this.placeOfBirth = placeOfBirth;
 		}
+
+		public Concept getOnSecondlineDrug() {
+			return onSecondlineDrug;
+		}
+
+		public void setOnSecondlineDrug(Concept onSecondlineDrug) {
+			this.onSecondlineDrug = onSecondlineDrug;
+		}
+
+	
+
+		public Obs getSavedSecondlineStatus() {
+			return savedSecondlineStatus;
+		}
+
+		public void setSavedSecondlineStatus(Obs savedSecondlineStatus) {
+			this.savedSecondlineStatus = savedSecondlineStatus;
+		}
+
+		public String getSpecifysecondLine() {
+			return specifysecondLine;
+		}
+
+		public void setSpecifysecondLine(String specifysecondLine) {
+			this.specifysecondLine = specifysecondLine;
+		}
+
+	
 		
 		
 

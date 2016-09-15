@@ -102,6 +102,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String PREVIOUS_REGIMEN_DATE = "c32c0ba5-22d8-4e4b-9c63-dd170eaf4af5";
 		public static final String PREVIOUS_REGIMEN = "9f11018f-cdf7-484a-a2bb-0e6f8d2b6b43";
 		public static final String LAB_PATIENT = "d6921b92-47fe-44a7-b872-b83270bf60b2";
+		public static final String SECONDLINE_DRUG = "044056ce-5333-47eb-ba6d-192c70f6b65a";
 		}
 
 	public static final class _Provider {
@@ -213,6 +214,9 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(personAttributeType("Lab Patient", "Patients coming only for lab tests",
 				String.class, null, false, 4.0, _PersonAttributeType.LAB_PATIENT));
 		
+		//second line drug
+		install(personAttributeType("SecondLine Drug", "Second Line drugs used by patients",
+				String.class, null, false, 15.0, _PersonAttributeType.SECONDLINE_DRUG));
 		
 		install(personAttributeType("Treatment Supporter's Relationship", "Next of kin relationship to the patient",
 				String.class, null, false, 4.1, _PersonAttributeType.NEXT_OF_KIN_RELATIONSHIP));

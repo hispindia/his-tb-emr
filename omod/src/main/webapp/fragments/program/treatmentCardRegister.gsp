@@ -50,7 +50,7 @@
 					</td>
 				</tr>
 	            <tr>
-					<td colspan="1" style="text-align: left; vertical-align: top; width: 30%; padding-left:1%">
+					<td colspan="2" style="text-align: left; vertical-align: top; width: 40%; padding-left:1%">
 							<br/><strong>Previous Township TB number : </strong>
 							<br/><strong>Township</strong>
 							<br/><strong>Site : </strong>
@@ -58,9 +58,12 @@
 							<br/><strong>Regimen :  </strong>
 							<br/><strong>Start date : </strong>
 							<br/><strong>Outcome : </strong>
+							<br/><strong>Used Second Line Drug Previously : </strong>
+							<br/><strong>If 'Yes',please specify : </strong>
 					</td>
 	                <td colspan="2" style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
-	                	
+	                	  <% if(tbHistory=="Yes")
+	                	  {%>
 							<br/> <% if(patientWrap.previousTownshipTBNumber) {%> ${patientWrap.previousTownshipTBNumber  }	<% } %>
 							<br/> ${ townshipVal } 
 							<br/> ${ tbDiseaseClasificationVal }
@@ -68,6 +71,9 @@
 							<br/> <% if(patientWrap.previousRegimenType) {%> ${patientWrap.previousRegimenType  }	<% } %>
 							<br/>  <% if(patientWrap.previousRegimenStartDate) {%> ${patientWrap.previousRegimenStartDate  } (${regimenStartDateTypeVal})	<% } %>
 							<br/>  ${outcomeVal}
+							<br/>  ${onSecondLine}
+							<br/> <% if(onSecondLine=="Yes") {%> ${patientWrap.secondline} 	<% } %>
+						<% } %>
 					</td>
 				</tr>
 	            

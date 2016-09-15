@@ -105,7 +105,20 @@ public class TreatmentCardRegisterFragmentController {
 			townshipVal = township.getValueCoded().getName().toString();
 		}
 		model.addAttribute("townshipVal", townshipVal);
-
+//secondline
+		String onSecondLine = "";
+		Obs secndline = getLatestObs(patient, Dictionary.SECOND_LINE_DRUG);
+		if (secndline != null) {
+			onSecondLine = secndline.getValueCoded().getName().toString();
+		}
+		model.addAttribute("onSecondLine", onSecondLine);
+		//Condition for previous treatment episodes
+		String tbHistory = "";
+		Obs tbhistry = getLatestObs(patient, Dictionary.TB_PATIENT);
+		if (tbhistry != null) {
+			tbHistory = tbhistry.getValueCoded().getName().toString();
+		}
+		model.addAttribute("tbHistory", tbHistory);
 		String tbDiseaseClasificationVal = "";
 		Obs tbDiseaseClasification = getLatestObs(patient,
 				Dictionary.SITE_OF_TUBERCULOSIS_DISEASE);

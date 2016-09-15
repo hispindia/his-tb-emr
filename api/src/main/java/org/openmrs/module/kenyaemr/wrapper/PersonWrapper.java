@@ -159,5 +159,12 @@ public class PersonWrapper extends AbstractPersonWrapper {
 	public void setLabPatient(String value) {
 		setAsAttribute(CommonMetadata._PersonAttributeType.LAB_PATIENT, value);
 	}	
+	public String getSecondline() {
+		return getAsAttribute(CommonMetadata._PersonAttributeType.SECONDLINE_DRUG);
+	}
+
+	public void setSecondline(String value) {
+		setAsAttribute(CommonMetadata._PersonAttributeType.SECONDLINE_DRUG, value);
+	}
 
 }
