@@ -299,7 +299,8 @@ public class SearchFragmentController {
         		searchedPatients.add(patient);
         	}
         	for(Obs obs:obsList){
-        		searchedPatients.add(obs.getPatient());
+        		Patient patient=Context.getPatientService().getPatientOrPromotePerson(obs.getPersonId());
+        		searchedPatients.add(patient);
         	}		
         }
         else{

@@ -43,6 +43,7 @@ import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -412,7 +413,10 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 	
 	public List<Obs> getObsByScheduledDate(Date date) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Obs.class,"obs");
-		criteria.add(Restrictions.eq("concept", Context.getConceptService().getConceptByUuid("5096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")));
+		Collection<Concept> conList=new	ArrayList<Concept>();
+		conList.add(Context.getConceptService().getConceptByUuid("5096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
+		conList.add(Context.getConceptService().getConceptByUuid("161261AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
+		criteria.add(Restrictions.in("concept", conList));
 		criteria.add(Restrictions.eq("valueDatetime", date));
 		return criteria.list();
 	}
