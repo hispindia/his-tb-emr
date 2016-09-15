@@ -35,8 +35,9 @@
 			<br/>Co-morbidities : <strong>${comorbitidyList}</strong>
 		<% } %>
 		<% if (pregStatusVal) { %>
-			<br/>Pregnancy : <strong>${pregStatusVal}</strong>
-		<% } %>
+		<%  if(deliveredStatusVal!="140791" && deliveredStatusVal!="140242" && deliveredStatusVal!="151843")
+		{ %>	<br/>Pregnancy : <strong>${pregStatusVal}</strong>
+		<% } }%>
 		<% if (drugAllergiesVal) { %>
 			<% if (drugAllergiesVal=="Yes") { %>
 			<br/>Drug Allergy & name : <strong>${drugAllergiesVal} 

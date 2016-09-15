@@ -54,7 +54,7 @@ public class IsPregnantCalculation extends AbstractPatientCalculation implements
 		Concept yes = Dictionary.getConcept(Dictionary.YES);
 		CalculationResultMap pregStatusObss = Calculations.lastObs(Dictionary.getConcept(Dictionary.PREGNANCY_STATUS), aliveAndFemale, context);
 		CalculationResultMap ret = new CalculationResultMap();
-
+		CalculationResultMap pregnancyStatus = Calculations.lastObs(Dictionary.getConcept(Dictionary.DELIVERY_STATUS), aliveAndFemale, context);
 		for (Integer ptId : cohort) {
 			boolean result = false;
 
@@ -62,8 +62,18 @@ public class IsPregnantCalculation extends AbstractPatientCalculation implements
 
 			if (pregStatusObs != null) {
 				result = pregStatusObs.getValueCoded().equals(yes);
+				
 			}
-
+			Obs deliveryStatusObs = EmrCalculationUtils.obsResultForPatient(pregnancyStatus, ptId);
+			if(deliveryStatusObs!=null)
+			{
+			if(deliveryStatusObs.getValueCoded().getConceptId()==140242 ||deliveryStatusObs.getValueCoded().getConceptId()==140791
+					||deliveryStatusObs.getValueCoded().getConceptId()==151843)
+			{
+				result=false;
+			}
+			
+			}
 			ret.put(ptId, new BooleanResult(result, this));
 		}
 

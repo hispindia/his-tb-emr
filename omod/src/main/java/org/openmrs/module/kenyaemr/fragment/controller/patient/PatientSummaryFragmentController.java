@@ -100,7 +100,15 @@ public class PatientSummaryFragmentController {
 			pregStatusVal = pregStatus.getValueCoded().getName().toString();
 		}
 		model.addAttribute("pregStatusVal", pregStatusVal);
+//Pregnancy
+		String deliveredStatusVal = "";
 
+		Obs deliveryStatus = getLatestObs(patient, Dictionary.DELIVERY_STATUS);
+		if (deliveryStatus != null) {
+			deliveredStatusVal = deliveryStatus.getValueCoded().getConceptId().toString();
+			
+		}
+		model.addAttribute("deliveredStatusVal", deliveredStatusVal);
 		/*
 		 * Drug History
 		 */
