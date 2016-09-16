@@ -10,6 +10,7 @@ import org.openmrs.Concept;
 import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
+
 import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.Patient;
@@ -59,7 +60,9 @@ public class TreatmentCardRegisterFragmentController {
 		} else {
 			model.addAttribute("mdrTBRegistrationNumber", null);
 		}
-    //Record vitals value
+    /*Record vitals value
+     * 
+     */
 		Integer height =0;Integer weight =0;
 		List <Obs> heightValue=Context.getObsService().getObservationsByPersonAndConcept(patient,Dictionary.getConcept(Dictionary.HEIGHT_CM));
 		for(Obs o:heightValue)
@@ -89,7 +92,95 @@ public class TreatmentCardRegisterFragmentController {
 					.toString();
 		}
 		model.addAttribute("registrationGroup", registrationGroupVal);
+      /* Co-morbidity values
+       * 
+       */
+		
+		String diabities="";String diabitiesss="";
+		Obs Diabetiec = getLatestObs(patient,
+				Dictionary.COMORBIDITY_TB_ENROLL_FORM);
+		if(Diabetiec!=null)
+		{
+			EncounterWrapper wrapped = new EncounterWrapper(
+					Diabetiec.getEncounter());
+			List<Obs> obsList = wrapped.allObs(Diabetiec.getConcept());
+			for (Obs obs : obsList) {
+			if (diabities.isEmpty()) {
+					diabities = diabities.concat(obs.getValueCoded().toString());
+					if(diabities.equals("142474")||diabities.equals("142473"))
+					{
+						diabitiesss="Yes";
+					}
+					else
+					{
+						diabitiesss="No";
+					}
+					
+				} 
+			else {
+					diabities = diabities.concat(", "+ obs.getValueCoded().toString());
+					String[] valueList = diabities.split("\\s*,\\s*");
+					for (String diabname : valueList)
+					{
+					if(diabname.equals("142474")||diabname.equals("142473"))
+					{
+						diabitiesss="Yes";
+						break;
+					}
+					
+					else
+					{
+						diabitiesss="No";
+					}
+					}
+					
+				}
+			}
+		}
+	
+		model.addAttribute("diabities", diabitiesss);
+		/*Other disease values
+		 * 
+		 */
+		String otherDiseaseVal = "";
 
+		Obs otherDises = getAllLatestObs(patient, Dictionary.COMORBIDITY_TB_ENROLL_FORM);
+		if (otherDises != null) {
+			EncounterWrapper wrapped = new EncounterWrapper(
+					otherDises.getEncounter());
+			List<Obs> obsList = wrapped.allObs(otherDises.getConcept());
+
+			for (Obs obs : obsList) {
+				if (otherDiseaseVal.isEmpty()) {
+					if(obs.getValueCoded().getConceptId()!=142473 && obs.getValueCoded().getConceptId()!=142474)
+					{
+						otherDiseaseVal = otherDiseaseVal.concat(obs.getValueCoded().getName()
+					
+							.toString());
+					}
+				} else {
+					if(obs.getValueCoded().getConceptId()!=142473 && obs.getValueCoded().getConceptId()!=142474)
+					{
+					otherDiseaseVal = otherDiseaseVal.concat(", "
+							+ obs.getValueCoded().getName().toString());
+					}
+					
+				}
+			}
+		}
+
+		model.addAttribute("otherDiseaseVal", otherDiseaseVal);
+		/*Treatment initiation center*/
+		String treatmentCenterVal = "";
+		Obs treatmentCenter = getLatestObs(patient,
+				Dictionary.INFANT_NAME);
+		if (treatmentCenter != null) {
+		    treatmentCenterVal=Context.getLocationService().getLocation(Integer.parseInt(treatmentCenter.getValueText())).toString();
+			
+		}
+		model.addAttribute("treatmentCenterVal", treatmentCenterVal);
+		
+		
 		String registrationDateVal = "";
 		Obs registrationDate = getLatestObs(patient,
 				Dictionary.MDR_TB_RGISTRATION_DATE);
@@ -105,14 +196,20 @@ public class TreatmentCardRegisterFragmentController {
 			townshipVal = township.getValueCoded().getName().toString();
 		}
 		model.addAttribute("townshipVal", townshipVal);
-//secondline
+       /*secondline
+        * 
+        */
+ 
 		String onSecondLine = "";
 		Obs secndline = getLatestObs(patient, Dictionary.SECOND_LINE_DRUG);
 		if (secndline != null) {
 			onSecondLine = secndline.getValueCoded().getName().toString();
 		}
 		model.addAttribute("onSecondLine", onSecondLine);
-		//Condition for previous treatment episodes
+		/* Condition for previous treatment episodes
+		 * 
+		 * 
+		 */
 		String tbHistory = "";
 		Obs tbhistry = getLatestObs(patient, Dictionary.TB_PATIENT);
 		if (tbhistry != null) {
@@ -167,8 +264,8 @@ public class TreatmentCardRegisterFragmentController {
 		}
 		model.addAttribute("regimenStartDateTypeVal", regimenStartDateTypeVal);
 
-		model.addAttribute("systemLocation",
-				Context.getService(KenyaEmrService.class).getDefaultLocation());
+		/*model.addAttribute("systemLocation",
+				Context.getService(KenyaEmrService.class).getDefaultLocation());*/
 
 		String dotProviderVal = "";
 		Obs dotProvider = getAllLatestObs(patient,
