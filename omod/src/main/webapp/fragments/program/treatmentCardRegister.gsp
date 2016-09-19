@@ -205,7 +205,7 @@
 			    
 				</td>
 			</tr>
-			 <tr>
+			<tr>
   				<td width="50%" colspan="3" valign="top">
 	                <table width="100%" border="1">
 	                	<tr bgcolor="#778899">
@@ -346,8 +346,8 @@
 			</tr>
 		</table>
 </div>
-
-<!--Print Area ==========================================================================================================================================-->
+	
+	<!--Print Area ==========================================================================================================================================-->
 	<div id="print" hidden="hidden">
 	<div align="center" >
 	<table width="50%">
@@ -398,8 +398,8 @@
 							<br/> ${ patientName }
 							<br/> ${ patientGender } 
 							<br/> ${ patientAge } / ${ birthDate }
-							<br/> ${ weight} 
-							<br/> ${ height} 
+							<br/> <% if(weight) {%>${ weight} <% } %>
+							<br/> <% if(height) {%>${ height} <% } %>
 							<br/> ${ registrationGroup } 
 							<br/> <% if(mdrTBRegistrationNumber) {%> ${mdrTBRegistrationNumber  }	<% } %>
 							<br/>  ${registrationDateVal}
@@ -458,7 +458,7 @@
 			            <tr>
 							<td colspan="1" style="text-align: left; vertical-align: top; width: 30%; padding-left:1%">
 									<br/> <strong>Address : </strong>
-									<br/><strong> Treatment centre : </strong>
+									<br/><strong> Treatment Initiation center: </strong>
 									<br/><strong>Name of DOT provider</strong>
 									<br/><strong>DOT supervisor : </strong>
 									<br/><strong>Contact of MDR-TB case : </strong>
@@ -466,7 +466,7 @@
 			                <td colspan="2" style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
 									<br/> <% if(address.address1) { %> ${ address.address1},  <%} %> <% if(address.cityVillage !='?') { %> ${address.cityVillage}, <%} %>
 										<% if(address.countyDistrict !='?') { %> ${ address.countyDistrict},  <%} %> <% if(address.stateProvince !='?') { %> ${address.stateProvince} <%} %>
-									<br/> ${ systemLocation }
+									<br/><% if(treatmentCenterVal) {%> ${ treatmentCenterVal }<% } %>
 									<br/> ${ dotProviderVal } 
 									<br/> ${ supervisorVal }
 									<br/> ${contactCaseVal}
@@ -528,9 +528,27 @@
 								</table>
 							</td>
 			             </tr>
+			             </table>
+			             <table width="100%" border="1">
+			                   <tr bgcolor="#778899">
+								<td colspan="3">
+									<h4><strong><center>Co-morbities</center> </strong></h4>
+								</td>
+							</tr>
+				            <tr>
+								<td colspan="1" style="text-align: left; vertical-align: top; width: 30%; padding-left:1%">
+										<br/><strong>Diabetes(Yes/No) : </strong>
+										<br/><strong>Other Diseases : </strong>
+								</td>
+				                <td colspan="2" style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
+				                	<br/> <% if (diabities)  { %> <strong>${diabities}</strong><%}%>
+									<br/> <% if (otherDiseaseVal) { %> <strong>${otherDiseaseVal}</strong><% }%>
+								</td>
+							</tr>
 			          </table>
 				</td> 
-			    <td width="50%" colspan="3" valign="top">
+				
+			    <td width="50%"  valign="top">
 				    <table width="100%" border="1">
 				            <tr bgcolor="#778899">
 								<td colspan="3">
@@ -538,11 +556,11 @@
 								</td>
 							</tr>
 				            <tr>
-								<td colspan="1" style="text-align: left; vertical-align: top; width: 30%; padding-left:1%">
+								<td  style="text-align: left; vertical-align: top; width: 30%; padding-left:1%">
 										<br/><strong>Outcome : </strong>
 										<br/><strong>Date : </strong>
 								</td>
-				                <td colspan="2" style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
+				                <td style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
 				                	
 										<br/> ${ tbOutcomeVal }
 										<br/> ${ tbOutcomeDateVal } 
@@ -553,33 +571,6 @@
 			    
 				</td>
 			</tr>
-			 <tr>
-  				<td width="50%" colspan="3" valign="top">
-	                <table width="100%" border="1">
-	                	<tr bgcolor="#778899">
-							<td colspan="3">
-								<h4><center><strong>Vist and next Appointment</strong></center></h4>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								<table border="1" width="100%">
-									<tr >
-										<th colspan="1"><strong>Vist Date</strong></th>
-										<th colspan="1"><strong>Next Appointment Date</strong></th>
-									</tr>
-									<% for ( vaa in visitAndAppointments ) { %>
-									<tr>
-										<td colspan="1">${vaa.currentVisit}</td>
-										<td colspan="1">${vaa.nextAppointMent}</td>
-									</tr>
-										<% } %>
-								</table>
-							</td>
-			             </tr>
-			          </table>
-				</td> 
-				</tr>
 			<tr bgcolor="#778899">
 				<td colspan="6">
 					<h4><strong><center>Diagnosis</center> </strong></h4>
@@ -694,7 +685,7 @@
 			</tr>
 		</table>
 </div>
-
+	
 	<a id="dlink"  style="display:none;"></a>
 	<div> 
 	<input type="button" onClick="tableToExcel('table1','TREATMENT CARD','${patientWrap.drTBSuspectNumber}-TREATMENT CARD.xls');"  value="Export as Excel" />
