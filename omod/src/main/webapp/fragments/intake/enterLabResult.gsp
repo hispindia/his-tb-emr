@@ -43,9 +43,43 @@ No record found.
 		<td>
 		<table style="text-align:right">
 			<select style='width: 190px;height: 20px;' id="${test.conceptId}_valueDropdown" size="1" name="${test.conceptId}_valueDropdown" value="${test.valueDropdown}">
+				<% if(test.conceptId==163561) { %>
+				<option value=""></option>
+				<option ${ (test.valueDropdown=='1874') ? 'selected="true"' : '' } value="1874">Trace</option>
+				<option ${ (test.valueDropdown=='162973') ? 'selected="true"' : '' } value="162973">AFB not seen</option>
+				<option ${ (test.valueDropdown=='151884') ? 'selected="true"' : '' } value="151884">+++</option>
+				<option ${ (test.valueDropdown=='5254') ? 'selected="true"' : '' } value="5254">++</option>
+				<option ${ (test.valueDropdown=='143129') ? 'selected="true"' : '' } value="143129">+</option>
+				<% }
+				else if(test.conceptId==163567)
+				{ %>
+				<option value=""></option>
+				<option ${ (test.valueDropdown=='1594') ? 'selected="true"' : '' } value="1594">1-10 colonies</option>
+				<option ${ (test.valueDropdown=='664') ? 'selected="true"' : '' } value="664">Negative</option>
+				<option ${ (test.valueDropdown=='151884') ? 'selected="true"' : '' } value="151884">+++</option>
+				<option ${ (test.valueDropdown=='5254') ? 'selected="true"' : '' } value="5254">++</option>
+				<option ${ (test.valueDropdown=='143129') ? 'selected="true"' : '' } value="143129">+</option>
+			    <option ${ (test.valueDropdown=='160008') ? 'selected="true"' : '' } value="160008">Contaminated</option>
+				<% } 
+				else if(test.conceptId==163566)
+				{ %>
 				<option value=""></option>
 				<option ${ (test.valueDropdown=='703') ? 'selected="true"' : '' } value="703">Positive</option>
 				<option ${ (test.valueDropdown=='664') ? 'selected="true"' : '' } value="664">Negative</option>
+				<option ${ (test.valueDropdown=='160008') ? 'selected="true"' : '' } value="160008">Contaminated</option>
+				<% } 
+				else if(test.conceptId==163571)
+				{ %>
+				<option value=""></option>
+				<option ${ (test.valueDropdown=='1586') ? 'selected="true"' : '' } value="1586">MTBC(No)</option>
+				<option ${ (test.valueDropdown=='6095') ? 'selected="true"' : '' } value="6095">MTBC(Yes)</option>
+				<% } 
+				else 
+				{ %>
+				<option value=""></option>
+				<option ${ (test.valueDropdown=='703') ? 'selected="true"' : '' } value="703">Positive</option>
+				<option ${ (test.valueDropdown=='664') ? 'selected="true"' : '' } value="664">Negative</option>
+				<% } %>
 			</select>
 			</table>
 		</td>

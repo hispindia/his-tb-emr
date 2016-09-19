@@ -25,7 +25,10 @@ public class TbpatientswithsmearpositiveculturenegativeCalculation extends Abstr
 		Set<Integer> inTbProgram = Filters.inProgram(tbProgram, cohort, context);
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
-		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
+		Concept trace=Dictionary.getConcept(Dictionary.TRACE);
+		Concept singlePositive=Dictionary.getConcept(Dictionary.SINGLE_POSITIVE);
+		Concept doublePositive=Dictionary.getConcept(Dictionary.DOUBLE_POSITIVE);
+		Concept triplePositive=Dictionary.getConcept(Dictionary.TRIPLE_POSITIVE);	
 		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
 		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		
@@ -48,7 +51,10 @@ public class TbpatientswithsmearpositiveculturenegativeCalculation extends Abstr
 			
 			if(obsResultsCulture != null)
 			{ if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultsCulture.getValue().getValueCoded()==null)))
-				{if ((obsResultsClassification.getValue().getValueCoded().equals(cultureresult))
+				{if ((obsResultsClassification.getValue().getValueCoded().equals(trace)||
+					obsResultsClassification.getValue().getValueCoded().equals(singlePositive)||
+					obsResultsClassification.getValue().getValueCoded().equals(doublePositive)||
+					obsResultsClassification.getValue().getValueCoded().equals(triplePositive))
 						&& (((obsResultsCulture.getValue().getValueCoded().equals(labresult)))))
 				{
 					
@@ -59,7 +65,10 @@ public class TbpatientswithsmearpositiveculturenegativeCalculation extends Abstr
 			}
 			if(obsResultLastCultureLiquidResults!=null)
 			{if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultLastCultureLiquidResults.getValue().getValueCoded()==null)))
-			{	if((obsResultsClassification.getValue().getValueCoded().equals(cultureresult))
+			{	if((obsResultsClassification.getValue().getValueCoded().equals(trace)||
+					obsResultsClassification.getValue().getValueCoded().equals(singlePositive)||
+					obsResultsClassification.getValue().getValueCoded().equals(doublePositive)||
+					obsResultsClassification.getValue().getValueCoded().equals(triplePositive))
 						&& (((obsResultLastCultureLiquidResults.getValue().getValueCoded().equals(labresult)))))
 				{
 					

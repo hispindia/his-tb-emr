@@ -24,7 +24,10 @@ public class TbpatientwithsmearunknownCulturepositiveCalculation extends Abstrac
 		Program tbProgram = MetadataUtils.existing(Program.class, TbMetadata._Program.TB);
 		Set<Integer> inTbProgram = Filters.inProgram(tbProgram, cohort, context);
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
-		
+		Concept singlePositive=Dictionary.getConcept(Dictionary.SINGLE_POSITIVE);
+		Concept doublePositive=Dictionary.getConcept(Dictionary.DOUBLE_POSITIVE);
+		Concept triplePositive=Dictionary.getConcept(Dictionary.TRIPLE_POSITIVE);
+		Concept colonies=Dictionary.getConcept(Dictionary.COLONIES);
 		Concept cultureresult=Dictionary.getConcept(Dictionary.POSITIVE)	;	
 		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
 		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
@@ -48,7 +51,10 @@ public class TbpatientwithsmearunknownCulturepositiveCalculation extends Abstrac
 			
 			if(obsResultsClassification == null )
 			{
-				if((obsResultsCulture.getValue().getValueCoded().equals(cultureresult)))
+				if(((obsResultsCulture.getValue().getValueCoded().equals(colonies)||
+						obsResultsCulture.getValue().getValueCoded().equals(singlePositive)||
+						obsResultsCulture.getValue().getValueCoded().equals(doublePositive)||
+						obsResultsCulture.getValue().getValueCoded().equals(triplePositive))))
 					{
 					oncultureTest = true;
 					}

@@ -86,8 +86,11 @@ else{
 			<% for ( d in smearCultureIndexList ) { %>
 				<td style="font-size: 15px;" colspan="1"><center><b>
 				<% def values = d.value.split(",")	%>
-					<% if (values[1].contains('Positive')) { %>  +
-					<% } else if (values[1].contains('Negative')) { %> -
+					<% if (values[1].contains('AFB not seen')) { %>  AFB not seen
+					<% } else if (values[1].contains('Trace')) { %> Trace
+					<% } else if (values[1].contains('+++')) { %> +++
+					<% } else if (values[1].contains('++')) { %> ++
+					<% } else if (values[1].contains('+')) { %> +
 				<% }  %>
 				</b></center></td>	
 			<% }%>
@@ -97,8 +100,15 @@ else{
 			<% for ( d in smearCultureIndexList ) { %>
 				<td style="font-size: 15px;" colspan="1"><center><b>
 				<% def values = d.value.split(",")	%>
-					<% if (values[2].contains('Positive')) { %>  +
+					<% if (values[2].contains('1-10 colonies')) { %> 1-10 colonies
+					<% } else if (values[2].contains('+++')) { %> +++
+					<% } else if (values[2].contains('++')) { %> ++
+					<% } else if (values[2].contains('+')) { %> +
 					<% } else if (values[2].contains('Negative')) { %> -
+					<% } else if (values[2].contains('Contaminated')) { %> Contaminated
+					<% } else if (values[2].contains('Positive')) { %> +
+					
+					
 				<% }  %>
 				</b></center></td>	
 			<% }%>

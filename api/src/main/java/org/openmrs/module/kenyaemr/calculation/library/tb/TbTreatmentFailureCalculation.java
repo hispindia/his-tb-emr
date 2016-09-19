@@ -85,9 +85,15 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 				.getConcept(Dictionary.CULTURE_LIQUID);
 		Concept positive = Dictionary
 				.getConcept(Dictionary.POSITIVE);
+		Concept afbntseen=Dictionary
+				.getConcept(Dictionary.AFB_NOT_SEEN);
 		Concept negative = Dictionary
 				.getConcept(Dictionary.NEGATIVE);
-
+		Concept trace=Dictionary.getConcept(Dictionary.TRACE);
+		Concept singlePositive=Dictionary.getConcept(Dictionary.SINGLE_POSITIVE);
+		Concept doublePositive=Dictionary.getConcept(Dictionary.DOUBLE_POSITIVE);
+		Concept triplePositive=Dictionary.getConcept(Dictionary.TRIPLE_POSITIVE);
+		Concept colonies=Dictionary.getConcept(Dictionary.COLONIES);
 		CalculationResultMap ret = new CalculationResultMap();
 		for (Integer ptId : cohort) {
 			boolean treatmentFailure = false;
@@ -129,10 +135,11 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 					else if(!(o.getValueCoded()==null))
 					{
 					
-					 if(o.getValueCoded().equals(positive)){
+					 if(o.getValueCoded().equals(trace)||o.getValueCoded().equals(singlePositive)||
+							 o.getValueCoded().equals(doublePositive)||o.getValueCoded().equals(triplePositive)){
 						positiveCount++;
 					}
-					else if(o.getValueCoded().equals(negative)){
+					else if(o.getValueCoded().equals(afbntseen)){
 						if(positiveCount>1){
 							obsSmearPositive=true;
 						}
@@ -153,7 +160,9 @@ public class TbTreatmentFailureCalculation extends AbstractPatientCalculation
 					}
 					else if(!(o.getValueCoded()==null))
 					{
-					if(o.getValueCoded().equals(positive)){
+					if(o.getValueCoded().equals(positive)||o.getValueCoded().equals(colonies)||
+							o.getValueCoded().equals(singlePositive)||o.getValueCoded().equals(doublePositive)||
+							o.getValueCoded().equals(triplePositive)	){
 						positiveCount++;
 					}
 					else if(o.getValueCoded().equals(negative)){

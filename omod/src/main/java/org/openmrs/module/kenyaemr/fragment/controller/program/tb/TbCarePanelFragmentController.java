@@ -87,16 +87,17 @@ public class TbCarePanelFragmentController {
 		List<Obs> sputumSmear = getAllLatestObs(patient, Dictionary.SPUTUM_SMEAR_TEST);
 		List<Obs> cultureSolid = getAllLatestObs(patient, Dictionary.CULTURE_SOLID);
 		List<Obs> cultureLiquid = getAllLatestObs(patient, Dictionary.CULTURE_LIQUID);
-		List<Obs> cultureSputum = getAllLatestObs(patient, Dictionary.SPUTUM_CULTURE);
+	//	List<Obs> cultureSputum = getAllLatestObs(patient, Dictionary.SPUTUM_CULTURE);
 	
 		List<Visit> visitList = Context.getVisitService().getVisitsByPatient(patient);
 		
 		Map<Integer, String> smearCultureIndexList = new HashMap<Integer, String>();
 		Integer visitIndex = visitList.size();
+		int flag=0;
 		if (visitList != null) {
 			for (Visit v : visitList) {
 				String sputumSmearVal = "";
-				String cultureVal = "";
+				String solidcultureVal = "";String liquidcultureVal="";
 				String visitDate = new SimpleDateFormat("dd-MMMM-yyyy").format(v.getStartDatetime());
 
 				if (sputumSmear != null) {
@@ -112,14 +113,21 @@ public class TbCarePanelFragmentController {
 				if (cultureSolid != null) {
 					for (Obs obs : cultureSolid) {
 						if (obs.getEncounter().getVisit().equals(v)) {
-							cultureVal = obs.getValueCoded().getName().toString();
+							if(obs.getValueCoded()!=null){
+							solidcultureVal = obs.getValueCoded().getName().toString();
+							flag=1;
+							}
+							
 						}
 					}
 				}
 				if(cultureLiquid != null){
 					for (Obs obs : cultureLiquid) {
 						if (obs.getEncounter().getVisit().equals(v)) {
-							cultureVal = obs.getValueCoded().getName().toString();
+							if(obs.getValueCoded()!=null){
+							liquidcultureVal = obs.getValueCoded().getName().toString();
+							flag=0;
+							}
 						}
 					}
 				}
@@ -132,8 +140,20 @@ public class TbCarePanelFragmentController {
 						}
 					}
 				}*/
+				
 				visitIndex--;
-				String val = visitDate + ", " + sputumSmearVal+ ", " + cultureVal ;
+				String val="";
+				
+				if(flag==1)
+				{
+					val = visitDate + ", " + sputumSmearVal+ ", " + solidcultureVal;
+				}
+				else
+				{
+					val = visitDate + ", " + sputumSmearVal+ ", " + liquidcultureVal;
+				}
+				
+				
 				smearCultureIndexList.put(visitIndex, val);
 			}
 		}

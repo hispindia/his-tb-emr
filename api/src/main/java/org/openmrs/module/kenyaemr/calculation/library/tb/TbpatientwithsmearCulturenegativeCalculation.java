@@ -25,6 +25,7 @@ public class TbpatientwithsmearCulturenegativeCalculation extends AbstractPatien
 		Set<Integer> inTbProgram = Filters.inProgram(tbProgram, cohort, context);
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		Concept cultureresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
+		Concept smearresult=Dictionary.getConcept(Dictionary.AFB_NOT_SEEN)	;	
 		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
 		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		
@@ -47,7 +48,7 @@ public class TbpatientwithsmearCulturenegativeCalculation extends AbstractPatien
 			
 			if(obsResultsCulture != null)
 			{ if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultsCulture.getValue().getValueCoded()==null)))
-				{if ((obsResultsClassification.getValue().getValueCoded().equals(cultureresult))
+				{if ((obsResultsClassification.getValue().getValueCoded().equals(smearresult))
 						&& (((obsResultsCulture.getValue().getValueCoded().equals(cultureresult)))))
 				{
 					
@@ -60,7 +61,7 @@ public class TbpatientwithsmearCulturenegativeCalculation extends AbstractPatien
 			{ if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultLastCultureLiquidResults.getValue().getValueCoded()==null)))
 				
 				{
-				if((obsResultsClassification.getValue().getValueCoded().equals(cultureresult))
+				if((obsResultsClassification.getValue().getValueCoded().equals(smearresult))
 				
 						&& (((obsResultLastCultureLiquidResults.getValue().getValueCoded().equals(cultureresult)))))
 				{

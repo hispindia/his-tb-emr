@@ -25,7 +25,7 @@ public class TbpatientwithsmearnegativecultureunknownCalculation extends Abstrac
 		Set<Integer> inTbProgram = Filters.inProgram(tbProgram, cohort, context);
 		Concept labtest=Dictionary.getConcept(Dictionary.SPUTUM_SMEAR_TEST);
 		
-		Concept labresult=Dictionary.getConcept(Dictionary.NEGATIVE)	;	
+		Concept labresult=Dictionary.getConcept(Dictionary.AFB_NOT_SEEN)	;	
 		Concept culturetest=Dictionary.getConcept(Dictionary.CULTURE_SOLID);
 		Concept cultureliquidtest=Dictionary.getConcept(Dictionary.CULTURE_LIQUID);
 		
