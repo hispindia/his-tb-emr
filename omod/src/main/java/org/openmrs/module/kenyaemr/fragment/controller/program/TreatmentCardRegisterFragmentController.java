@@ -3,6 +3,7 @@ package org.openmrs.module.kenyaemr.fragment.controller.program;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,16 +11,17 @@ import org.openmrs.Concept;
 import org.openmrs.DrugOrder;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
-
 import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.Person;
+import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
+import org.openmrs.module.kenyaemr.model.VisitAndAppointment;
 import org.openmrs.module.kenyaemr.wrapper.EncounterWrapper;
 import org.openmrs.module.kenyaemr.wrapper.PatientWrapper;
 import org.openmrs.module.kenyaemr.wrapper.PersonWrapper;
@@ -51,6 +53,16 @@ public class TreatmentCardRegisterFragmentController {
 		model.addAttribute("patientWrap", wrapperPatient);
 		model.addAttribute("personWrap", wrapperPerson);
 
+		PatientIdentifier mdrTBSuspectId = patient
+				.getPatientIdentifier(Context.getPatientService()
+						.getPatientIdentifierTypeByUuid(
+								"d59d0f67-4a05-4e41-bfad-342da68feb6f"));
+		if (mdrTBSuspectId != null) {
+			model.addAttribute("mdrTBSuspectNumber",mdrTBSuspectId);
+		} else {
+			model.addAttribute("mdrTBSuspectNumber", " ");
+		}
+		
 		PatientIdentifier mdrTBRegistrationId = patient
 				.getPatientIdentifier(Context.getPatientService()
 						.getPatientIdentifierTypeByUuid(
@@ -58,7 +70,17 @@ public class TreatmentCardRegisterFragmentController {
 		if (mdrTBRegistrationId != null) {
 			model.addAttribute("mdrTBRegistrationNumber", mdrTBRegistrationId);
 		} else {
-			model.addAttribute("mdrTBRegistrationNumber", null);
+			model.addAttribute("mdrTBRegistrationNumber", " ");
+		}
+		
+		PatientIdentifier mdrTBPatientId = patient
+				.getPatientIdentifier(Context.getPatientService()
+						.getPatientIdentifierTypeByUuid(
+								"90e2e35a-ce2a-43d5-8790-2dc139d7ace1"));
+		if (mdrTBPatientId != null) {
+			model.addAttribute("mdrTBPatientId", mdrTBPatientId);
+		} else {
+			model.addAttribute("mdrTBPatientId", " ");
 		}
     /*Record vitals value
      * 
@@ -509,54 +531,54 @@ public class TreatmentCardRegisterFragmentController {
 							// regName0 = druName+"(" +
 							// doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";
 							regName0 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 							
 						} else if (druName.equals("R")) {
 							regName1 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 						} else if (druName.equals("Z")) {
 							regName2 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 							
 						} else if (druName.equals("E")) {
 							regName3 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 						} else if (druName.equals("S")) {
 							regName4 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 						} else if (druName.equals("Km")) {
 							regName5 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 						} else if (druName.equals("Am")) {
 							regName6 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 							
 						} else if (druName.equals("Cm")) {
 							regName7 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 						} else if (druName.equals("Lfx")) {
 							regName8 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 						} else if (druName.equals("Eto")) {
 							regName9 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 						} else if (druName.equals("Cs")) {
 							regName10 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 						} else if (druName.equals("Sodium PAS")) {
 							regName11 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
 									+ ")";
 						}
 						count++;
@@ -764,6 +786,19 @@ public class TreatmentCardRegisterFragmentController {
 			}
 		}
 		model.addAttribute("cultureDstList", cultureDstList);
+		
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+		
+		List<Visit> visits=Context.getVisitService().getVisitsByPatient(patient);
+		List<VisitAndAppointment> visitAndAppointments=new LinkedList<VisitAndAppointment>();
+		for(Visit visit:visits){
+		Obs nextAppointment=kenyaEmrService.getObsForNextAppointmentByPerson(person,visit.getEncounters());
+		VisitAndAppointment visitAndAppointment=new VisitAndAppointment();
+		visitAndAppointment.setCurrentVisit(sdf.format(visit.getStartDatetime()));
+		visitAndAppointment.setNextAppointMent(sdf.format( nextAppointment.getValueDatetime()));
+		visitAndAppointments.add(visitAndAppointment);
+		}
+		model.addAttribute("visitAndAppointments", visitAndAppointments);
 
 	}
 

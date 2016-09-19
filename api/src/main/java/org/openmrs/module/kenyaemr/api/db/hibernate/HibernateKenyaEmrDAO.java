@@ -420,6 +420,20 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 		criteria.add(Restrictions.eq("valueDatetime", date));
 		return criteria.list();
 	}
+	
+	public Obs getObsForNextAppointmentByPerson(Person person,Set encounters) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Obs.class,"obs");
+		criteria.add(Restrictions.eq("person", person));
+		Collection<Concept> conList=new	ArrayList<Concept>();
+		conList.add(Context.getConceptService().getConceptByUuid("5096AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
+		conList.add(Context.getConceptService().getConceptByUuid("161261AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
+		criteria.add(Restrictions.in("concept", conList));
+		//criteria.add(Restrictions.isNull("dateVoided"));
+		criteria.add(Restrictions.in("encounter", encounters));
+		criteria.addOrder(Order.desc("dateCreated"));
+		criteria.setMaxResults(1);
+		return (Obs) criteria.uniqueResult();
+	}
 
 	@Override
 	public List<DrugOrderProcessed> getPatientWithPASregime() {
