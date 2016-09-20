@@ -281,7 +281,7 @@ public class RegimenUtilFragmentController {
 				//drugoOrder.setDose(dose);
 				drugOrder.setUnits(units);
 				drugOrder.setFrequency(frequency);
-				drugOrder.setQuantity(noOfTablet);
+				//drugOrder.setQuantity(noOfTablet);
 				
 				Order order=Context.getOrderService().saveOrder(drugOrder);
 				
@@ -448,7 +448,7 @@ public class RegimenUtilFragmentController {
 							drugOder.setConcept(drugConcept);
 							drugOder.setUnits(units);
 							drugOder.setFrequency(frequency);
-							drugOrder.setQuantity(noOfTablet);
+							//drugOrder.setQuantity(noOfTablet);
 							
 							Order order=Context.getOrderService().saveOrder(drugOder);
 							
@@ -512,7 +512,7 @@ public class RegimenUtilFragmentController {
 				drugOder.setConcept(drugConcept);
 				drugOder.setUnits(units);
 				drugOder.setFrequency(frequency);
-				drugOder.setQuantity(noOfTablet);
+				//drugOder.setQuantity(noOfTablet);
 				
 				Order order=Context.getOrderService().saveOrder(drugOder);
 				

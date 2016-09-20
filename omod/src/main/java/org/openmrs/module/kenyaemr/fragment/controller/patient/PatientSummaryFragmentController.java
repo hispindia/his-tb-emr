@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Patient summary fragment
@@ -217,6 +218,24 @@ public class PatientSummaryFragmentController {
 		}
 
 		model.addAttribute("dotMembers", dotMembers);
+		
+		Concept finSupportconcept=Context.getConceptService().getConceptByUuid("162717AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		Concept nutSupportconcept=Context.getConceptService().getConceptByUuid("5484AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		List<Obs> finObss=Context.getObsService().getObservationsByPersonAndConcept(patient, finSupportconcept);
+		List<Obs> nutObss=Context.getObsService().getObservationsByPersonAndConcept(patient, nutSupportconcept);
+		if(finObss.size()!=0){
+			model.addAttribute("fin", finObss.get(0).getValueCoded().getName());	
+		}
+		else{
+			model.addAttribute("fin", "");		
+		}
+		
+		if(nutObss.size()!=0){
+			model.addAttribute("nut", nutObss.get(0).getValueCoded().getName());	
+		}
+		else{
+			model.addAttribute("nut", "");	
+		}
 
 	}
 

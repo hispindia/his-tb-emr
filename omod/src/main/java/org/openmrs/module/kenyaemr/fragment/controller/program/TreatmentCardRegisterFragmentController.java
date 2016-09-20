@@ -531,54 +531,54 @@ public class TreatmentCardRegisterFragmentController {
 							// regName0 = druName+"(" +
 							// doseArray[count]+" "+dr.getUnits()+" "+dr.getFrequency()+")";
 							regName0 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 							
 						} else if (druName.equals("R")) {
 							regName1 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 						} else if (druName.equals("Z")) {
 							regName2 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 							
 						} else if (druName.equals("E")) {
 							regName3 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 						} else if (druName.equals("S")) {
 							regName4 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 						} else if (druName.equals("Km")) {
 							regName5 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 						} else if (druName.equals("Am")) {
 							regName6 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 							
 						} else if (druName.equals("Cm")) {
 							regName7 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 						} else if (druName.equals("Lfx")) {
 							regName8 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 						} else if (druName.equals("Eto")) {
 							regName9 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 						} else if (druName.equals("Cs")) {
 							regName10 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 						} else if (druName.equals("Sodium PAS")) {
 							regName11 = "(" + doseArray[count] + " "
-									+ dr.getUnits() + " " + dr.getFrequency() + " " + dr.getQuantity()
+									+ dr.getUnits() + " " + dr.getFrequency() + " " + dop.getNoOfTablet()
 									+ ")";
 						}
 						count++;
@@ -795,7 +795,12 @@ public class TreatmentCardRegisterFragmentController {
 		Obs nextAppointment=kenyaEmrService.getObsForNextAppointmentByPerson(person,visit.getEncounters());
 		VisitAndAppointment visitAndAppointment=new VisitAndAppointment();
 		visitAndAppointment.setCurrentVisit(sdf.format(visit.getStartDatetime()));
+		if(nextAppointment!=null){
 		visitAndAppointment.setNextAppointMent(sdf.format( nextAppointment.getValueDatetime()));
+		}
+		else{
+			visitAndAppointment.setNextAppointMent("");	
+		}
 		visitAndAppointments.add(visitAndAppointment);
 		}
 		model.addAttribute("visitAndAppointments", visitAndAppointments);
