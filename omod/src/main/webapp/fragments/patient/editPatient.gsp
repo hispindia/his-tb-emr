@@ -47,12 +47,7 @@
 	]
 	
 		
-	def patientSource1 = [
-			[
-					[ object: command, property: "entryPoint", label: "Entry Point ", config: [ style: "list", answerTo: entryPointList ] ],
-					[ object: command, property: "entrySourceId", label: "Entry source ID" ]
-			]		
-	] 
+	
 	
 	
 	def addressFieldRows = [
@@ -279,11 +274,34 @@
 
 		<fieldset>
 			<legend>Patient Source</legend>
-			 <% patientSource1.each { %>
-			   ${ ui.includeFragment("kenyaui", "widget/rowOfFields", [ fields: it ]) }
-			 <% } %>
+			<table>
+			<tr>
+			<td>
+			 <center><label class="ke-field-label">Entry Point</label></center>
+			  <span class="ke-field-content" >
+			 ${ ui.includeFragment("kenyaui", "widget/field",[ id:"entryPoint", object: command, property: "entryPoint", config: [ style: "list", answerTo: entryPointList ] ]) }
+			  </span>
+			  </td>
+			  <td  id="entrysourceId">
+						 <center><label class="ke-field-label">Entry Source ID</label></center>
+						<span  class="ke-field-content">
+							${ ui.includeFragment("kenyaui", "widget/field",[ id:"entrySourceId",object: command, property: "entrySourceId" ]) }
+						</span>	
+			 </td>
+			 </tr>
+			 </table>
 		</fieldset>
-
+           <fieldset>
+          <td>
+           <div id="treatmentcenter">
+            <legend>Treatment Center</legend>
+           <span class="ke-field-content" >
+           ${ ui.includeFragment("kenyaui", "widget/field",[ object: command, property: "treatmentCenter", config: [ style: "list", answerTo: treatmentList ] ]) }
+           </span>
+           </div>
+           </td>
+           </fieldset>
+           
 		<fieldset>
 			<legend>Previous TB treatment Episodes</legend>
 			<table>
@@ -443,6 +461,7 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 	      	jq("#otherStatus").hide();
 	      	document.getElementById("previousTBHistory").style.display = 'none';
 	      	 document.getElementById("iffyees").style.display = 'none';
+	      	 document.getElementById("treatmentcenter").style.display = 'none';
 	    }
 	    else
 	    {
@@ -475,7 +494,15 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 	        {
 		          document.getElementById("iffyees").style.display = 'none';
 	        }
-	        
+	        var entry=${pointentry};
+	         if(entry==160563)
+	         {
+	         jq("#treatmentcenter").show();
+	         }
+	        else
+	        {
+	        jq("#treatmentcenter").hide();
+	        }
 	     }   
 
 		 document.getElementById('checkInField').style.display='none';
@@ -497,7 +524,11 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
 			getSelectOption(jq(this).val());
 			
 		});
-
+    jq('#entryPoint').on('change', function() 
+            {  
+			getSelectedOption(jq(this).val());
+			
+		});
 		
 		 jq('input[type=radio][name=tbHistoryStatus]').change(function() {
 	        if (this.value == 1065) {
@@ -529,7 +560,18 @@ ${ ui.includeFragment("kenyaui", "widget/dialogForm", [
           document.getElementById("otherStatus").style.display = 'none';
         }
     };
-
+ function getSelectedOption(elem)
+    {   
+        
+        if(elem==160563){ 
+            document.getElementById("treatmentcenter").style.display = "";
+        }
+        
+        else
+        {
+          document.getElementById("treatmentcenter").style.display = 'none';
+        }
+    };
 
 	jQuery(function() {
 		jQuery('#from-age-button').appendTo(jQuery('#from-age-button-placeholder'));

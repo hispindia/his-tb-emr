@@ -149,7 +149,6 @@ public class TreatmentCardRegisterFragmentController {
 						diabitiesss="Yes";
 						break;
 					}
-					
 					else
 					{
 						diabitiesss="No";
@@ -195,9 +194,9 @@ public class TreatmentCardRegisterFragmentController {
 		/*Treatment initiation center*/
 		String treatmentCenterVal = "";
 		Obs treatmentCenter = getLatestObs(patient,
-				Dictionary.INFANT_NAME);
+				Dictionary.TREATMENT_CENTER);
 		if (treatmentCenter != null) {
-		    treatmentCenterVal=Context.getLocationService().getLocation(Integer.parseInt(treatmentCenter.getValueText())).toString();
+		    treatmentCenterVal=treatmentCenter.getValueCoded().getName().toString();
 			
 		}
 		model.addAttribute("treatmentCenterVal", treatmentCenterVal);

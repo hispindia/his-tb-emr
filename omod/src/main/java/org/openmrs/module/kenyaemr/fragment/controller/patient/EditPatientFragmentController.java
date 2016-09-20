@@ -114,8 +114,17 @@ public class EditPatientFragmentController {
 
 		model.addAttribute("townShipList",
 				Dictionary.getConcept(Dictionary.TOWNSHIP));
-		
-		
+		model.addAttribute("treatmentList",
+				Dictionary.getConcept(Dictionary.TREATMENT_CENTER));
+		Obs savedEntryPointConcept;
+		savedEntryPointConcept = getLatestObs(patient,
+				Dictionary.METHOD_OF_ENROLLMENT);
+		if (savedEntryPointConcept != null) {
+			model.addAttribute("pointentry",
+					savedEntryPointConcept.getValueCoded());
+		} else {
+			model.addAttribute("pointentry", 0);
+		}
 		Obs tbHistory ;
 		tbHistory = getLatestObs(patient,
 				Dictionary.TB_PATIENT);
@@ -367,7 +376,10 @@ public class EditPatientFragmentController {
 		private Concept onSecondlineDrug;
 		private Obs savedSecondlineStatus;
 		private String specifysecondLine;
-		
+		 //Treatment Center
+		private Concept treatmentCenter;
+		private Obs saveTreatmentCenter;
+	
 		
 		/**
 		 * Creates an edit form for a new patient
@@ -449,7 +461,11 @@ public class EditPatientFragmentController {
 			} catch (Exception e) {
 			}
 		
-			
+			saveTreatmentCenter = getLatestObs(patient, Dictionary.TREATMENT_CENTER);
+			if (saveTreatmentCenter != null) {
+				treatmentCenter = saveTreatmentCenter.getValueCoded();
+				
+			}
 			savedOccupation = getLatestObs(patient, Dictionary.OCCUPATION);
 			if (savedOccupation != null) {
 				occupation = savedOccupation.getValueCoded();
@@ -825,7 +841,9 @@ public class EditPatientFragmentController {
 					Dictionary.getConcept(Dictionary.SECOND_LINE_DRUG),
 					savedSecondlineStatus, onSecondlineDrug);
 			
-			
+			handleOncePerPatientObs(ret, obsToSave, obsToVoid,
+					Dictionary.getConcept(Dictionary.TREATMENT_CENTER),
+					saveTreatmentCenter,treatmentCenter);
 			if (occupation != null) {
 				if (occupation.getName().toString().equals("Other")) {
 					handleOncePerPatientObs(
@@ -1491,6 +1509,22 @@ public class EditPatientFragmentController {
 
 		public void setSpecifysecondLine(String specifysecondLine) {
 			this.specifysecondLine = specifysecondLine;
+		}
+
+		public Obs getSaveTreatmentCenter() {
+			return saveTreatmentCenter;
+		}
+
+		public void setSaveTreatmentCenter(Obs saveTreatmentCenter) {
+			this.saveTreatmentCenter = saveTreatmentCenter;
+		}
+
+		public Concept getTreatmentCenter() {
+			return treatmentCenter;
+		}
+
+		public void setTreatmentCenter(Concept treatmentCenter) {
+			this.treatmentCenter = treatmentCenter;
 		}
 
 	
