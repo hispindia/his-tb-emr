@@ -787,11 +787,15 @@ public class TreatmentCardRegisterFragmentController {
 		model.addAttribute("cultureDstList", cultureDstList);
 		
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-		
+        
 		List<Visit> visits=Context.getVisitService().getVisitsByPatient(patient);
 		List<VisitAndAppointment> visitAndAppointments=new LinkedList<VisitAndAppointment>();
+		Obs nextAppointment=new Obs();
 		for(Visit visit:visits){
-		Obs nextAppointment=kenyaEmrService.getObsForNextAppointmentByPerson(person,visit.getEncounters());
+		if(visit.getEncounters().size()!=0)
+		{
+		 nextAppointment=kenyaEmrService.getObsForNextAppointmentByPerson(person,visit.getEncounters());
+		}
 		VisitAndAppointment visitAndAppointment=new VisitAndAppointment();
 		visitAndAppointment.setCurrentVisit(sdf.format(visit.getStartDatetime()));
 		if(nextAppointment!=null){
