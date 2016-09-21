@@ -1,5 +1,5 @@
 /**
- * The contents of this file are subject to the OpenMRS Public License
+  * The contents of this file are subject to the OpenMRS Public License
  * Version 1.0 (the "License"); you may not use this file except in
  * compliance with the License. You may obtain a copy of the License at
  * http://license.openmrs.org
@@ -17,7 +17,10 @@ package org.openmrs.module.kenyaemr.calculation.library.hiv;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
+import org.openmrs.Patient;
 import org.openmrs.Program;
+import org.openmrs.Visit;
+import org.openmrs.api.context.Context;
 import org.openmrs.calculation.patient.PatientCalculationContext;
 import org.openmrs.calculation.result.CalculationResultMap;
 import org.openmrs.calculation.result.SimpleResult;
@@ -28,6 +31,7 @@ import org.openmrs.module.kenyacore.calculation.PatientFlagCalculation;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.HivConstants;
 import org.openmrs.module.kenyaemr.TbConstants;
+import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.module.kenyaemr.calculation.EmrCalculationUtils;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata;
 import org.openmrs.module.kenyaemr.metadata.TbMetadata;
@@ -35,6 +39,7 @@ import org.openmrs.module.metadatadeploy.MetadataUtils;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -67,25 +72,44 @@ public class LostToFollowUpCalculation extends AbstractPatientCalculation implem
 		Set<Integer> inTbProgram = Filters.inProgram(tbProgram, alive, context);
 
 		CalculationResultMap lastEncounters = Calculations.lastEncounter(null, inTbProgram, context);
-
+		
+        
 		CalculationResultMap ret = new CalculationResultMap();
+		
 		for (Integer ptId : cohort) {
 			boolean lost = false;
-
-			// Is patient alive and in the HIV program
-			if (inTbProgram.contains(ptId)) {
-
-				// Patient is lost if no encounters in last X days
-				Encounter lastEncounter = EmrCalculationUtils.encounterResultForPatient(lastEncounters, ptId);
-				if (lastEncounter != null) {
-					if(daysSince(lastEncounter.getEncounterDatetime(), context) > TbConstants.MONTH_THREE_SPUTUM_TEST){
-						lost = true;
-					}
+			Patient pat=Context.getPatientService().getPatient(ptId);
+			
+			List<Visit>visss=Context.getVisitService().getVisitsByPatient(pat);
+			List<Visit>v=Context.getVisitService().getActiveVisitsByPatient(pat);
+			
+			
+			if (inTbProgram.contains(ptId))
+			{
+			for(Visit viss:visss)
+			{
+				if(viss.getStopDatetime()!=null)
+				{ for(Visit viii:v)
+				{
+					long dd=(viii.getStartDatetime().getTime()-viss.getStopDatetime().getTime())/(24 * 60 * 60 * 1000);
+					
+					if(dd > TbConstants.MONTH_THREE_SPUTUM_TEST)
+					{
+						lost=true;
+						break;
+					}	
 				}
+				break;
+				}
+				
+			}		
+						
+			
+			
+			
 
-			}
+		}
 			ret.put(ptId, new SimpleResult(lost, this, context));
-
 		}
 		return ret;
 	}
