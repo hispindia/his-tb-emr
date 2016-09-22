@@ -8,15 +8,15 @@
 		if (isHivcount=="No")
 		{
 		
-			dataPoints << [ label: "Hiv Testing done", value: ui.format(isHivcount)]
+			dataPoints << [ label: "HIV Testing done", value: ui.format(isHivcount)]
 		}
 		else
 		{
-		dataPoints << [ label: "Hiv Testing done", value: ui.format(isHivcount) ,extra: calculations.hivTestdate.value.obsDatetime]
+		dataPoints << [ label: "HIV Testing done", value: ui.format(isHivcount) ,extra: calculations.hivTestdate.value.obsDatetime]
 		}
 		}
 		else {
-			dataPoints << [ label: "Hiv Testing done", value: "None" ]
+			dataPoints << [ label: "HIV Testing done", value: "None" ]
 		}
 	    if(hivresult)
 	    {
@@ -27,11 +27,11 @@
 	    if (ArtStarted=="No")
 		{
 		
-			 dataPoints << [ label: "Started on Art", value: ui.format(ArtStarted)]
+			 dataPoints << [ label: "Started on ART", value: ui.format(ArtStarted)]
 		}
 		else
 		{
-		 dataPoints << [ label: "Started on Art", value: ui.format(ArtStarted) ,extra: calculations.artstart.value.obsDatetime]
+		 dataPoints << [ label: "Started on ART", value: ui.format(ArtStarted) ,extra: calculations.artstart.value.obsDatetime]
 		}
 	   
 	    }
