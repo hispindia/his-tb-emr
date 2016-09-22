@@ -4,7 +4,8 @@
 <div class="ke-panel-content">
 	<div class="ke-stack-item">
 		Financial Support :${fin}  <br/>
-		Nutrition Support :${nut}
+		Nutrition Support :${nut}  <br/> 
+		
 		<% if (recordedAsDeceased) { %>
 		<div class="ke-warning" style="margin-bottom: 5px">
 			Patient has been recorded as deceased in a program form. Please update the registration form.
