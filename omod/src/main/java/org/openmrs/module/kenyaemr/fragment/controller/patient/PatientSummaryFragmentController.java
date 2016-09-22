@@ -146,9 +146,11 @@ public class PatientSummaryFragmentController {
 		String listAllRiskFactor = "";
 		String comorbitidyList = "";
 
-		Obs comorbidity = getAllLatestObs(patient,
+		Obs comorbidity = getLatestObs(patient,
 				Dictionary.COMORBIDITY_TB_ENROLL_FORM);
+		
 		if (comorbidity != null) {
+			
 			EncounterWrapper wrapped = new EncounterWrapper(
 					comorbidity.getEncounter());
 			List<Obs> obsList = wrapped.allObs(comorbidity.getConcept());
@@ -166,11 +168,11 @@ public class PatientSummaryFragmentController {
 
 		model.addAttribute("comorbitidyList", comorbitidyList);
 
-		Obs dotProviderName = getAllLatestObs(patient,
+		Obs dotProviderName = getLatestObs(patient,
 				Dictionary.DOT_PROVIDER_NAME_TB_ENROLL_FORM);
-		Obs dotProviderContact = getAllLatestObs(patient,
+		Obs dotProviderContact = getLatestObs(patient,
 				Dictionary.DOT_PROVIDER_CONTACT_TB_ENROLL_FORM);
-		Obs providerGroup = getAllLatestObs(patient,
+		Obs providerGroup = getLatestObs(patient,
 				Dictionary.DOT_PROVIDER_DETAILS_SECTION);
 
 		Map<Integer, String> dotMembers = new HashMap<Integer, String>();
