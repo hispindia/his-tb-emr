@@ -62,8 +62,7 @@
 							<br/><strong>If 'Yes',please specify : </strong>
 					</td>
 	                <td colspan="2" style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
-	                	  <% if(tbHistory=="Yes")
-	                	  {%>
+	                	 
 							<br/> <% if(patientWrap.previousTownshipTBNumber) {%> ${patientWrap.previousTownshipTBNumber  }	<% } %>
 							<br/> ${ townshipVal } 
 							<br/> ${ tbDiseaseClasificationVal }
@@ -71,6 +70,8 @@
 							<br/> <% if(patientWrap.previousRegimenType) {%> ${patientWrap.previousRegimenType  }	<% } %>
 							<br/>  <% if(patientWrap.previousRegimenStartDate) {%> ${patientWrap.previousRegimenStartDate  } (${regimenStartDateTypeVal})	<% } %>
 							<br/>  ${outcomeVal}
+						 <% if(tbHistory=="Yes")
+	                	  {%>
 							<br/>  ${onSecondLine}
 							<br/> <% if(onSecondLine=="Yes") {%> ${patientWrap.secondline} 	<% } %>
 						<% } %>
@@ -202,22 +203,19 @@
 							</tr>
 			            </table>
 			    
-			    
-				</td>
-			</tr>
-			<tr>
-  				<td width="50%" colspan="3" valign="top">
+			    		
+  				
 	                <table width="100%" border="1">
 	                	<tr bgcolor="#778899">
 							<td colspan="3">
-								<h4><center><strong>Vist and next Appointment</strong></center></h4>
+								<h4><center><strong>Visit and Next Appointment</strong></center></h4>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="3">
 								<table border="1" width="100%">
 									<tr >
-										<th colspan="1"><strong>Vist Date</strong></th>
+										<th colspan="1"><strong>Visit Date</strong></th>
 										<th colspan="1"><strong>Next Appointment Date</strong></th>
 									</tr>
 									<% for ( vaa in visitAndAppointments ) { %>
@@ -230,8 +228,12 @@
 							</td>
 			             </tr>
 			          </table>
-				</td> 
-				</tr>
+				
+				
+				</td>
+				
+			</tr>
+	
 			<tr bgcolor="#778899">
 				<td colspan="6">
 					<h4><strong><center>Diagnosis</center> </strong></h4>
@@ -567,6 +569,31 @@
 								</td>
 							</tr>
 			            </table>
+			            		
+	                <table width="100%" border="1">
+	                	<tr bgcolor="#778899">
+							<td colspan="3">
+								<h4><center><strong>Visit And Next Appointment</strong></center></h4>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<table border="1" width="100%">
+									<tr >
+										<th colspan="1"><strong>Visit Date</strong></th>
+										<th colspan="1"><strong>Next Appointment Date</strong></th>
+									</tr>
+									<% for ( vaa in visitAndAppointments ) { %>
+									<tr>
+										<td colspan="1">${vaa.currentVisit}</td>
+										<td colspan="1">${vaa.nextAppointMent}</td>
+									</tr>
+										<% } %>
+								</table>
+							</td>
+			             </tr>
+			          </table>
+				
 			    
 			    
 				</td>

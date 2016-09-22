@@ -795,7 +795,7 @@ public class TreatmentCardRegisterFragmentController {
 		if(visit.getEncounters().size()!=0)
 		{
 		 nextAppointment=kenyaEmrService.getObsForNextAppointmentByPerson(person,visit.getEncounters());
-		}
+		
 		VisitAndAppointment visitAndAppointment=new VisitAndAppointment();
 		visitAndAppointment.setCurrentVisit(sdf.format(visit.getStartDatetime()));
 		if(nextAppointment!=null){
@@ -805,6 +805,7 @@ public class TreatmentCardRegisterFragmentController {
 			visitAndAppointment.setNextAppointMent("");	
 		}
 		visitAndAppointments.add(visitAndAppointment);
+		}
 		}
 		model.addAttribute("visitAndAppointments", visitAndAppointments);
 
