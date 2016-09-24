@@ -416,7 +416,8 @@ public class SearchFragmentController {
 				matched.add(drugOrder.getPatient());
 			}
 			for (Obs obs : obss) {
-				matched.add(obs.getPatient());
+				Patient patient=Context.getPatientService().getPatientOrPromotePerson(obs.getPersonId());
+				matched.add(patient);
 			}
 		}
 
