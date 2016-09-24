@@ -38,16 +38,18 @@ table.tb1 tr th, table.tb1 tr td {
 		
 			if( checkData!="" &amp;&amp; document.getElementById("w10").value==null )
 			{
-				fieldIndex = 69;
+				fieldIndex = 25;
 			}
 			else{
 				
 				fieldIndex = 10;
 			}
 			j=1;
+			
+			
 			if(document.getElementById("w"+fieldIndex)!=null)
 				{
-			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!="" ){
+			while( j &lt; 6 &amp;&amp; document.getElementById("w"+fieldIndex).value!='' ){
 				
 				jQuery('#'+j+'-toggleContainer').show();   
 				fieldIndex=fieldIndex+2;
@@ -68,7 +70,7 @@ table.tb1 tr th, table.tb1 tr td {
 				j++;
 			}
 				}
-	
+		
 			$j('#1-removeEntry').remove();
 			$j('#5-addEntry').remove();
 			$j('#1-toggleContainer').show();
@@ -178,19 +180,27 @@ table.tb1 tr th, table.tb1 tr td {
 				fieldIndex = 49;
 				}
 			else if( checkData!="" &amp;&amp; optValues == 156204 || optValues == 163055)
-			{  if(document.getElementById("w87").value!='')
+			{ 
+				if(document.getElementById("w81_1")==null || document.getElementById("w75_1")=='')
+				{if(document.getElementById("w85").value!='')
 				{
-				
+			
 			fieldIndex = 59;
 				}
-			else
+				}
+			else if(document.getElementById("w29").value!='')
 				{
 				
 				fieldIndex = 65;
 				}
+			else if(document.getElementById("w85").value=='')
+			{
+				
+			fieldIndex = 59;
+			}
 			}
 			
-			else{ 
+			else{
 				fieldIndex = 71;
 			}
 				}
@@ -204,16 +214,26 @@ table.tb1 tr th, table.tb1 tr td {
 					fieldIndex = 49;
 					}
 				else if( checkData!="" &amp;&amp; optValues == 156204 || optValues == 163055)
-				{  if(document.getElementById("w81").value!='')
-					{
-					
+				{  
+					if(document.getElementById("w75")!=null)
+				{
+						if(document.getElementById("w75").value!='')
+							{
 				fieldIndex = 59;
+							}
+						else if(document.getElementById("w75").value=='')
+						{
+						
+						fieldIndex = 59;
+						}
+				
 					}
-				else
+					else if(document.getElementById("w29").value!='')
 					{
 					
-					fieldIndex = 65;
+				fieldIndex = 65;
 					}
+				
 				}
 				
 				else{ 
@@ -267,23 +287,28 @@ table.tb1 tr th, table.tb1 tr td {
 			if(document.getElementById("curDate")){
 				var months = {1:"Jan", 2:"Feb",3:"Mar", 4:"Apr", 5:"May",6:"Jun", 7:"Jul",8:"Aug", 9:"Sep",10:"Oct",11:"Nov",12:"Dec"};
 				var d = new Date(getValue('curDate.value'));
-				var today = new Date(); if( optValues == 156204 || optValues == 163055)
-					{
-				if(document.getElementById("w55")){
-					if( checkData!=""){
+				
+				var today = new Date(getValue('encounter-date.value'));
+				if( optValues == 156204 || optValues == 163055)
+					{ 
+				if(document.getElementById("w59").value!=''){
+					if(document.getElementById("w91").value!='')
+					{if( checkData!=""){
 						if(d!="Invalid Date"){
-							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+							jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 							
 							d.setDate(d.getDate() + 280);
 							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 							document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
+							
 						}
 						else{
 							document.getElementById("w79-display").value =  "";
 							document.getElementById("w79").value = "";
 						}
 					}
-					else{
+					
+					else{ 
 						if(d!="Invalid Date"){
 							d.setDate(d.getDate() + 280);
 							document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
@@ -295,12 +320,13 @@ table.tb1 tr th, table.tb1 tr td {
 						}
 						
 					}
-				}	
+				}
+				}
 				else{
 					if( checkData!=""){
 						if(document.getElementById("w85")=='' )
 						{if(d!="Invalid Date"){ 
-							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+							jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 							d.setDate(d.getDate() + 280);
 							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 							document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
@@ -314,7 +340,7 @@ table.tb1 tr th, table.tb1 tr td {
 						else if(document.getElementById("w81")=='')
 							{
 							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 								d.setDate(d.getDate() + 280);
 								document.getElementById("w85-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 								document.getElementById("w85").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
@@ -341,11 +367,14 @@ table.tb1 tr th, table.tb1 tr td {
 					}
 				else
 					{
-					if(document.getElementById("w49")){
-						if( checkData!=""){
+					if(document.getElementById("w45_1")==null)
+					{if(document.getElementById("w49"))
+					{if(document.getElementById("w49").value!='')
+						{if( checkData!=""){
 							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 								d.setDate(d.getDate() + 280);
+								
 								document.getElementById("w69-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 								document.getElementById("w69").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
 							}
@@ -366,11 +395,15 @@ table.tb1 tr th, table.tb1 tr td {
 							}
 							
 						}
-					}	
+						}
+					}
+					}
 					else{
 						if( checkData!=""){
-							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+							if(document.getElementById("w91").value=='')
+							{	if(d!="Invalid Date"){
+								
+									jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 								d.setDate(d.getDate() + 280);
 								document.getElementById("w75-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 								document.getElementById("w75").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
@@ -379,6 +412,8 @@ table.tb1 tr th, table.tb1 tr td {
 								document.getElementById("w75-display").value =  "";
 								document.getElementById("w75").value = "";
 							}
+							}
+						
 						}
 						else{
 							if(d!="Invalid Date"){
@@ -396,10 +431,12 @@ table.tb1 tr th, table.tb1 tr td {
 					}
 				
 				var da = new Date(getValue('curDate.value'));
-				da.setDate(da.getDate() + 250);
+				da.setDate(da.getDate() + 280);
 				var edd = new Date(da);
-				var today = new Date();
+				var today = new Date(getValue('encounter-date.value'));
+				
 				if(edd-today &lt; 0){
+					
 				//	$('.ke-form-content').find('input:text').val('');
 					$(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
 					$(':checkbox, :radio').prop('checked', false);
@@ -412,16 +449,19 @@ table.tb1 tr th, table.tb1 tr td {
 				jq("#curDate :input").change(function() {
 					var months = {1:"Jan", 2:"Feb",3:"Mar", 4:"Apr", 5:"May",6:"Jun", 7:"Jul",8:"Aug", 9:"Sep",10:"Oct",11:"Nov",12:"Dec"};
 					var d = new Date(getValue('curDate.value'));
-					var today = new Date(); if( optValues == 156204 || optValues == 163055)
+					
+					var today = new Date(getValue('encounter-date.value')); if( optValues == 156204 || optValues == 163055)
 					{
-				if(document.getElementById("w55")){
+				if(document.getElementById("w59").value!=''){
+					
 					if( checkData!=""){
 						if(d!="Invalid Date"){
-							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+							jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 							
 							d.setDate(d.getDate() + 280);
 							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-							document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
+					     document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
+						
 						}
 						else{
 							document.getElementById("w79-display").value =  "";
@@ -429,7 +469,7 @@ table.tb1 tr th, table.tb1 tr td {
 						}
 					}
 					else{
-						if(d!="Invalid Date"){
+						if(d!="Invalid Date"){ 
 							d.setDate(d.getDate() + 280);
 							document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 							document.getElementById("w91").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
@@ -445,7 +485,7 @@ table.tb1 tr th, table.tb1 tr td {
 					if( checkData!=""){
 						if(document.getElementById("w81")=='' )
 						{if(d!="Invalid Date"){ 
-							jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+							jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 							d.setDate(d.getDate() + 280);
 							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 							document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
@@ -459,7 +499,7 @@ table.tb1 tr th, table.tb1 tr td {
 						else if(document.getElementById("w87")=='')
 							{
 							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 								 
 								d.setDate(d.getDate() + 280);
 								document.getElementById("w85-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
@@ -488,9 +528,11 @@ table.tb1 tr th, table.tb1 tr td {
 				else
 					{
 					if(document.getElementById("w49")){
-						if( checkData!=""){
+						if(document.getElementById("w49").value!='')
+						{
+							if( checkData!=""){
 							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 								
 							    
 								d.setDate(d.getDate() + 280);
@@ -516,11 +558,13 @@ table.tb1 tr th, table.tb1 tr td {
 							}
 							
 						}
+					}
 					}	
+					
 					else{
 						if( checkData!=""){
 							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7));
+								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
 								d.setDate(d.getDate() + 280);
 								document.getElementById("w75-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 								document.getElementById("w75").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
@@ -530,6 +574,7 @@ table.tb1 tr th, table.tb1 tr td {
 								document.getElementById("w75").value = "";
 							}
 						}
+					
 						else{
 							if(d!="Invalid Date"){
 								d.setDate(d.getDate() + 280);
@@ -860,11 +905,12 @@ table.tb1 tr th, table.tb1 tr td {
 	</script> <script type="text/javascript">
 		function mbdCalculation() {
 			var display = '';
-			
+			var displaydate='';
 			var d = new Date(getValue('curDate.value'));
-			var today = new Date();
+			var today = new Date(getValue('encounter-date.value'));
 			if(d!="Invalid Date"){
-				display=Math.round(parseInt((today - d) / (1000 * 60 * 60 * 24)) /7) + " week";
+				display=Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)) + " week";
+				
 				
 			}
 			jQuery('#mbddate').html(display );
@@ -873,13 +919,15 @@ table.tb1 tr th, table.tb1 tr td {
 			if(document.getElementById("curDate")){
 			getField('curDate.value').change(mbdCalculation);
 			var da = new Date(getValue('curDate.value'));
-			da.setDate(da.getDate() + 250);
+			da.setDate(da.getDate() + 280);
 			var edd = new Date(da);
-			var today = new Date();
+			var today = new Date(getValue('encounter-date.value'));
 			if(edd-today &lt; 0){
+				
 				jQuery('#mbddate').html('');
 			}
 			else{
+				
 				mbdCalculation();	
 			}
 			}

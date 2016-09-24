@@ -164,6 +164,7 @@ public class TbCarePanelFragmentController {
 				
 		Concept medSet = regimenManager.getMasterSetConcept("TB");
 		RegimenChangeHistory history = RegimenChangeHistory.forPatient(patient, medSet);
+		
 		model.addAttribute("regimenHistory", history);
 	}
 	
