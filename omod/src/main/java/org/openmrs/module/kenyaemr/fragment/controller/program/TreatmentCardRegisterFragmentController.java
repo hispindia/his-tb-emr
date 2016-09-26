@@ -191,7 +191,7 @@ public class TreatmentCardRegisterFragmentController {
 		}
 
 		model.addAttribute("otherDiseaseVal", otherDiseaseVal);
-		/*Treatment initiation center*/
+		/*Treatment initiation center
 		String treatmentCenterVal = "";
 		Obs treatmentCenter = getLatestObs(patient,
 				Dictionary.TREATMENT_CENTER);
@@ -199,7 +199,7 @@ public class TreatmentCardRegisterFragmentController {
 		    treatmentCenterVal=treatmentCenter.getValueCoded().getName().toString();
 			
 		}
-		model.addAttribute("treatmentCenterVal", treatmentCenterVal);
+		model.addAttribute("treatmentCenterVal", treatmentCenterVal);*/
 		
 		
 		String registrationDateVal = "";
@@ -246,7 +246,19 @@ public class TreatmentCardRegisterFragmentController {
 		}
 		model.addAttribute("tbDiseaseClasificationVal",
 				tbDiseaseClasificationVal);
-
+        /*
+         * Health Facility
+         * 
+         */
+		String healthFacility = "";
+		Obs healthFaciltyhistry= getLatestObs(patient, Dictionary.TOWNSHIP);
+		if (healthFaciltyhistry != null) {
+			healthFacility = healthFaciltyhistry.getValueCoded().getName().toString();
+		}
+		model.addAttribute("healthFacility", healthFacility);
+		
+		
+		
 		String tbSiteVal = "";
 
 		Obs tbSite = getAllLatestObs(patient, Dictionary.TB_SITE);
@@ -285,8 +297,8 @@ public class TreatmentCardRegisterFragmentController {
 		}
 		model.addAttribute("regimenStartDateTypeVal", regimenStartDateTypeVal);
 
-		/*model.addAttribute("systemLocation",
-				Context.getService(KenyaEmrService.class).getDefaultLocation());*/
+		model.addAttribute("systemLocation",
+				Context.getService(KenyaEmrService.class).getDefaultLocation());
 
 		String dotProviderVal = "";
 		Obs dotProvider = getAllLatestObs(patient,

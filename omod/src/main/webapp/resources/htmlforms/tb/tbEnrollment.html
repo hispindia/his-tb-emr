@@ -30,7 +30,69 @@ table.tb1 tr th, table.tb1 tr td {
 	padding: 10px;
 }
 </style>
+<script type="text/javascript">
+jq(function () {
+	onLmpChange();
+	
+	getField('curDate.value').change(onLmpChange);
+	
+});
+function onLmpChange() {
+	var display = '';
+	var lmpValue = getValue('curDate.value');
+	if (lmpValue) {
+		var lmp = Date.parse(getValue('curDate.value'));
+		
+		var edd = lmp;
+		display=calculateEdd(new Date(lmp));
+		
+		
+		
+	}
+	document.getElementById("nextDate").value=display;
+	$("#nextDate").text(display);
+     
+	
+}
+function daysInMonth(month, year) {
+	var dim = 31;
+	if (month == 1) {
+		if (year % 4 == 0) {
+			dim = 29;
+		} else {
+			dim = 28;
+		}
+	} else if (month == 3 || month == 5 || month == 8 || month == 10) {
+		dim = 30;
+	}
+	return dim;
+}
+function calculateEdd(lmp) {
+	var months = {1:"Jan", 2:"Feb",3:"Mar", 4:"Apr", 5:"May",6:"Jun", 7:"Jul",8:"Aug", 9:"Sep",10:"Oct",11:"Nov",12:"Dec"};
+	var lmpDay = lmp.getDate();
+	var lmpMonth = lmp.getMonth();
+	var lmpYear = lmp.getFullYear();
 
+	var dayOffset = 7;
+	var monthOffset = -2;
+	var yearOffset = 1;
+
+	var eddDay = lmpDay + dayOffset;
+	var dim = daysInMonth(lmpMonth, lmpYear);
+	if (eddDay &gt; dim) {
+		eddDay -= dim;
+		monthOffset++;
+	}
+	var eddMonth = lmpMonth + monthOffset;
+	if (eddMonth &lt;= 0) {
+		eddMonth += 12;
+		yearOffset--;
+	}
+	var eddYear = lmpYear + yearOffset;
+	return (eddDay &lt;= 9 ? '0' + eddDay : eddDay) + '-' + (eddMonth &lt;= 9 ? months[eddMonth] : months[eddMonth]) + '-' +
+			eddYear;
+}
+</script>
 <script type="text/javascript">
 		jq(document).ready(function(){
 			var checkData = getValue('regGroup.value');
@@ -38,7 +100,7 @@ table.tb1 tr th, table.tb1 tr td {
 		
 			if( checkData!="" &amp;&amp; document.getElementById("w10").value==null )
 			{
-				fieldIndex = 25;
+				fieldIndex = 69;
 			}
 			else{
 				
@@ -105,7 +167,7 @@ table.tb1 tr th, table.tb1 tr td {
 				fieldIndex = 85;
 			}
 			else if( checkData!="" &amp;&amp; optValues == 156204 || optValues == 163055 &amp;&amp;document.getElementById("w10").value!=null)
-				{
+				{ 
 				  fieldIndex = 85;
 				}
 			else{
@@ -180,24 +242,25 @@ table.tb1 tr th, table.tb1 tr td {
 				fieldIndex = 49;
 				}
 			else if( checkData!="" &amp;&amp; optValues == 156204 || optValues == 163055)
-			{ 
-				if(document.getElementById("w81_1")==null || document.getElementById("w75_1")=='')
-				{if(document.getElementById("w85").value!='')
+			{  
+			if(document.getElementById("w85")!=null)	
+			{if(document.getElementById("w85").value!='')
 				{
 			
 			fieldIndex = 59;
-				}
-				}
-			else if(document.getElementById("w29").value!='')
-				{
-				
-				fieldIndex = 65;
 				}
 			else if(document.getElementById("w85").value=='')
 			{
 				
 			fieldIndex = 59;
 			}
+			}
+			else if(document.getElementById("w29").value!='')
+				{
+				
+				fieldIndex = 65;
+				}
+			
 			}
 			
 			else{
@@ -284,151 +347,18 @@ table.tb1 tr th, table.tb1 tr td {
 				return false;
 				});
 				
-			if(document.getElementById("curDate")){
+		/*	if(document.getElementById("curDate")){
 				var months = {1:"Jan", 2:"Feb",3:"Mar", 4:"Apr", 5:"May",6:"Jun", 7:"Jul",8:"Aug", 9:"Sep",10:"Oct",11:"Nov",12:"Dec"};
 				var d = new Date(getValue('curDate.value'));
 				
 				var today = new Date(getValue('encounter-date.value'));
-				if( optValues == 156204 || optValues == 163055)
-					{ 
-				if(document.getElementById("w59").value!=''){
-					if(document.getElementById("w91").value!='')
-					{if( checkData!=""){
-						if(d!="Invalid Date"){
-							jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-							
-							d.setDate(d.getDate() + 280);
-							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-							document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							
-						}
-						else{
-							document.getElementById("w79-display").value =  "";
-							document.getElementById("w79").value = "";
-						}
-					}
-					
-					else{ 
-						if(d!="Invalid Date"){
-							d.setDate(d.getDate() + 280);
-							document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-							document.getElementById("w91").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-						}
-						else{
-							document.getElementById("w91-display").value =  "";
-							document.getElementById("w91").value = "";
-						}
-						
-					}
-				}
-				}
-				else{
-					if( checkData!=""){
-						if(document.getElementById("w85")=='' )
-						{if(d!="Invalid Date"){ 
-							jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-							d.setDate(d.getDate() + 280);
-							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-							document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-						}
-						else{
-							document.getElementById("w79-display").value =  "";
-							document.getElementById("w79").value = "";
-						}
-					}
-						
-						else if(document.getElementById("w81")=='')
-							{
-							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-								d.setDate(d.getDate() + 280);
-								document.getElementById("w85-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w85").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							}
-							else{
-								document.getElementById("w85-display").value =  "";
-								document.getElementById("w85").value = "";
-							}
-							}
-					}
-					else{
-						if(d!="Invalid Date"){ 
-							d.setDate(d.getDate() + 280);
-							document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-							document.getElementById("w91").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-						}
-						else{
-							document.getElementById("w91-display").value =  "";
-							document.getElementById("w91").value = "";
-						}
-						
-					}
-				}
-					}
-				else
-					{
-					if(document.getElementById("w45_1")==null)
-					{if(document.getElementById("w49"))
-					{if(document.getElementById("w49").value!='')
-						{if( checkData!=""){
-							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-								d.setDate(d.getDate() + 280);
-								
-								document.getElementById("w69-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w69").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							}
-							else{
-								document.getElementById("w69-display").value =  "";
-								document.getElementById("w69").value = "";
-							}
-						}
-						else{
-							if(d!="Invalid Date"){
-								d.setDate(d.getDate() + 280);
-								document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w91").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							}
-							else{
-								document.getElementById("w91-display").value =  "";
-								document.getElementById("w91").value = "";
-							}
-							
-						}
-						}
-					}
-					}
-					else{
-						if( checkData!=""){
-							if(document.getElementById("w91").value=='')
-							{	if(d!="Invalid Date"){
-								
-									jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-								d.setDate(d.getDate() + 280);
-								document.getElementById("w75-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w75").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							}
-							else{
-								document.getElementById("w75-display").value =  "";
-								document.getElementById("w75").value = "";
-							}
-							}
-						
-						}
-						else{
-							if(d!="Invalid Date"){
-								d.setDate(d.getDate() + 280);
-								document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w91").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							}
-							else{
-								document.getElementById("w91-display").value =  "";
-								document.getElementById("w91").value = "";
-							}
-							
-						}
-					}
-					}
+				jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
+				var edd = ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
+			
+				document.getElementById("nextDate").value=edd;
+				
+			
+			}*/
 				
 				var da = new Date(getValue('curDate.value'));
 				da.setDate(da.getDate() + 280);
@@ -446,151 +376,16 @@ table.tb1 tr th, table.tb1 tr td {
 					
 				}
 			
-				jq("#curDate :input").change(function() {
+	/*			jq("#curDate :input").change(function() {
 					var months = {1:"Jan", 2:"Feb",3:"Mar", 4:"Apr", 5:"May",6:"Jun", 7:"Jul",8:"Aug", 9:"Sep",10:"Oct",11:"Nov",12:"Dec"};
 					var d = new Date(getValue('curDate.value'));
 					
-					var today = new Date(getValue('encounter-date.value')); if( optValues == 156204 || optValues == 163055)
-					{
-				if(document.getElementById("w59").value!=''){
+					var today = new Date(getValue('encounter-date.value')); 
+					var edd = ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
 					
-					if( checkData!=""){
-						if(d!="Invalid Date"){
-							jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-							
-							d.setDate(d.getDate() + 280);
-							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-					     document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-						
-						}
-						else{
-							document.getElementById("w79-display").value =  "";
-							document.getElementById("w79").value = "";
-						}
-					}
-					else{
-						if(d!="Invalid Date"){ 
-							d.setDate(d.getDate() + 280);
-							document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-							document.getElementById("w91").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-						}
-						else{
-							document.getElementById("w91-display").value =  "";
-							document.getElementById("w91").value = "";
-						}
-						
-					}
-				}	
-				else{
-					if( checkData!=""){
-						if(document.getElementById("w81")=='' )
-						{if(d!="Invalid Date"){ 
-							jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-							d.setDate(d.getDate() + 280);
-							document.getElementById("w79-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-							document.getElementById("w79").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-						}
-						else{
-							document.getElementById("w79-display").value =  "";
-							document.getElementById("w79").value = "";
-						}
-					}
-						
-						else if(document.getElementById("w87")=='')
-							{
-							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-								 
-								d.setDate(d.getDate() + 280);
-								document.getElementById("w85-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w85").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							}
-							else{
-								document.getElementById("w85-display").value =  "";
-								document.getElementById("w85").value = "";
-							}
-							}
-					}
-					else{
-						if(d!="Invalid Date"){
-							d.setDate(d.getDate() + 280);
-							document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-							document.getElementById("w91").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-						}
-						else{
-							document.getElementById("w91-display").value =  "";
-							document.getElementById("w91").value = "";
-						}
-						
-					}
-				}
-					}
-				else
-					{
-					if(document.getElementById("w49")){
-						if(document.getElementById("w49").value!='')
-						{
-							if( checkData!=""){
-							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-								
-							    
-								d.setDate(d.getDate() + 280);
-								
-								document.getElementById("w69-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w69").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							
-							}
-							else{
-								document.getElementById("w69-display").value =  "";
-								document.getElementById("w69").value = "";
-							}
-						}
-						else{
-							if(d!="Invalid Date"){
-								d.setDate(d.getDate() + 280);
-								document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w91").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							}
-							else{
-								document.getElementById("w91-display").value =  "";
-								document.getElementById("w91").value = "";
-							}
-							
-						}
-					}
-					}	
-					
-					else{
-						if( checkData!=""){
-							if(d!="Invalid Date"){
-								jQuery('#mbdDate').html(Math.abs(Math.round(parseInt((today-d) / (1000 * 60 * 60 * 24)) /7)));
-								d.setDate(d.getDate() + 280);
-								document.getElementById("w75-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w75").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							}
-							else{
-								document.getElementById("w75-display").value =  "";
-								document.getElementById("w75").value = "";
-							}
-						}
-					
-						else{
-							if(d!="Invalid Date"){
-								d.setDate(d.getDate() + 280);
-								document.getElementById("w91-display").value =  ("0" + d.getDate()).slice(-2) + "-" + months[d.getMonth()+1] + "-" + d.getFullYear();
-								document.getElementById("w91").value = d.getFullYear()  + "-" +  (d.getMonth()+1) 	+ "-" + d.getDate();
-							}
-							else{
-								document.getElementById("w91-display").value =  "";
-								document.getElementById("w91").value = "";
-							}
-							
-						}
-					}
-					}
+					setValue("nextDate")=edd;
 				});
-			}
+			*/
 			
 			
 			//getting the values of the disease classification option buttons
@@ -1064,9 +859,9 @@ table.tb1 tr th, table.tb1 tr td {
 							<td><obs conceptId="1526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 									style="radio" /></td>
 						</tr>
-						<tr style="display: none">
-							<td>Treatment centre</td>
-							<td><obs conceptId="be719294-8fe8-41eb-9218-ce2c9e7ef2ba" style="location"/></td>
+						<tr>
+							<td>Health Facility</td>
+							<td><obs conceptId="943aeb93-1446-4a11-9bfa-4523ea5998fa" /></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -1192,7 +987,7 @@ table.tb1 tr th, table.tb1 tr td {
 						<tr>
 							<td>EDD</td>
 							<td><obs conceptId="5596AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-									allowFutureDates="true" id="nextDate" /></td>
+									allowFutureDates="true" id="nextDate"/></td>
 						</tr>
 						<tr>
 							<td>MBD</td>

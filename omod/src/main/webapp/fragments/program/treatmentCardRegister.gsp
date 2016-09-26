@@ -95,6 +95,7 @@
 							<td colspan="1" style="text-align: left; vertical-align: top; width: 30%; padding-left:1%">
 									<br/> <strong>Address : </strong>
 									<br/><strong> Treatment Initiation center: </strong>
+									<br/><strong> Health Facility: </strong>
 									<br/><strong>Name of DOT provider</strong>
 									<br/><strong>DOT supervisor : </strong>
 									<br/><strong>Contact of MDR-TB case : </strong>
@@ -102,7 +103,8 @@
 			                <td colspan="2" style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
 									<br/> <% if(address.address1) { %> ${ address.address1},  <%} %> <% if(address.cityVillage !='?') { %> ${address.cityVillage}, <%} %>
 										<% if(address.countyDistrict !='?') { %> ${ address.countyDistrict},  <%} %> <% if(address.stateProvince !='?') { %> ${address.stateProvince} <%} %>
-									<br/><% if(treatmentCenterVal) {%> ${ treatmentCenterVal }<% } %>
+									<br/>${systemLocation}
+									<br/><% if(healthFacility){%> ${ healthFacility } <%}%>
 									<br/> ${ dotProviderVal } 
 									<br/> ${ supervisorVal }
 									<br/> ${contactCaseVal}
@@ -465,6 +467,7 @@
 							<td colspan="1" style="text-align: left; vertical-align: top; width: 30%; padding-left:1%">
 									<br/> <strong>Address : </strong>
 									<br/><strong> Treatment Initiation center: </strong>
+									<br/><strong> Health Facility: </strong>
 									<br/><strong>Name of DOT provider</strong>
 									<br/><strong>DOT supervisor : </strong>
 									<br/><strong>Contact of MDR-TB case : </strong>
@@ -472,7 +475,8 @@
 			                <td colspan="2" style="text-align: left; vertical-align: top; width: 70%; padding-left:1%">
 									<br/> <% if(address.address1) { %> ${ address.address1},  <%} %> <% if(address.cityVillage !='?') { %> ${address.cityVillage}, <%} %>
 										<% if(address.countyDistrict !='?') { %> ${ address.countyDistrict},  <%} %> <% if(address.stateProvince !='?') { %> ${address.stateProvince} <%} %>
-									<br/><% if(treatmentCenterVal) {%> ${ treatmentCenterVal }<% } %>
+									<br/>${systemLocation}
+									<br/><% if(healthFacility){%> ${ healthFacility } <%}%>
 									<br/> ${ dotProviderVal } 
 									<br/> ${ supervisorVal }
 									<br/> ${contactCaseVal}
