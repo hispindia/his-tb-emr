@@ -221,8 +221,8 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 		obsGroupCollection.add(concept2);
 		obsGroupCollection.add(concept3);
 		try {
-			criteria.add(Restrictions.and(Restrictions.ge("obs.dateCreated", formatter.parse(startFromDate)),
-				    Restrictions.le("obs.dateCreated", formatter.parse(endFromDate))));
+			criteria.add(Restrictions.and(Restrictions.ge("obs.obsDatetime", formatter.parse(startFromDate)),
+				    Restrictions.le("obs.obsDatetime", formatter.parse(endFromDate))));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -247,8 +247,8 @@ public class HibernateKenyaEmrDAO implements KenyaEmrDAO {
 		String startFromDate = dat + " 00:00:00";
 		String endFromDate = dat + " 23:59:59";
 		try {
-			criteria.add(Restrictions.and(Restrictions.ge("obs.dateCreated", formatter.parse(startFromDate)),
-				    Restrictions.le("obs.dateCreated", formatter.parse(endFromDate))));
+			criteria.add(Restrictions.and(Restrictions.ge("obs.obsDatetime", formatter.parse(startFromDate)),
+				    Restrictions.le("obs.obsDatetime", formatter.parse(endFromDate))));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
