@@ -478,12 +478,21 @@ public class EditPatientFragmentController {
 				entryPoint = savedEntryPoint.getValueCoded();
 			}
 	
-			savedTownship = getLatestObs(patient,
+		/*	savedTownship = getLatestObs(patient,
 					Dictionary.TOWNSHIP);
 			if (savedTownship != null) {
 				township = savedTownship.getValueCoded();
+			}*/
+			List<Obs>saveTownship=Context.getObsService().getObservationsByPersonAndConcept(patient, Dictionary.getConcept(Dictionary.TOWNSHIP));
+			if(saveTownship!=null)
+			{for(Obs townshipp:saveTownship)
+			{
+				if(townshipp.getEncounter()==null)
+				{
+				township = townshipp.getValueCoded();
 			}
-			
+			}
+			}
 			savedPlaceOfBirth = getLatestObs(patient,
 					Dictionary.LOCATION_OF_BIRTH);
 			if (savedPlaceOfBirth != null) {

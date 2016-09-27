@@ -212,9 +212,15 @@ public class TreatmentCardRegisterFragmentController {
 		model.addAttribute("registrationDateVal", registrationDateVal);
 
 		String townshipVal = "";
-		Obs township = getLatestObs(patient, Dictionary.TOWNSHIP);
-		if (township != null) {
-			townshipVal = township.getValueCoded().getName().toString();
+		List<Obs>township=Context.getObsService().getObservationsByPersonAndConcept(patient, Dictionary.getConcept(Dictionary.TOWNSHIP));
+		if(township!=null)
+		{for(Obs twnShip:township)
+		{
+			if(twnShip.getEncounter()==null)
+			{
+				townshipVal = twnShip.getValueCoded().getName().toString();
+		}
+		}	
 		}
 		model.addAttribute("townshipVal", townshipVal);
        /*secondline
@@ -251,9 +257,16 @@ public class TreatmentCardRegisterFragmentController {
          * 
          */
 		String healthFacility = "";
-		Obs healthFaciltyhistry= getLatestObs(patient, Dictionary.TOWNSHIP);
-		if (healthFaciltyhistry != null) {
-			healthFacility = healthFaciltyhistry.getValueCoded().getName().toString();
+	
+		List<Obs>healthFaciltyhistry=Context.getObsService().getObservationsByPersonAndConcept(patient, Dictionary.getConcept(Dictionary.TOWNSHIP));
+		if(healthFaciltyhistry!=null)
+		{for(Obs helthFacility:healthFaciltyhistry)
+		{
+			if(helthFacility.getEncounter()!=null)
+			{
+			healthFacility = helthFacility.getValueCoded().getName().toString();
+		}
+		}	
 		}
 		model.addAttribute("healthFacility", healthFacility);
 		

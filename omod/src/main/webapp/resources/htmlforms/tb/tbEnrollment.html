@@ -31,6 +31,9 @@ table.tb1 tr th, table.tb1 tr td {
 }
 </style>
 <script type="text/javascript">
+var pgender    = "<lookup expression="patient.gender" />";
+if(pgender == 'F')
+	{
 jq(function () {
 	onLmpChange();
 	
@@ -49,7 +52,7 @@ function onLmpChange() {
 		
 		
 	}
-	document.getElementById("nextDate").value=display;
+	
 	$("#nextDate").text(display);
      
 	
@@ -92,6 +95,7 @@ function calculateEdd(lmp) {
 	return (eddDay &lt;= 9 ? '0' + eddDay : eddDay) + '-' + (eddMonth &lt;= 9 ? months[eddMonth] : months[eddMonth]) + '-' +
 			eddYear;
 }
+	}
 </script>
 <script type="text/javascript">
 		jq(document).ready(function(){
@@ -99,10 +103,11 @@ function calculateEdd(lmp) {
 			// show fields with data 
 		
 			if( checkData!="" &amp;&amp; document.getElementById("w10").value==null )
-			{
+			{ 
 				fieldIndex = 69;
 			}
 			else{
+				
 				
 				fieldIndex = 10;
 			}
@@ -359,8 +364,8 @@ function calculateEdd(lmp) {
 				
 			
 			}*/
-				
-				var da = new Date(getValue('curDate.value'));
+			if(pgender == 'F')
+			{	var da = new Date(getValue('curDate.value'));
 				da.setDate(da.getDate() + 280);
 				var edd = new Date(da);
 				var today = new Date(getValue('encounter-date.value'));
@@ -375,7 +380,7 @@ function calculateEdd(lmp) {
 					jq('#infantTable :input').prop('disabled', true);
 					
 				}
-			
+			}
 	/*			jq("#curDate :input").change(function() {
 					var months = {1:"Jan", 2:"Feb",3:"Mar", 4:"Apr", 5:"May",6:"Jun", 7:"Jul",8:"Aug", 9:"Sep",10:"Oct",11:"Nov",12:"Dec"};
 					var d = new Date(getValue('curDate.value'));
