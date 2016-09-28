@@ -19,8 +19,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -308,6 +310,9 @@ public class RegimenUtilFragmentController {
 					drugOrderProcessed.setRegimenName("6(Amk Z Lfx Eto Cs PAS)/14(Lfx Eto Cs Z PAS)");	
 				}
 				}
+				else{
+					drugOrderProcessed.setRegimenName("");		
+				}
 				kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
 				}
 			   }
@@ -349,6 +354,12 @@ public class RegimenUtilFragmentController {
 				}
 				else if(changeType == RegimenChangeType.Change){
 				encounter=createEncounterForBaseLine(patient);
+				Set<String> regimenList=new LinkedHashSet<String>();
+				Set<DrugOrder> baseLineList1=baseline.getDrugOrders();
+				List<String> baseLineList2=new ArrayList<String>();
+				for(DrugOrder drugOrder:baseline.getDrugOrders()){
+					baseLineList2.add(drugOrder.getConcept().getName().getName());	
+				}
 				if (srNo != null) {
 					for (String srn : srNo) {
 				Concept drugConcept=null;
@@ -380,6 +391,7 @@ public class RegimenUtilFragmentController {
 
 				if(drugConceptId!=null){
 					 drugConcept=Context.getConceptService().getConcept(drugConceptId);
+					 regimenList.add(drugConcept.getName().getName());
 				}
 				
 				List<ConceptAnswer> conceptAnswers=kenyaEmrService.getConceptAnswerByAnsweConcept(drugConcept);
@@ -426,6 +438,9 @@ public class RegimenUtilFragmentController {
 						else if(regimenNo.equals("Standard Regimen 2")){
 							drugOrderProcessed.setRegimenName("6(Amk Z Lfx Eto Cs PAS)/14(Lfx Eto Cs Z PAS)");	
 						}
+						}
+						else{
+							drugOrderProcessed.setRegimenName("");		
 						}
 						kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
 						}
@@ -476,6 +491,9 @@ public class RegimenUtilFragmentController {
 								drugOrderProcessed.setRegimenName("6(Amk Z Lfx Eto Cs PAS)/14(Lfx Eto Cs Z PAS)");	
 							}
 							}
+							else{
+								drugOrderProcessed.setRegimenName("");		
+							}
 							kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
 						}
 					}
@@ -493,17 +511,12 @@ public class RegimenUtilFragmentController {
 					 }
 				   }
 				}
-								
-				List<String> stringg=new ArrayList<String>();
-				for(DrugOrder drugOrder:baseline.getDrugOrders()){
-					stringg.add(drugOrder.getConcept().getName().getName());	
-				}
 				
 				if(drugConcept!=null){
-				if(stringg.contains(drugConcept.getName().getName())){
+				if(baseLineList2.contains(drugConcept.getName().getName())){
+					
 				}
 				else{
-				encounter=createEncounterForBaseLine(patient);
 				DrugOrder drugOder = new DrugOrder();
 				drugOder.setOrderType(Context.getOrderService().getOrderType(OpenmrsConstants.ORDERTYPE_DRUG));
 				drugOder.setEncounter(encounter);
@@ -540,11 +553,36 @@ public class RegimenUtilFragmentController {
 					drugOrderProcessed.setRegimenName("6(Amk Z Lfx Eto Cs PAS)/14(Lfx Eto Cs Z PAS)");	
 				}
 				}
+				else{
+					drugOrderProcessed.setRegimenName("");		
+				}
 				kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
 				}
 				}
 			  }
 			 }
+				
+				//remove baseLine Drug
+				for(DrugOrder drugOrder:baseLineList1){
+                if(regimenList.contains(drugOrder.getConcept().getName().getName())){
+					
+				}
+                else{
+                	DrugOrderProcessed dop=kenyaEmrService.getLastDrugOrderProcessedNotDiscontinued(drugOrder);
+					if(dop!=null){
+						dop.setDiscontinuedDate(new Date());
+						kenyaEmrService.saveDrugOrderProcessed(dop);
+						drugOrder.setDiscontinued(true);
+						drugOrder.setDiscontinuedDate(date);
+						drugOrder.setDiscontinuedBy(Context.getAuthenticatedUser());
+						drugOrder.setDiscontinuedReason(changeReason);
+						drugOrder.setDiscontinuedReasonNonCoded(changeReasonNonCoded);
+						Context.getOrderService().saveOrder(drugOrder);		
+					}
+                  }
+				}
+				//
+				
 			}
 			else if(changeType == RegimenChangeType.Stop){
 				OrderService os = Context.getOrderService();

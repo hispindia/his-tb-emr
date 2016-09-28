@@ -48,135 +48,32 @@
 </tbody>
 </table>
 
+<fieldset  data-ng-repeat="choice in choicess">
 <table>
 <tbody>
 <tr>
-<td class="colA" style="text-align:center"><input type="text" id="drugKey1" name="drugKey1"></td>
-<td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id="strength1"  name="strength1"><option value="" />${ strengthOptions }</select></td>
-<td class="colC" style="text-align:center"><input type="text" id="noOfTablet1" name="noOfTablet1"></td>
-<td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="type1" name="type1">${typeOptions}</select></td>
-<td class="colE" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="frequncy1" name="frequncy1" >${ frequencyOptions }</select></td>
+<td class="colA" style="text-align:center"><input type="text" ng-model="drugKey" id={{choice.drugKey}} name={{choice.drugKey}} placeholder="search box" uib-typeahead="drug as drug.drugName for drug in myDrug | filter : drugKey" typeahead-on-select="drugSearch(drugKey,choice);"></td>
+<td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id={{choice.strength}}  name={{choice.strength}}><option value="" />${ strengthOptions }</select></td>
+<td class="colC" style="text-align:center"><input type="text" ng-model="noOfTablet" id={{choice.noOfTablet}} name={{choice.noOfTablet}}></td>
+<td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" ng-model="type" id={{choice.type}} name={{choice.type}}>${typeOptions}</select></td>
+<td class="colE" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" ng-model="frequncy" id={{choice.frequncy}} name={{choice.frequncy}} >${ frequencyOptions }</select></td>
 <td class="colF" style="text-align:center">
-<select id="route1" name="route1" style='width: 155px;height: 30px;'>
+<select ng-model="route" id={{choice.route}} name={{choice.route}} style='width: 155px;height: 30px;'>
 <% routeConAnss.each { routeConAns -> %>
 <option value="${routeConAns.answerConcept.conceptId}">${routeConAns.answerConcept.name}</option>
 <% } %>
 </select>
 </td>
-<td class="colG" style="text-align:center"><input type="text" id="duration1" name="duration1"></td>
-<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForContinueRegimenSearch('Am');" /></td>
+<td class="colG" style="text-align:center"><input type="text" ng-model="duration" id={{choice.duration}} name={{choice.duration}}></td>
+<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForRegimenSearch(choice);" /></td>
 <td class="colI" style="text-align:center"></td>
-<td class="colJ" style="text-align:center"></td>
-<td class="colK" style="text-align:center"><input type="hidden" id="srNumber1" name="srNo" value="1"></td>
-<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept1" name="drugConcept1"></td>
-</tr>
-
-<tr>
-<td class="colA" style="text-align:center"><input type="text" id="drugKey2" name="drugKey2"></td>
-<td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id="strength2"  name="strength2"><option value="" />${ strengthOptions }</select></td>
-<td class="colC" style="text-align:center"><input type="text" id="noOfTablet2" name="noOfTablet2"></td>
-<td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="type2" name="type2">${typeOptions}</select></td>
-<td class="colE" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="frequncy2" name="frequncy2" >${ frequencyOptions }</select></td>
-<td class="colF" style="text-align:center">
-<select id="route2" name="route2" style='width: 155px;height: 30px;'>
-<% routeConAnss.each { routeConAns -> %>
-<option value="${routeConAns.answerConcept.conceptId}">${routeConAns.answerConcept.name}</option>
-<% } %>
-</select>
-</td>
-<td class="colG" style="text-align:center"><input type="text" id="duration2" name="duration2"></td>
-<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForContinueRegimenSearch('Z');" /></td>
-<td class="colI" style="text-align:center"></td>
-<td class="colJ" style="text-align:center"></td>
-<td class="colK" style="text-align:center"><input type="hidden" id="srNumber2" name="srNo" value="2"></td>
-<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept2" name="drugConcept2"></td>
-</tr>
-
-<tr>
-<td class="colA" style="text-align:center"><input type="text" id="drugKey3" name="drugKey3"></td>
-<td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id="strength3"  name="strength3"><option value="" />${ strengthOptions }</select></td>
-<td class="colC" style="text-align:center"><input type="text" id="noOfTablet3" name="noOfTablet3"></td>
-<td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="type3" name="type3">${typeOptions}</select></td>
-<td class="colE" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="frequncy3" name="frequncy3" >${ frequencyOptions }</select></td>
-<td class="colF" style="text-align:center">
-<select id="route3" name="route3" style='width: 155px;height: 30px;'>
-<% routeConAnss.each { routeConAns -> %>
-<option value="${routeConAns.answerConcept.conceptId}">${routeConAns.answerConcept.name}</option>
-<% } %>
-</select>
-</td>
-<td class="colG" style="text-align:center"><input type="text" id="duration3" name="duration3"></td>
-<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForContinueRegimenSearch('Lfx');" /></td>
-<td class="colI" style="text-align:center"></td>
-<td class="colJ" style="text-align:center"></td>
-<td class="colK" style="text-align:center"><input type="hidden" id="srNumber3" name="srNo" value="3"></td>
-<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept3" name="drugConcept3"></td>
-</tr>
-
-<tr>
-<td class="colA" style="text-align:center"><input type="text" id="drugKey4" name="drugKey4"></td>
-<td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id="strength4"  name="strength4"><option value="" />${ strengthOptions }</select></td>
-<td class="colC" style="text-align:center"><input type="text" id="noOfTablet4" name="noOfTablet4"></td>
-<td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="type4" name="type4">${typeOptions}</select></td>
-<td class="colE" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="frequncy4" name="frequncy4" >${ frequencyOptions }</select></td>
-<td class="colF" style="text-align:center">
-<select id="route4" name="route4" style='width: 155px;height: 30px;'>
-<% routeConAnss.each { routeConAns -> %>
-<option value="${routeConAns.answerConcept.conceptId}">${routeConAns.answerConcept.name}</option>
-<% } %>
-</select>
-</td>
-<td class="colG" style="text-align:center"><input type="text" id="duration4" name="duration4"></td>
-<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForContinueRegimenSearch('Eto');" /></td>
-<td class="colI" style="text-align:center"></td>
-<td class="colJ" style="text-align:center"></td>
-<td class="colK" style="text-align:center"><input type="hidden" id="srNumber4" name="srNo" value="4"></td>
-<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept4" name="drugConcept4"></td>
-</tr>
-
-<tr>
-<td class="colA" style="text-align:center"><input type="text" id="drugKey5" name="drugKey5"></td>
-<td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id="strength5"  name="strength5"><option value="" />${ strengthOptions }</select></td>
-<td class="colC" style="text-align:center"><input type="text" id="noOfTablet5" name="noOfTablet5"></td>
-<td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" ng-model="type" id="type5" name="type5">${typeOptions}</select></td>
-<td class="colE" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" ng-model="frequncy" id="frequncy5" name="frequncy5" >${ frequencyOptions }</select></td>
-<td class="colF" style="text-align:center">
-<select id="route5" name="route5" style='width: 155px;height: 30px;'>
-<% routeConAnss.each { routeConAns -> %>
-<option value="${routeConAns.answerConcept.conceptId}">${routeConAns.answerConcept.name}</option>
-<% } %>
-</select>
-</td>
-<td class="colG" style="text-align:center"><input type="text" id="duration5" name="duration5"></td>
-<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForContinueRegimenSearch('Cs');" /></td>
-<td class="colI" style="text-align:center"></td>
-<td class="colJ" style="text-align:center"></td>
-<td class="colK" style="text-align:center"><input type="hidden" id="srNumber5" name="srNo" value="5"></td>
-<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept5" name="drugConcept5"></td>
-</tr>
-
-<tr>
-<td class="colA" style="text-align:center"><input type="text" id="drugKey6" name="drugKey6"></td>
-<td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id="strength6"  name="strength6"><option value="" />${ strengthOptions }</select></td>
-<td class="colC" style="text-align:center"><input type="text" id="noOfTablet6" name="noOfTablet6"></td>
-<td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="type6" name="type6">${typeOptions}</select></td>
-<td class="colE" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" id="frequncy6" name="frequncy6" >${ frequencyOptions }</select></td>
-<td class="colF" style="text-align:center">
-<select id="route6" name="route6" style='width: 155px;height: 30px;'>
-<% routeConAnss.each { routeConAns -> %>
-<option value="${routeConAns.answerConcept.conceptId}">${routeConAns.answerConcept.name}</option>
-<% } %>
-</select>
-</td>
-<td class="colG" style="text-align:center"><input type="text" id="duration6" name="duration6"></td>
-<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForContinueRegimenSearch('Sodium PAS');" /></td>
-<td class="colI" style="text-align:center"></td>
-<td class="colJ" style="text-align:center"></td>
-<td class="colK" style="text-align:center"><input type="hidden" id="srNumber6" name="srNo" value="6"></td>
-<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept6" name="drugConcept6"></td>
+<td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" ng-click="removeChoicee(choice)" /></td>
+<td class="colK" style="text-align:center"><input type="hidden" id={{choice.srNumber}} name="srNo" value={{choice.srNo}}></td>
+<td class="colL" style="text-align:center"><input type="hidden" id={{choice.drugConcept}} name={{choice.drugConcept}} value={{choice.drugConcept}}></td>
 </tr>
 </tbody>
 </table>
+</fieldset>
 
 <fieldset  data-ng-repeat="choice in choices">
 <table>
@@ -195,7 +92,7 @@
 </select>
 </td>
 <td class="colG" style="text-align:center"><input type="text" ng-model="duration" id={{choice.duration}} name={{choice.duration}}></td>
-<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForRegimenSearch(drugKey);" /></td>
+<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForRegimenSearchh(drugKey);" /></td>
 <td class="colI" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="add" name="add" value="Add" ng-click="addNewChoice()"/></td>
 <td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" ng-click="removeChoice(choice)" /></td>
 <td class="colK" style="text-align:center"><input type="hidden" id={{choice.srNumber}} name="srNo" value={{choice.srNo}}></td>
@@ -259,6 +156,9 @@ tb_show("Art Regimen",url,false);
 function regimenSelection(value){
 
 if(value=='regimen1'){
+//ui.reloadPage();
+//jQuery('#abcd').load();
+//jQuery("#abcd").load(location.href+" #abcd>*","");
 jQuery('#drugKey1').val('${regimenDetails1.drugName}');
 jQuery('#strength1').val('${regimenDetails1.strength}');
 jQuery('#type1').val('${regimenDetails1.formulation}');
@@ -304,6 +204,9 @@ jQuery('#drugConcept6').val("");
 jQuery('#regimenNo').val("Standard Regimen 1");
 }
 else{
+//ui.reloadPage();
+//jQuery('#abcd').load();
+//jQuery("#abcd").load(location.href+" #abcd>*","");
 jQuery('#drugKey1').val('${regimenDetails1.drugName}');
 jQuery('#strength1').val('${regimenDetails1.strength}');
 jQuery('#type1').val('${regimenDetails1.formulation}');

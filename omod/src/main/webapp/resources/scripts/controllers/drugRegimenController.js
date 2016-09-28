@@ -35,6 +35,10 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	    }*/
 	}
 	
+	$scope.removeChoicee = function(index) {
+	    $scope.choices.splice(index,1);
+	}
+	
 	$scope.drugSearch = function(drugKey,choice){
 	//var drugKey="drugKey"+count.toString();
 	//$scope.strength = $scope[drugKey].strength;
@@ -49,7 +53,48 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	$('#drugConcept'+srNo).val(drugKey.drugConcept);
 	}
 	
-	$scope.artDrugInfoForRegimenSearch=function(drugKey){
+	$scope.artDrugInfoForRegimenSearch=function(choice){
+		var drugName=$('#drugKey'+choice.srNo).val();
+		jQuery('#drugInfoDiv').empty();
+		jQuery.ajax(ui.fragmentActionLink("kenyaemr", "field/drugInfo", "drugDetails"), { data: { drugNames: drugName }, dataType: 'json'
+		}).done(function(data) {
+        var htmlText =  "<table style='width: 100%'>"
+        +"<tr>"
+        +"<th>"
+        +"Drug Code&nbsp;"
+        +"</th>"
+        +"<th>"
+        +'Adverse Effect&nbsp;'
+        +"</th>"
+        +"</tr>"
+
+        $.each(data, function(i, item){
+            $.each(this,function(j) {
+        
+            	htmlText=htmlText
+            	 +"<tr>"
+            	 +"<td>"
+                 +this.drugCode
+                 +"</td>"
+                 +"<td>"
+                 +this.adverseEffect
+                 +"</td>"
+                 +"</tr>"
+            });
+        });
+		htmlText=htmlText
+		 +"</table>"
+       var newElement = document.createElement('div');
+      newElement.setAttribute("id", "drugDiv"); 
+      newElement.innerHTML = htmlText;
+      var fieldsArea = document.getElementById('drugInfoDiv');
+      fieldsArea.appendChild(newElement);
+      var url = "#TB_inline?height=500&width=750&inlineId=drugDiv";
+      tb_show("Drug Info",url,false);
+      });
+	}
+	
+	$scope.artDrugInfoForRegimenSearchh=function(drugKey){
 		var drugName=drugKey.drugName;
 		jQuery('#drugInfoDiv').empty();
 		jQuery.ajax(ui.fragmentActionLink("kenyaemr", "field/drugInfo", "drugDetails"), { data: { drugNames: drugName }, dataType: 'json'
@@ -141,9 +186,60 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	    		$scope.drugKey4 = data.drugConceptName4;
 	    		$scope.drugKey5 = data.drugConceptName5;
 	    		$scope.drugKey6 = data.drugConceptName6;
+	    		
+	    		$scope.choicess=[];
+	    	    
+	    		for(var i=1;i<7;i++){
+	    		    $scope.choicess.push({srNo:i,srNumber:'srNumber'+i,id:'choice'+i,drugKey:'drugKey'+i,drugConcept:'drugConcept'+i,strength:'strength'+i,noOfTablet:'noOfTablet'+i,route:'route'+i,type: 'type'+i,frequncy: 'frequncy'+i,duration:'duration'+i});
+	    		}
 			});
 	    	
 	     });
 	 }
 
 }]);
+
+
+
+
+
+function drugInfo(count){
+	var drugName=$('#drugKey'+count).val();
+	jQuery('#drugInfoDiv').empty();
+	jQuery.ajax(ui.fragmentActionLink("kenyaemr", "field/drugInfo", "drugDetails"), { data: { drugNames: drugName }, dataType: 'json'
+	}).done(function(data) {
+    var htmlText =  "<table style='width: 100%'>"
+    +"<tr>"
+    +"<th>"
+    +"Drug Code&nbsp;"
+    +"</th>"
+    +"<th>"
+    +'Adverse Effect&nbsp;'
+    +"</th>"
+    +"</tr>"
+
+    $.each(data, function(i, item){
+        $.each(this,function(j) {
+    
+        	htmlText=htmlText
+        	 +"<tr>"
+        	 +"<td>"
+             +this.drugCode
+             +"</td>"
+             +"<td>"
+             +this.adverseEffect
+             +"</td>"
+             +"</tr>"
+        });
+    });
+	htmlText=htmlText
+	 +"</table>"
+   var newElement = document.createElement('div');
+  newElement.setAttribute("id", "drugDiv"); 
+  newElement.innerHTML = htmlText;
+  var fieldsArea = document.getElementById('drugInfoDiv');
+  fieldsArea.appendChild(newElement);
+  var url = "#TB_inline?height=500&width=750&inlineId=drugDiv";
+  tb_show("Drug Info",url,false);
+  });
+}
