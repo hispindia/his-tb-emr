@@ -115,6 +115,7 @@ public class PatientSummaryFragmentController {
 		 */
 		String drugAllergiesVal = "";
 		String drugAllergiesName = "";
+		String otherReasonVal = "";
 
 		Obs drugAllergies = getLatestObs(patient,
 				Dictionary.DRUG_ALLERGY_TB_ENROLL_FORM);
@@ -139,9 +140,15 @@ public class PatientSummaryFragmentController {
 				 
 			}
 		}
-
+		
+		Obs otherRegion = getLatestObs(patient, Dictionary.OTHER_REGION);
+		if(otherRegion!=null){
+		otherReasonVal=otherRegion.getValueText();
+		}
+		
 		model.addAttribute("drugAllergiesVal", drugAllergiesVal);
 		model.addAttribute("drugAllergiesName", drugAllergiesName);
+		model.addAttribute("otherReasonVal",otherReasonVal);
 
 		String listAllRiskFactor = "";
 		String comorbitidyList = "";

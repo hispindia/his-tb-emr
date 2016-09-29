@@ -44,7 +44,7 @@
 		<% if (drugAllergiesVal) { %>
 			<% if (drugAllergiesVal=="Yes") { %>
 			<br/>Drug Allergy & name : <strong>${drugAllergiesVal} 
-			(${drugAllergiesName})
+			(${drugAllergiesName}  ${otherReasonVal})
 			<% } else {%>
 				<br/>Drug Allergy  : <strong>${drugAllergiesVal} 
 			</strong>
