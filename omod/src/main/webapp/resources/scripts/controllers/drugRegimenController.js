@@ -17,6 +17,7 @@ $scope.drugSearch = function(drugKey){
 }]);
 */
 var selectedSerialNoArr = new Array();
+var contArr = new Array();
 
 kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	
@@ -266,6 +267,7 @@ function removee(count){
 	}
 
 function validateRegimenFields(){
+if(actionName=='start-new-regimen' || actionName=='change-regimen' || actionName=='restart-regimen'){
 for (var i = 0; i < selectedSerialNoArr.length; i++){
 	var ssn=selectedSerialNoArr[i];
 	var noOfTablet=jQuery('#noOfTablet'+ssn).val();
@@ -278,6 +280,20 @@ for (var i = 0; i < selectedSerialNoArr.length; i++){
 	alert("Please Enter Duration");
 	return false;
 	}
+  }
 }
+
+if(actionName=='continue-regimen'){
+if(contArr.length>0){
+for (var i = 0; i < contArr.length; i++){
+	var durationnn=jQuery('#durationnn'+contArr[i]).val();
+	if(durationnn==""){
+	alert("Please Enter Duration");
+	return false;
+	}
+  }
+ }
+}
+
 return true;
 }

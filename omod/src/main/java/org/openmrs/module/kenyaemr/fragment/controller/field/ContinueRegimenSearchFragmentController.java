@@ -61,14 +61,18 @@ public class ContinueRegimenSearchFragmentController {
 		RegimenOrder baseline = lastChange != null ? lastChange.getStarted() : null;
 		List<DrugOrder> continueRegimen = new ArrayList<DrugOrder>(baseline.getDrugOrders());
 		List<DrugOrderProcessed> drugOrderProcessed = new ArrayList<DrugOrderProcessed>();
+		String[] drugOrderProcessedArr = new String[continueRegimen.size()];
+		int countt=0;
 		for(DrugOrder continueRegim:continueRegimen){
 			DrugOrderProcessed drugOrderProcess=kenyaEmrService.getLastDrugOrderProcessed(continueRegim);
 			if(drugOrderProcess!=null){
 			drugOrderProcessed.add(drugOrderProcess);
+			drugOrderProcessedArr[countt++]=drugOrderProcess.getDrugOrder().getConcept().getName().getName();
 			}
 		}
 		//model.addAttribute("continueRegimen", continueRegimen);
 		model.addAttribute("drugOrderProcesseds", drugOrderProcessed);
+		model.addAttribute("drugOrderProcessedArr",drugOrderProcessedArr);
 		model.addAttribute("count", 1);
 	}
 }

@@ -407,7 +407,11 @@ selectedSerialNoArr.push(6);
 }
 
 jQuery(document).ready(function(){
+//jQuery('#continueRegimenSearch').remove();
 jQuery('#regimenNo').val("${regimenNo}");
+for (var i = 1; i <= ${drugOrderProcesseds.size}; i++){
+selectedSerialNoArr.push(i);
+}
 });
 </script>
 

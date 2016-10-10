@@ -93,19 +93,19 @@
 
 			<div id="regimen-action-buttons" style="text-align: center">
 			<% if (allowNew) { %>
-			${ ui.includeFragment("kenyaui", "widget/button", [ iconProvider: "kenyaui", icon: "buttons/regimen_start.png", label: "Start", extra: "a new regimen", onClick: "choseAction('start-new-regimen')" ]) }
+			${ ui.includeFragment("kenyaui", "widget/button", [ iconProvider: "kenyaui", icon: "buttons/regimen_start.png", label: "Start", extra: "a new regimen", onClick: "updateAction('start-new-regimen');choseAction('start-new-regimen')" ]) }
 			<% } %>
 
 			<% if (allowChange) { %>
-			${ ui.includeFragment("kenyaui", "widget/button", [ iconProvider: "kenyaui", icon: "buttons/regimen_stop.png", label: "Continue", extra: "the current regimen", onClick: "choseAction('continue-regimen')" ]) }
+			${ ui.includeFragment("kenyaui", "widget/button", [ iconProvider: "kenyaui", icon: "buttons/regimen_stop.png", label: "Continue", extra: "the current regimen", onClick: "updateAction('continue-regimen');choseAction('continue-regimen')" ]) }
 			
-			${ ui.includeFragment("kenyaui", "widget/button", [ iconProvider: "kenyaui", icon: "buttons/regimen_change.png", label: "Change", extra: "the current regimen", onClick: "choseAction('change-regimen')" ]) }
+			${ ui.includeFragment("kenyaui", "widget/button", [ iconProvider: "kenyaui", icon: "buttons/regimen_change.png", label: "Change", extra: "the current regimen", onClick: "updateAction('change-regimen');choseAction('change-regimen')" ]) }
 			
 			${ ui.includeFragment("kenyaui", "widget/button", [ iconProvider: "kenyaui", icon: "buttons/regimen_stop.png", label: "Stop", extra: "the current regimen", onClick: "choseAction('stop-regimen')" ]) }
 			<% } %>
 
 			<% if (allowRestart) { %>
-			${ ui.includeFragment("kenyaui", "widget/button", [ iconProvider: "kenyaui", icon: "buttons/regimen_restart.png", label: "Restart", extra: "a new regimen", onClick: "choseAction('restart-regimen')" ]) }
+			${ ui.includeFragment("kenyaui", "widget/button", [ iconProvider: "kenyaui", icon: "buttons/regimen_restart.png", label: "Restart", extra: "a new regimen", onClick: "updateAction('restart-regimen');choseAction('restart-regimen')" ]) }
 			<% } %>
 
 			<% if (allowUndo) { %>
@@ -293,5 +293,8 @@
 </div>
 
 <script type="text/javascript">
-
+var actionName="";
+function updateAction(action){
+actionName=action;
+}
 </script>

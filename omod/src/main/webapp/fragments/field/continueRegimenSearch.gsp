@@ -32,7 +32,7 @@
 <td class="colD" style="text-align:center"><input type="text" id="type${count}" name="type${count}" value="${drugOrderProcessed.drugOrder.units}" disabled></td>
 <td class="colE" style="text-align:center"><input type="text" id="frequncy${count}" name="frequncy${count}" value="${drugOrderProcessed.drugOrder.frequency}" disabled></td>
 <td class="colF" style="text-align:center"><input type="text" id="route${count}" name="route${count}" value="${drugOrderProcessed.route.name}" disabled></td>
-<td class="colG" style="text-align:center"><input type="text" id="durationn${drugOrderProcessed.drugOrder.concept.name}" name="durationn${drugOrderProcessed.drugOrder.concept.name}"></td>
+<td class="colG" style="text-align:center"><input type="text" id="durationnn${drugOrderProcessed.drugOrder.concept.name}" name="durationnn${drugOrderProcessed.drugOrder.concept.name}"></td>
 <td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForContinueRegimenSearch('${drugOrderProcessed.drugOrder.concept.name}');" /></td>
 <td class="colI" style="text-align:center"></td>
 <td class="colJ" style="text-align:center"></td>
@@ -85,6 +85,13 @@ fieldsArea.appendChild(newElement);
 var url = "#TB_inline?height=500&width=1110&inlineId=artRegimenDivAdult";
 tb_show("Art Regimen",url,false);
 }
+
+jQuery(document).ready(function(){
+//jQuery('#changeRegimenSearch').remove();
+var lenth="${drugOrderProcessedArr}".length;
+var dopa="${drugOrderProcessedArr}".substring(1,lenth-1).split(", ");
+contArr=dopa;
+});
 </script>
 
 <style type="text/css">

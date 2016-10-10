@@ -40,6 +40,7 @@ import org.openmrs.User;
 import org.openmrs.Visit;
 import org.openmrs.api.OrderService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.module.kenyaemr.metadata.CommonMetadata._EncounterType;
 import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
@@ -152,8 +153,8 @@ public class RegimenUtilFragmentController {
 			require(errors, "changeDate");
 
 			// Reason is only required for stopping or changing/
-			/*
-			if (changeType == RegimenChangeType.Change || changeType == RegimenChangeType.Switch || changeType == RegimenChangeType.Substitute) {
+			
+			if (changeType == RegimenChangeType.Change || changeType == RegimenChangeType.Stop) {
 				require(errors, "changeReason");
 
 				if (changeReason != null) {
@@ -165,6 +166,7 @@ public class RegimenUtilFragmentController {
 				}
 			}
 
+			/*
 			if (category != null && changeDate != null) {
 				// Get patient regimen history
 				Concept masterSet = regimenManager.getMasterSetConcept(category);
@@ -319,6 +321,7 @@ public class RegimenUtilFragmentController {
 			}
 			else {
 				if (changeType == RegimenChangeType.Continue) {
+					encounter=createEncounterForBaseLine(patient);
 					List<DrugOrder> continu = new ArrayList<DrugOrder>(baseline.getDrugOrders());	
 					for (DrugOrder drugOrder : continu){
 						    DrugOrderProcessed dop=new DrugOrderProcessed();
@@ -334,15 +337,26 @@ public class RegimenUtilFragmentController {
 						    		dop=drugOrderProcessCompletd;
 						    	}
 						    }
-							DrugOrderProcessed drugOrderProcessed=new DrugOrderProcessed();
-							drugOrderProcessed.setDrugOrder(dop.getDrugOrder());
+							
+							DrugOrder drugOder = new DrugOrder();
+							drugOder.setOrderType(Context.getOrderService().getOrderType(OpenmrsConstants.ORDERTYPE_DRUG));
+							drugOder.setEncounter(encounter);
+							drugOder.setPatient(patient);
+							drugOder.setStartDate(date);
+							drugOder.setConcept(drugOrder.getConcept());
+							drugOder.setUnits(drugOrder.getUnits());
+							drugOder.setFrequency(drugOrder.getFrequency());
+							Order order=Context.getOrderService().saveOrder(drugOder);
+							
+						    DrugOrderProcessed drugOrderProcessed=new DrugOrderProcessed();
+							drugOrderProcessed.setDrugOrder(drugOder);
 							drugOrderProcessed.setPatient(patient);
 							drugOrderProcessed.setCreatedDate(new Date());
 							drugOrderProcessed.setProcessedStatus(false);
 							drugOrderProcessed.setDose(dop.getDose());
 							drugOrderProcessed.setNoOfTablet(dop.getNoOfTablet());
 							drugOrderProcessed.setRoute(dop.getRoute());
-							Integer durationn=Integer.parseInt(request.getParameter("durationn"+drugOrder.getConcept().getName()));
+							Integer durationn=Integer.parseInt(request.getParameter("durationnn"+drugOrder.getConcept().getName()));
 							drugOrderProcessed.setDurationPreProcess(durationn);
 							drugOrderProcessed.setRegimenConcept(dop.getRegimenConcept());
 							drugOrderProcessed.setRegimenChangeType(changeType.name());
@@ -350,6 +364,11 @@ public class RegimenUtilFragmentController {
 							drugOrderProcessed.setRegimenNo(dop.getRegimenNo());
 							drugOrderProcessed.setRegimenName(dop.getRegimenName());
 							kenyaEmrService.saveDrugOrderProcessed(drugOrderProcessed);
+							
+							drugOrder.setDiscontinued(true);
+							drugOrder.setDiscontinuedDate(date);
+							drugOrder.setDiscontinuedBy(Context.getAuthenticatedUser());
+							Context.getOrderService().saveOrder(drugOrder);	
 					}	
 				}
 				else if(changeType == RegimenChangeType.Change){
