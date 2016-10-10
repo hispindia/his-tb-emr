@@ -1,12 +1,12 @@
 <%
 	ui.includeJavascript("kenyaemr", "controllers/drugRegimenController.js")
 	
-	def strengths = ["150/75/400/275 mg","150/75/275 mg","60/30/150 mg","500/125 mg","150/75 mg","60/60 mg","600 mg","500 mg","400 mg","300 mg","250 mg",
-	                 "100 mg","50 mg","100 g jar","4 g sachets","500/500 mg Vial","1 g vial"]
+	def strengths = ["","150/75/400/275 mg","150/75/275 mg","60/30/150 mg","500/125 mg","150/75 mg","60/60 mg","600 mg","500 mg","400 mg","300 mg","250 mg",
+	                 "100 mg","50 mg","100 g jar","4 g sachets","500/500 mg vial","1 g vial"]
 	                 
-	def types = ["tab","ml","vial","sachet","scoop"]
+	def types = ["","tab","ml","vial","sachet","scoop"]
 	
-	def frequencys = ["Once daily","Twice daily","Three times daily","Four times daily","Early morning","Night time","3 times per week","6 times per week","prn","stat"]
+	def frequencys = ["","Once daily","Twice daily","Three times daily","Four times daily","Early morning","Night time","3 times per week","6 times per week","prn","stat"]
 	
 	def strengthOptions = strengths.collect( { """<option value="${ it }">${ it }</option>""" } ).join()
 	
@@ -48,32 +48,33 @@
 </tbody>
 </table>
 
-<fieldset  data-ng-repeat="choice in choicess">
 <table>
 <tbody>
-<tr>
-<td class="colA" style="text-align:center"><input type="text" ng-model="drugKey" id={{choice.drugKey}} name={{choice.drugKey}} placeholder="search box" uib-typeahead="drug as drug.drugName for drug in myDrug | filter : drugKey" typeahead-on-select="drugSearch(drugKey,choice);"></td>
-<td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id={{choice.strength}}  name={{choice.strength}}><option value="" />${ strengthOptions }</select></td>
-<td class="colC" style="text-align:center"><input type="text" ng-model="noOfTablet" id={{choice.noOfTablet}} name={{choice.noOfTablet}}></td>
-<td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" ng-model="type" id={{choice.type}} name={{choice.type}}>${typeOptions}</select></td>
-<td class="colE" style="text-align:center"><select style='width: 155px;height: 30px;' type="text" ng-model="frequncy" id={{choice.frequncy}} name={{choice.frequncy}} >${ frequencyOptions }</select></td>
+<% drugOrderProcessedd.each { drugOrderProcessed -> %>
+<tr id="row${count}">
+<td class="colA" style="text-align:center"><input type="text" id="drugKey${count}" name="drugKey${count}"></td>
+<td class="colB" style="text-align:center"><select style='width: 155px;height: 30px;' id="strength${count}"  name="strength${count}">${ strengthOptions }</select></td>
+<td class="colC" style="text-align:center"><input type="text" id="noOfTablet${count}" name="noOfTablet${count}"></td>
+<td class="colD" style="text-align:center"><select style='width: 155px;height: 30px;' id="type${count}"  name="type${count}">${typeOptions}</select></td>
+<td class="colE" style="text-align:center"><select style='width: 155px;height: 30px;' id="frequncy${count}"  name="frequncy${count}">${frequencyOptions}</select></td>
 <td class="colF" style="text-align:center">
-<select ng-model="route" id={{choice.route}} name={{choice.route}} style='width: 155px;height: 30px;'>
+<select id="route${count}" name="route${count}" style='width: 155px;height: 30px;'>
+<option value="" > </option>
 <% routeConAnss.each { routeConAns -> %>
 <option value="${routeConAns.answerConcept.conceptId}">${routeConAns.answerConcept.name}</option>
 <% } %>
 </select>
 </td>
-<td class="colG" style="text-align:center"><input type="text" ng-model="duration" id={{choice.duration}} name={{choice.duration}}></td>
-<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForRegimenSearch(choice);" /></td>
+<td class="colG" style="text-align:center"><input type="text" id="durationn${count}" name="durationn${count}"></td>
+<td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" onClick="drugInfo('${count}');"/></td>
 <td class="colI" style="text-align:center"></td>
-<td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" ng-click="removeChoicee(choice)" /></td>
-<td class="colK" style="text-align:center"><input type="hidden" id={{choice.srNumber}} name="srNo" value={{choice.srNo}}></td>
-<td class="colL" style="text-align:center"><input type="hidden" id={{choice.drugConcept}} name={{choice.drugConcept}} value={{choice.drugConcept}}></td>
+<td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" onClick="removee(${count});" /></td>
+<td class="colK" style="text-align:center"><input type="hidden" id="srNumber${count}" name="srNo" value="${count}"></td>
+<td class="colL" style="text-align:center"><input type="hidden" id="drugConcept${count}" name="drugConcept${count++}"></td>
 </tr>
+<% } %>
 </tbody>
 </table>
-</fieldset>
 
 <fieldset  data-ng-repeat="choice in choices">
 <table>
@@ -91,9 +92,9 @@
 <% } %>
 </select>
 </td>
-<td class="colG" style="text-align:center"><input type="text" ng-model="duration" id={{choice.duration}} name={{choice.duration}}></td>
+<td class="colG" style="text-align:center"><input type="text" ng-model="duration" id={{choice.durationn}} name={{choice.durationn}}></td>
 <td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForRegimenSearchh(drugKey);" /></td>
-<td class="colI" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="add" name="add" value="Add" ng-click="addNewChoice()"/></td>
+<td class="colI" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="add" name="add" value="Add" ng-click="addNewChoice(choice)"/></td>
 <td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" ng-click="removeChoice(choice)" /></td>
 <td class="colK" style="text-align:center"><input type="hidden" id={{choice.srNumber}} name="srNo" value={{choice.srNo}}></td>
 <td class="colL" style="text-align:center"><input type="hidden" id={{choice.drugConcept}} name={{choice.drugConcept}} value={{choice.drugConcept}}></td>
@@ -156,9 +157,6 @@ tb_show("Art Regimen",url,false);
 function regimenSelection(value){
 
 if(value=='regimen1'){
-//ui.reloadPage();
-//jQuery('#abcd').load();
-//jQuery("#abcd").load(location.href+" #abcd>*","");
 jQuery('#drugKey1').val('${regimenDetails1.drugName}');
 jQuery('#strength1').val('${regimenDetails1.strength}');
 jQuery('#type1').val('${regimenDetails1.formulation}');
@@ -202,11 +200,43 @@ jQuery('#route6').val("");
 jQuery('#drugConcept6').val("");
 
 jQuery('#regimenNo').val("Standard Regimen 1");
+
+var indx = selectedSerialNoArr.indexOf(1);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+
+indx = selectedSerialNoArr.indexOf(2);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+indx = selectedSerialNoArr.indexOf(3);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+indx = selectedSerialNoArr.indexOf(4);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+indx = selectedSerialNoArr.indexOf(5);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+indx = selectedSerialNoArr.indexOf(6);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+selectedSerialNoArr.push(1);
+selectedSerialNoArr.push(2);
+selectedSerialNoArr.push(3);
+selectedSerialNoArr.push(4);
+selectedSerialNoArr.push(5);
 }
-else{
-//ui.reloadPage();
-//jQuery('#abcd').load();
-//jQuery("#abcd").load(location.href+" #abcd>*","");
+else if(value=='regimen2'){
 jQuery('#drugKey1').val('${regimenDetails1.drugName}');
 jQuery('#strength1').val('${regimenDetails1.strength}');
 jQuery('#type1').val('${regimenDetails1.formulation}');
@@ -250,8 +280,39 @@ jQuery('#route6').val('${regimenDetails6.route}');
 jQuery('#drugConcept6').val('${regimenDetails6.drugConcept}');
 
 jQuery('#regimenNo').val("Standard Regimen 2");
-}
 
+
+var indx = selectedSerialNoArr.indexOf(1);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+
+indx = selectedSerialNoArr.indexOf(2);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+indx = selectedSerialNoArr.indexOf(3);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+indx = selectedSerialNoArr.indexOf(4);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+indx = selectedSerialNoArr.indexOf(5);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+selectedSerialNoArr.push(1);
+selectedSerialNoArr.push(2);
+selectedSerialNoArr.push(3);
+selectedSerialNoArr.push(4);
+selectedSerialNoArr.push(5);
+selectedSerialNoArr.push(6);
+}
 }
 </script>
 

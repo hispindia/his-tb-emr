@@ -16,26 +16,38 @@ $scope.drugSearch = function(drugKey){
 
 }]);
 */
+var selectedSerialNoArr = new Array();
 
 kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	
-	$scope.choices = [{srNo:'11',srNumber:'srNumber11',id:'choice11',drugKey:'drugKey11',drugConcept:'drugConcept11',strength:'strength11',noOfTablet:'noOfTablet11',route:'route11',type: 'type11',frequncy: 'frequncy11',duration:'duration11'}];
-	$scope.addNewChoice = function() {
-		var newItemNo = $scope.choices.length+1;
-		$scope.choices.push({srNo:newItemNo,srNumber:'srNumber'+newItemNo,id:'choice'+newItemNo,drugKey:'drugKey'+newItemNo,drugConcept:'drugConcept'+newItemNo,strength:'strength'+newItemNo,noOfTablet:'noOfTablet'+newItemNo,route:'route'+newItemNo,type: 'type'+newItemNo,frequncy:'frequncy'+newItemNo,duration:'duration'+newItemNo});
+	$scope.choices = [{srNo:'11',srNumber:'srNumber11',id:'choice11',drugKey:'drugKey11',drugConcept:'drugConcept11',strength:'strength11',noOfTablet:'noOfTablet11',route:'route11',type: 'type11',frequncy: 'frequncy11',durationn:'durationn11'}];
+	$scope.addNewChoice = function(index) {
+		var srNo=index.srNo;
+		var newItemNo=parseInt(srNo)+1;
+		$scope.choices.push({srNo:newItemNo,srNumber:'srNumber'+newItemNo,id:'choice'+newItemNo,drugKey:'drugKey'+newItemNo,drugConcept:'drugConcept'+newItemNo,strength:'strength'+newItemNo,noOfTablet:'noOfTablet'+newItemNo,route:'route'+newItemNo,type: 'type'+newItemNo,frequncy:'frequncy'+newItemNo,durationn:'durationn'+newItemNo});
 	}
 	
 	$scope.removeChoice = function(index) {
-	    $scope.choices.splice(index,1);
 	    /*
 	    var newItemNo = $scope.choices.length;
 	    $scope.choices=[];
 	    for(var i=1;i<=newItemNo;i++){
 	    	$scope.choices.push({srNo:i,srNumber:'srNumber'+i,id:'choice'+i,drugKey:'drugKey'+i,strength:'strength'+i,noOfTablet:'noOfTablet'+i,type: 'type'+i,frequncy:'frequncy'+i,duration:'duration'+i});
 	    }*/
+	    var srNo=index.srNo;
+	    var indx = selectedSerialNoArr.indexOf(srNo);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    $scope.choices.splice(index,1);
 	}
 	
 	$scope.removeChoicee = function(index) {
+	    var srNo=index.srNo;
+	    var indx = selectedSerialNoArr.indexOf(srNo);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
 	    $scope.choices.splice(index,1);
 	}
 	
@@ -51,6 +63,7 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	$('#frequncy'+srNo).val(drugKey.frequency);
 	$('#route'+srNo).val(drugKey.route);
 	$('#drugConcept'+srNo).val(drugKey.drugConcept);
+	selectedSerialNoArr.push(srNo);
 	}
 	
 	$scope.artDrugInfoForRegimenSearch=function(choice){
@@ -190,7 +203,7 @@ kenyaemrApp.controller('DrugCtrl', ['$scope', function($scope) {
 	    		$scope.choicess=[];
 	    	    
 	    		for(var i=1;i<7;i++){
-	    		    $scope.choicess.push({srNo:i,srNumber:'srNumber'+i,id:'choice'+i,drugKey:'drugKey'+i,drugConcept:'drugConcept'+i,strength:'strength'+i,noOfTablet:'noOfTablet'+i,route:'route'+i,type: 'type'+i,frequncy: 'frequncy'+i,duration:'duration'+i});
+	    		    $scope.choicess.push({srNo:i,srNumber:'srNumber'+i,id:'choice'+i,drugKey:'drugKey'+i,drugConcept:'drugConcept'+i,strength:'strength'+i,noOfTablet:'noOfTablet'+i,route:'route'+i,type: 'type'+i,frequncy: 'frequncy'+i,durationn:'durationn'+i});
 	    		}
 			});
 	    	
@@ -242,4 +255,29 @@ function drugInfo(count){
   var url = "#TB_inline?height=500&width=750&inlineId=drugDiv";
   tb_show("Drug Info",url,false);
   });
+}
+
+function removee(count){
+	var indx = selectedSerialNoArr.indexOf(count);
+		    if (indx > -1) {
+		    	selectedSerialNoArr.splice(indx, 1);
+		    }
+	jQuery('#row'+count).remove();
+	}
+
+function validateRegimenFields(){
+for (var i = 0; i < selectedSerialNoArr.length; i++){
+	var ssn=selectedSerialNoArr[i];
+	var noOfTablet=jQuery('#noOfTablet'+ssn).val();
+	var durationn=jQuery('#durationn'+ssn).val();
+	if(noOfTablet==""){
+	alert("Please Enter Quantity");
+	return false;
+	}
+	if(durationn==""){
+	alert("Please Enter Duration");
+	return false;
+	}
+}
+return true;
 }

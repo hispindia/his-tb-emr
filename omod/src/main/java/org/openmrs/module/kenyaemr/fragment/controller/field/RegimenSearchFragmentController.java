@@ -29,6 +29,7 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.module.kenyaemr.model.DrugInfo;
+import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
 import org.openmrs.module.kenyaemr.model.RegimenDetails;
 import org.openmrs.module.kenyaemr.regimen.RegimenDefinition;
 import org.openmrs.module.kenyaemr.regimen.RegimenDefinitionGroup;
@@ -162,6 +163,13 @@ public class RegimenSearchFragmentController {
 		regimenDetails6.setFrequency(props.getProperty(drugNam+".frequency"));
 		regimenDetails6.setRoute(props.getProperty(drugNam+".route"));
 		model.addAttribute("regimenDetails6",regimenDetails6);
+		
+		List<DrugOrderProcessed> drugOrderProcessedd = new ArrayList<DrugOrderProcessed>();
+		for(int i=0;i<6;i++){
+			DrugOrderProcessed drugOrderProcess=new DrugOrderProcessed();
+			drugOrderProcessedd.add(drugOrderProcess);
+		}
+		model.addAttribute("drugOrderProcessedd", drugOrderProcessedd);
 	}
 
 	/**

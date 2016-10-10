@@ -65,10 +65,10 @@
 <option value="${drugOrderProcessed.route.name}" > ${drugOrderProcessed.route.name}</option>
 </select>
 </td>
-<td class="colG" style="text-align:center"><input type="text" id="duration${count}" name="duration${count}"></td>
+<td class="colG" style="text-align:center"><input type="text" id="durationn${count}" name="durationn${count}"></td>
 <td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForContinueRegimenSearch('${drugOrderProcessed.drugOrder.concept.name}');" /></td>
 <td class="colI" style="text-align:center"></td>
-<td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" onClick="removee('${count}');" /></td>
+<td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" onClick="removee(${count});" /></td>
 <td class="colK" style="text-align:center"><input type="hidden" id="srNumber${count}" name="srNo" value="${count}"></td>
 <td class="colL" style="text-align:center"><input type="hidden" id="drugConcept${count}" name="drugConcept${count++}" value="${drugOrderProcessed.regimenConcept.conceptId}"></td>
 </tr>
@@ -90,10 +90,10 @@
 <% } %>
 </select>
 </td>
-<td class="colG" style="text-align:center"><input type="text" id="duration${count}" name="duration${count}"></td>
+<td class="colG" style="text-align:center"><input type="text" id="durationn${count}" name="durationn${count}"></td>
 <td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" onClick="drugInfo('${count}');" /></td>
 <td class="colI" style="text-align:center"></td>
-<td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" onClick="removee('${count}');" /></td>
+<td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" onClick="removee(${count});" /></td>
 <td class="colK" style="text-align:center"><input type="hidden" id="srNumber${count}" name="srNo" value="${count}"></td>
 <td class="colL" style="text-align:center"><input type="hidden" id="drugConcept${count}" name="drugConcept${count++}"></td>
 </tr>
@@ -118,7 +118,7 @@
 <% } %>
 </select>
 </td>
-<td class="colG" style="text-align:center"><input type="text" ng-model="duration" id={{choice.duration}} name={{choice.duration}}></td>
+<td class="colG" style="text-align:center"><input type="text" ng-model="duration" id={{choice.durationn}} name={{choice.durationn}}></td>
 <td class="colH" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="info" name="info" value="Info" ng-click="artDrugInfoForRegimenSearchh(drugKey);" /></td>
 <td class="colI" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" id="add" name="add" value="Add" ng-click="addNewChoice()"/></td>
 <td class="colJ" style="text-align:center"><input type="button" class="ui-button ui-widget ui-state-default ui-corner-all" style="color:red" id="remove" name="remove" value="[X]" ng-click="removeChoice(choice)" /></td>
@@ -260,13 +260,48 @@ jQuery('#route10').val("");
 jQuery('#drugConcept10').val("");
 
 jQuery('#regimenNo').val("Standard Regimen 1");
+
+var indx = selectedSerialNoArr.indexOf(1);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+
+var indx = selectedSerialNoArr.indexOf(2);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+var indx = selectedSerialNoArr.indexOf(3);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+var indx = selectedSerialNoArr.indexOf(4);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+var indx = selectedSerialNoArr.indexOf(5);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+var indx = selectedSerialNoArr.indexOf(6);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+selectedSerialNoArr.push(1);
+selectedSerialNoArr.push(2);
+selectedSerialNoArr.push(3);
+selectedSerialNoArr.push(4);
+selectedSerialNoArr.push(5);
 }
-else{
+else if(value=='regimen2'){
 jQuery('#drugKey1').val('${regimenDetails1.drugName}');
 jQuery('#strength1').val('${regimenDetails1.strength}');
 jQuery('#type1').val('${regimenDetails1.formulation}');
 jQuery('#frequncy1').val('${regimenDetails1.frequency}');
-jQuery('#route1').val('${regimenDetails1.route}');
+jQuery('#route1').val(${regimenDetails1.route});
 jQuery('#drugConcept1').val('${regimenDetails1.drugConcept}');
 
 jQuery('#drugKey2').val('${regimenDetails2.drugName}');
@@ -337,18 +372,43 @@ jQuery('#route10').val("");
 jQuery('#drugConcept10').val("");
 
 jQuery('#regimenNo').val("Standard Regimen 2");
-}
 
+var indx = selectedSerialNoArr.indexOf(1);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+
+var indx = selectedSerialNoArr.indexOf(2);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+var indx = selectedSerialNoArr.indexOf(3);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+var indx = selectedSerialNoArr.indexOf(4);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+	    
+var indx = selectedSerialNoArr.indexOf(5);
+	    if (indx > -1) {
+	    	selectedSerialNoArr.splice(indx, 1);
+	    }
+selectedSerialNoArr.push(1);
+selectedSerialNoArr.push(2);
+selectedSerialNoArr.push(3);
+selectedSerialNoArr.push(4);
+selectedSerialNoArr.push(5);
+selectedSerialNoArr.push(6);
+}
 }
 
 jQuery(document).ready(function(){
 jQuery('#regimenNo').val("${regimenNo}");
 });
-
-function removee(count){
-//jQuery('#drugConcept'+count).val();
-jQuery('#row'+count).remove();
-}
 </script>
 
 <style type="text/css">
