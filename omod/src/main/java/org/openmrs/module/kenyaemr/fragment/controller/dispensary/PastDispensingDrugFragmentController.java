@@ -44,6 +44,7 @@ public class PastDispensingDrugFragmentController {
 			drugDetails.setStrength(dop.getDose());
 			drugDetails.setFormulation(dop.getDrugOrder().getUnits().toString());
 			drugDetails.setFrequency(dop.getDrugOrder().getFrequency().toString());
+			drugDetails.setRoute(dop.getRoute().getName().getName());
 			drugDetails.setQuantity(dop.getQuantityPostProcess().toString());
 			drugDetails.setDuration(dop.getDurationPreProcess().toString());
 			drugDetailsList.add(drugDetails);
