@@ -41,7 +41,7 @@ public class RecordedDeceasedCalculation extends AbstractPatientCalculation {
 	public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> params, PatientCalculationContext context) {
 
 		Set<Integer> alive = Filters.alive(cohort, context);
-		CalculationResultMap exitObss = Calculations.allObs(Dictionary.getConcept(Dictionary.REASON_FOR_PROGRAM_DISCONTINUATION), alive, context);
+		CalculationResultMap exitObss = Calculations.allObs(Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME), alive, context);
 		Concept died = Dictionary.getConcept(Dictionary.DIED);
 
 		CalculationResultMap ret = new CalculationResultMap();
