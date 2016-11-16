@@ -78,6 +78,6 @@ public class CohortDialogPageController {
 
 		model.addAttribute("column", dataSetColumn);
 		model.addAttribute("cohort", cohort);
-		model.addAttribute("patients", ui.simplifyCollection(patients));
+		model.addAttribute("patients", patients);
 	}
 }

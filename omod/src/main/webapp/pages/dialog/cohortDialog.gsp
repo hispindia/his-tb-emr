@@ -12,7 +12,7 @@
 			<tr>
 				<td>
 					<img src="${ ui.resourceLink("kenyaui", "images/glyphs/patient_" + patient.gender.toLowerCase() + ".png") }" class="ke-glyph" />
-					<a href="${ ui.pageLink("kenyaemr", "chart/chartViewPatient", [ patientId: patient.id ]) }">${ patient.name }</a>
+					<a href="${ ui.pageLink("kenyaemr", "chart/chartViewPatient", [ patientId: patient.id ]) }">${ patient.givenName }</a>
 				</td>
 				<td>${ patient.age }</td>
 				<td>${ patient.gender }</td>
