@@ -18,11 +18,14 @@
 			// show fields with data 
 			fieldIndex1 = 8;
 			count=1;
-			while(document.getElementById("w"+fieldIndex1).value!="" &amp;&amp; count &lt; 26){
+			if(document.getElementById("w"+fieldIndex1)!=null &amp;&amp; document.getElementById("w"+fieldIndex1)!="")
+		{
+				while(document.getElementById("w"+fieldIndex1).value!="" &amp;&amp; count &lt; 26){
 				jQuery('#'+count+'-toggleContainer1').show();   
 				fieldIndex1=fieldIndex1+2;
 				count++;
 			}
+		}
 			
 			$j('#1-removeEntry1').remove();
 			$j('#25-addEntry1').remove();

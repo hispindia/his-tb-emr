@@ -119,7 +119,11 @@
 			// show fields with data 
 			fieldIndex = 26; 
 			j=1;
-			while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 4){
+			if(document.getElementById("w"+fieldIndex)!=null &amp;&amp; document.getElementById("w"+fieldIndex)!="")
+			
+				{
+				while(document.getElementById("w"+fieldIndex).value!="" &amp;&amp; j &lt; 4){
+				
 				
 				jQuery('#'+j+'-toggleContainer').show();   
 				fieldIndex=fieldIndex+10;
@@ -130,6 +134,7 @@
 					}
 				j++;
 			}
+				}
 	
 			$j('#1-removeEntry').remove();
 			$j('#3-addEntry').remove();

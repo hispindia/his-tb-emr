@@ -101,8 +101,10 @@ function calculateEdd(lmp) {
 		jq(document).ready(function(){
 			var checkData = getValue('regGroup.value');
 			// show fields with data 
-		
+		if(document.getElementById("w10")!=null &amp;&amp; document.getElementById("w10")!="")
+			{
 			if( checkData!="" &amp;&amp; document.getElementById("w10").value==null )
+			
 			{ 
 				fieldIndex = 69;
 			}
@@ -111,6 +113,7 @@ function calculateEdd(lmp) {
 				
 				fieldIndex = 10;
 			}
+			
 			j=1;
 			
 			
@@ -137,6 +140,7 @@ function calculateEdd(lmp) {
 				j++;
 			}
 				}
+			}
 		
 			$j('#1-removeEntry').remove();
 			$j('#5-addEntry').remove();
@@ -165,8 +169,9 @@ function calculateEdd(lmp) {
 			
 			// show fields with data 
 			var pgender    = "<lookup expression="patient.gender" />";
-
-			if (pgender == 'F' )
+			if(document.getElementById("w10")!=null &amp;&amp; document.getElementById("w10")!="")
+			{
+				if (pgender == 'F' )
 				{
 			if( checkData!="" &amp;&amp; document.getElementById("w10").value==null ){ 
 				fieldIndex = 85;
@@ -212,6 +217,7 @@ function calculateEdd(lmp) {
 				}
 				
 			}
+		}
 	
 			$j('#1-removeEntry1').remove();
 			$j('#2-addEntry1').remove();
@@ -237,7 +243,8 @@ function calculateEdd(lmp) {
 				return false;
 				});
 			// show fields with data 
-			if (pgender == 'F' )
+			if(document.getElementById("w10")!=null &amp;&amp; document.getElementById("w10")!="")
+			{if (pgender == 'F' )
 				{
 			if( checkData!="" &amp;&amp; document.getElementById("w19").value!='' &amp;&amp; optValues == 42 ){ 
 				fieldIndex = 55;
@@ -326,6 +333,7 @@ function calculateEdd(lmp) {
 					}
 				}
 				j++;
+			}
 			}
 			}
 			$j('#1-removeEntry2').remove();
