@@ -44,6 +44,11 @@
 			while(document.getElementById("w"+fieldIndex1).value!="" &amp;&amp; count &lt; 11){
 				jQuery('#'+count+'-toggleContainer1').show();   
 				fieldIndex1=fieldIndex1+2;
+				if(document.getElementById("w"+fieldIndex1).value != '')
+				{
+			$j('#'+count+'-removeEntry1').toggle(false);
+			$j('#'+count+'-addEntry1').toggle(false);
+				}
 				count++;
 			}
 			}
