@@ -260,14 +260,14 @@ public class PatientHavingMDRTBcaseDetectinBuilder extends AbstractReportBuilder
 		dsd.addDimension("patienttype",map(commonDimensions.typeOfPatients()));
 		
 		
-		ColumnParameters child=new ColumnParameters("FP", "female", "age=<15|patienttype=enrollmentTbRegnumber");
-		ColumnParameters adult=new ColumnParameters("MP", "male", "age=15+|patienttype=enrollmentTbRegnumber");
+		ColumnParameters child=new ColumnParameters("CP", "child", "age=<15|patienttype=enrollmentTbRegnumber");
+		ColumnParameters adult=new ColumnParameters("AP", "adult", "age=15+|patienttype=enrollmentTbRegnumber");
 		ColumnParameters total=new ColumnParameters("T", "total", "patienttype=enrollmentTbRegnumber");
 
 
 		String indParams = "startDate=${startDate},endDate=${endDate}";
 		List<ColumnParameters> allColumns = Arrays.asList(child,adult,total);
-		List<String> indSuffixes = Arrays.asList("FM","MA", "TT");    
+		List<String> indSuffixes = Arrays.asList("CP","AP", "TT");    
 		
              
 		EmrReportingUtils.addRow(dsd, "X1", "No. of detected cases ", ReportUtils.map(tbIndicators.totalNumberPatients(), indParams),allColumns,indSuffixes);
