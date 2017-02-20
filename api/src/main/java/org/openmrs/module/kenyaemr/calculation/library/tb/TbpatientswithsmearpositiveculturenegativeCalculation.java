@@ -1,6 +1,9 @@
 package org.openmrs.module.kenyaemr.calculation.library.tb;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +19,7 @@ import org.openmrs.module.kenyacore.calculation.Filters;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.metadata.TbMetadata;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
+import org.openmrs.module.reporting.common.DateUtil;
 
 public class TbpatientswithsmearpositiveculturenegativeCalculation extends AbstractPatientCalculation{
 	@Override
@@ -38,6 +42,11 @@ public class TbpatientswithsmearpositiveculturenegativeCalculation extends Abstr
 		CalculationResultMap lastcultureliquidClassiffication = Calculations.lastObs(cultureliquidtest, inTbProgram, context);
 	
 		CalculationResultMap ret = new CalculationResultMap();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yy");
+
+		Date start = DateUtil.getStartOfMonth(context.getNow());
+
+		Date endDate = context.getNow();
 		for (Integer ptId : cohort) {
 			
 			boolean oncultureTest = false;
@@ -46,7 +55,38 @@ public class TbpatientswithsmearpositiveculturenegativeCalculation extends Abstr
 			ObsResult obsResultsCulture = (ObsResult) lastcultureClassiffication.get(ptId);
 			
 			ObsResult obsResultLastCultureLiquidResults = (ObsResult) lastcultureliquidClassiffication.get(ptId);
-			
+			Date obssmear = null;
+			Date obssolid = null;
+			Date obsliquid = null;
+			Date reportstart = null;
+			Date reportend = null;
+			try {
+				if ((obsResultsClassification != null)) {
+					if (obsResultsCulture != null) {
+						obssmear = sdf.parse(sdf
+								.format(obsResultsClassification.getValue()
+										.getObsDatetime()));
+						obssolid = sdf.parse(sdf.format(obsResultsCulture
+								.getValue().getObsDatetime()));
+						reportstart = sdf.parse(sdf.format(start));
+						reportend = sdf.parse(sdf.format(endDate));
+
+					} else if (obsResultLastCultureLiquidResults != null) {
+						obssmear = sdf.parse(sdf
+								.format(obsResultsClassification.getValue()
+										.getObsDatetime()));
+						obsliquid = sdf.parse(sdf
+								.format(obsResultLastCultureLiquidResults
+										.getValue().getObsDatetime()));
+						reportstart = sdf.parse(sdf.format(start));
+						reportend = sdf.parse(sdf.format(endDate));
+					}
+				}
+
+			} catch (ParseException e) {
+
+				e.printStackTrace();
+			}
 		if ((obsResultsClassification != null))  {
 			
 			if(obsResultsCulture != null)
@@ -58,7 +98,19 @@ public class TbpatientswithsmearpositiveculturenegativeCalculation extends Abstr
 						&& (((obsResultsCulture.getValue().getValueCoded().equals(labresult)))))
 				{
 					
-					oncultureTest = true;
+					if ((obssmear.after(reportstart)
+							&& obssmear.before(reportend)
+							|| obssmear.equals(reportstart) || obssmear
+								.equals(reportend))
+							&& (obssolid.after(reportstart)
+									&& obssolid.before(reportend)
+									|| obssolid.equals(reportstart) || obssolid
+										.equals(reportend)))
+
+					{
+						oncultureTest = true;
+					}
+
 					
 				}
 				}
@@ -71,8 +123,19 @@ public class TbpatientswithsmearpositiveculturenegativeCalculation extends Abstr
 					obsResultsClassification.getValue().getValueCoded().equals(triplePositive))
 						&& (((obsResultLastCultureLiquidResults.getValue().getValueCoded().equals(labresult)))))
 				{
-					
+				if ((obssmear.after(reportstart)
+						&& obssmear.before(reportend)
+						|| obssmear.equals(reportstart) || obssmear
+							.equals(reportend))
+						&& (obsliquid.after(reportstart)
+								&& obsliquid.before(reportend)
+								|| obsliquid.equals(reportstart) || obsliquid
+									.equals(reportend)))
+
+				{
+
 					oncultureTest = true;
+				}
 				}
 				
 			}
