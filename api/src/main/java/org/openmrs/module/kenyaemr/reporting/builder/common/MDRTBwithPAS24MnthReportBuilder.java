@@ -97,13 +97,13 @@ private DataSetDefinition createTbNewCategorywithpaspatientwithTBEnrollNumber() 
 	
 	String indParams = "startDate=${startDate},endDate=${endDate}";
 
-	EmrReportingUtils.addRow(dsd, "LA1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category with outcome (Cure) ", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsA);
-	EmrReportingUtils.addRow(dsd, "LB1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category with outcome (Died) ", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsB);
-	EmrReportingUtils.addRow(dsd, "LC1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome (Completed)", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsC);
-	EmrReportingUtils.addRow(dsd, "LD1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome (Failure)", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsD);
-	EmrReportingUtils.addRow(dsd, "LE1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome (Defaulted)", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsE);
-	EmrReportingUtils.addRow(dsd, "LF1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome (MoveToXDR)", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsF);
-	EmrReportingUtils.addRow(dsd, "LG1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome (Still Enroll)", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsG);
+	EmrReportingUtils.addRow(dsd, "LA1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsA);
+	EmrReportingUtils.addRow(dsd, "LB1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsB);
+	EmrReportingUtils.addRow(dsd, "LC1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsC);
+	EmrReportingUtils.addRow(dsd, "LD1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsD);
+	EmrReportingUtils.addRow(dsd, "LE1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsE);
+	EmrReportingUtils.addRow(dsd, "LF1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsF);
+	EmrReportingUtils.addRow(dsd, "LG1", "No. of detected cases with New (New, MDR-TB contact, PLHIV) category  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmednewCategoryMDRTBwithpas(), indParams), columnsG);
 	return  dsd;
 }
 
@@ -139,13 +139,13 @@ private DataSetDefinition createTbCategoryIIFwithpaspatientwithTBEnrollNumber() 
 	
 	String indParams = "startDate=${startDate},endDate=${endDate}";
 
-	EmrReportingUtils.addRow(dsd, "MA1", "No. of detected cases with Treatment after failure of treatment (IR , RR) with outcome (Cure) ", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsA);
-	EmrReportingUtils.addRow(dsd, "MB1", "No. of detected cases with Treatment after failure of treatment (IR , RR) with outcome (Died) ", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsB);
-	EmrReportingUtils.addRow(dsd, "MC1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome (Completed)", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsC);
-	EmrReportingUtils.addRow(dsd, "MD1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome (Failure)", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsD);
-	EmrReportingUtils.addRow(dsd, "ME1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome (Defaulted)", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsE);
-	EmrReportingUtils.addRow(dsd, "MF1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome (MoveToXDR)", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsF);
-	EmrReportingUtils.addRow(dsd, "MG1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome (Still Enroll)", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsG);
+	EmrReportingUtils.addRow(dsd, "MA1", "No. of detected cases with Treatment after failure of treatment (IR , RR) with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsA);
+	EmrReportingUtils.addRow(dsd, "MB1", "No. of detected cases with Treatment after failure of treatment (IR , RR) with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsB);
+	EmrReportingUtils.addRow(dsd, "MC1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsC);
+	EmrReportingUtils.addRow(dsd, "MD1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsD);
+	EmrReportingUtils.addRow(dsd, "ME1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsE);
+	EmrReportingUtils.addRow(dsd, "MF1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsF);
+	EmrReportingUtils.addRow(dsd, "MG1", "No. of detected cases with Treatment after failure of treatment (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedCatIITBwithpas(), indParams), columnsG);
 	return  dsd;
 }
 
@@ -180,13 +180,13 @@ private DataSetDefinition createTbCategoryIITADwithpaspatientwithTBEnrollNumber(
 	columnsG.add(new ColumnParameters("T6", "Still Enroll", "parameter=StillEnroll|patienttype=enrollmentTbRegnumber"));
 	String indParams = "startDate=${startDate},endDate=${endDate}";
 
-	EmrReportingUtils.addRow(dsd, "NA1", "No. of detected cases with Treatment after lost to follow up (IR , RR) with outcome (Cure) ", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsA);
-	EmrReportingUtils.addRow(dsd, "NB1", "No. of detected cases with Treatment after lost to follow up (IR , RR) with outcome (Died) ", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsB);
-	EmrReportingUtils.addRow(dsd, "NC1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome (Completed)", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsC);
-	EmrReportingUtils.addRow(dsd, "ND1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome (Failure)", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsD);
-	EmrReportingUtils.addRow(dsd, "NE1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome (Defaulted)", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsE);
-	EmrReportingUtils.addRow(dsd, "NF1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome (MoveToXDR)", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsF);
-	EmrReportingUtils.addRow(dsd, "NG1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome (Still Enroll)", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsG);
+	EmrReportingUtils.addRow(dsd, "NA1", "No. of detected cases with Treatment after lost to follow up (IR , RR) with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsA);
+	EmrReportingUtils.addRow(dsd, "NB1", "No. of detected cases with Treatment after lost to follow up (IR , RR) with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsB);
+	EmrReportingUtils.addRow(dsd, "NC1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsC);
+	EmrReportingUtils.addRow(dsd, "ND1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsD);
+	EmrReportingUtils.addRow(dsd, "NE1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsE);
+	EmrReportingUtils.addRow(dsd, "NF1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsF);
+	EmrReportingUtils.addRow(dsd, "NG1", "No. of detected cases with Treatment after lost to follow up (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedDefaultwithpasTB(), indParams), columnsG);
 	return  dsd;
 }
 
@@ -222,13 +222,13 @@ private DataSetDefinition createTbRelapseCategoryIIwithpaspatientwithTBEnrollNum
 	
 	String indParams = "startDate=${startDate},endDate=${endDate}";
 
-	EmrReportingUtils.addRow(dsd, "OA1", "No. of detected cases with Relapse ( IR, RR)  with outcome (Cure) ", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsA);
-	EmrReportingUtils.addRow(dsd, "OB1", "No. of detected cases with Relapse ( IR, RR)  with outcome (Died) ", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsB);
-	EmrReportingUtils.addRow(dsd, "OC1", "No. of detected cases with Relapse ( IR, RR)  with outcome (Completed)", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsC);
-	EmrReportingUtils.addRow(dsd, "OD1", "No. of detected cases with Relapse ( IR, RR)  with outcome (Failure)", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsD);
-	EmrReportingUtils.addRow(dsd, "OE1", "No. of detected cases with Relapse ( IR, RR)  with outcome (Defaulted)", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsE);
-	EmrReportingUtils.addRow(dsd, "OF1", "No. of detected cases with Relapse ( IR, RR)  with outcome (MoveToXDR)", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsF);
-	EmrReportingUtils.addRow(dsd, "OG1", "No. of detected cases with Relapse ( IR, RR)  with outcome (Still Enroll)", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsG);
+	EmrReportingUtils.addRow(dsd, "OA1", "No. of detected cases with Relapse ( IR, RR)  with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsA);
+	EmrReportingUtils.addRow(dsd, "OB1", "No. of detected cases with Relapse ( IR, RR)  with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsB);
+	EmrReportingUtils.addRow(dsd, "OC1", "No. of detected cases with Relapse ( IR, RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsC);
+	EmrReportingUtils.addRow(dsd, "OD1", "No. of detected cases with Relapse ( IR, RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsD);
+	EmrReportingUtils.addRow(dsd, "OE1", "No. of detected cases with Relapse ( IR, RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsE);
+	EmrReportingUtils.addRow(dsd, "OF1", "No. of detected cases with Relapse ( IR, RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsF);
+	EmrReportingUtils.addRow(dsd, "OG1", "No. of detected cases with Relapse ( IR, RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedTBwithpas(), indParams), columnsG);
 	return  dsd;
 }
 
@@ -264,13 +264,13 @@ private DataSetDefinition createTbCategoryIFwithpaspatientwithTBEnrollNumber() {
 	
 	String indParams = "startDate=${startDate},endDate=${endDate}";
 
-	EmrReportingUtils.addRow(dsd, "PA1", "No. of detected cases with Non-Converter (IR , RR)  with outcome (Cure) ", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsA);
-	EmrReportingUtils.addRow(dsd, "PB1", "No. of detected cases with Non-Converter (IR , RR) with outcome (Died) ", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsB);
-	EmrReportingUtils.addRow(dsd, "PC1", "No. of detected cases with Non-Converter (IR , RR)  with outcome (Completed)", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsC);
-	EmrReportingUtils.addRow(dsd, "PD1", "No. of detected cases with Non-Converter (IR , RR) with outcome (Failure)", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsD);
-	EmrReportingUtils.addRow(dsd, "PE1", "No. of detected cases with Non-Converter (IR , RR) with outcome (Defaulted)", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsE);
-	EmrReportingUtils.addRow(dsd, "PF1", "No. of detected cases with Non-Converter (IR , RR) with outcome (MoveToXDR)", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsF);
-	EmrReportingUtils.addRow(dsd, "PG1", "No. of detected cases with Non-Converter (IR , RR) with outcome (Still Enroll)", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsG);
+	EmrReportingUtils.addRow(dsd, "PA1", "No. of detected cases with Non-Converter (IR , RR)  with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsA);
+	EmrReportingUtils.addRow(dsd, "PB1", "No. of detected cases with Non-Converter (IR , RR) with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsB);
+	EmrReportingUtils.addRow(dsd, "PC1", "No. of detected cases with Non-Converter (IR , RR)  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsC);
+	EmrReportingUtils.addRow(dsd, "PD1", "No. of detected cases with Non-Converter (IR , RR) with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsD);
+	EmrReportingUtils.addRow(dsd, "PE1", "No. of detected cases with Non-Converter (IR , RR) with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsE);
+	EmrReportingUtils.addRow(dsd, "PF1", "No. of detected cases with Non-Converter (IR , RR) with outcome", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsF);
+	EmrReportingUtils.addRow(dsd, "PG1", "No. of detected cases with Non-Converter (IR , RR) with outcome", ReportUtils.map(tbIndicatorLibrary.confirmedCatITBwithpas(), indParams), columnsG);
 	return  dsd;
 }
 private DataSetDefinition createTbMDRTBCASESwithpaspatientwithTBEnrollNumber() {
@@ -305,13 +305,13 @@ private DataSetDefinition createTbMDRTBCASESwithpaspatientwithTBEnrollNumber() {
 	
 	String indParams = "startDate=${startDate},endDate=${endDate}";
 
-	EmrReportingUtils.addRow(dsd, "QA1", "No. of detected cases with MDR tb cases  with outcome (Cure) ", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsA);
-	EmrReportingUtils.addRow(dsd, "QB1", "No. of detected cases with MDR tb cases with outcome (Died) ", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsB);
-	EmrReportingUtils.addRow(dsd, "QC1", "No. of detected cases with MDR tb cases  with outcome (Completed)", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsC);
-	EmrReportingUtils.addRow(dsd, "QD1", "No. of detected cases with MDR tb cases with outcome (Failure)", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsD);
-	EmrReportingUtils.addRow(dsd, "QE1", "No. of detected cases with MDR tb cases with outcome (Defaulted)", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsE);
-	EmrReportingUtils.addRow(dsd, "QF1", "No. of detected cases with MDR tb cases with outcome (MoveToXDR)", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsF);
-	EmrReportingUtils.addRow(dsd, "QG1", "No. of detected cases with MDR tb cases with outcome (Still Enroll)", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsG);
+	EmrReportingUtils.addRow(dsd, "QA1", "No. of detected cases with MDR tb cases  with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsA);
+	EmrReportingUtils.addRow(dsd, "QB1", "No. of detected cases with MDR tb cases with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsB);
+	EmrReportingUtils.addRow(dsd, "QC1", "No. of detected cases with MDR tb cases  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsC);
+	EmrReportingUtils.addRow(dsd, "QD1", "No. of detected cases with MDR tb cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsD);
+	EmrReportingUtils.addRow(dsd, "QE1", "No. of detected cases with MDR tb cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsE);
+	EmrReportingUtils.addRow(dsd, "QF1", "No. of detected cases with MDR tb cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsF);
+	EmrReportingUtils.addRow(dsd, "QG1", "No. of detected cases with MDR tb cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedstandardMDRTBwithpas(), indParams), columnsG);
 	return  dsd;
 }
 private DataSetDefinition createTbOtherCategorywithpaspatientwithTBEnrollNumber() {
@@ -346,13 +346,13 @@ private DataSetDefinition createTbOtherCategorywithpaspatientwithTBEnrollNumber(
 	
 	String indParams = "startDate=${startDate},endDate=${endDate}";
 
-	EmrReportingUtils.addRow(dsd, "RA1", "No. of detected cases with Other Category cases  with outcome (Cure) ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsA);
-	EmrReportingUtils.addRow(dsd, "RB1", "No. of detected cases with Other Category cases with outcome (Died) ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsB);
-	EmrReportingUtils.addRow(dsd, "RC1", "No. of detected cases with Other Category cases  with outcome (Completed)", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsC);
-	EmrReportingUtils.addRow(dsd, "RD1", "No. of detected cases with Other Category with outcome (Failure)", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsD);
-	EmrReportingUtils.addRow(dsd, "RE1", "No. of detected cases with Other Category cases with outcome (Defaulted)", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsE);
-	EmrReportingUtils.addRow(dsd, "RF1", "No. of detected cases with Other Category cases with outcome (MoveToXDR)", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsF);
-	EmrReportingUtils.addRow(dsd, "RG1", "No. of detected cases with Other Category cases with outcome (Still Enroll)", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsG);
+	EmrReportingUtils.addRow(dsd, "RA1", "No. of detected cases with Other Category cases  with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsA);
+	EmrReportingUtils.addRow(dsd, "RB1", "No. of detected cases with Other Category cases with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsB);
+	EmrReportingUtils.addRow(dsd, "RC1", "No. of detected cases with Other Category cases  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsC);
+	EmrReportingUtils.addRow(dsd, "RD1", "No. of detected cases with Other Category with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsD);
+	EmrReportingUtils.addRow(dsd, "RE1", "No. of detected cases with Other Category cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsE);
+	EmrReportingUtils.addRow(dsd, "RF1", "No. of detected cases with Other Category cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsF);
+	EmrReportingUtils.addRow(dsd, "RG1", "No. of detected cases with Other Category cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsG);
 	return  dsd;
 }
 }
