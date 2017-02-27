@@ -979,7 +979,59 @@ public class EditPatientFragmentController {
 					Obs o = new Obs();
 					o.setPerson(patient);
 					o.setConcept(question);
-					o.setObsDatetime(new Date());
+					//o.setObsDatetime(new Date());
+				    Date curDate=new Date();
+					SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat(
+							"dd-MMM-yy HH:mm:ss");
+					Date date = null;
+					if(dateOfRegistration!=null)
+					{	try {
+						
+						date = mysqlDateTimeFormatter.parse(dateOfRegistration
+								+ " " + curDate.getHours() + ":" + curDate.getMinutes()
+								+ ":" + curDate.getSeconds());
+					
+						o.setObsDatetime(date);
+						
+					} catch (ParseException e) {
+				
+						date=curDate;
+						
+						e.printStackTrace();
+					}
+					}
+					else
+					{
+						List<Visit> vis=Context.getVisitService().getActiveVisitsByPatient(patient);
+						
+						if(!vis.isEmpty())
+						{
+							
+							
+							
+							for(Visit v:vis)
+							{
+								o.setObsDatetime(v.getStartDatetime());
+							}
+						}
+						else
+						{
+							List<Visit> visit=Context.getVisitService().getVisitsByPatient(patient);
+							
+							if(visit!=null)
+							{ if (visit.size() > 0) 
+								{Visit v=visit.get(0);
+								 
+									
+									 
+								
+									o.setObsDatetime(v.getStartDatetime());
+								
+								}
+							}	
+						}
+						
+					}
 					o.setLocation(Context.getService(KenyaEmrService.class)
 							.getDefaultLocation());
 					o.setValueCoded(newValue);
@@ -1009,7 +1061,59 @@ public class EditPatientFragmentController {
 					Obs o = new Obs();
 					o.setPerson(patient);
 					o.setConcept(question);
-					o.setObsDatetime(new Date());
+					//	o.setObsDatetime(new Date());
+					Date curDate=new Date();
+						SimpleDateFormat mysqlDateTimeFormatter = new SimpleDateFormat(
+								"dd-MMM-yy HH:mm:ss");
+						Date date = null;
+						if(dateOfRegistration!=null)
+						{	try {
+							
+							date = mysqlDateTimeFormatter.parse(dateOfRegistration
+									+ " " + curDate.getHours() + ":" + curDate.getMinutes()
+									+ ":" + curDate.getSeconds());
+							
+							o.setObsDatetime(date);
+							
+						} catch (ParseException e) {
+					
+							date=curDate;
+							
+							e.printStackTrace();
+						}
+						}
+						else
+						{
+							List<Visit> vis=Context.getVisitService().getActiveVisitsByPatient(patient);
+							
+							if(!vis.isEmpty())
+							{
+								
+								
+								
+								for(Visit v:vis)
+								{
+									o.setObsDatetime(v.getStartDatetime());
+								}
+							}
+							else
+							{
+								List<Visit> visit=Context.getVisitService().getVisitsByPatient(patient);
+								
+								if(visit!=null)
+								{ if (visit.size() > 0) 
+									{Visit v=visit.get(0);
+									 
+										
+										 
+									
+										o.setObsDatetime(v.getStartDatetime());
+									
+									}
+								}	
+							}
+							
+						}
 					o.setLocation(Context.getService(KenyaEmrService.class)
 							.getDefaultLocation());
 					if(newValue!=null){
