@@ -46,6 +46,7 @@ public class TbpatientwithwithsmearpositiveculturepositiveCalculation extends Ab
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yy");
 
 		Date start = DateUtil.getStartOfMonth(context.getNow());
+		
 
 		Date endDate = context.getNow();
 		for (Integer ptId : cohort) {
@@ -61,26 +62,31 @@ public class TbpatientwithwithsmearpositiveculturepositiveCalculation extends Ab
 			Date obsliquid = null;
 			Date reportstart = null;
 			Date reportend = null;
-			try {
-				if ((obsResultsClassification != null)) {
-					if (obsResultsCulture != null) {
-						obssmear = sdf.parse(sdf
-								.format(obsResultsClassification.getValue()
-										.getObsDatetime()));
-						obssolid = sdf.parse(sdf.format(obsResultsCulture
-								.getValue().getObsDatetime()));
+			try { 
+				if (obsResultsClassification != null) {
+					if ((obsResultsCulture != null))  {
+						obssmear = sdf.parse(sdf.format(obsResultsClassification.getValue().getObsDatetime()));
+						
+						obssolid = sdf.parse(sdf.format(obsResultsCulture.getValue().getObsDatetime()));
+						
 						reportstart = sdf.parse(sdf.format(start));
+						
 						reportend = sdf.parse(sdf.format(endDate));
+						
 
-					} else if (obsResultLastCultureLiquidResults != null) {
+					}  if ((obsResultLastCultureLiquidResults != null)) {
 						obssmear = sdf.parse(sdf
 								.format(obsResultsClassification.getValue()
 										.getObsDatetime()));
+						
 						obsliquid = sdf.parse(sdf
 								.format(obsResultLastCultureLiquidResults
 										.getValue().getObsDatetime()));
+						
 						reportstart = sdf.parse(sdf.format(start));
+					
 						reportend = sdf.parse(sdf.format(endDate));
+						
 					}
 				}
 
@@ -91,8 +97,10 @@ public class TbpatientwithwithsmearpositiveculturepositiveCalculation extends Ab
 		if ((obsResultsClassification != null))  {
 			
 			if(obsResultsCulture != null)
-			{if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultsCulture.getValue().getValueCoded()==null)))
-				{if ((obsResultsClassification.getValue().getValueCoded().equals(trace)||
+			{
+				if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultsCulture.getValue().getValueCoded()==null)))
+				{
+					if ((obsResultsClassification.getValue().getValueCoded().equals(trace)||
 						obsResultsClassification.getValue().getValueCoded().equals(singlePositive)||
 						obsResultsClassification.getValue().getValueCoded().equals(doublePositive)||
 						obsResultsClassification.getValue().getValueCoded().equals(triplePositive))
@@ -117,8 +125,10 @@ public class TbpatientwithwithsmearpositiveculturepositiveCalculation extends Ab
 				}
 			}
 			if(obsResultLastCultureLiquidResults!=null)
-			{if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultLastCultureLiquidResults.getValue().getValueCoded()==null)))
-			{	if((obsResultsClassification.getValue().getValueCoded().equals(trace)||
+			{
+				if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultLastCultureLiquidResults.getValue().getValueCoded()==null)))
+			{	
+			if((obsResultsClassification.getValue().getValueCoded().equals(trace)||
 					obsResultsClassification.getValue().getValueCoded().equals(singlePositive)||
 					obsResultsClassification.getValue().getValueCoded().equals(doublePositive)||
 					obsResultsClassification.getValue().getValueCoded().equals(triplePositive))
@@ -135,7 +145,7 @@ public class TbpatientwithwithsmearpositiveculturepositiveCalculation extends Ab
 									.equals(reportend)))
 
 				{
-
+					
 					oncultureTest = true;
 				}
 				}

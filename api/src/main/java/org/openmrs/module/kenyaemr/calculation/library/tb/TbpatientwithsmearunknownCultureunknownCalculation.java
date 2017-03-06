@@ -68,7 +68,7 @@ public class TbpatientwithsmearunknownCultureunknownCalculation extends Abstract
 						reportstart = sdf.parse(sdf.format(start));
 						reportend = sdf.parse(sdf.format(endDate));
 
-					} else if (obsResultLastCultureLiquidResults != null) {
+					} if (obsResultLastCultureLiquidResults != null) {
 						obssmear = sdf.parse(sdf
 								.format(obsResultsClassification.getValue()
 										.getObsDatetime()));

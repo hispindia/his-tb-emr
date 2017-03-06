@@ -65,7 +65,7 @@ public class TbpatientwithsmearunknownCulturenegativeCalculation extends Abstrac
 						reportend = sdf.parse(sdf.format(endDate));
 
 					} 
-					else if(obsResultLastCultureLiquidResults != null)
+					if(obsResultLastCultureLiquidResults != null)
 					{
 						obsliquid = sdf.parse(sdf
 								.format(obsResultLastCultureLiquidResults.getValue()

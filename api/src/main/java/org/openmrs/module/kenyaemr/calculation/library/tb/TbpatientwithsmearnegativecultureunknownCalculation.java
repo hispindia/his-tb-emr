@@ -66,7 +66,7 @@ public class TbpatientwithsmearnegativecultureunknownCalculation extends Abstrac
 					reportend = sdf.parse(sdf.format(endDate));
 							
 					}
-					else if(obsResultLastCultureLiquidResults!=null && obsResultLastCultureLiquidResults.getValue().getValueCoded()==null )
+					 if(obsResultLastCultureLiquidResults!=null && obsResultLastCultureLiquidResults.getValue().getValueCoded()==null )
 					{
 						obssmear = sdf.parse(sdf
 								.format(obsResultsClassification.getValue()
@@ -94,7 +94,7 @@ public class TbpatientwithsmearnegativecultureunknownCalculation extends Abstrac
 						}
 						
 				}
-				else if(obsResultLastCultureLiquidResults!=null && obsResultLastCultureLiquidResults.getValue().getValueCoded()==null )
+				 if(obsResultLastCultureLiquidResults!=null && obsResultLastCultureLiquidResults.getValue().getValueCoded()==null )
 				{
 					if((obsResultsClassification.getValue().getValueCoded().equals(labresult)))
 					{ 
