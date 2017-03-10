@@ -53,6 +53,7 @@ import org.openmrs.module.kenyaemr.calculation.library.tb.Tbpatientwithsmearunkn
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithwithsmearpositiveculturepositiveCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TotalPatientOnMedicationCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TotalPatientRegisteredCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TotalPatientRegisteredMDRDetectionCalculation;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata;
 import org.openmrs.module.kenyaemr.metadata.TbMetadata;
 import org.openmrs.module.kenyaemr.reporting.library.shared.common.CommonCohortLibrary;
@@ -1955,21 +1956,30 @@ public class TbCohortLibrary {
 		return cd;
 	}
 	public CohortDefinition totalpatientRegisteredInTb() {
-		CalculationCohortDefinition cd = new CalculationCohortDefinition(new TotalPatientRegisteredCalculation());
+		CalculationCohortDefinition cd = new CalculationCohortDefinition(new TotalPatientRegisteredMDRDetectionCalculation());
 		cd.setName("registration");
-		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
-		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
-		return cd;
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition compco = new CompositionCohortDefinition();
+		compco.setName("Total register  ");
+		compco.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		compco.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		compco.addSearch("usingRegime", ReportUtils.map(cd, "onDate=${onOrBefore}"));
+		compco.setCompositionString("usingRegime");
+		return compco;
 	}
 
 	public CohortDefinition totalpatientOnMedicationInTb() {
 		
 		CalculationCohortDefinition cd = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
 		cd.setName("medication");
-		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
-		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
-		
-		return cd;
+		cd.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CompositionCohortDefinition compco = new CompositionCohortDefinition();
+		compco.setName("Total started  ");
+		compco.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
+		compco.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
+		compco.addSearch("usingMonthsAgo", ReportUtils.map(cd, "onDate=${onOrBefore}"));
+		compco.setCompositionString("usingMonthsAgo ");
+		return compco;
 	}
 	public CohortDefinition totalpatientOnConfirmedtb() {
 		
@@ -1980,7 +1990,6 @@ public class TbCohortLibrary {
 		cd.setName("Total confirmed  ");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
-	
 		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,relapseIR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
 		cd.addSearch("reggroupTwo", ReportUtils.map(commonCohorts.hasObs(registration_group,relapseRR), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
         cd.setCompositionString("reggroupOne OR reggroupTwo ");
@@ -3507,13 +3516,12 @@ public CohortDefinition totalEnrolledResultsAtMonths() {
 }
 	
 public CohortDefinition totalEnrolledResults() {
-	CalculationCohortDefinition cp = new CalculationCohortDefinition(new TotalPatientRegisteredCalculation());
+	CalculationCohortDefinition cp = new CalculationCohortDefinition(new TotalPatientRegisteredMDRDetectionCalculation());
 	cp.setName("registration");
 	cp.addParameter(new Parameter("onDate", "On Date", Date.class));
 	CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
 	comp.setName("medication");
 	comp.addParameter(new Parameter("onDate", "On Date", Date.class));
-	
 	CompositionCohortDefinition cd = new CompositionCohortDefinition();
 	cd.setName("Total enrolled  ");
 	cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));

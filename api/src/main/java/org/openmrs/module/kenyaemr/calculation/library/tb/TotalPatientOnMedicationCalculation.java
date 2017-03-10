@@ -1,6 +1,10 @@
 package org.openmrs.module.kenyaemr.calculation.library.tb;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +17,7 @@ import org.openmrs.calculation.patient.PatientCalculationContext;
 import org.openmrs.calculation.result.CalculationResultMap;
 import org.openmrs.module.kenyacore.calculation.AbstractPatientCalculation;
 import org.openmrs.module.kenyacore.calculation.BooleanResult;
+import org.openmrs.module.reporting.common.DateUtil;
 
 public class TotalPatientOnMedicationCalculation extends AbstractPatientCalculation {
 
@@ -24,19 +29,34 @@ public class TotalPatientOnMedicationCalculation extends AbstractPatientCalculat
 	 */
 	@Override
     public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> arg1, PatientCalculationContext context) {
-
+		SimpleDateFormat sdf= new SimpleDateFormat("dd-MMM-yy");
+		Date start = DateUtil.getStartOfMonth(context.getNow());
+		Date endDate = context.getNow(); 
 		
 		CalculationResultMap ret = new CalculationResultMap();
 		for (Integer ptId : cohort) {
 			boolean onMedication = false;
 			Patient patient=Context.getPatientService().getPatient(ptId);
 			List<Order> order=Context.getOrderService().getOrdersByPatient(patient);
-			
+		
 			 for(Order orderdrug: order){
-		 		
+				
 		 		if(orderdrug.getPatient().getId().equals(ptId))
 				{ 
-		 			onMedication = true;
+		 			Date ord=null;Date reportstart=null;Date reportend=null;
+					try {
+						ord=sdf.parse(sdf.format(orderdrug.getStartDate()));
+						reportstart=sdf.parse(sdf.format(start));
+						reportend=sdf.parse(sdf.format(endDate));
+						
+					} catch (ParseException e) {
+						
+						e.printStackTrace();
+					}
+		if(ord.after(reportstart) && ord.before(reportend) ||ord.equals(reportstart) ||ord.equals(reportend))
+					{
+			           onMedication=true;
+					}
 				}
 			 
 			 }
