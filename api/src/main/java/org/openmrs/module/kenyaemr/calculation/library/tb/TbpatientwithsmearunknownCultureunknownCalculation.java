@@ -95,7 +95,8 @@ public class TbpatientwithsmearunknownCultureunknownCalculation extends Abstract
 		
 		}
 		else if(obsResultsClassification != null)
-		{   if (obsResultsCulture != null)
+		{  if(obsResultsClassification.getValue().getValueCoded()!=null )
+		{	if (obsResultsCulture != null)
 		{	if (!(obssmear.after(reportstart)
 				&& obssmear.before(reportend)
 				|| obssmear.equals(reportstart) || obssmear
@@ -110,7 +111,8 @@ public class TbpatientwithsmearunknownCultureunknownCalculation extends Abstract
 		}
 			
 		}
-		else if(obsResultLastCultureLiquidResults!=null)
+		
+	    if(obsResultLastCultureLiquidResults!=null)
 		{
 			if (!(obssmear.after(reportstart)
 					&& obssmear.before(reportend)
@@ -137,6 +139,29 @@ public class TbpatientwithsmearunknownCultureunknownCalculation extends Abstract
 		}
 			
 		}
+		}
+		else if(obsResultsClassification.getValue().getValueCoded()==null )
+	    { if(obsResultsCulture != null && obsResultsCulture.getValue().getValueCoded()==null)
+	    {  if(((obssmear.after(reportstart)
+				&& obssmear.before(reportend)
+				|| obssmear.equals(reportstart) || obssmear
+					.equals(reportend))))
+	    {
+	    	oncultureTest = true;
+	    }
+	    	
+	    }
+	    if(obsResultLastCultureLiquidResults!=null && obsResultLastCultureLiquidResults.getValue().getValueCoded()==null)
+	    { if(((obssmear.after(reportstart)
+				&& obssmear.before(reportend)
+				|| obssmear.equals(reportstart) || obssmear
+					.equals(reportend))))
+	    {
+	    	oncultureTest = true;
+	    }
+	    	
+	    }
+	    }
 		}
 		else if(obsResultsCulture != null||obsResultLastCultureLiquidResults!=null)
 		{

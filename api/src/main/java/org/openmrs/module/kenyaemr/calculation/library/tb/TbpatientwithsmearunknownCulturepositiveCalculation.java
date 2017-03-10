@@ -82,7 +82,7 @@ public class TbpatientwithsmearunknownCulturepositiveCalculation extends Abstrac
 
 				e.printStackTrace();
 			}
-		if ((obsResultsCulture != null))  {
+		if ((obsResultsCulture != null && obsResultsCulture.getValue().getValueCoded()!=null))  {
 			
 			if(obsResultsClassification != null && obsResultsClassification.getValue().getValueCoded()==null )
 			{
@@ -105,7 +105,7 @@ public class TbpatientwithsmearunknownCulturepositiveCalculation extends Abstrac
 			
 		
 		}
-		if ((obsResultLastCultureLiquidResults != null))  {
+		if ((obsResultLastCultureLiquidResults != null && obsResultLastCultureLiquidResults.getValue().getValueCoded()!=null))  {
 			
 			if(obsResultsClassification != null && obsResultsClassification.getValue().getValueCoded()==null )
 			{

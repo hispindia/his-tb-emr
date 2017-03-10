@@ -82,7 +82,7 @@ public class TbpatientwithsmearpositiveCultureunknownCalculation extends Abstrac
 
 				e.printStackTrace();
 			}
-		if ((obsResultsClassification != null))  {
+		if ((obsResultsClassification != null && obsResultsClassification.getValue().getValueCoded()!=null))  {
 			
 			if(obsResultsCulture != null && obsResultsCulture.getValue().getValueCoded()==null)
 			{
