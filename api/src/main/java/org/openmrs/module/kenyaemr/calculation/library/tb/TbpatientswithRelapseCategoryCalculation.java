@@ -11,8 +11,10 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.calculation.patient.PatientCalculationContext;
 import org.openmrs.calculation.result.CalculationResultMap;
+import org.openmrs.calculation.result.ObsResult;
 import org.openmrs.module.kenyacore.calculation.AbstractPatientCalculation;
 import org.openmrs.module.kenyacore.calculation.BooleanResult;
+import org.openmrs.module.kenyacore.calculation.Calculations;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.module.kenyaemr.model.DrugOrderProcessed;
@@ -23,21 +25,26 @@ public class TbpatientswithRelapseCategoryCalculation extends AbstractPatientCal
 	{ 	Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
 	Concept relapseIR=Dictionary.getConcept(Dictionary.RELAPSE_IR);
 	Concept relapseRR=Dictionary.getConcept(Dictionary.RELAPSE_RR);
-		CalculationResultMap ret = new CalculationResultMap();
+	CalculationResultMap ret = new CalculationResultMap();
+	CalculationResultMap lastoutcomeClassiffication = Calculations.lastObs(
+				registration_group, cohort, context);
 		for (Integer ptId : cohort) {
-			Patient patient = Context.getPatientService().getPatient(ptId);
 			boolean onRelapseCategory = false;
-			List<Obs> obs = Context.getObsService()
-					.getObservationsByPersonAndConcept(patient, registration_group);
-			
-			for (Obs o : obs) {
-				if (o.getValueCoded() == relapseIR|| o.getValueCoded() == relapseRR) 
-				{
+			ObsResult obsResultsClassification = (ObsResult) lastoutcomeClassiffication
+					.get(ptId);
+			if (obsResultsClassification != null
+					&& obsResultsClassification.getValue().getValueCoded() != null) {
+
+				if (obsResultsClassification.getValue().getValueCoded()
+						.equals(relapseIR)||obsResultsClassification.getValue().getValueCoded()
+						.equals(relapseRR)) {
+
 					onRelapseCategory = true;
+
 				}
+
 			}
-		 	 
-			
+					
 			ret.put(ptId, new BooleanResult(onRelapseCategory , this, context));
 		}
 		return ret;

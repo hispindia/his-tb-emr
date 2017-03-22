@@ -1,11 +1,10 @@
 package org.openmrs.module.kenyaemr.calculation.library.tb;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.openmrs.Concept;
-import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.calculation.patient.PatientCalculationContext;
@@ -16,37 +15,39 @@ import org.openmrs.module.kenyacore.calculation.BooleanResult;
 import org.openmrs.module.kenyacore.calculation.Calculations;
 import org.openmrs.module.kenyaemr.Dictionary;
 
-public class TbpatientwithlosstoFollowupCalculation extends AbstractPatientCalculation{
+public class TbpatientCompletedOutcomeCalculation extends
+		AbstractPatientCalculation {
 	@Override
-	public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> params, PatientCalculationContext context) 
-	{ 
-		Concept registration_group=Dictionary.getConcept(Dictionary.REGISTRATION_GROUP);
-		Concept losstofolloupIR=Dictionary.getConcept(Dictionary.TREATMENT_AFTER_LOSS_FOLLOW_UP_IR);
-		Concept losstofolloupRR=Dictionary.getConcept(Dictionary.TREATMENT_AFTER_LOSS_FOLLOW_UP_RR);
+	public CalculationResultMap evaluate(Collection<Integer> cohort,
+			Map<String, Object> params, PatientCalculationContext context) {
+		Concept tboutcome = Dictionary
+				.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
+		Concept completedoutcomresult = Dictionary.getConcept(Dictionary.TREATMENT_COMPLETE);
 		CalculationResultMap ret = new CalculationResultMap();
 		CalculationResultMap lastoutcomeClassiffication = Calculations.lastObs(
-				registration_group, cohort, context);
+				tboutcome, cohort, context);
 		for (Integer ptId : cohort) {
-			boolean onlosstofollowupCategory = false;
+			boolean onCompletedOutcome = false;
 			ObsResult obsResultsClassification = (ObsResult) lastoutcomeClassiffication
 					.get(ptId);
 			if (obsResultsClassification != null
 					&& obsResultsClassification.getValue().getValueCoded() != null) {
-
+				if(obsResultsClassification.getValue().getEncounter().getVisit()!=null)
+				{	
+				if(obsResultsClassification.getValue().getEncounter().getVisit().getStopDatetime()==null)
+				{
 				if (obsResultsClassification.getValue().getValueCoded()
-						.equals(losstofolloupIR)||obsResultsClassification.getValue().getValueCoded()
-						.equals(losstofolloupRR)) {
+						.equals(completedoutcomresult)) {
 
-					onlosstofollowupCategory = true;
-
+					onCompletedOutcome = true;
+				}
+				}
 				}
 
 			}
-		 	 
-			ret.put(ptId, new BooleanResult(onlosstofollowupCategory , this, context));
+			ret.put(ptId, new BooleanResult(onCompletedOutcome, this, context));
+
 		}
 		return ret;
 	}
-
 }
-

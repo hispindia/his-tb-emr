@@ -10,8 +10,10 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.calculation.patient.PatientCalculationContext;
 import org.openmrs.calculation.result.CalculationResultMap;
+import org.openmrs.calculation.result.ObsResult;
 import org.openmrs.module.kenyacore.calculation.AbstractPatientCalculation;
 import org.openmrs.module.kenyacore.calculation.BooleanResult;
+import org.openmrs.module.kenyacore.calculation.Calculations;
 import org.openmrs.module.kenyaemr.Dictionary;
 
 public class TbpatientwithOtherCategoryCalculation extends AbstractPatientCalculation{
@@ -22,20 +24,24 @@ public class TbpatientwithOtherCategoryCalculation extends AbstractPatientCalcul
 		Concept previuoslytreated=Dictionary.getConcept(Dictionary.PREVIOUSLY_TREATED_EP);
 		Concept unknownmdr=Dictionary.getConcept(Dictionary.UNKNOWN_OUTCOME_PREVIOUSLY_TREATED_EP);
 		CalculationResultMap ret = new CalculationResultMap();
+		CalculationResultMap lastoutcomeClassiffication = Calculations.lastObs(
+				registration_group, cohort, context);
 		for (Integer ptId : cohort) {
-			Patient patient = Context.getPatientService().getPatient(ptId);
 			boolean onotherCategory = false;
-			List<Obs> obs = Context.getObsService()
-					.getObservationsByPersonAndConcept(patient, registration_group);
-			
-			for (Obs o : obs) {
-				if (o.getValueCoded() == previuoslytreated|| o.getValueCoded() == unknownmdr) 
-				{
+			ObsResult obsResultsClassification = (ObsResult) lastoutcomeClassiffication
+					.get(ptId);
+			if (obsResultsClassification != null
+					&& obsResultsClassification.getValue().getValueCoded() != null) {
+
+				if (obsResultsClassification.getValue().getValueCoded()
+						.equals(previuoslytreated) || obsResultsClassification.getValue().getValueCoded()
+						.equals(unknownmdr)) {
+
 					onotherCategory = true;
+
 				}
-			}
-		 	 
-			
+
+			}		
 			ret.put(ptId, new BooleanResult(onotherCategory , this, context));
 		}
 		return ret;
