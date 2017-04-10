@@ -90,7 +90,8 @@ public class TbpatientswithsmearpositiveculturenegativeCalculation extends Abstr
 		if ((obsResultsClassification != null))  {
 			
 			if(obsResultsCulture != null)
-			{ if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultsCulture.getValue().getValueCoded()==null)))
+			{ if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultsCulture.getValue().getValueCoded()==null))
+					&&(obsResultsClassification.getValue().getEncounter().equals(obsResultsCulture.getValue().getEncounter())))
 				{if ((obsResultsClassification.getValue().getValueCoded().equals(trace)||
 					obsResultsClassification.getValue().getValueCoded().equals(singlePositive)||
 					obsResultsClassification.getValue().getValueCoded().equals(doublePositive)||
@@ -116,7 +117,9 @@ public class TbpatientswithsmearpositiveculturenegativeCalculation extends Abstr
 				}
 			}
 			if(obsResultLastCultureLiquidResults!=null)
-			{if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultLastCultureLiquidResults.getValue().getValueCoded()==null)))
+			{if(!(obsResultsClassification.getValue().getValueCoded()==null)&& (!(obsResultLastCultureLiquidResults.getValue().getValueCoded()==null))&&
+					(obsResultsClassification.getValue().getEncounter().equals
+					(obsResultLastCultureLiquidResults.getValue().getEncounter())))
 			{	if((obsResultsClassification.getValue().getValueCoded().equals(trace)||
 					obsResultsClassification.getValue().getValueCoded().equals(singlePositive)||
 					obsResultsClassification.getValue().getValueCoded().equals(doublePositive)||

@@ -102,7 +102,9 @@ public class TbpatientwithsmearCulturenegativeCalculation extends
 				if (obsResultsCulture != null) {
 
 					if (!(obsResultsClassification.getValue().getValueCoded() == null)
-							&& (!(obsResultsCulture.getValue().getValueCoded() == null))) {
+							&& (!(obsResultsCulture.getValue().getValueCoded() == null))&&
+							(obsResultsClassification.getValue().getEncounter().equals
+							(obsResultsCulture.getValue().getEncounter()))) {
 
 						if ((obsResultsClassification.getValue()
 								.getValueCoded().equals(smearresult))
@@ -128,10 +130,10 @@ public class TbpatientwithsmearCulturenegativeCalculation extends
 				if (obsResultLastCultureLiquidResults != null) {
 					if (!(obsResultsClassification.getValue().getValueCoded() == null)
 							&& (!(obsResultLastCultureLiquidResults.getValue()
-									.getValueCoded() == null)))
-
+									.getValueCoded() == null))&&
+					(obsResultsClassification.getValue().getEncounter().equals
+					(obsResultLastCultureLiquidResults.getValue().getEncounter())))
 					{
-
 						if ((obsResultsClassification.getValue()
 								.getValueCoded().equals(smearresult))
 

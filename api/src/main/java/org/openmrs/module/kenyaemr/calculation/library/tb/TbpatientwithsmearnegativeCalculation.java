@@ -103,10 +103,11 @@ public class TbpatientwithsmearnegativeCalculation extends
 				e.printStackTrace();
 			}
 			if ((obsResultsClassification != null)) {
-
 				if (obsResultsCulture != null) {
 					if (!(obsResultsClassification.getValue().getValueCoded() == null)
-							&& (!(obsResultsCulture.getValue().getValueCoded() == null))) {
+							&& (!(obsResultsCulture.getValue().getValueCoded() == null)) &&
+							(obsResultsClassification.getValue().getEncounter().equals
+							(obsResultsCulture.getValue().getEncounter()))) {
 						if ((obsResultsClassification.getValue()
 								.getValueCoded().equals(labresult))
 								&& ((obsResultsCulture.getValue()
@@ -123,7 +124,7 @@ public class TbpatientwithsmearnegativeCalculation extends
 										.getValue().getValueCoded()
 										.equals(solidresulttriplepositive))))
 
-						{
+						{ 
 							if ((obssmear.after(reportstart)
 									&& obssmear.before(reportend)
 									|| obssmear.equals(reportstart) || obssmear
@@ -143,7 +144,9 @@ public class TbpatientwithsmearnegativeCalculation extends
 				if (obsResultLastCultureLiquidResults != null) {
 					if (!(obsResultsClassification.getValue().getValueCoded() == null)
 							&& (!(obsResultLastCultureLiquidResults.getValue()
-									.getValueCoded() == null))) {
+									.getValueCoded() == null)) &&
+									(obsResultsClassification.getValue().getEncounter().equals
+											(obsResultLastCultureLiquidResults.getValue().getEncounter()))) {
 						if ((obsResultsClassification.getValue()
 								.getValueCoded().equals(labresult))
 								&& (((obsResultLastCultureLiquidResults
@@ -159,7 +162,7 @@ public class TbpatientwithsmearnegativeCalculation extends
 												.equals(reportend)))
 
 							{
-
+								
 								oncultureTest = true;
 							}
 						}
