@@ -51,6 +51,7 @@ import org.openmrs.module.kenyaemr.calculation.library.tb.Tbpatientwithsmearunkn
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearunknownCulturepositiveCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearunknownCultureunknownCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithwithsmearpositiveculturepositiveCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TotalPatientOnMedication12to15earlierCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TotalPatientOnMedicationCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TotalPatientRegisteredCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TotalPatientRegisteredMDRDetectionCalculation;
@@ -1548,7 +1549,7 @@ public class TbCohortLibrary {
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativeculturenegativeAtMonths(int highMonths, int leastMonths) {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearCulturenegativeCalculation());
@@ -1591,7 +1592,7 @@ public class TbCohortLibrary {
 		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativeCalculation());
 		cp.setName("Patients who are on smear negative and culture positive");
 		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
@@ -1645,7 +1646,7 @@ public class TbCohortLibrary {
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearnegativecultureunknownAtMonths(int highMonths, int leastMonths) {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearnegativecultureunknownCalculation());
@@ -1665,7 +1666,7 @@ public class TbCohortLibrary {
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositiveculturenegativeAtMonths(int highMonths, int leastMonths) {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientswithsmearpositiveculturenegativeCalculation());
@@ -1704,7 +1705,7 @@ public class TbCohortLibrary {
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositiveculturepositiveAtMonths(int highMonths, int leastMonths) {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithwithsmearpositiveculturepositiveCalculation());
@@ -1743,7 +1744,7 @@ public class TbCohortLibrary {
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearpositivecultureunknownAtMonths(int highMonths, int leastMonths) {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearpositiveCultureunknownCalculation());
@@ -1783,7 +1784,7 @@ public class TbCohortLibrary {
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknownculturenegativeAtMonths(int highMonths, int leastMonths) {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearunknownCulturenegativeCalculation());
@@ -1822,7 +1823,7 @@ public class TbCohortLibrary {
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknownculturepositiveAtMonths(int highMonths, int leastMonths) {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearunknownCulturepositiveCalculation());
@@ -1861,7 +1862,7 @@ public class TbCohortLibrary {
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultswithsmearunknowncultureunknownAtMonths(int highMonths, int leastMonths) {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithsmearunknownCultureunknownCalculation());
@@ -3374,7 +3375,7 @@ public CohortDefinition totalpatientOutcomewithOtherCategory() {
 	public CohortDefinition treatmentOutcome_Died(int highMonths, int leastMonths) {
 		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
 		Concept outcomresult=Dictionary.getConcept(Dictionary.DIED);
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
@@ -3420,7 +3421,7 @@ public CohortDefinition totalpatientOutcomewithOtherCategory() {
 	public CohortDefinition treatmentOutcome_Defaulted(int highMonths, int leastMonths) {
 		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
 		Concept outcomresult=Dictionary.getConcept(Dictionary.LOSS_TO_FOLLOW_UP);
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
@@ -3452,7 +3453,7 @@ public CohortDefinition totalpatientOutcomewithOtherCategory() {
 	public CohortDefinition treatmentOutcome_Transferedout(int highMonths, int leastMonths) {
 		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
 		Concept outcomresult=Dictionary.getConcept(Dictionary.TRANSFERRED_OUT);
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
@@ -3483,7 +3484,7 @@ public CohortDefinition totalpatientOutcomewithOtherCategory() {
 		return cd;
 	}
 	public CohortDefinition totalEnrolledResultsAtMonths(int highMonths, int leastMonths) {
-		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedicationCalculation());
+		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
