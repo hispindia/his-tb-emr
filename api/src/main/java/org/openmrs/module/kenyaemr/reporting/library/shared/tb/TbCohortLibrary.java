@@ -3550,16 +3550,17 @@ public CohortDefinition totalEnrolledResultswithTransferIn() {
 
 }	
 public CohortDefinition totalEnrolledResultswithTransferIn(int highMonths, int leastMonths) {
-	Concept registration_group=Dictionary.getConcept(Dictionary.METHOD_OF_ENROLLMENT);
-	Concept previuoslytreated=Dictionary.getConcept(Dictionary.TRANSFER_IN);
-	
+//	Concept registration_group=Dictionary.getConcept(Dictionary.METHOD_OF_ENROLLMENT);
+//	Concept previuoslytreated=Dictionary.getConcept(Dictionary.TRANSFER_IN);
+	CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithTransferredInCalculation());
+	cp.setName("Patients with Transferred outcome");
+	cp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled with treatment  outcome transferred");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
-		cd.addSearch("reggroupOne", ReportUtils.map(commonCohorts.hasObs(registration_group,previuoslytreated), "onOrAfter=${onOrAfter},onOrBefore=${onOrBefore}"));
-		cd.setCompositionString("reggroupOne");
+		cd.addSearch("reggroupOne", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		
 		cd.setCompositionString("enrolled AND reggroupOne");
 		return cd;
