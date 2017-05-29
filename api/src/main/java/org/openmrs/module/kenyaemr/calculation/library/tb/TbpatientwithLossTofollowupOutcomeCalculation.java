@@ -14,8 +14,10 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.calculation.patient.PatientCalculationContext;
 import org.openmrs.calculation.result.CalculationResultMap;
+import org.openmrs.calculation.result.ObsResult;
 import org.openmrs.module.kenyacore.calculation.AbstractPatientCalculation;
 import org.openmrs.module.kenyacore.calculation.BooleanResult;
+import org.openmrs.module.kenyacore.calculation.Calculations;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.reporting.common.DateUtil;
 
@@ -25,6 +27,8 @@ public class TbpatientwithLossTofollowupOutcomeCalculation extends AbstractPatie
 	{ 	Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
 	    Concept outcomresult=Dictionary.getConcept(Dictionary.LOSS_TO_FOLLOW_UP);
 		CalculationResultMap ret = new CalculationResultMap();
+		CalculationResultMap lastoutcomeClassiffication = Calculations.lastObs(
+				tboutcome, cohort, context);
 		SimpleDateFormat sdf= new SimpleDateFormat("dd-MMM-yy");
 		Date start = DateUtil.getStartOfMonth(context.getNow());
 		Calendar calendar = Calendar.getInstance();
@@ -35,13 +39,15 @@ public class TbpatientwithLossTofollowupOutcomeCalculation extends AbstractPatie
 		for (Integer ptId : cohort) {
 			Patient patient = Context.getPatientService().getPatient(ptId);
 			boolean onDiedOutcome = false;
-			List<Obs> obs = Context.getObsService()
-					.getObservationsByPersonAndConcept(patient, tboutcome);
-			
-			for (Obs o : obs) {
-				Date ord=null;Date reportstart=null;Date reportend=null;Date monthStart=null;
-				try {
-					ord=sdf.parse(sdf.format(o.getObsDatetime()));
+			Date ord=null;Date reportstart=null;Date reportend=null;Date monthStart=null;
+			ObsResult obsResultsClassification = (ObsResult) lastoutcomeClassiffication
+					.get(ptId);
+			if (obsResultsClassification != null
+					&& obsResultsClassification.getValue().getValueCoded() != null) {
+				if(obsResultsClassification.getValue().getEncounter().getVisit()!=null)
+				{if(obsResultsClassification.getValue().getEncounter().getVisit().getStopDatetime()==null)
+				{		try {
+					ord=sdf.parse(sdf.format(obsResultsClassification.getValue().getObsDatetime()));
 					reportstart=sdf.parse(sdf.format(start));
 					reportend=sdf.parse(sdf.format(endDate));
 					monthStart=sdf.parse(sdf.format(startDate));
@@ -49,16 +55,20 @@ public class TbpatientwithLossTofollowupOutcomeCalculation extends AbstractPatie
 					
 					e.printStackTrace();
 				}
-				if (o.getValueCoded() == outcomresult) 
-				{ if(ord.after(monthStart) && ord.before(reportend)||ord.equals(monthStart) ||ord.equals(reportend))
-					
+				if (obsResultsClassification.getValue().getValueCoded()
+						.equals(outcomresult)) {
+
+					{ if(ord.after(monthStart) && ord.before(reportend)||ord.equals(monthStart) ||ord.equals(reportend))
+						
 					{ 
 					onDiedOutcome = true;
 					}
 				}
+
+				}
+				}
+				}
 			}
-		 	 
-			
 			ret.put(ptId, new BooleanResult(onDiedOutcome , this, context));
 		}
 		return ret;
