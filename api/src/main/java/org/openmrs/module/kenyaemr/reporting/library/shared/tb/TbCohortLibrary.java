@@ -34,13 +34,16 @@ import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientswithFailuret
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientswithNewCategoryCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientswithRelapseCategoryCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientswithsmearpositiveculturenegativeCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithDiedOutcomeAt12to15mnthCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithDiedOutcomeAt6mnthCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithLossTofollowupOutcome12to15Calculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithLossTofollowupOutcomeCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithNonConverterCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithOtherCategoryCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithSmearCulturepositiveCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithStandardMDRcasesCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithTransferredInCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithTransferredOutOutCome12to15Calculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithTransferredOutOutComeCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithlosstoFollowupCalculation;
 import org.openmrs.module.kenyaemr.calculation.library.tb.TbpatientwithsmearCulturenegativeCalculation;
@@ -3373,19 +3376,20 @@ public CohortDefinition totalpatientOutcomewithOtherCategory() {
 		return cd;
 	}
 	public CohortDefinition treatmentOutcome_Died(int highMonths, int leastMonths) {
-		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
-		Concept outcomresult=Dictionary.getConcept(Dictionary.DIED);
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithDiedOutcomeAt12to15mnthCalculation());
+		cp.setName("Patients with died outcome");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CompositionCohortDefinition cd = new CompositionCohortDefinition();
 		cd.setName("Total enrolled with treatment  outcome died");
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
-		cd.addSearch("givenOutcomeDied", ReportUtils.map(commonCohorts.hasObs(tboutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+		cd.addSearch("givenOutcomeDied", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
-		cd.setCompositionString("enrolled AND usingRegime AND givenOutcomeDied");
+		cd.setCompositionString("enrolled AND usingRegime AND givenOutcomeDied ");
 		return cd;
 	}
 	public CohortDefinition treatmentOutcome_DiedAt6Mnth() {
@@ -3419,8 +3423,9 @@ public CohortDefinition totalpatientOutcomewithOtherCategory() {
 		return cd;
 	}
 	public CohortDefinition treatmentOutcome_Defaulted(int highMonths, int leastMonths) {
-		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
-		Concept outcomresult=Dictionary.getConcept(Dictionary.LOSS_TO_FOLLOW_UP);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithLossTofollowupOutcome12to15Calculation());
+		cp.setName("Patients with loss to follow up outcome");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
@@ -3429,7 +3434,7 @@ public CohortDefinition totalpatientOutcomewithOtherCategory() {
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
-		cd.addSearch("givenlosstofollowupOutcome", ReportUtils.map(commonCohorts.hasObs(tboutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+		cd.addSearch("givenlosstofollowupOutcome", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
 		cd.setCompositionString("enrolled AND usingRegime AND givenlosstofollowupOutcome");
 		return cd;
@@ -3451,8 +3456,9 @@ public CohortDefinition totalpatientOutcomewithOtherCategory() {
 		return cd;
 	}
 	public CohortDefinition treatmentOutcome_Transferedout(int highMonths, int leastMonths) {
-		Concept tboutcome=Dictionary.getConcept(Dictionary.TUBERCULOSIS_TREATMENT_OUTCOME);
-		Concept outcomresult=Dictionary.getConcept(Dictionary.TRANSFERRED_OUT);
+		CalculationCohortDefinition cp = new CalculationCohortDefinition(new TbpatientwithTransferredOutOutCome12to15Calculation());
+		cp.setName("Patients with Transferred outcome");
+		cp.addParameter(new Parameter("onDate", "On Date", Date.class));
 		CalculationCohortDefinition comp = new CalculationCohortDefinition(new TotalPatientOnMedication12to15earlierCalculation());
 		comp.setName("medication");
 		comp.addParameter(new Parameter("onDate", "On Date", Date.class));
@@ -3461,7 +3467,7 @@ public CohortDefinition totalpatientOutcomewithOtherCategory() {
 		cd.addParameter(new Parameter("onOrAfter", "After Date", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "Before Date", Date.class));
 		cd.addSearch("enrolled", ReportUtils.map(enrolled(), "enrolledOnOrAfter=${onOrAfter-"+ highMonths +"m},enrolledOnOrBefore=${onOrBefore-"+ leastMonths + "m}"));
-		cd.addSearch("givenOutcometransferredout", ReportUtils.map(commonCohorts.hasObs(tboutcome,outcomresult), "onOrBefore=${onOrBefore}"));
+		cd.addSearch("givenOutcometransferredout", ReportUtils.map(cp, "onDate=${onOrBefore}"));
 		cd.addSearch("usingRegime", ReportUtils.map(comp, "onDate=${onOrBefore}"));
 		cd.setCompositionString("enrolled AND usingRegime AND givenOutcometransferredout");
 		return cd;
