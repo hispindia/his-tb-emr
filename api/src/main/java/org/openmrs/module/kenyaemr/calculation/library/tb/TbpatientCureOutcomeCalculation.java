@@ -39,17 +39,14 @@ public class TbpatientCureOutcomeCalculation extends AbstractPatientCalculation 
 			
 			if (obsResultsClassification != null
 					&& obsResultsClassification.getValue().getValueCoded() != null) {
-				if(obsResultsClassification.getValue().getEncounter().getVisit()!=null)
-				{if(obsResultsClassification.getValue().getEncounter().getVisit().getStopDatetime()==null)
-				{
+				
 				if (obsResultsClassification.getValue().getValueCoded()
 						.equals(cureoutcomresult)) {
 
 					onCureOutcome = true;
 
 				}
-				}
-				}
+				
 			}
 			ret.put(ptId, new BooleanResult(onCureOutcome, this, context));
 

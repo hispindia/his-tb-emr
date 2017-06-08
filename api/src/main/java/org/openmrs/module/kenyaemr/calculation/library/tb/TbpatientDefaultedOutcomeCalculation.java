@@ -29,9 +29,7 @@ for (Integer ptId : cohort) {
 			.get(ptId);
 	if (obsResultsClassification != null
 			&& obsResultsClassification.getValue().getValueCoded() != null) {
-		if(obsResultsClassification.getValue().getEncounter().getVisit()!=null){
-if(obsResultsClassification.getValue().getEncounter().getVisit().getStopDatetime()==null)
-		{
+
 	if (obsResultsClassification.getValue().getValueCoded()
 				.equals(Defaultedoutcomresult)) {
 		System.out.println("defgautl");
@@ -39,8 +37,6 @@ if(obsResultsClassification.getValue().getEncounter().getVisit().getStopDatetime
 
 		}
 
-	}
-		}
 	}
 	ret.put(ptId, new BooleanResult(ondefaultedOutcome, this, context));
 

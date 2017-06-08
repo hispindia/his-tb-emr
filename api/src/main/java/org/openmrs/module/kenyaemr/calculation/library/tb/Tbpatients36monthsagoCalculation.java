@@ -40,15 +40,16 @@ public class Tbpatients36monthsagoCalculation  extends AbstractPatientCalculatio
 			
 			boolean onVisit = false;boolean onMonth = false;
 			Patient patient=Context.getPatientService().getPatient(ptId);
-			
-			List<Visit>v=Context.getVisitService().getVisitsByPatient(patient);
-			 for(Visit vis: v){
+			List<Order> order = Context.getOrderService().getOrdersByPatient(
+					patient);
+		//	List<Visit>v=Context.getVisitService().getVisitsByPatient(patient);
+			 for(Order ordd : order){
 				 
-		 		if(vis.getPatient().getId().equals(ptId))
+		 		if(ordd.getPatient().getId().equals(ptId))
 				{ 
 		 			Date visitDate=null;Date reportstart=null;Date reportend=null;
 		 			try {
-		 				visitDate=sdf.parse(sdf.format(vis.getStartDatetime()));
+		 				visitDate=sdf.parse(sdf.format(ordd.getStartDate()));
 						reportstart=sdf.parse(sdf.format(startDate));
 						reportend=sdf.parse(sdf.format(endDate));
 						

@@ -349,7 +349,7 @@ private DataSetDefinition createTbOtherCategorywithpaspatientwithTBEnrollNumber(
 	EmrReportingUtils.addRow(dsd, "RA1", "No. of detected cases with Other Category cases  with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsA);
 	EmrReportingUtils.addRow(dsd, "RB1", "No. of detected cases with Other Category cases with outcome  ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsB);
 	EmrReportingUtils.addRow(dsd, "RC1", "No. of detected cases with Other Category cases  with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsC);
-	EmrReportingUtils.addRow(dsd, "RD1", "No. of detected cases with Other Category with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsD);
+	EmrReportingUtils.addRow(dsd, "RD1", "No. of detected cases with Other Category cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsD);
 	EmrReportingUtils.addRow(dsd, "RE1", "No. of detected cases with Other Category cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsE);
 	EmrReportingUtils.addRow(dsd, "RF1", "No. of detected cases with Other Category cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsF);
 	EmrReportingUtils.addRow(dsd, "RG1", "No. of detected cases with Other Category cases with outcome ", ReportUtils.map(tbIndicatorLibrary.confirmedotherCategoryMDRTBwithpas(), indParams), columnsG);

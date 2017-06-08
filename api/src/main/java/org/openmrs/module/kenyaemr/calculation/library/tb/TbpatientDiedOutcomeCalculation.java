@@ -31,17 +31,14 @@ public class TbpatientDiedOutcomeCalculation extends AbstractPatientCalculation 
 					.get(ptId);
 			if (obsResultsClassification != null
 					&& obsResultsClassification.getValue().getValueCoded() != null) {
-				if(obsResultsClassification.getValue().getEncounter().getVisit()!=null)
-				{	if(obsResultsClassification.getValue().getEncounter().getVisit().getStopDatetime()==null)
-				{
+				
 				if (obsResultsClassification.getValue().getValueCoded()
 						.equals(diedoutcomresult)) {
 
 					onDiedOutcome = true;
 
 				}
-				}
-				}
+				
 			}
 			ret.put(ptId, new BooleanResult(onDiedOutcome, this, context));
 

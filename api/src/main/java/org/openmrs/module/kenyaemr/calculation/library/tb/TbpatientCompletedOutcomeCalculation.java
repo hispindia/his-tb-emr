@@ -32,17 +32,13 @@ public class TbpatientCompletedOutcomeCalculation extends
 					.get(ptId);
 			if (obsResultsClassification != null
 					&& obsResultsClassification.getValue().getValueCoded() != null) {
-				if(obsResultsClassification.getValue().getEncounter().getVisit()!=null)
-				{	
-				if(obsResultsClassification.getValue().getEncounter().getVisit().getStopDatetime()==null)
-				{
+			
 				if (obsResultsClassification.getValue().getValueCoded()
 						.equals(completedoutcomresult)) {
 
 					onCompletedOutcome = true;
 				}
-				}
-				}
+				
 
 			}
 			ret.put(ptId, new BooleanResult(onCompletedOutcome, this, context));

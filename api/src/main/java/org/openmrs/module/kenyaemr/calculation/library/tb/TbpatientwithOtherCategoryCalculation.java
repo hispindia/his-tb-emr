@@ -7,6 +7,7 @@ import java.util.Map;
 import org.openmrs.Concept;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
+import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
 import org.openmrs.calculation.patient.PatientCalculationContext;
 import org.openmrs.calculation.result.CalculationResultMap;
@@ -26,13 +27,17 @@ public class TbpatientwithOtherCategoryCalculation extends AbstractPatientCalcul
 		CalculationResultMap ret = new CalculationResultMap();
 		CalculationResultMap lastoutcomeClassiffication = Calculations.lastObs(
 				registration_group, cohort, context);
+	 
 		for (Integer ptId : cohort) {
+			
 			boolean onotherCategory = false;
 			ObsResult obsResultsClassification = (ObsResult) lastoutcomeClassiffication
 					.get(ptId);
 			if (obsResultsClassification != null
 					&& obsResultsClassification.getValue().getValueCoded() != null) {
-
+				
+					
+			
 				if (obsResultsClassification.getValue().getValueCoded()
 						.equals(previuoslytreated) || obsResultsClassification.getValue().getValueCoded()
 						.equals(unknownmdr)) {
@@ -40,6 +45,8 @@ public class TbpatientwithOtherCategoryCalculation extends AbstractPatientCalcul
 					onotherCategory = true;
 
 				}
+				
+				
 
 			}		
 			ret.put(ptId, new BooleanResult(onotherCategory , this, context));

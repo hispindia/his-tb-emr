@@ -29,17 +29,14 @@ for (Integer ptId : cohort) {
 			.get(ptId);
 	if (obsResultsClassification != null
 			&& obsResultsClassification.getValue().getValueCoded() != null) {
-		if(obsResultsClassification.getValue().getEncounter().getVisit()!=null)
-		{if(obsResultsClassification.getValue().getEncounter().getVisit().getStopDatetime()==null)
-		{
+
 		if (obsResultsClassification.getValue().getValueCoded()
 				.equals(movetoXDRoutcomresult)) {
 
 			onmovetoXDROutcome = true;
 
 		}
-		}
-		}
+		
 	}
 	ret.put(ptId, new BooleanResult(onmovetoXDROutcome, this, context));
 
